@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小白————排序, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="小白————万年历, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小白————排序 | Wabbybabbo的摸鱼圣地</title>
+    <title>小白————万年历 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小白————排序</h1>
+                    <h1 class="description center-align post-title">小白————万年历</h1>
                 </div>
             </div>
         </div>
@@ -551,7 +551,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-02-07
+                    2023-02-08
                 </div>
                 
 
@@ -565,7 +565,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    535
+                    342
                 </div>
                 
 
@@ -590,175 +590,122 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h1><h3 id="一-冒泡排序bubbleSort"><a href="#一-冒泡排序bubbleSort" class="headerlink" title="一.冒泡排序bubbleSort"></a>一.冒泡排序bubbleSort</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">3</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
-	<span class="token keyword">int</span> size <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> size <span class="token operator">-</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span>
-		<span class="token punctuation">{</span>
-			<span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">&gt;</span> a<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-			<span class="token punctuation">{</span>
-				<span class="token keyword">int</span> temp <span class="token operator">=</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-				a<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-				a<span class="token punctuation">[</span>j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
+                <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_CRT_SECURE_NO_WARNINGS</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdbool.h&gt;</span></span>
 
-	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h3 id="二-选择排序"><a href="#二-选择排序" class="headerlink" title="二.选择排序"></a>二.选择排序</h3><p>每次把最小的找出来跟第一个数值换位置</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token keyword">void</span> <span class="token function">printMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">printMonthBody</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">getStartDay</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">getTotalNumOfDays</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+bool <span class="token function">isLeapYear</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">9</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">14</span><span class="token punctuation">,</span><span class="token number">6</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
-	<span class="token keyword">int</span> i<span class="token punctuation">,</span> j<span class="token punctuation">,</span> temp<span class="token punctuation">;</span>
-	<span class="token keyword">int</span> min<span class="token punctuation">;</span>
-	<span class="token keyword">int</span> length <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> year<span class="token punctuation">,</span> month<span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"请输入要查询的年份：\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">scanf_s</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>year<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		min <span class="token operator">=</span> i<span class="token punctuation">;</span>
-		<span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> length<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span>
-		<span class="token punctuation">{</span>
-			<span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>min<span class="token punctuation">]</span> <span class="token operator">&gt;</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
-				min <span class="token operator">=</span> j<span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span>min <span class="token operator">!=</span> i<span class="token punctuation">)</span>
-		<span class="token punctuation">{</span>
-			temp <span class="token operator">=</span> a<span class="token punctuation">[</span>min<span class="token punctuation">]</span><span class="token punctuation">;</span>
-			a<span class="token punctuation">[</span>min<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-			a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"请输入要查询的月份：\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">scanf_s</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printMonth</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span>
 
-<h3 id="三-快速排序"><a href="#三-快速排序" class="headerlink" title="三.快速排序"></a>三.快速排序</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
-
-<span class="token keyword">void</span> <span class="token function">quickSort</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> low<span class="token punctuation">,</span> <span class="token keyword">int</span> high<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> <span class="token function">findPos</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> low<span class="token punctuation">,</span> <span class="token keyword">int</span> high<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">printMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d年%d月份的日历\n"</span><span class="token punctuation">,</span>year<span class="token punctuation">,</span>month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"--------------------------------\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"日\t一\t二\t三\t四\t五\t六\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printMonthBody</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">printMonthBody</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> week <span class="token operator">=</span> <span class="token function">getStartDay</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> days <span class="token operator">=</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token keyword">int</span> i<span class="token punctuation">;</span>
-	<span class="token function">quickSort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">6</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
-
-	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> date <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> circulation <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token comment">//第一行的日期</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> week <span class="token operator">%</span> <span class="token number">7</span><span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"  \t"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> week<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">7</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span> date<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">//从第二行开始的日期</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> date<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> days<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>circulation <span class="token operator">==</span> <span class="token number">7</span><span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			circulation <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		circulation<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">quickSort</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> low<span class="token punctuation">,</span> <span class="token keyword">int</span> high<span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">getStartDay</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">int</span> pos<span class="token punctuation">;</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span>low <span class="token operator">&lt;</span> high<span class="token punctuation">)</span>
+	<span class="token keyword">int</span> week<span class="token punctuation">;</span>
+	week <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">getTotalNumOfDays</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">7</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>week <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">7</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span>
+		<span class="token keyword">return</span> week<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">getTotalNumOfDays</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> i<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> yearChange <span class="token operator">=</span> year<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> sum1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> sum2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> daysOfYear<span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> year <span class="token operator">-</span> <span class="token number">1800</span><span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		pos <span class="token operator">=</span> <span class="token function">findPos</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> low <span class="token punctuation">,</span>high<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">quickSort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> low<span class="token punctuation">,</span> pos <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">quickSort</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> pos <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> high<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isLeapYear</span><span class="token punctuation">(</span>yearChange<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			daysOfYear <span class="token operator">=</span> <span class="token number">366</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span>
+			daysOfYear <span class="token operator">=</span> <span class="token number">365</span><span class="token punctuation">;</span>
+		sum1 <span class="token operator">+=</span> daysOfYear<span class="token punctuation">;</span>
+		yearChange<span class="token operator">--</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> month <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
+		sum2 <span class="token operator">+=</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	sum <span class="token operator">=</span> sum1 <span class="token operator">+</span> sum2<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> sum<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">int</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>month <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">3</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">5</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">7</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">8</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">10</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">12</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">31</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>month <span class="token operator">==</span> <span class="token number">4</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">6</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">9</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">11</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">31</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>month <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isLeapYear</span><span class="token punctuation">(</span>year<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token keyword">return</span> <span class="token number">29</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span>
+			<span class="token keyword">return</span> <span class="token number">28</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">int</span> <span class="token function">findPos</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span> a<span class="token punctuation">,</span> <span class="token keyword">int</span> low<span class="token punctuation">,</span> <span class="token keyword">int</span> high<span class="token punctuation">)</span>
+bool <span class="token function">isLeapYear</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">int</span> val <span class="token operator">=</span> a<span class="token punctuation">[</span>low<span class="token punctuation">]</span><span class="token punctuation">;</span>
-	<span class="token keyword">while</span> <span class="token punctuation">(</span>low <span class="token operator">&lt;</span> high<span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token keyword">while</span> <span class="token punctuation">(</span>low <span class="token operator">&lt;</span> high <span class="token operator">&amp;&amp;</span> a<span class="token punctuation">[</span>high<span class="token punctuation">]</span> <span class="token operator">&gt;=</span> val<span class="token punctuation">)</span>
-			<span class="token operator">--</span>high<span class="token punctuation">;</span>
-		a<span class="token punctuation">[</span>low<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>high<span class="token punctuation">]</span><span class="token punctuation">;</span>
-		<span class="token keyword">while</span> <span class="token punctuation">(</span>low <span class="token operator">&lt;</span> high <span class="token operator">&amp;&amp;</span> a<span class="token punctuation">[</span>low<span class="token punctuation">]</span> <span class="token operator">&lt;=</span> val<span class="token punctuation">)</span>
-			<span class="token operator">++</span>low<span class="token punctuation">;</span>
-		a<span class="token punctuation">[</span>high<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>low<span class="token punctuation">]</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	a<span class="token punctuation">[</span>low<span class="token punctuation">]</span> <span class="token operator">=</span> val<span class="token punctuation">;</span>
-	<span class="token keyword">return</span> low<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>year <span class="token operator">%</span> <span class="token number">4</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> true<span class="token punctuation">;</span>
+	<span class="token keyword">else</span>
+		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="四-插入排序-二分法"><a href="#四-插入排序-二分法" class="headerlink" title="四.插入排序+二分法"></a>四.插入排序+二分法</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">8</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token number">10</span><span class="token punctuation">,</span><span class="token number">7</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
-	<span class="token keyword">int</span> i<span class="token punctuation">,</span> j<span class="token punctuation">,</span> temp<span class="token punctuation">;</span>
-	<span class="token keyword">int</span> low<span class="token punctuation">,</span> high<span class="token punctuation">,</span>mid<span class="token punctuation">;</span>
-	<span class="token keyword">int</span> l <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-	<span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">&gt;</span> a<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		temp <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-		a<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-		a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-		low <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-		high <span class="token operator">=</span> i <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-		mid <span class="token operator">=</span> <span class="token punctuation">(</span>high <span class="token operator">+</span> low<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
-		<span class="token keyword">while</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">!=</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">&amp;&amp;</span> high <span class="token operator">!=</span> low<span class="token punctuation">)</span>
-		<span class="token punctuation">{</span>
-			mid <span class="token operator">=</span> <span class="token punctuation">(</span>high <span class="token operator">+</span> low<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">;</span>
-			<span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&gt;</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-				high <span class="token operator">=</span> mid <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
-			<span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">&lt;</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-				low <span class="token operator">=</span> mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>mid<span class="token punctuation">]</span> <span class="token operator">==</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-		<span class="token punctuation">{</span>
-			<span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> i<span class="token punctuation">;</span> j <span class="token operator">&gt;=</span> mid <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span>
-			<span class="token punctuation">{</span>
-				temp <span class="token operator">=</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-				a<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-				a<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			a<span class="token punctuation">[</span>mid <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
-		<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>high <span class="token operator">==</span> low<span class="token punctuation">)</span>
-		<span class="token punctuation">{</span>
-			<span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>low<span class="token punctuation">]</span> <span class="token operator">&lt;</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-			<span class="token punctuation">{</span>
-				<span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> i<span class="token punctuation">;</span> j <span class="token operator">&gt;</span> low<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span>
-				<span class="token punctuation">{</span>
-					temp <span class="token operator">=</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-					a<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-					a<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
-				<span class="token punctuation">}</span>
-				a<span class="token punctuation">[</span>low <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-			<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>a<span class="token punctuation">[</span>high<span class="token punctuation">]</span> <span class="token operator">&gt;</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-			<span class="token punctuation">{</span>
-				<span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> i<span class="token punctuation">;</span> j <span class="token operator">&gt;=</span> high <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span> j<span class="token operator">--</span><span class="token punctuation">)</span>
-				<span class="token punctuation">{</span>
-					temp <span class="token operator">=</span> a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-					a<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-					a<span class="token punctuation">[</span>j <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> temp<span class="token punctuation">;</span>
-				<span class="token punctuation">}</span>
-				a<span class="token punctuation">[</span>high<span class="token punctuation">]</span> <span class="token operator">=</span> a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-			<span class="token punctuation">}</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -786,7 +733,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/02/07/xiao-bai-pai-xu/">https://wabbybabb0.github.io/2023/02/07/xiao-bai-pai-xu/</a>
+                    <a href="https://wabbybabb0.github.io/2023/02/08/xiao-bai-wan-nian-li/">https://wabbybabb0.github.io/2023/02/08/xiao-bai-wan-nian-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1003,25 +950,78 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/02/08/xiao-bai-wan-nian-li/">
+                <a href="/2023/02/10/xiao-bai-wen-jian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/15.png" class="responsive-img" alt="小白————万年历">
+                        <img src="/medias/featureimages/6.png" class="responsive-img" alt="小白————文件">
                         
-                        <span class="card-title">小白————万年历</span>
+                        <span class="card-title">小白————文件</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大云屋软件组考核题之一，寒假没事做于是试着写一个
+                            云屋考核时用到了读写文件，于是寒假闲着就去查了一些资料粗略记录了一下
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-02-08
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-02-10
                         </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                        <span class="chip bg-color">闲着没事干</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/02/07/xiao-bai-pai-xu/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.png" class="responsive-img" alt="小白————排序">
+                        
+                        <span class="card-title">小白————排序</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            2023年寒假在家无聊找了几个排序学习它们的思路，现在已经忘光了(苦笑)
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-07
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1043,59 +1043,6 @@
                     
                     <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%81%9A/">
                         <span class="chip bg-color">闲着没事做</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2022/11/22/xiao-bai-dui-lie/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/9.png" class="responsive-img" alt="小白————队列">
-                        
-                        <span class="card-title">小白————队列</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            大一小白WB粗略学习队列
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-22
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/C/" class="post-category">
-                                    C
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C</span>
-                    </a>
-                    
-                    <a href="/tags/%E9%98%9F%E5%88%97/">
-                        <span class="chip bg-color">队列</span>
                     </a>
                     
                 </div>

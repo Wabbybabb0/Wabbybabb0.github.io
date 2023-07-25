@@ -42,36 +42,38 @@
   </entry>
   
   <entry>
-    <title>小白————排序</title>
-    <link href="https://wabbybabb0.github.io/2023/02/07/xiao-bai-pai-xu/"/>
-    <id>https://wabbybabb0.github.io/2023/02/07/xiao-bai-pai-xu/</id>
-    <published>2023-02-07T13:00:00.000Z</published>
-    <updated>2023-07-25T11:41:14.343Z</updated>
+    <title>小白————文件</title>
+    <link href="https://wabbybabb0.github.io/2023/02/10/xiao-bai-wen-jian/"/>
+    <id>https://wabbybabb0.github.io/2023/02/10/xiao-bai-wen-jian/</id>
+    <published>2023-02-10T03:15:00.000Z</published>
+    <updated>2023-07-25T12:21:11.678Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;排序&quot;&gt;&lt;a href=&quot;#排序&quot; class=&quot;headerlink&quot; title=&quot;排序&quot;&gt;&lt;/a&gt;排序&lt;/h1&gt;&lt;h3 id=&quot;一-冒泡排序bubbleSort&quot;&gt;&lt;a href=&quot;#一-冒泡排序bubbleSort&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h3 id=&quot;一-文件的当前位置指针&quot;&gt;&lt;a href=&quot;#一-文件的当前位置指针&quot; class=&quot;headerlink&quot;</summary>
         
       
     
     
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/categories/C/"/>
     
     
     <category term="C" scheme="https://wabbybabb0.github.io/tags/C/"/>
     
-    <category term="闲着没事做" scheme="https://wabbybabb0.github.io/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%81%9A/"/>
+    <category term="闲着没事干" scheme="https://wabbybabb0.github.io/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/"/>
     
   </entry>
   
   <entry>
-    <title>小白————Calculator</title>
-    <link href="https://wabbybabb0.github.io/2022/10/13/xiao-bai-calculator/"/>
-    <id>https://wabbybabb0.github.io/2022/10/13/xiao-bai-calculator/</id>
-    <published>2022-10-12T23:56:00.000Z</published>
-    <updated>2023-07-25T11:32:08.935Z</updated>
+    <title>小白————万年历</title>
+    <link href="https://wabbybabb0.github.io/2023/02/08/xiao-bai-wan-nian-li/"/>
+    <id>https://wabbybabb0.github.io/2023/02/08/xiao-bai-wan-nian-li/</id>
+    <published>2023-02-08T07:59:00.000Z</published>
+    <updated>2023-07-25T12:16:09.301Z</updated>
     
     
       
@@ -84,7 +86,174 @@
     
     
     
-    <category term="Calculator" scheme="https://wabbybabb0.github.io/categories/Calculator/"/>
+    <category term="C" scheme="https://wabbybabb0.github.io/categories/C/"/>
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/tags/C/"/>
+    
+    <category term="闲着没事做" scheme="https://wabbybabb0.github.io/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%81%9A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小白————排序</title>
+    <link href="https://wabbybabb0.github.io/2023/02/07/xiao-bai-pai-xu/"/>
+    <id>https://wabbybabb0.github.io/2023/02/07/xiao-bai-pai-xu/</id>
+    <published>2023-02-07T13:00:00.000Z</published>
+    <updated>2023-07-25T11:49:27.230Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;排序&quot;&gt;&lt;a href=&quot;#排序&quot; class=&quot;headerlink&quot; title=&quot;排序&quot;&gt;&lt;/a&gt;排序&lt;/h1&gt;&lt;h3 id=&quot;一-冒泡排序bubbleSort&quot;&gt;&lt;a href=&quot;#一-冒泡排序bubbleSort&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/categories/C/"/>
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/tags/C/"/>
+    
+    <category term="闲着没事做" scheme="https://wabbybabb0.github.io/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%81%9A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小白————队列</title>
+    <link href="https://wabbybabb0.github.io/2022/11/22/xiao-bai-dui-lie/"/>
+    <id>https://wabbybabb0.github.io/2022/11/22/xiao-bai-dui-lie/</id>
+    <published>2022-11-22T07:44:00.000Z</published>
+    <updated>2023-07-25T12:43:42.654Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;一-概念&quot;&gt;&lt;a href=&quot;#一-概念&quot; class=&quot;headerlink&quot; title=&quot;一.概念&quot;&gt;&lt;/a&gt;一.概念&lt;/h1&gt;&lt;h2 id=&quot;1-前front-后rear&quot;&gt;&lt;a href=&quot;#1-前front-后rear&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/categories/C/"/>
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/tags/C/"/>
+    
+    <category term="队列" scheme="https://wabbybabb0.github.io/tags/%E9%98%9F%E5%88%97/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小白————栈</title>
+    <link href="https://wabbybabb0.github.io/2022/11/20/xiao-bai-zhan/"/>
+    <id>https://wabbybabb0.github.io/2022/11/20/xiao-bai-zhan/</id>
+    <published>2022-11-20T07:00:00.000Z</published>
+    <updated>2023-07-25T12:40:50.266Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;一-栈和堆&quot;&gt;&lt;a href=&quot;#一-栈和堆&quot; class=&quot;headerlink&quot; title=&quot;一.栈和堆&quot;&gt;&lt;/a&gt;一.栈和堆&lt;/h1&gt;&lt;pre class=&quot;line-numbers language-c&quot; data-language=&quot;c&quot;&gt;&lt;code</summary>
+        
+      
+    
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/categories/C/"/>
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/tags/C/"/>
+    
+    <category term="栈" scheme="https://wabbybabb0.github.io/tags/%E6%A0%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="https://wabbybabb0.github.io/2022/11/18/xiao-bai-lian-biao/"/>
+    <id>https://wabbybabb0.github.io/2022/11/18/xiao-bai-lian-biao/</id>
+    <published>2022-11-18T07:00:00.000Z</published>
+    <updated>2023-07-25T12:40:01.990Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;一-typedef&quot;&gt;&lt;a href=&quot;#一-typedef&quot; class=&quot;headerlink&quot; title=&quot;一.typedef&quot;&gt;&lt;/a&gt;一.typedef&lt;/h1&gt;&lt;pre class=&quot;line-numbers language-c&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/categories/C/"/>
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/tags/C/"/>
+    
+    <category term="链表" scheme="https://wabbybabb0.github.io/tags/%E9%93%BE%E8%A1%A8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小白————连续储存数组</title>
+    <link href="https://wabbybabb0.github.io/2022/11/13/xiao-bai-lian-xu-chu-cun-shu-zu/"/>
+    <id>https://wabbybabb0.github.io/2022/11/13/xiao-bai-lian-xu-chu-cun-shu-zu/</id>
+    <published>2022-11-13T06:20:00.000Z</published>
+    <updated>2023-07-25T12:47:39.227Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;一-数组&quot;&gt;&lt;a href=&quot;#一-数组&quot; class=&quot;headerlink&quot; title=&quot;一.数组&quot;&gt;&lt;/a&gt;一.数组&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;存放类型相同，大小相等的元素&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;二-代码部分&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/categories/C/"/>
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/tags/C/"/>
+    
+    <category term="数组" scheme="https://wabbybabb0.github.io/tags/%E6%95%B0%E7%BB%84/"/>
+    
+    <category term="指针" scheme="https://wabbybabb0.github.io/tags/%E6%8C%87%E9%92%88/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>小白————Calculator</title>
+    <link href="https://wabbybabb0.github.io/2022/10/13/xiao-bai-jian-yi-ji-suan-qi/"/>
+    <id>https://wabbybabb0.github.io/2022/10/13/xiao-bai-jian-yi-ji-suan-qi/</id>
+    <published>2022-10-12T23:56:00.000Z</published>
+    <updated>2023-07-25T11:49:11.977Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;pre class=&quot;line-numbers language-c&quot; data-language=&quot;c&quot;&gt;&lt;code class=&quot;language-c&quot;&gt;&lt;span class=&quot;token macro property&quot;&gt;&lt;span class=&quot;token</summary>
+        
+      
+    
+    
+    
+    <category term="C" scheme="https://wabbybabb0.github.io/categories/C/"/>
     
     
     <category term="C" scheme="https://wabbybabb0.github.io/tags/C/"/>
