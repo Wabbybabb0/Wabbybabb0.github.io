@@ -23,6 +23,276 @@
       </tags>
   </entry>
   <entry>
+    <title>入土1————串口通信</title>
+    <url>/2022/10/11/ru-tu-chuan-kou-tong-xin/</url>
+    <content><![CDATA[<h1 id="串口通信"><a href="#串口通信" class="headerlink" title="串口通信"></a>串口通信</h1><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1667718744627.png" alt="1667718744627"></p>
+<h3 id="电平标准"><a href="#电平标准" class="headerlink" title="电平标准"></a>电平标准</h3><p>TTL：+5V表示1，0V表示0</p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665028662515.png" alt="1665028662515"></p>
+<p>异步：A发了1s的1和1s的0，那B就可以连续两次0.5s发1和两次0.5s的0</p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665028784073.png" alt="1665028784073"></p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665030486097.png" alt="1665030486097"></p>
+<h3 id="检验位-9位"><a href="#检验位-9位" class="headerlink" title="检验位(9位)"></a>检验位(9位)</h3><p>奇校验</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//收：0000 0011 1</span>
+<span class="token comment">//发：0000 0011 1</span>
+<span class="token comment">//但是如果是0000 1010 1就也会补1，排错率不高</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//收：1110 0000 0</span>
+<span class="token comment">//发：1100 0000 0</span>
+<span class="token comment">//这时就是错误的，说明数据出了问题</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665034718385.png" alt="1665034718385"></p>
+<p>中间圈起来那块是控制波特率的</p>
+<p>发送寄存器： X=SBUF</p>
+<p>接收寄存器：SBUF=X</p>
+<h2 id="通信初实现"><a href="#通信初实现" class="headerlink" title="通信初实现"></a>通信初实现</h2><p><strong>16位定时器/计时器</strong>和<strong>8位自动重装载</strong>的区别</p>
+<p>就是十六位记的数多，但每次都需要自己写的代码赋初值，浪费时间。双八位就是将十六位分开，一个计数，另一个存放初值，每次计数完成后AR会自动将值赋给CNT，不用代码处理，比较快，但只有八位所以记的数少了。</p>
+<h3 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//4800bps@11.0592MHz</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">//串口部分</span>
+	SCON <span class="token operator">=</span> <span class="token number">0x40</span><span class="token punctuation">;</span>		<span class="token comment">//8位数据,可变波特率</span>
+	PCON <span class="token operator">&amp;=</span> <span class="token number">0x7F</span><span class="token punctuation">;</span>	
+	<span class="token comment">//定时器1部分，T1是串口专用的定时器</span>
+	TMOD <span class="token operator">&amp;=</span> <span class="token number">0x0F</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时器模式</span>
+	TMOD <span class="token operator">|=</span> <span class="token number">0x20</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时器模式</span>
+	TL1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时初值</span>
+	TH1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时器重装值</span>
+	ET1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>		<span class="token comment">//禁止定时器1中断</span>
+	TR1 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>		<span class="token comment">//启动定时器1</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Byte<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	SBUF<span class="token operator">=</span>Byte<span class="token punctuation">;</span><span class="token comment">//SBUF写入,被赋值</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>TI<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//本来TI=0，但是在数据传输完成之后串口会自动将1赋给TI,因此需要软件进行复位。</span>
+	TI<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//软件复位</span>
+	
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token number">0x11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="①串口部分SCON-serial-control-PCON-power-control"><a href="#①串口部分SCON-serial-control-PCON-power-control" class="headerlink" title="①串口部分SCON(serial control)&amp;PCON(power control)"></a>①串口部分SCON(serial control)&amp;PCON(power control)</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060156865.png" alt="1665060156865"></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">SCON <span class="token operator">=</span> <span class="token number">0x40</span><span class="token punctuation">;</span>		<span class="token comment">//8位数据,可变波特率</span>
+PCON <span class="token operator">&amp;=</span> <span class="token number">0x7F</span><span class="token punctuation">;</span>	<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h5 id="SM0-SM1"><a href="#SM0-SM1" class="headerlink" title="SM0&amp;SM1"></a>SM0&amp;SM1</h5><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060097555.png" alt="1665060097555"></p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060798326.png" alt="1665060798326"></p>
+<p><strong>REN给0/1都可以</strong></p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060618059.png" alt="1665060618059"></p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060758267.png" alt="1665060758267"></p>
+<p><strong>SM2，TB8，RB8跟模式1无关，给0</strong></p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060935728.png" alt="1665060935728"></p>
+<p>就是发送结束后，硬件给T1置1，表示发送完了，然后请求中断的时候TI=0，必须用软件复位是指要人为在软件中使TI=1																																												</p>
+<p><strong>TI=0</strong> —发送–完毕—-硬件–&gt; <strong>T1=1</strong> –请求中断–&gt; <strong>TI=1</strong> –主机响应中断—-软件复位&gt; <strong>TI=0</strong></p>
+<p>TI最开始为0</p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665061477038.png" alt="1665061477038"></p>
+<p>对RI的理解和TI一样</p>
+<p><strong>所以SCON=0100 0000 –&gt; 0x40</strong></p>
+<h4 id="②PCON，用波特率计算搞出来的"><a href="#②PCON，用波特率计算搞出来的" class="headerlink" title="②PCON，用波特率计算搞出来的"></a>②PCON，用波特率计算搞出来的</h4><h3 id="定时器部分"><a href="#定时器部分" class="headerlink" title="定时器部分"></a>定时器部分</h3><p>要改为定时器1</p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665063805338.png" alt="1665063805338"></p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665063783218.png" alt="1665063783218"></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">TMOD <span class="token operator">&amp;=</span> <span class="token number">0x0F</span><span class="token punctuation">;</span>    <span class="token operator">&amp;</span> <span class="token number">0000</span> <span class="token number">1111</span>		
+TMOD <span class="token operator">|=</span> <span class="token number">0x20</span><span class="token punctuation">;</span>    <span class="token operator">|</span> <span class="token number">0010</span> <span class="token number">0000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="小小问题"><a href="#小小问题" class="headerlink" title="小小问题"></a>小小问题</h3><p>当我把下面这串</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token number">0x11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>改成</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token number">0x11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>当为0x11时正常且不断输出11，当为0x66时异常且不断输出96，是因为波特率的误差，此时我们让它翻慢点就可以正常输出了(让他稳定点)</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token number">0x11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//让他慢慢翻</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+
+
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665068005111.png" alt="1665068005111"></p>
+<p>我们要启用串口中断，而不是定时器中断，定时器中断是到点了就中断，串口中断是有数据过来中断，所以要配置定时器不中断即ET1等于0，然后开启串口中断</p>
+<h2 id="中断服务函数"><a href="#中断服务函数" class="headerlink" title="中断服务函数"></a>中断服务函数</h2><p>模板</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">UART_Rountine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">4</span><span class="token comment">//中断服务子函数</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>RI<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		
+		RI<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>例子</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">UART_Rountine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">4</span><span class="token comment">//中断服务子函数</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>RI<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token comment">//区分发送和接收，发送和接收都会触发中断</span>
+			 <span class="token comment">//而且二者占用同一个通道，写这个是为了判断，然后把发送和接受分开</span>
+	<span class="token punctuation">{</span>
+		P2<span class="token operator">=</span><span class="token operator">~</span>SBUF<span class="token punctuation">;</span>
+		<span class="token function">UART_SendByte</span><span class="token punctuation">(</span>SBUF<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		RI<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="算波特率"><a href="#算波特率" class="headerlink" title="算波特率"></a>算波特率</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">TL1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时初值</span>
+TH1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时器重装值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>FA–16转10–&gt; 250</p>
+<p>那么一个TL1/TH1对应8byte，也就是256，定时器每隔256-250=6µs溢出一次(每计6个数就溢出一次)，11.0529MHz晶振对应12T模式下的0.924µs计数一次</p>
+<p>溢出的频率=0.924/6=0.154MHz</p>
+<p>0.154MHz/16=0.009625MHz</p>
+<p>0.009625×1000×1000=9625？<strong>应该是接近4800的才对</strong>………up主用的12MHz来算，算到了4807</p>
+]]></content>
+      <categories>
+        <category>51单片机</category>
+      </categories>
+      <tags>
+        <tag>51单片机</tag>
+        <tag>大云屋考核</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>入门————模块化编程</title>
+    <url>/2022/10/02/ru-men-51-mo-kuai-hua-bian-cheng/</url>
+    <content><![CDATA[<h1 id="5-1模块化编程"><a href="#5-1模块化编程" class="headerlink" title="5-1模块化编程"></a>5-1模块化编程</h1><p><img src="/blog_pictures/%E6%A8%A1%E5%9D%97%E5%8C%96%E7%BC%96%E7%A8%8B1.png" alt="1664697418158"></p>
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664697427003.png" alt="1664697427003"></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//Delay函数的声明就在第一行那</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664712848764.png" alt="1664712848764"></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_DELAY_H_</span><span class="token comment">//如果没有定义就执行编译(第一次没有定义才参与编译定义)防止多次编译</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_DELAY_H_</span></span>
+
+<span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="实例操作"><a href="#实例操作" class="headerlink" title="实例操作"></a>实例操作</h2><h3 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+<span class="token comment">//调用函数</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Nixie.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Delay-c"><a href="#Delay-c" class="headerlink" title="Delay.c"></a>Delay.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">unsigned</span> <span class="token keyword">char</span> i<span class="token punctuation">,</span> j<span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>xms<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+		j <span class="token operator">=</span> <span class="token number">199</span><span class="token punctuation">;</span>
+		<span class="token keyword">do</span>
+		<span class="token punctuation">{</span>
+			<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>	
+	xms<span class="token operator">--</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Delay-h"><a href="#Delay-h" class="headerlink" title="Delay.h"></a>Delay.h</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__DELAY_H__</span><span class="token comment">//如果没有定义过这个函数</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__DELAY_H__</span><span class="token comment">//则开始定义</span></span>
+
+<span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//声明</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Nixie-c"><a href="#Nixie-c" class="headerlink" title="Nixie.c"></a>Nixie.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span><span class="token comment">//因为在声明时用到了P0 P2这种没有被说明的量，所以要引入这个头文件说明</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">char</span> NixieTable<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0x3F</span><span class="token punctuation">,</span><span class="token number">0x06</span><span class="token punctuation">,</span><span class="token number">0x5B</span><span class="token punctuation">,</span><span class="token number">0x4F</span><span class="token punctuation">,</span><span class="token number">0x66</span><span class="token punctuation">,</span><span class="token number">0x6D</span><span class="token punctuation">,</span><span class="token number">0x7D</span><span class="token punctuation">,</span><span class="token number">0x07</span><span class="token punctuation">,</span><span class="token number">0x7F</span><span class="token punctuation">,</span><span class="token number">0x6F</span><span class="token punctuation">,</span><span class="token number">0x5E</span><span class="token punctuation">,</span><span class="token number">0x6E</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Location<span class="token punctuation">,</span>Number<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">switch</span><span class="token punctuation">(</span>Location<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		
+		<span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span><span class="token comment">//111-8</span>
+		<span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span><span class="token comment">//110-7</span>
+		<span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">4</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">5</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">6</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">7</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">8</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	P0<span class="token operator">=</span>NixieTable<span class="token punctuation">[</span>Number<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	P0 <span class="token operator">=</span> <span class="token number">0x00</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="Nixie-h"><a href="#Nixie-h" class="headerlink" title="Nixie.h"></a>Nixie.h</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__NIXIE_H__</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__NIXIE_H__</span></span>
+
+<span class="token keyword">void</span> <span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Location<span class="token punctuation">,</span>Number<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+]]></content>
+      <categories>
+        <category>51单片机</category>
+      </categories>
+      <tags>
+        <tag>51单片机</tag>
+        <tag>大云屋考核</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>入土————定时器和定时器时钟</title>
     <url>/2022/10/10/ru-tu-ding-shi-qi-he-ding-shi-qi-shi-zhong/</url>
     <content><![CDATA[<h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664956769554.png" alt="1664956769554"></p>
@@ -288,276 +558,6 @@ a<span class="token operator">=</span><span class="token function">_crol_</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>这个，不难理解，dddd</p>
-]]></content>
-      <categories>
-        <category>51单片机</category>
-      </categories>
-      <tags>
-        <tag>51单片机</tag>
-        <tag>大云屋考核</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>入土1————串口通信</title>
-    <url>/2022/10/11/ru-tu-chuan-kou-tong-xin/</url>
-    <content><![CDATA[<h1 id="串口通信"><a href="#串口通信" class="headerlink" title="串口通信"></a>串口通信</h1><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1667718744627.png" alt="1667718744627"></p>
-<h3 id="电平标准"><a href="#电平标准" class="headerlink" title="电平标准"></a>电平标准</h3><p>TTL：+5V表示1，0V表示0</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665028662515.png" alt="1665028662515"></p>
-<p>异步：A发了1s的1和1s的0，那B就可以连续两次0.5s发1和两次0.5s的0</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665028784073.png" alt="1665028784073"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665030486097.png" alt="1665030486097"></p>
-<h3 id="检验位-9位"><a href="#检验位-9位" class="headerlink" title="检验位(9位)"></a>检验位(9位)</h3><p>奇校验</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//收：0000 0011 1</span>
-<span class="token comment">//发：0000 0011 1</span>
-<span class="token comment">//但是如果是0000 1010 1就也会补1，排错率不高</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//收：1110 0000 0</span>
-<span class="token comment">//发：1100 0000 0</span>
-<span class="token comment">//这时就是错误的，说明数据出了问题</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665034718385.png" alt="1665034718385"></p>
-<p>中间圈起来那块是控制波特率的</p>
-<p>发送寄存器： X=SBUF</p>
-<p>接收寄存器：SBUF=X</p>
-<h2 id="通信初实现"><a href="#通信初实现" class="headerlink" title="通信初实现"></a>通信初实现</h2><p><strong>16位定时器/计时器</strong>和<strong>8位自动重装载</strong>的区别</p>
-<p>就是十六位记的数多，但每次都需要自己写的代码赋初值，浪费时间。双八位就是将十六位分开，一个计数，另一个存放初值，每次计数完成后AR会自动将值赋给CNT，不用代码处理，比较快，但只有八位所以记的数少了。</p>
-<h3 id="上代码"><a href="#上代码" class="headerlink" title="上代码"></a>上代码</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
-
-<span class="token keyword">void</span> <span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment">//4800bps@11.0592MHz</span>
-<span class="token punctuation">{</span>
-	<span class="token comment">//串口部分</span>
-	SCON <span class="token operator">=</span> <span class="token number">0x40</span><span class="token punctuation">;</span>		<span class="token comment">//8位数据,可变波特率</span>
-	PCON <span class="token operator">&amp;=</span> <span class="token number">0x7F</span><span class="token punctuation">;</span>	
-	<span class="token comment">//定时器1部分，T1是串口专用的定时器</span>
-	TMOD <span class="token operator">&amp;=</span> <span class="token number">0x0F</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时器模式</span>
-	TMOD <span class="token operator">|=</span> <span class="token number">0x20</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时器模式</span>
-	TL1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时初值</span>
-	TH1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时器重装值</span>
-	ET1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>		<span class="token comment">//禁止定时器1中断</span>
-	TR1 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>		<span class="token comment">//启动定时器1</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">void</span> <span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Byte<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	SBUF<span class="token operator">=</span>Byte<span class="token punctuation">;</span><span class="token comment">//SBUF写入,被赋值</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span>TI<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//本来TI=0，但是在数据传输完成之后串口会自动将1赋给TI,因此需要软件进行复位。</span>
-	TI<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//软件复位</span>
-	
-<span class="token punctuation">}</span>
-
-<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token number">0x11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="①串口部分SCON-serial-control-PCON-power-control"><a href="#①串口部分SCON-serial-control-PCON-power-control" class="headerlink" title="①串口部分SCON(serial control)&amp;PCON(power control)"></a>①串口部分SCON(serial control)&amp;PCON(power control)</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060156865.png" alt="1665060156865"></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">SCON <span class="token operator">=</span> <span class="token number">0x40</span><span class="token punctuation">;</span>		<span class="token comment">//8位数据,可变波特率</span>
-PCON <span class="token operator">&amp;=</span> <span class="token number">0x7F</span><span class="token punctuation">;</span>	<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
-<h5 id="SM0-SM1"><a href="#SM0-SM1" class="headerlink" title="SM0&amp;SM1"></a>SM0&amp;SM1</h5><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060097555.png" alt="1665060097555"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060798326.png" alt="1665060798326"></p>
-<p><strong>REN给0/1都可以</strong></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060618059.png" alt="1665060618059"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060758267.png" alt="1665060758267"></p>
-<p><strong>SM2，TB8，RB8跟模式1无关，给0</strong></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060935728.png" alt="1665060935728"></p>
-<p>就是发送结束后，硬件给T1置1，表示发送完了，然后请求中断的时候TI=0，必须用软件复位是指要人为在软件中使TI=1																																												</p>
-<p><strong>TI=0</strong> —发送–完毕—-硬件–&gt; <strong>T1=1</strong> –请求中断–&gt; <strong>TI=1</strong> –主机响应中断—-软件复位&gt; <strong>TI=0</strong></p>
-<p>TI最开始为0</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665061477038.png" alt="1665061477038"></p>
-<p>对RI的理解和TI一样</p>
-<p><strong>所以SCON=0100 0000 –&gt; 0x40</strong></p>
-<h4 id="②PCON，用波特率计算搞出来的"><a href="#②PCON，用波特率计算搞出来的" class="headerlink" title="②PCON，用波特率计算搞出来的"></a>②PCON，用波特率计算搞出来的</h4><h3 id="定时器部分"><a href="#定时器部分" class="headerlink" title="定时器部分"></a>定时器部分</h3><p>要改为定时器1</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665063805338.png" alt="1665063805338"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665063783218.png" alt="1665063783218"></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">TMOD <span class="token operator">&amp;=</span> <span class="token number">0x0F</span><span class="token punctuation">;</span>    <span class="token operator">&amp;</span> <span class="token number">0000</span> <span class="token number">1111</span>		
-TMOD <span class="token operator">|=</span> <span class="token number">0x20</span><span class="token punctuation">;</span>    <span class="token operator">|</span> <span class="token number">0010</span> <span class="token number">0000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
-<h3 id="小小问题"><a href="#小小问题" class="headerlink" title="小小问题"></a>小小问题</h3><p>当我把下面这串</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token number">0x11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>改成</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token number">0x11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>当为0x11时正常且不断输出11，当为0x66时异常且不断输出96，是因为波特率的误差，此时我们让它翻慢点就可以正常输出了(让他稳定点)</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token function">UART_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token number">0x11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-        <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//让他慢慢翻</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665068005111.png" alt="1665068005111"></p>
-<p>我们要启用串口中断，而不是定时器中断，定时器中断是到点了就中断，串口中断是有数据过来中断，所以要配置定时器不中断即ET1等于0，然后开启串口中断</p>
-<h2 id="中断服务函数"><a href="#中断服务函数" class="headerlink" title="中断服务函数"></a>中断服务函数</h2><p>模板</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">UART_Rountine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">4</span><span class="token comment">//中断服务子函数</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>RI<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		
-		RI<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>例子</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">UART_Rountine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">4</span><span class="token comment">//中断服务子函数</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>RI<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token comment">//区分发送和接收，发送和接收都会触发中断</span>
-			 <span class="token comment">//而且二者占用同一个通道，写这个是为了判断，然后把发送和接受分开</span>
-	<span class="token punctuation">{</span>
-		P2<span class="token operator">=</span><span class="token operator">~</span>SBUF<span class="token punctuation">;</span>
-		<span class="token function">UART_SendByte</span><span class="token punctuation">(</span>SBUF<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		RI<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h3 id="算波特率"><a href="#算波特率" class="headerlink" title="算波特率"></a>算波特率</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">TL1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时初值</span>
-TH1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时器重装值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>FA–16转10–&gt; 250</p>
-<p>那么一个TL1/TH1对应8byte，也就是256，定时器每隔256-250=6µs溢出一次(每计6个数就溢出一次)，11.0529MHz晶振对应12T模式下的0.924µs计数一次</p>
-<p>溢出的频率=0.924/6=0.154MHz</p>
-<p>0.154MHz/16=0.009625MHz</p>
-<p>0.009625×1000×1000=9625？<strong>应该是接近4800的才对</strong>………up主用的12MHz来算，算到了4807</p>
-]]></content>
-      <categories>
-        <category>51单片机</category>
-      </categories>
-      <tags>
-        <tag>51单片机</tag>
-        <tag>大云屋考核</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>入门————模块化编程</title>
-    <url>/2022/10/02/ru-men-51-mo-kuai-hua-bian-cheng/</url>
-    <content><![CDATA[<h1 id="5-1模块化编程"><a href="#5-1模块化编程" class="headerlink" title="5-1模块化编程"></a>5-1模块化编程</h1><p><img src="/blog_pictures/%E6%A8%A1%E5%9D%97%E5%8C%96%E7%BC%96%E7%A8%8B1.png" alt="1664697418158"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664697427003.png" alt="1664697427003"></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
-
-<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//Delay函数的声明就在第一行那</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664712848764.png" alt="1664712848764"></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_DELAY_H_</span><span class="token comment">//如果没有定义就执行编译(第一次没有定义才参与编译定义)防止多次编译</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_DELAY_H_</span></span>
-
-<span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="实例操作"><a href="#实例操作" class="headerlink" title="实例操作"></a>实例操作</h2><h3 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
-<span class="token comment">//调用函数</span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Nixie.h"</span></span>
-
-<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="Delay-c"><a href="#Delay-c" class="headerlink" title="Delay.c"></a>Delay.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">unsigned</span> <span class="token keyword">char</span> i<span class="token punctuation">,</span> j<span class="token punctuation">;</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span>xms<span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-		j <span class="token operator">=</span> <span class="token number">199</span><span class="token punctuation">;</span>
-		<span class="token keyword">do</span>
-		<span class="token punctuation">{</span>
-			<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>	
-	xms<span class="token operator">--</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="Delay-h"><a href="#Delay-h" class="headerlink" title="Delay.h"></a>Delay.h</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__DELAY_H__</span><span class="token comment">//如果没有定义过这个函数</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__DELAY_H__</span><span class="token comment">//则开始定义</span></span>
-
-<span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//声明</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="Nixie-c"><a href="#Nixie-c" class="headerlink" title="Nixie.c"></a>Nixie.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span><span class="token comment">//因为在声明时用到了P0 P2这种没有被说明的量，所以要引入这个头文件说明</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
-
-<span class="token keyword">unsigned</span> <span class="token keyword">char</span> NixieTable<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0x3F</span><span class="token punctuation">,</span><span class="token number">0x06</span><span class="token punctuation">,</span><span class="token number">0x5B</span><span class="token punctuation">,</span><span class="token number">0x4F</span><span class="token punctuation">,</span><span class="token number">0x66</span><span class="token punctuation">,</span><span class="token number">0x6D</span><span class="token punctuation">,</span><span class="token number">0x7D</span><span class="token punctuation">,</span><span class="token number">0x07</span><span class="token punctuation">,</span><span class="token number">0x7F</span><span class="token punctuation">,</span><span class="token number">0x6F</span><span class="token punctuation">,</span><span class="token number">0x5E</span><span class="token punctuation">,</span><span class="token number">0x6E</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Location<span class="token punctuation">,</span>Number<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">switch</span><span class="token punctuation">(</span>Location<span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		
-		<span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span><span class="token comment">//111-8</span>
-		<span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span><span class="token comment">//110-7</span>
-		<span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">4</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">5</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">6</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">7</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">8</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	P0<span class="token operator">=</span>NixieTable<span class="token punctuation">[</span>Number<span class="token punctuation">]</span><span class="token punctuation">;</span>
-	<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	P0 <span class="token operator">=</span> <span class="token number">0x00</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="Nixie-h"><a href="#Nixie-h" class="headerlink" title="Nixie.h"></a>Nixie.h</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__NIXIE_H__</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__NIXIE_H__</span></span>
-
-<span class="token keyword">void</span> <span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Location<span class="token punctuation">,</span>Number<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 ]]></content>
       <categories>
         <category>51单片机</category>
