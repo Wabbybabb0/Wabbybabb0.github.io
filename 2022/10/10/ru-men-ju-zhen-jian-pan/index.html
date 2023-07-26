@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
 </head>
 
 
@@ -590,8 +590,8 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="6-1矩阵键盘"><a href="#6-1矩阵键盘" class="headerlink" title="6-1矩阵键盘"></a>6-1矩阵键盘</h1><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664719734079.png" alt="1664719734079"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665402994031.png" alt="1665402994031"></p>
+                <h1 id="6-1矩阵键盘"><a href="#6-1矩阵键盘" class="headerlink" title="6-1矩阵键盘"></a>6-1矩阵键盘</h1><p><img src="/../../../../medias/blog_picture/51/20.png" alt="矩阵按键"></p>
+<p><img src="/../../../../medias/blog_picture/51/21.png" alt="芯片引脚"></p>
 <p>前四根线(P17~P14)判断行，给0相当于接地**(由上面这幅图我们知道P1的一端已经接在了VCC，所以要让P1_x运行，要给它低电平，即0)**，此时io口为低电平</p>
 <p>后四根(P13~P10)判断该行对应的某一个按键</p>
 <h2 id="下面的代码主要是实现控制矩阵键盘，并把按下去的键位对应的数字在LCD1602上显示出来"><a href="#下面的代码主要是实现控制矩阵键盘，并把按下去的键位对应的数字在LCD1602上显示出来" class="headerlink" title="下面的代码主要是实现控制矩阵键盘，并把按下去的键位对应的数字在LCD1602上显示出来"></a>下面的代码主要是实现控制矩阵键盘，并把按下去的键位对应的数字在LCD1602上显示出来</h2><p>ps:常见的Delay就不放出来了，懂得都懂</p>
@@ -643,7 +643,7 @@
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>我们可以发现这个函数代码是由<strong>四组模板一样</strong>的小代码组成的，下面将拎一组出来解释</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664937518543.png" alt="1664937518543"></p>
+<p><img src="/../../../../medias/blog_picture/51/22.png" alt="矩阵按键"></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">P1<span class="token operator">=</span><span class="token number">0xFF</span><span class="token punctuation">;</span><span class="token comment">//让所有的P1口都为1，就是不对他们进行操作，让他们处于standby状态</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">P1_3<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//"唤醒"列，我们先控制P1_3,让他为0，处于运行状态--①</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -811,8 +811,8 @@ Count<span class="token operator">=</span><span class="token number">0</span><sp
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>有了上面的解释，这个应该不难理解吧</p>
-<h1 id="关于LCD1602-c"><a href="#关于LCD1602-c" class="headerlink" title="关于LCD1602.c"></a>关于LCD1602.c</h1><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664724956686.png" alt="1664724956686"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664724990622.png" alt="1664724990622"></p>
+<h1 id="关于LCD1602-c"><a href="#关于LCD1602-c" class="headerlink" title="关于LCD1602.c"></a>关于LCD1602.c</h1><p><img src="/../../../../medias/blog_picture/51/23.png" alt="LCD1602内部显示地址"></p>
+<p><img src="/../../../../medias/blog_picture/51/24.png" alt="举例说明"></p>
 
                 
             </div>

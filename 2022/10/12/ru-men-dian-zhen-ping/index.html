@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
 </head>
 
 
@@ -587,37 +587,37 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="点阵屏"><a href="#点阵屏" class="headerlink" title="点阵屏"></a>点阵屏</h1><p>跟数码管原理有一些类似</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664927994656.png" alt="1664927994656"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664928157773.png" alt="1664928112891"></p>
+<p><img src="/../../../../medias/blog_picture/51/4.png" alt="显示原理"></p>
+<p><img src="/../../../../medias/blog_picture/51/5.png" alt="行与列的控制关系"></p>
 <p>圈起来部分用来控制<strong>行</strong>或<strong>列</strong></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664928212802.png" alt="1664928212802"></p>
+<p><img src="/../../../../medias/blog_picture/51/6.png" alt="开发板引脚对应关系"></p>
 <p>列直接给P0赋值来控制</p>
 <p>但是行要用到74HC595</p>
 <p>提出：若是单片机上只有这个LED点阵屏，其他都不要，可不可以把D1-D7的接在P1口上</p>
 <p>回答：不行，因为单片机的IO口是弱上拉特性</p>
 <p>弱上拉：输出**低电平(直接接GND)<strong>时电流可以很大，输出</strong>高电平(相当于接了一个电阻再接VCC)**时电流很小</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665111489718.png" alt="1665111489718">用到三极管，接IO口就可以</p>
+<p><img src="/../../../../medias/blog_picture/51/7.png" alt="IO口">用到三极管，接IO口就可以</p>
 <p>IO口低电平，VCC直接通到4那，IO起控制作用，自己干不动不干活而指使别人干活</p>
 <p>IO口给高电平的时候就会截止，相当于没有接</p>
-<h2 id="IO口扩展"><a href="#IO口扩展" class="headerlink" title="IO口扩展"></a>IO口扩展</h2><h3 id="OE-output-enable输出使能"><a href="#OE-output-enable输出使能" class="headerlink" title="OE(output enable输出使能)"></a>OE(output enable输出使能)</h3><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665108058997.png" alt="1665108058997"></p>
+<h2 id="IO口扩展"><a href="#IO口扩展" class="headerlink" title="IO口扩展"></a>IO口扩展</h2><h3 id="OE-output-enable输出使能"><a href="#OE-output-enable输出使能" class="headerlink" title="OE(output enable输出使能)"></a>OE(output enable输出使能)</h3><p><img src="/../../../../medias/blog_picture/51/8.png" alt="OE"></p>
 <h3 id="寄存器时钟，RCLK-register-clock"><a href="#寄存器时钟，RCLK-register-clock" class="headerlink" title="寄存器时钟，RCLK(register clock)"></a>寄存器时钟，RCLK(register clock)</h3><p>上方有—，表示它要接低电平，所以JOE那要和GND短接，才能有输出</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665108223980.png" alt="1665108223980"></p>
+<p><img src="/../../../../medias/blog_picture/51/9.png" alt="RCLK"></p>
 <h3 id="SRCLR串行清零端"><a href="#SRCLR串行清零端" class="headerlink" title="SRCLR串行清零端"></a>SRCLR串行清零端</h3><p>接了VCC代表它不清空</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665108304106.png" alt="1665108304106"></p>
+<p><img src="/../../../../medias/blog_picture/51/10.png" alt="SRCLR"></p>
 <h3 id="SRCLK串行时钟"><a href="#SRCLK串行时钟" class="headerlink" title="SRCLK串行时钟"></a>SRCLK串行时钟</h3><p>上升沿是PWM波的从低电平到高电平的一瞬间</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665108404721.png" alt="1665108404721"></p>
-<h3 id="SER串行数据"><a href="#SER串行数据" class="headerlink" title="SER串行数据"></a>SER串行数据</h3><p><img src="C:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665108431888.png" alt="1665108431888"></p>
+<p><img src="/../../../../medias/blog_picture/51/11.png" alt="SRCLK"></p>
+<h3 id="SER串行数据"><a href="#SER串行数据" class="headerlink" title="SER串行数据"></a>SER串行数据</h3><p><img src="/../../../../medias/blog_picture/51/12.png" alt="SER"></p>
 <p>主要用这三个引脚控制八个输出</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665108484159.png" alt="1665108484159"></p>
-<h3 id="串行vs并行"><a href="#串行vs并行" class="headerlink" title="串行vs并行"></a>串行vs并行</h3><p>串行是<img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665108831235.png" alt="1665108831235">这样子一个一个出去的</p>
+<p><img src="/../../../../medias/blog_picture/51/13.png" alt="三个引脚控制八个输出"></p>
+<h3 id="串行vs并行"><a href="#串行vs并行" class="headerlink" title="串行vs并行"></a>串行vs并行</h3><p><img src="/../../../../medias/blog_picture/51/14.png" alt="串行是这样子一个一个出去的"></p>
 <p>并行是用那八个输出端同时输出</p>
 <h3 id="串行输入-并行输出"><a href="#串行输入-并行输出" class="headerlink" title="串行输入 并行输出"></a>串行输入 并行输出</h3><p>每上升沿移位，从SER进的数据就向下沿移位，SERCLK高电平的时候移进，数据一位一位地往前走，等有了八位数据之后同时搬过去输出缓存那，串行那里每输入一位，SER清零，数据下移</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665109982993.png" alt="1665109982993"></p>
+<p><img src="/../../../../medias/blog_picture/51/15.png" alt="74HC595"></p>
 <p>当寄存器满位后，给RCLK高电平，把数据搬运到输出缓存那</p>
-<h3 id="多片级联"><a href="#多片级联" class="headerlink" title="多片级联"></a>多片级联<img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665110741026.png" alt="1665110741026"></h3><p>在寄存器的数据传到QH’，然后多片级联到下一个SER，当所有数据就位了，来一个上升沿锁存，所有数据都相应地输出，实现了IO口的扩展，但是速率会有所减慢(时间换时空)</p>
+<h3 id="多片级联"><a href="#多片级联" class="headerlink" title="多片级联"></a>多片级联<img src="/../../../../medias/blog_picture/51/16.png" alt="多片级联"></h3><p>在寄存器的数据传到QH’，然后多片级联到下一个SER，当所有数据就位了，来一个上升沿锁存，所有数据都相应地输出，实现了IO口的扩展，但是速率会有所减慢(时间换时空)</p>
 <h2 id="sfr和sbit可位寻址-不可位寻址"><a href="#sfr和sbit可位寻址-不可位寻址" class="headerlink" title="sfr和sbit	可位寻址/不可位寻址"></a>sfr和sbit	可位寻址/不可位寻址</h2><p>sfr：特殊功能寄存器声明(声明寄存器地址)	相当于把某个元件的操作地址赋给一个自定义的变量名，把相应的名称和地址给声明出来，我们才能操作那个名称</p>
 <p>sbit：特殊位声明(声明地址的某一位)</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665114789531.png" alt="1665114789531"></p>
+<p><img src="/../../../../medias/blog_picture/51/17.png" alt="C51的sfr、sbit"></p>
 <p>可位寻址和不可位寻址就类比于C语言的数组，可位寻址的就是数组的首地址，不是首地址的就不能位寻址</p>
 <h2 id="上代码-笑脸"><a href="#上代码-笑脸" class="headerlink" title="上代码(笑脸)"></a>上代码(笑脸)</h2><h3 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
@@ -701,10 +701,10 @@ sbit SER<span class="token operator">=</span>P3<span class="token operator">^</s
 <p>.</p>
 <p>i=7	(0x80&gt;&gt;i)=0000 0001</p>
 <p>SER=0101 010<strong>1</strong> &amp; 0000 0001 =0000 0001——-根据非0即<strong>1</strong>，SER为<strong>1</strong></p>
-<p>最后变成这样<img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665134589725.png" alt="1665134589725"></p>
+<p><img src="/../../../../medias/blog_picture/51/18.png" alt="最后变成这样"></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">SCK<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">//给高电平形成上升沿传入数据</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665135259437.png" alt="1665135259437"></p>
+<p><img src="/../../../../medias/blog_picture/51/19.png" alt="."></p>
 <p>段选 位选 <strong>延时</strong> <strong>位清零</strong> 段选 位选</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/**
 * @brief  LED点阵屏显示一列数据
