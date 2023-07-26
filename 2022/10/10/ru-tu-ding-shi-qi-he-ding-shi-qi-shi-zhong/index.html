@@ -590,24 +590,24 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664956769554.png" alt="1664956769554"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664958968732.png" alt="1664958968732"></p>
+                <h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><p><img src="/../../../../medias/blog_picture/51/46.png" alt="定时器框图"></p>
+<p><img src="/../../../../medias/blog_picture/51/47.png"></p>
 <p>按视频中的去理解，up主的板子晶振为12MHz，如果分频接了÷12的线路，那么传给计数器的就会是1µs计数一次(计算:<strong>1/(12MHz/12)=1/1*10^9s=1µs</strong>)</p>
 <p>CT选择开关：那里给<strong>1</strong>是<strong>counter计数器</strong>  给<strong>0</strong>是<strong>timer定时器</strong></p>
 <p>GATE那里：三角是异门(1–&gt;0  0—&gt;1)，第二个是或门(只有00情况给0，其余给1)，第三个是与门<strong>跟C的异或与的与意思差不多</strong></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664959268349.png" alt="1664959268349"></p>
-<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><h3 id="1-TMOD-TIME-MODE"><a href="#1-TMOD-TIME-MODE" class="headerlink" title="1.TMOD(TIME_MODE)"></a>1.TMOD(TIME_MODE)</h3><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664966840682.png" alt="1664966840682"></p>
+<p><img src="/../../../../medias/blog_picture/51/48.png"></p>
+<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><h3 id="1-TMOD-TIME-MODE"><a href="#1-TMOD-TIME-MODE" class="headerlink" title="1.TMOD(TIME_MODE)"></a>1.TMOD(TIME_MODE)</h3><p><img src="/../../../../medias/blog_picture/51/49.png"></p>
 <p>由于TMOD不可寻址，所以要<strong>整体</strong>表示</p>
 <p>(对于**(不)可寻址<strong>的理解，</strong>可寻址<strong>像之前的点LED灯，直接P2=0x01&lt;==&gt;P2_1=1然后P2_2~8=0，</strong>不可寻址**就是只能一坨地表示，就像P2=0x00这样)</p>
 <p><strong>目的</strong>：我们要实现<strong>定时器0</strong>运行且进入<strong>模式1</strong></p>
-<h4 id="①M0-M1"><a href="#①M0-M1" class="headerlink" title="①M0&amp;M1"></a>①M0&amp;M1</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664972509978.png" alt="1664972509978"></p>
+<h4 id="①M0-M1"><a href="#①M0-M1" class="headerlink" title="①M0&amp;M1"></a>①M0&amp;M1</h4><p><img src="/../../../../medias/blog_picture/51/50.png"></p>
 <p>所以<strong>M0–&gt;1</strong>，<strong>M1–&gt;0</strong></p>
-<h4 id="②C-T"><a href="#②C-T" class="headerlink" title="②C/T"></a>②C/T</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664974940690.png" alt="1664974940690"></p>
+<h4 id="②C-T"><a href="#②C-T" class="headerlink" title="②C/T"></a>②C/T</h4><p><img src="/../../../../medias/blog_picture/51/51.png"></p>
 <p>因为是定时器 <strong>C/T–&gt;0</strong></p>
-<h4 id="③GATE"><a href="#③GATE" class="headerlink" title="③GATE"></a>③GATE</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664974889370.png" alt="1664974889370"></p>
+<h4 id="③GATE"><a href="#③GATE" class="headerlink" title="③GATE"></a>③GATE</h4><p><img src="/../../../../medias/blog_picture/51/52.png"></p>
 <p>要让TR0参与控制，所以<strong>GATE–&gt;0</strong></p>
 <p><strong>附GATE的运行模式</strong></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664973287426.png" alt="1664973287426"></p>
+<p><img src="/../../../../medias/blog_picture/51/53.png"></p>
 <h4 id="因此"><a href="#因此" class="headerlink" title="因此"></a>因此</h4><pre class="line-numbers language-C" data-language="C"><code class="language-C">TMOD=0X01;//0000 0001<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <h4 id="TMOD的优化"><a href="#TMOD的优化" class="headerlink" title="TMOD的优化"></a>TMOD的优化</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c">TMOD <span class="token operator">&amp;=</span> <span class="token number">0xF0</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时器模式       0xF0--&gt;1111 0000</span>
@@ -620,20 +620,20 @@ TMOD <span class="token operator">|=</span> <span class="token number">0x01</spa
 <p><strong>理解</strong>：<strong>n &amp; 1 <strong>时，n为几就返回几(此时不影响定时器1)；</strong>n &amp; 0 <strong>时，全为0(有点</strong>初始化</strong>定时器0的感觉)</p>
 <p><strong>2nd——1010 0000 | 0000 0001 =1010 0001</strong></p>
 <p><strong>理解</strong>：<strong>n | 0 <strong>时，n为几就返回几(还是不影响定时器1)；</strong>0 | n</strong> 时，n为几也返回几(n是人工决定的，这时可以自行操控定时器0了)</p>
-<h3 id="2-TCON"><a href="#2-TCON" class="headerlink" title="2.TCON"></a>2.TCON</h3><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664966872192.png" alt="1664966872192"></p>
-<h4 id="①TR0"><a href="#①TR0" class="headerlink" title="①TR0"></a>①TR0</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664966932449.png" alt="1664966932449"></p>
+<h3 id="2-TCON"><a href="#2-TCON" class="headerlink" title="2.TCON"></a>2.TCON</h3><p><img src="/../../../../medias/blog_picture/51/54.png"></p>
+<h4 id="①TR0"><a href="#①TR0" class="headerlink" title="①TR0"></a>①TR0</h4><p><img src="/../../../../medias/blog_picture/51/55.png"></p>
 <p><strong>省流</strong>：GATE=0 &amp;&amp; TR0=1时允许T0计数，开始工作</p>
 <pre class="line-numbers language-none"><code class="language-none">TR0=1;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
-<h4 id="②TF0"><a href="#②TF0" class="headerlink" title="②TF0"></a>②TF0</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664966915060.png" alt="1664966915060"></p>
+<h4 id="②TF0"><a href="#②TF0" class="headerlink" title="②TF0"></a>②TF0</h4><p><img src="/../../../../medias/blog_picture/51/56.png"></p>
 <p><strong>省流</strong>：TF0=1时就产生中断，所以要=0，防止刚配置好就产生中断</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">TF0<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 
 
-<h4 id="③TH0-TL0"><a href="#③TH0-TL0" class="headerlink" title="③TH0&amp;TL0"></a>③TH0&amp;TL0</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664974155505.png" alt="1664974155505"></p>
+<h4 id="③TH0-TL0"><a href="#③TH0-TL0" class="headerlink" title="③TH0&amp;TL0"></a>③TH0&amp;TL0</h4><p><img src="/../../../../medias/blog_picture/51/57.png"></p>
 <p>来自弹幕大佬：两个寄存器TH0、TL0为<strong>二进制八位</strong>(2^8)，<strong>单独</strong>可计256次，<strong>低八位计满256次后高八位进1</strong>，所以<strong>除以256</strong>可得<strong>高八位</strong>得次数，<strong>取余</strong>就是<strong>低八位</strong>的次数，合并在一起就是所赋的初始值</p>
 <p>来自UP主：<strong>123</strong>要放到两个<strong>容量</strong>为100的盒子里，<strong>高位次</strong>的盒子存储—<strong>123/100=1</strong>，<strong>低位次</strong>的盒子存储—<strong>123%100=23</strong>，<strong>合并</strong>之后就是123(初始值)</p>
 <p><strong>对应项目，就是两个容量为256的小盒子要存储64535这个庞然大物</strong></p>
@@ -642,7 +642,7 @@ TL0<span class="token operator">=</span><span class="token number">64535</span><
 
 
 
-<h4 id="④ET0-EA-PT0"><a href="#④ET0-EA-PT0" class="headerlink" title="④ET0&amp;EA&amp;PT0"></a>④ET0&amp;EA&amp;PT0</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1664983132707.png" alt="1664983132707"></p>
+<h4 id="④ET0-EA-PT0"><a href="#④ET0-EA-PT0" class="headerlink" title="④ET0&amp;EA&amp;PT0"></a>④ET0&amp;EA&amp;PT0</h4><p><img src="/../../../../medias/blog_picture/51/58.png"></p>
 <p>把通道打通</p>
 <pre class="line-numbers language-C" data-language="C"><code class="language-C">ET0=1;
 EA=1;
@@ -1100,9 +1100,9 @@ a<span class="token operator">=</span><span class="token function">_crol_</span>
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/0.jpg" class="responsive-img" alt="入土1————串口通信">
+                        <img src="/medias/featureimages/8.png" class="responsive-img" alt="入土————串口通信">
                         
-                        <span class="card-title">入土1————串口通信</span>
+                        <span class="card-title">入土————串口通信</span>
                     </div>
                 </a>
                 <div class="card-content article-content">

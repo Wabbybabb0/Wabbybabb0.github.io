@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="入土1————串口通信, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="入土————串口通信, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>入土1————串口通信 | Wabbybabbo的摸鱼圣地</title>
+    <title>入土————串口通信 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/8.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">入土1————串口通信</h1>
+                    <h1 class="description center-align post-title">入土————串口通信</h1>
                 </div>
             </div>
         </div>
@@ -590,12 +590,12 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="串口通信"><a href="#串口通信" class="headerlink" title="串口通信"></a>串口通信</h1><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1667718744627.png" alt="1667718744627"></p>
+                <h1 id="串口通信"><a href="#串口通信" class="headerlink" title="串口通信"></a>串口通信</h1><p><img src="/../../../../medias/blog_picture/51/32.png" alt="硬件电路"></p>
 <h3 id="电平标准"><a href="#电平标准" class="headerlink" title="电平标准"></a>电平标准</h3><p>TTL：+5V表示1，0V表示0</p>
 <p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665028662515.png" alt="1665028662515"></p>
 <p>异步：A发了1s的1和1s的0，那B就可以连续两次0.5s发1和两次0.5s的0</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665028784073.png" alt="1665028784073"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665030486097.png" alt="1665030486097"></p>
+<p><img src="/../../../../medias/blog_picture/51/33.png"></p>
+<p><img src="/../../../../medias/blog_picture/51/34.png" alt="串口参数及时序图"></p>
 <h3 id="检验位-9位"><a href="#检验位-9位" class="headerlink" title="检验位(9位)"></a>检验位(9位)</h3><p>奇校验</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//收：0000 0011 1</span>
 <span class="token comment">//发：0000 0011 1</span>
@@ -609,7 +609,7 @@
 
 
 
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665034718385.png" alt="1665034718385"></p>
+<p><img src="/../../../../medias/blog_picture/51/35.png" alt="串口模式图"></p>
 <p>中间圈起来那块是控制波特率的</p>
 <p>发送寄存器： X=SBUF</p>
 <p>接收寄存器：SBUF=X</p>
@@ -650,28 +650,28 @@
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h4 id="①串口部分SCON-serial-control-PCON-power-control"><a href="#①串口部分SCON-serial-control-PCON-power-control" class="headerlink" title="①串口部分SCON(serial control)&amp;PCON(power control)"></a>①串口部分SCON(serial control)&amp;PCON(power control)</h4><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060156865.png" alt="1665060156865"></p>
+<h4 id="①串口部分SCON-serial-control-PCON-power-control"><a href="#①串口部分SCON-serial-control-PCON-power-control" class="headerlink" title="①串口部分SCON(serial control)&amp;PCON(power control)"></a>①串口部分SCON(serial control)&amp;PCON(power control)</h4><p><img src="/../../../../medias/blog_picture/51/36.png"></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">SCON <span class="token operator">=</span> <span class="token number">0x40</span><span class="token punctuation">;</span>		<span class="token comment">//8位数据,可变波特率</span>
 PCON <span class="token operator">&amp;=</span> <span class="token number">0x7F</span><span class="token punctuation">;</span>	<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 
 
-<h5 id="SM0-SM1"><a href="#SM0-SM1" class="headerlink" title="SM0&amp;SM1"></a>SM0&amp;SM1</h5><p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060097555.png" alt="1665060097555"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060798326.png" alt="1665060798326"></p>
+<h5 id="SM0-SM1"><a href="#SM0-SM1" class="headerlink" title="SM0&amp;SM1"></a>SM0&amp;SM1</h5><p><img src="/../../../../medias/blog_picture/51/37.png"></p>
+<p><img src="/../../../../medias/blog_picture/51/38.png"></p>
 <p><strong>REN给0/1都可以</strong></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060618059.png" alt="1665060618059"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060758267.png" alt="1665060758267"></p>
+<p><img src="/../../../../medias/blog_picture/51/39.png"></p>
+<p><img src="/../../../../medias/blog_picture/51/40.png"></p>
 <p><strong>SM2，TB8，RB8跟模式1无关，给0</strong></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665060935728.png" alt="1665060935728"></p>
+<p><img src="/../../../../medias/blog_picture/51/41.png"></p>
 <p>就是发送结束后，硬件给T1置1，表示发送完了，然后请求中断的时候TI=0，必须用软件复位是指要人为在软件中使TI=1																																												</p>
 <p><strong>TI=0</strong> —发送–完毕—-硬件–&gt; <strong>T1=1</strong> –请求中断–&gt; <strong>TI=1</strong> –主机响应中断—-软件复位&gt; <strong>TI=0</strong></p>
 <p>TI最开始为0</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665061477038.png" alt="1665061477038"></p>
+<p><img src="/../../../../medias/blog_picture/51/42.png"></p>
 <p>对RI的理解和TI一样</p>
 <p><strong>所以SCON=0100 0000 –&gt; 0x40</strong></p>
 <h4 id="②PCON，用波特率计算搞出来的"><a href="#②PCON，用波特率计算搞出来的" class="headerlink" title="②PCON，用波特率计算搞出来的"></a>②PCON，用波特率计算搞出来的</h4><h3 id="定时器部分"><a href="#定时器部分" class="headerlink" title="定时器部分"></a>定时器部分</h3><p>要改为定时器1</p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665063805338.png" alt="1665063805338"></p>
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665063783218.png" alt="1665063783218"></p>
+<p><img src="/../../../../medias/blog_picture/51/43.png"></p>
+<p><img src="/../../../../medias/blog_picture/51/44.png"></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">TMOD <span class="token operator">&amp;=</span> <span class="token number">0x0F</span><span class="token punctuation">;</span>    <span class="token operator">&amp;</span> <span class="token number">0000</span> <span class="token number">1111</span>		
 TMOD <span class="token operator">|=</span> <span class="token number">0x20</span><span class="token punctuation">;</span>    <span class="token operator">|</span> <span class="token number">0010</span> <span class="token number">0000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
@@ -713,7 +713,7 @@ TMOD <span class="token operator">|=</span> <span class="token number">0x20</spa
 
 
 
-<p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665068005111.png" alt="1665068005111"></p>
+<p><img src="/../../../../medias/blog_picture/51/45.png" alt="串口和中断系统"></p>
 <p>我们要启用串口中断，而不是定时器中断，定时器中断是到点了就中断，串口中断是有数据过来中断，所以要配置定时器不中断即ET1等于0，然后开启串口中断</p>
 <h2 id="中断服务函数"><a href="#中断服务函数" class="headerlink" title="中断服务函数"></a>中断服务函数</h2><p>模板</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">UART_Rountine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">4</span><span class="token comment">//中断服务子函数</span>
