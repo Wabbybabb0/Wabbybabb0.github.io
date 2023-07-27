@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="入门————模块化编程, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="入门————蜂鸣器, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>入门————模块化编程 | Wabbybabbo的摸鱼圣地</title>
+    <title>入门————蜂鸣器 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/2.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">入门————模块化编程</h1>
+                    <h1 class="description center-align post-title">入门————蜂鸣器</h1>
                 </div>
             </div>
         </div>
@@ -551,21 +551,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-10-02
+                    2022-10-18
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-26
+                    2023-07-27
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    314
+                    1k
                 </div>
                 
 
@@ -590,94 +590,198 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="5-1模块化编程"><a href="#5-1模块化编程" class="headerlink" title="5-1模块化编程"></a>5-1模块化编程</h1><p><img src="/../../../../medias/blog_picture/51/1.png" alt="模块化编程框图"></p>
-<p><img src="/../../../../medias/blog_picture/51/2.png" alt="模块化编程注意事项"></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
-
-<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//Delay函数的声明就在第一行那</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/../../../../medias/blog_picture/51/3.png" alt="C预编译"></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_DELAY_H_</span><span class="token comment">//如果没有定义就执行编译(第一次没有定义才参与编译定义)防止多次编译</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_DELAY_H_</span></span>
-
-<span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="实例操作"><a href="#实例操作" class="headerlink" title="实例操作"></a>实例操作</h2><h3 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
-<span class="token comment">//调用函数</span>
+                <h1 id="蜂鸣器"><a href="#蜂鸣器" class="headerlink" title="蜂鸣器"></a>蜂鸣器</h1><p><img src="/../../../../medias/blog_picture/51/64.png"></p>
+<p>无源蜂鸣器不能一直通电流，它内部置了线圈，要给他交流震荡</p>
+<p><img src="/../../../../medias/blog_picture/51/65.png"></p>
+<p>VCC高电平，只有蜂鸣器接口处为0才能驱动；白色三角是非门，左边给1/0右边反0/1</p>
+<p><img src="/../../../../medias/blog_picture/51/66.png"></p>
+<h2 id="经典上代码"><a href="#经典上代码" class="headerlink" title="经典上代码"></a>经典上代码</h2><h4 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Key.h"</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Nixie.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Buzzer.h"</span></span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">char</span> KeyNum<span class="token punctuation">;</span>
 
 <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="Delay-c"><a href="#Delay-c" class="headerlink" title="Delay.c"></a>Delay.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">unsigned</span> <span class="token keyword">char</span> i<span class="token punctuation">,</span> j<span class="token punctuation">;</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span>xms<span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		i <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
-		j <span class="token operator">=</span> <span class="token number">199</span><span class="token punctuation">;</span>
-		<span class="token keyword">do</span>
+		KeyNum<span class="token operator">=</span><span class="token function">Key</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>KeyNum<span class="token punctuation">)</span>
 		<span class="token punctuation">{</span>
-			<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>j<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>	
-	xms<span class="token operator">--</span><span class="token punctuation">;</span>
+			<span class="token function">Buzzer_Time</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>KeyNum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="Delay-h"><a href="#Delay-h" class="headerlink" title="Delay.h"></a>Delay.h</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__DELAY_H__</span><span class="token comment">//如果没有定义过这个函数</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__DELAY_H__</span><span class="token comment">//则开始定义</span></span>
-
-<span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//声明</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h3 id="Nixie-c"><a href="#Nixie-c" class="headerlink" title="Nixie.c"></a>Nixie.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span><span class="token comment">//因为在声明时用到了P0 P2这种没有被说明的量，所以要引入这个头文件说明</span></span>
+<h4 id="Key-c"><a href="#Key-c" class="headerlink" title="Key.c"></a>Key.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
 
-<span class="token keyword">unsigned</span> <span class="token keyword">char</span> NixieTable<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token number">0x3F</span><span class="token punctuation">,</span><span class="token number">0x06</span><span class="token punctuation">,</span><span class="token number">0x5B</span><span class="token punctuation">,</span><span class="token number">0x4F</span><span class="token punctuation">,</span><span class="token number">0x66</span><span class="token punctuation">,</span><span class="token number">0x6D</span><span class="token punctuation">,</span><span class="token number">0x7D</span><span class="token punctuation">,</span><span class="token number">0x07</span><span class="token punctuation">,</span><span class="token number">0x7F</span><span class="token punctuation">,</span><span class="token number">0x6F</span><span class="token punctuation">,</span><span class="token number">0x5E</span><span class="token punctuation">,</span><span class="token number">0x6E</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token comment">/**
+  * @brief  获取独立按键键码
+  * @param  无
+  * @retval 按下按键的键码，范围：0~4，无按键按下时返回值为0
+  */</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token function">Key</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">unsigned</span> <span class="token keyword">char</span> KeyNumber<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">if</span><span class="token punctuation">(</span>P3_1<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P3_1<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>P3_0<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P3_0<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>P3_2<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P3_2<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>P3_3<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P3_3<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+	
+	<span class="token keyword">return</span> KeyNumber<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<h4 id="Nixie-c"><a href="#Nixie-c" class="headerlink" title="Nixie.c"></a>Nixie.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span>	<span class="token comment">//包含Delay头文件</span></span>
+
+<span class="token comment">//数码管段码表</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">char</span> NixieTable<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">0x3F</span><span class="token punctuation">,</span><span class="token number">0x06</span><span class="token punctuation">,</span><span class="token number">0x5B</span><span class="token punctuation">,</span><span class="token number">0x4F</span><span class="token punctuation">,</span><span class="token number">0x66</span><span class="token punctuation">,</span><span class="token number">0x6D</span><span class="token punctuation">,</span><span class="token number">0x7D</span><span class="token punctuation">,</span><span class="token number">0x07</span><span class="token punctuation">,</span><span class="token number">0x7F</span><span class="token punctuation">,</span><span class="token number">0x6F</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token comment">//数码管显示子函数</span>
 <span class="token keyword">void</span> <span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Location<span class="token punctuation">,</span>Number<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">switch</span><span class="token punctuation">(</span>Location<span class="token punctuation">)</span>
+	<span class="token keyword">switch</span><span class="token punctuation">(</span>Location<span class="token punctuation">)</span>		<span class="token comment">//位码输出</span>
 	<span class="token punctuation">{</span>
-		
-		<span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span><span class="token comment">//111-8</span>
-		<span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span><span class="token comment">//110-7</span>
-		<span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">4</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">5</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">6</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">7</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
-		<span class="token keyword">case</span> <span class="token number">8</span><span class="token operator">:</span>P2_4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> P2_2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>P2_4<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>P2_3<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>P2_2<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>P2_4<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>P2_3<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>P2_2<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>P2_4<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>P2_3<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>P2_2<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">4</span><span class="token operator">:</span>P2_4<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>P2_3<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>P2_2<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">5</span><span class="token operator">:</span>P2_4<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>P2_3<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>P2_2<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">6</span><span class="token operator">:</span>P2_4<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>P2_3<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>P2_2<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">7</span><span class="token operator">:</span>P2_4<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>P2_3<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>P2_2<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
+		<span class="token keyword">case</span> <span class="token number">8</span><span class="token operator">:</span>P2_4<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>P2_3<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>P2_2<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token keyword">break</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-	P0<span class="token operator">=</span>NixieTable<span class="token punctuation">[</span>Number<span class="token punctuation">]</span><span class="token punctuation">;</span>
-	<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	P0 <span class="token operator">=</span> <span class="token number">0x00</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	P0<span class="token operator">=</span>NixieTable<span class="token punctuation">[</span>Number<span class="token punctuation">]</span><span class="token punctuation">;</span>	<span class="token comment">//段码输出</span>
 
-<h3 id="Nixie-h"><a href="#Nixie-h" class="headerlink" title="Nixie.h"></a>Nixie.h</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__NIXIE_H__</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__NIXIE_H__</span></span>
-
-<span class="token keyword">void</span> <span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Location<span class="token punctuation">,</span>Number<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
+
+<h4 id="Buzzer-c"><a href="#Buzzer-c" class="headerlink" title="Buzzer.c"></a>Buzzer.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;INTRINS.H&gt;</span></span>
+
+<span class="token comment">//蜂鸣器端口：</span>
+sbit Buzzer<span class="token operator">=</span>P2<span class="token operator">^</span><span class="token number">5</span><span class="token punctuation">;</span>
+
+<span class="token comment">/**
+  * @brief  蜂鸣器私有延时函数，延时500ms
+  * @param  无
+  * @retval 无
+  */</span>
+<span class="token keyword">void</span> <span class="token function">Buzzer_Delay500us</span><span class="token punctuation">(</span><span class="token punctuation">)</span>		<span class="token comment">//@11.0592MHz，专门为蜂鸣器写了一个</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">unsigned</span> <span class="token keyword">char</span> i<span class="token punctuation">;</span>
+	
+	<span class="token function">_nop_</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	i <span class="token operator">=</span> <span class="token number">227</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">--</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/**
+  * @brief  蜂鸣器发声
+  * @param  ms，发声的时长
+  * @retval 无
+  */</span>
+<span class="token keyword">void</span> <span class="token function">Buzzer_Time</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> ms<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">//原来的Delay最小是1ms(半个周期)，那么1个周期是2ms，能达到的蜂鸣器最大频率是1/2*0.1^3=500Hz，蜂鸣器标准提示音是1000Hz</span>
+	<span class="token comment">//根据f=1/T，Delay(模块，不建议修改)的应该要更小，但是1已经是最小的</span>
+	<span class="token keyword">unsigned</span> <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>ms<span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token comment">//用for循环是为了让蜂鸣器响的久一点</span>
+        <span class="token comment">//*2的原因：现在的ms代表500us，不乘二，它只响ms/2毫秒，乘以二才是响ms毫秒</span>
+	<span class="token punctuation">{</span>
+		Buzzer<span class="token operator">=</span><span class="token operator">!</span>Buzzer<span class="token punctuation">;</span><span class="token comment">//发声需要翻转两次io口</span>
+		<span class="token function">Buzzer_Delay500us</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//半个周期500us，一个周期1000us，频率1000Hz=1/1000*0.1^6</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>	<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="Buzzer-h"><a href="#Buzzer-h" class="headerlink" title="Buzzer.h"></a>Buzzer.h</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__Buzzer_H__</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__Buzzer_H__</span></span>
+
+sbit Buzzer<span class="token operator">=</span>P2<span class="token operator">^</span><span class="token number">5</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">Buzzer_Time</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> ms<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="音乐"><a href="#音乐" class="headerlink" title="音乐"></a>音乐</h2><p>音符–&gt;频率(Hz)–&gt;周期(us)–&gt;周期/2(us)–&gt;取整–&gt;<strong>重装数值(用到定时器)</strong></p>
+<p><strong>周期</strong>=1/频率</p>
+<p><strong>周期/2</strong>：半个周期翻转一次</p>
+<p>周期/2-小数点=<strong>取整</strong></p>
+<p>65535-取整=<strong>重装数值</strong></p>
+<h4 id="用定时器操控频率"><a href="#用定时器操控频率" class="headerlink" title="用定时器操控频率"></a>用定时器操控频率</h4><h4 id="main-c-1"><a href="#main-c-1" class="headerlink" title="main.c"></a>main.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Time0.h"</span></span>
+
+sbit Buzzer<span class="token operator">=</span>P2<span class="token operator">^</span><span class="token number">5</span><span class="token punctuation">;</span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">int</span> FreqTable<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token number">63628</span><span class="token punctuation">,</span><span class="token number">63731</span><span class="token punctuation">}</span><span class="token punctuation">;</span><span class="token comment">//存放每个音的重载数值</span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">char</span> FreqSelect<span class="token punctuation">;</span><span class="token comment">//对于数组FreqTable中每个数据对应的Index</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token function">Timer0Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		FreqSelect<span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//在中断里每个500ms自动切换到下一个音</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">void</span> <span class="token function">Timer0_Routine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">1</span><span class="token comment">//定时器初始化每隔1ms进行一次，所以每隔1ms中断一次</span>
+<span class="token punctuation">{</span>
+	TL0 <span class="token operator">=</span> FreqTable<span class="token punctuation">[</span>FreqSelect<span class="token punctuation">]</span><span class="token operator">%</span><span class="token number">256</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+	TH0 <span class="token operator">=</span> FreqTable<span class="token punctuation">[</span>FreqSelect<span class="token punctuation">]</span><span class="token operator">/</span><span class="token number">256</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+	<span class="token comment">//跟子函数里的设置不同在于，之后的溢出都是这里管理的，子函数那只管理一次</span>
+	Buzzer<span class="token operator">=</span><span class="token operator">!</span>Buzzer<span class="token punctuation">;</span> <span class="token comment">//直接翻转，一个周期是2*1ms(翻转两次才是一个周期)，频率=1/2*1*0.1^3=500Hz</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h4 id="Timer0-c"><a href="#Timer0-c" class="headerlink" title="Timer0.c"></a>Timer0.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+
+<span class="token comment">/**
+  * @brief  定时器0初始化，1ms@11.0592MH
+  * @param  无
+  * @retval 无
+  */</span>
+<span class="token keyword">void</span> <span class="token function">Timer0Init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>		<span class="token comment">//1毫秒@11.0592MHz</span>
+<span class="token punctuation">{</span>
+	TMOD <span class="token operator">&amp;=</span> <span class="token number">0xF0</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时器模式</span>
+	TMOD <span class="token operator">|=</span> <span class="token number">0x01</span><span class="token punctuation">;</span>
+	TL0 <span class="token operator">=</span> <span class="token number">0x66</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+	TH0 <span class="token operator">=</span> <span class="token number">0xFC</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+	<span class="token comment">//TH0和TL0无关紧要，他们只决定第一次中断时间，因为溢出之后他们不清零，所以这里可以不改，只改主函数里的</span>
+	TF0 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>		<span class="token comment">//清除TF0标志</span>
+	TR0 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>		<span class="token comment">//定时器0开始计时</span>
+	ET0<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>          <span class="token comment">//允许中断</span>
+	EA<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+	PT0<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/*
+定时器中断函数模板
+void Timer0_Routine() interrupt 1
+{
+	static unsigned int T0Count;//为了不丢失这个数字
+	TL0 = 0x66;		//设置定时初值
+	TH0 = 0xFC;		//设置定时初值
+	T0Count++;
+	if(T0Count&gt;=1000)
+	{
+		T0Count=0;
+	}
+}
+*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -705,7 +809,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2022/10/02/ru-men-51-mo-kuai-hua-bian-cheng/">https://wabbybabb0.github.io/2022/10/02/ru-men-51-mo-kuai-hua-bian-cheng/</a>
+                    <a href="https://wabbybabb0.github.io/2022/10/18/ru-men-feng-ming-qi/">https://wabbybabb0.github.io/2022/10/18/ru-men-feng-ming-qi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -922,24 +1026,24 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/10/10/ru-men-ju-zhen-jian-pan/">
+                <a href="/2022/10/30/ru-men-lcd1602/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/13.png" class="responsive-img" alt="入门————矩阵键盘">
+                        <img src="/medias/featureimages/16.png" class="responsive-img" alt="入门————LCD1602">
                         
-                        <span class="card-title">入门————矩阵键盘</span>
+                        <span class="card-title">入门————LCD1602</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大云屋考核之51单片机学习————矩阵键盘
+                            大云屋考核之51单片机学习————LCD1602
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-10
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-30
                         </span>
                         <span class="publish-author">
                             
@@ -975,31 +1079,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/10/02/ru-men-zui-chu-de-bi-ji/">
+                <a href="/2022/10/13/xiao-bai-jian-yi-ji-suan-qi/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/16.png" class="responsive-img" alt="入门————最初的笔记">
+                        <img src="/medias/featureimages/7.png" class="responsive-img" alt="小白————Calculator">
                         
-                        <span class="card-title">入门————最初的笔记</span>
+                        <span class="card-title">小白————Calculator</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大云屋考核之51单片机学习————前置学习
+                            大云屋工作室考核(一)任务之一：用C语言写一个简易的计算器
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-02
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-13
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/" class="post-category">
-                                    51单片机
+                            <a href="/categories/C/" class="post-category">
+                                    C
                                 </a>
                             
                             
@@ -1009,12 +1113,16 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
-                        <span class="chip bg-color">51单片机</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C</span>
                     </a>
                     
-                    <a href="/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/">
-                        <span class="chip bg-color">大云屋考核</span>
+                    <a href="/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B/">
+                        <span class="chip bg-color">大云屋</span>
+                    </a>
+                    
+                    <a href="/tags/%E8%80%83%E6%A0%B8/">
+                        <span class="chip bg-color">考核</span>
                     </a>
                     
                 </div>
