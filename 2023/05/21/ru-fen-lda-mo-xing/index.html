@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
-
+<meta name="generator" content="Hexo 6.3.0">
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
 </head>
 
 
@@ -602,14 +602,14 @@
 <h1 id="1-整体把握"><a href="#1-整体把握" class="headerlink" title="1.整体把握"></a>1.整体把握</h1><p>LDA是一种<strong>主题模型</strong>，可以将文档集中每篇文档的主题以<strong>概率分布</strong>的形式给出，根据给定的一篇文章，反推其主题分布</p>
 <p>一篇文档可以包含多个主题，文档中每一个词都由其中的一个主题生成</p>
 <h2 id="1-1LDA的图模型结构"><a href="#1-1LDA的图模型结构" class="headerlink" title="1.1LDA的图模型结构"></a>1.1LDA的图模型结构</h2><p>  类似贝叶斯网络结构</p>
-<p><img src="https://oa7vrw2neqh.feishu.cn/space/api/box/stream/download/asynccode/?code=NGUwZjU1MDNhYmViODRjOGYzZDUwZDg5MTFjYTMwM2RfNFhCdDN3Q0ZCVUVSRkI0eGoxTWZmVVJvVnpFNmpVVlhfVG9rZW46T2lpaGJnTlpjbzF5eHB4a3BMRWNKdmtsbnAxXzE2OTA0NjAwNjY6MTY5MDQ2MzY2Nl9WNA" alt="img"></p>
+<p><img src="/../../../../medias/blog_picture/LDA/1.PNG"></p>
 <h3 id="1-1-1贝叶斯的定义"><a href="#1-1-1贝叶斯的定义" class="headerlink" title="1.1.1贝叶斯的定义"></a>1.1.1贝叶斯的定义</h3><p>  节点表示随机变量${X_1,X_2,…,X_n}$，认为有<strong>因果关系</strong>(或非条件独立)的变量或命题用箭头来连接。如果用一个单箭头来连接，表示其中一个节点是“因(parents)”，另一个是“果(children)”，两节点就会产生一个条件概率值</p>
-<p><img src="https://oa7vrw2neqh.feishu.cn/space/api/box/stream/download/asynccode/?code=NmNlNWQ2NDU0NDliNzMxYzE5NzBmOTU1NjFkMzk1YjhfbDBaMmpnRzdaNTZ3TVJTREdIM3RDSUtYMEVITXdENXRfVG9rZW46WElaTmJkaDRIbzZkTjF4WXZZMmM3d1ZWbnFoXzE2OTA0NjAwNjY6MTY5MDQ2MzY2Nl9WNA" alt="img"></p>
+<p><img src="/../../../../medias/blog_picture/LDA/2.PNG"></p>
 <p>  👆圈表示随机变量(random variables)，用箭头表示条件依赖(conditional dependencies)</p>
 <p>  令$G = (I,E)$表示一个有向无环图(DAG)，其中I代表图形中所有的节点的集合，而E代表有向连接线段的集合，且令$X = (X_i),i ∈ I$为其有向无环图中的某一节点i所代表的随机变量，若节点X的联合概率可以表示成$p(x)=\prod\limits_{i\in I}p(x_i|x_{pa(i)})$，则称$$X$$为相对于一有向无环图G 的贝叶斯网络，其中，$pa(i)$表示节点i之“因”，或称pa(i)是i的parents（父母）。</p>
-<p>  联合概率：事件A和事件B同时发生的概率，记为$$P(AB)$$或$$P(A,B)$$或$$P(A∩B)$$</p>
+<p>  联合概率：事件A和事件B同时发生的概率，记为$P(AB)$或$P(A,B)$或$P(A∩B)$</p>
 <p>  对于任意的随机变量，其联合概率可由各自的局部条件概率分布相乘得出：</p>
-<p>  $p(x_1,….,x_K)=p(x_K|x_1,….,x_{K-1})…p(x_2|x_1)p(x_1)$</p>
+<p>  $$p(x_1,….,x_K)=p(x_K|x_1,….,x_{K-1})…p(x_2|x_1)p(x_1)$$</p>
 <p><img src="https://oa7vrw2neqh.feishu.cn/space/api/box/stream/download/asynccode/?code=NGM1ZjVmNGE0NWVlMDc4MTM1MDU3MjdjM2UyYjBiZmFfcE50RXpXOE01Z2NWNzNrUDJCV1hSUVIxRk1vbWtadlNfVG9rZW46RER2cGJlbU5ob2sxdFV4V3pFN2NQYWxjbkRJXzE2OTA0NjAwNjY6MTY5MDQ2MzY2Nl9WNA" alt="img"></p>
 <p>  👆一个简单的贝叶斯网络(a导致b，a和b导致c)</p>
 <p>  $$p(a,b,c)=p(c|a.b)p(b|a)p(a)$$</p>
