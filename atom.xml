@@ -6,7 +6,7 @@
   <link href="https://wabbybabb0.github.io/atom.xml" rel="self"/>
   
   <link href="https://wabbybabb0.github.io/"/>
-  <updated>2023-11-28T14:51:41.729Z</updated>
+  <updated>2023-12-06T08:45:17.233Z</updated>
   <id>https://wabbybabb0.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="https://wabbybabb0.github.io/2023/12/06/ru-fen-alexnet-mo-xing-fu-xian/"/>
-    <id>https://wabbybabb0.github.io/2023/12/06/ru-fen-alexnet-mo-xing-fu-xian/</id>
-    <published>2023-12-06T08:37:14.027Z</published>
-    <updated>2023-11-28T14:51:41.729Z</updated>
+    <title>入坟———AlexNet模型复现</title>
+    <link href="https://wabbybabb0.github.io/2023/12/27/ru-fen-alexnet-mo-xing-fu-xian/"/>
+    <id>https://wabbybabb0.github.io/2023/12/27/ru-fen-alexnet-mo-xing-fu-xian/</id>
+    <published>2023-12-27T14:51:00.000Z</published>
+    <updated>2023-12-06T08:45:17.233Z</updated>
     
     
       
@@ -34,6 +34,12 @@
     
     
     
+    <category term="人工智能" scheme="https://wabbybabb0.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    
+    <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="卷积神经网络" scheme="https://wabbybabb0.github.io/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
     
   </entry>
   
@@ -83,11 +89,11 @@
     <category term="NLP" scheme="https://wabbybabb0.github.io/categories/NLP/"/>
     
     
+    <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
     <category term="DMIR考核" scheme="https://wabbybabb0.github.io/tags/DMIR%E8%80%83%E6%A0%B8/"/>
     
     <category term="NLP" scheme="https://wabbybabb0.github.io/tags/NLP/"/>
-    
-    <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="LDA" scheme="https://wabbybabb0.github.io/tags/LDA/"/>
     
@@ -114,11 +120,11 @@
     <category term="NLP" scheme="https://wabbybabb0.github.io/categories/NLP/"/>
     
     
+    <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
     <category term="DMIR考核" scheme="https://wabbybabb0.github.io/tags/DMIR%E8%80%83%E6%A0%B8/"/>
     
     <category term="NLP" scheme="https://wabbybabb0.github.io/tags/NLP/"/>
-    
-    <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
   </entry>
   
