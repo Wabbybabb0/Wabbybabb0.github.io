@@ -29,9 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 6.3.0">
+<meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
+
 <style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
-<link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
 </head>
 
 
@@ -606,22 +606,22 @@
 <h3 id="1-1-1贝叶斯的定义"><a href="#1-1-1贝叶斯的定义" class="headerlink" title="1.1.1贝叶斯的定义"></a>1.1.1贝叶斯的定义</h3><p>  节点表示随机变量${X_1,X_2,…,X_n}$，认为有<strong>因果关系</strong>(或非条件独立)的变量或命题用箭头来连接。如果用一个单箭头来连接，表示其中一个节点是“因(parents)”，另一个是“果(children)”，两节点就会产生一个条件概率值</p>
 <p><img src="/../../../../medias/blog_picture/LDA/2.PNG"></p>
 <p>  👆圈表示随机变量(random variables)，用箭头表示条件依赖(conditional dependencies)</p>
-<p>  令$G = (I,E)$表示一个有向无环图(DAG)，其中I代表图形中所有的节点的集合，而E代表有向连接线段的集合，且令$X = (X_i),i ∈ I$为其有向无环图中的某一节点i所代表的随机变量，若节点X的联合概率可以表示成$p(x)=\prod\limits_{i\in I}p(x_i|x_{pa(i)})$，则称$$X$$为相对于一有向无环图G 的贝叶斯网络，其中，$pa(i)$表示节点i之“因”，或称pa(i)是i的parents（父母）。</p>
+<p>  令$G = (I,E)$表示一个有向无环图(DAG)，其中I代表图形中所有的节点的集合，而E代表有向连接线段的集合，且令$X = (X_i),i ∈ I$为其有向无环图中的某一节点i所代表的随机变量，若节点X的联合概率可以表示成$p(x)=\prod\limits_{i\in I}p(x_i|x_{pa(i)})$，则称$X$为相对于一有向无环图G 的贝叶斯网络，其中，$pa(i)$表示节点i之“因”，或称$pa(i)$是$i$的parents（父母）。</p>
 <p>  联合概率：事件A和事件B同时发生的概率，记为$P(AB)$或$P(A,B)$或$P(A∩B)$</p>
 <p>  对于任意的随机变量，其联合概率可由各自的局部条件概率分布相乘得出：</p>
 <p>  $$p(x_1,….,x_K)=p(x_K|x_1,….,x_{K-1})…p(x_2|x_1)p(x_1)$$</p>
-<p><img src="https://oa7vrw2neqh.feishu.cn/space/api/box/stream/download/asynccode/?code=NGM1ZjVmNGE0NWVlMDc4MTM1MDU3MjdjM2UyYjBiZmFfcE50RXpXOE01Z2NWNzNrUDJCV1hSUVIxRk1vbWtadlNfVG9rZW46RER2cGJlbU5ob2sxdFV4V3pFN2NQYWxjbkRJXzE2OTA0NjAwNjY6MTY5MDQ2MzY2Nl9WNA" alt="img"></p>
+<p><img src="/../../../../medias/blog_picture/LDA/3.PNG"></p>
 <p>  👆一个简单的贝叶斯网络(a导致b，a和b导致c)</p>
 <p>  $$p(a,b,c)=p(c|a.b)p(b|a)p(a)$$</p>
-<h2 id="1-2二项式分布"><a href="#1-2二项式分布" class="headerlink" title="1.2二项式分布"></a>1.2二项式分布</h2><p>随机变量只有两个(非正即负)，即重复n次的伯努利实验，记为$$X\sim b(n,p)$$</p>
+<h2 id="1-2二项式分布"><a href="#1-2二项式分布" class="headerlink" title="1.2二项式分布"></a>1.2二项式分布</h2><p>随机变量只有两个(非正即负)，即重复n次的伯努利实验，记为$X\sim b(n,p)$</p>
 <p>二项分布的概率密度函数为：</p>
-<p><img src="https://oa7vrw2neqh.feishu.cn/space/api/box/stream/download/asynccode/?code=ZDcyNTgzZWU2YTdmOGIyOTE5NDc4OWFiZmZhZWJlMGFfa21QcWRQdk15WXpiNVVrWnh4Y2d4ZERLT3lKeWFOd3NfVG9rZW46QUxCcWJaOE9sb1VFWGh4NlY5WWNOWTlEbm5iXzE2OTA0NjAwNjY6MTY5MDQ2MzY2Nl9WNA" alt="img"></p>
+<p><img src="/../../../../medias/blog_picture/LDA/4.PNG"></p>
 <p> 对于k = 0, 1, 2, …, n，其中的</p>
-<p><img src="https://oa7vrw2neqh.feishu.cn/space/api/box/stream/download/asynccode/?code=NWY5ZjBkYzQ4OTRmNWMxOTZhNmJjMGUxM2UxMmRjNjVfT1oxS1NnNHU0d0ZBUVh2QUVleHBuam84SmxCT0FKaFZfVG9rZW46TW83TGJLejZVb2ttSUt4cU9FaWNqVzJMbkxnXzE2OTA0NjAwNjY6MTY5MDQ2MzY2Nl9WNA" alt="img"></p>
-<p>是二项式系数（这就是二项分布的名称的由来），又记为$$\dfrac{n!}{k!(n-k)!}$$</p>
+<p><img src="/../../../../medias/blog_picture/LDA/5.PNG"></p>
+<p>是二项式系数（这就是二项分布的名称的由来），又记为$\dfrac{n!}{k!(n-k)!}$</p>
 <h2 id="1-3多项式分布"><a href="#1-3多项式分布" class="headerlink" title="1.3多项式分布"></a>1.3多项式分布</h2><p>由二项分布扩展到多维的情况</p>
 <p>随机变量取值不是0-1，而是有多种离散值的可能(1,2,3,…,k)</p>
-<p>假设有$$i$$个离散值，那么有$$\sum_{i=1}^kp_i=1,p_i&gt;0$$</p>
+<p>假设有$$i$$个离散值，那么有$\sum_{i=1}^kp_i=1,p_i&gt;0$</p>
 <p>多项式分布的概率密度函数为：$$P(x_1,x_2,…,x_k;n,p_1,p_2,…,p_k)=\dfrac{n!}{x_1!…x_k!}p^{x_1}…p^{x_k}$$</p>
 <h2 id="1-4Gamma分布"><a href="#1-4Gamma分布" class="headerlink" title="1.4Gamma分布"></a>1.4Gamma分布</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69606875">Beta函数和Gamma函数的关系</a></p>
 <p>Gamma函数实际意义：阶乘一般化，将阶乘推广到实数域</p>
@@ -630,43 +630,42 @@
 <h2 id="2-1Beta分布"><a href="#2-1Beta分布" class="headerlink" title="2.1Beta分布"></a>2.1Beta分布</h2><p>beta是指一组定义在$$(0,1)$$区间的连续概率分布，有两个参数$$\alpha$$和$$\beta$$，且$$\alpha,\beta&gt;0$$</p>
 <p>二项分布的共轭先验分布</p>
 <p>给定参数$$\alpha&gt;0$$和$$\beta&gt;0$$，取值范围为[0,1]的随机变量 x 的概率密度函数：$$f(x;\alpha,\beta)=\dfrac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}$$</p>
-<p>其中$$\dfrac{1}{B(\alpha,\beta)}=\dfrac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)},\Gamma(z)=\int_0^\infty t^{z-1}e^{-t}dt$$</p>
+<p>其中$\dfrac{1}{B(\alpha,\beta)}=\dfrac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)},\Gamma(z)=\int_0^\infty t^{z-1}e^{-t}dt$</p>
 <p>见pdf</p>
 <h2 id="2-2Beta-Binomial共轭"><a href="#2-2Beta-Binomial共轭" class="headerlink" title="2.2Beta-Binomial共轭"></a>2.2Beta-Binomial共轭</h2><ul>
 <li>问题引入：<ul>
-<li><strong>问题1</strong>：随机变量$$X_1,X_2,…,X_n\sim^{idd}Uniform(0,1)$$，把这n个随机变量排序后得到顺序统计量$$X_{(1)},X_{(2)},…,X_{(n)}$$，问$$X_{(k)}$$的分布是什么</li>
-<li><strong>问题2</strong>：$$X_{(k)}$$的分布是什么 &lt;==&gt; 猜测$$p=X_{(k)}$$，<ul>
-<li>$$Y_1,Y_2,…,Y_n\sim^{idd}Uniform(0,1)$$,$$Y_i$$中有$$m_1$$个比$$p$$小，$$m_2$$个比$$p$$大，问$$P(p|Y_1,Y_2,…Y_m)$$的分布是什么</li>
+<li><strong>问题1</strong>：随机变量$X_1,X_2,…,X_n\sim^{idd}Uniform(0,1)$，把这n个随机变量排序后得到顺序统计量$X_{(1)},X_{(2)},…,X_{(n)}$，问$X_{(k)}$的分布是什么</li>
+<li><strong>问题2</strong>：$X_{(k)}$的分布是什么 &lt;==&gt; 猜测$p=X_{(k)}$，<ul>
+<li>$Y_1,Y_2,…,Y_n\sim^{idd}Uniform(0,1)$,$Y_i$$中有$$m_1$$个比$$p$$小，$$m_2$个比$p$大，问$P(p|Y_1,Y_2,…Y_m)$的分布是什么</li>
 </ul>
 </li>
 </ul>
 </li>
 <li>分析：<ul>
-<li>换言之，$$Y_i$$中有$$m_1$$个比$$X_{(k)}$$小，有$$m_2$$个比$$X_{(k)}$$大，所以$$X_{(k)}$$是$$X_1,X_2,…,X_n,Y_1,Y_2,…,Y_n\sim^{idd}Uniform(0,1)$$中第$$k+m_1$$大的数</li>
+<li>换言之，$Y_i$中有$m_1$个比$X_{(k)}$小，有$m_2$个比$X_{(k)}$大，所以$X_{(k)}$是$X_1,X_2,…,X_n,Y_1,Y_2,…,Y_n\sim^{idd}Uniform(0,1)$中第$k+m_1$大的数</li>
 <li>事件服从Beta分布</li>
-<li>可知$$p=X_{(k)}$$的密度概率函数为：$$Beta(p|k+m_1,n-k+1+m_2)$$</li>
+<li>可知$p=X_{(k)}$的密度概率函数为：$$Beta(p|k+m_1,n-k+1+m_2)$$</li>
 </ul>
 </li>
 <li>与贝叶斯结合过程<ul>
 <li><p>贝叶斯派思考问题的固定模式：</p>
 </li>
-<li><p><strong>先验分布</strong>$$\pi(\theta)$$<strong>+ 样本信息</strong>$$X$$$$\rightarrow$$<strong>后验分布</strong>$$\pi(\theta|x)$$</p>
+<li><p><strong>先验分布</strong>$\pi(\theta)$<strong>+ 样本信息</strong>$$X$$$$\rightarrow$$<strong>后验分布</strong>$\pi(\theta|x)$</p>
 </li>
-<li><p>在得到新的样本信息之前，人们对$$\theta$$的认知是先验分布$$\pi(\theta)$$，在得到新的样本信息</p>
-</li>
-<li><p>$$X$$后，人们对$$\theta$$的认知为$$\pi(\theta|x)$$</p>
+<li><p>在得到新的样本信息之前，人们对$\theta$的认知是先验分布$\pi(\theta)$，在得到新的样本信息</p>
+<p>$X$后，人们对$\theta$的认知为$\pi(\theta|x)$</p>
 </li>
 <li><p>过程</p>
 <ul>
-<li>为了猜测$$p=X_{(k)}$$，在获得一定的观测数据前，我们对$$p$$的认知是：$$f(p)=Beta(p|k,n-k+1)$$，此称为$$p$$的先验分布</li>
-<li>为了获得结果“$$Y_i$$中有$$m_1$$个比$$p$$小，$$m_2$$个比$$p$$大”，针对$$Y_i$$做了$$m$$次伯努利实验，所以$$m_1$$服从二项分布$$B(m,p)$$</li>
-<li>在得到$$(m_1,m_2)$$的数据后，$$p$$的后验分布为$$f(p|m_1,m_2)=Beta(p|k+m_1,n-k+1+m_2)$$</li>
+<li>为了猜测$p=X_{(k)}$，在获得一定的观测数据前，我们对$p$的认知是：$f(p)=Beta(p|k,n-k+1)$，此称为$p$的先验分布</li>
+<li>为了获得结果“$Y_i$中有$m_1$个比$p$小，$m_2$个比$p$大”，针对$Y_i$做了$m$次伯努利实验，所以$m_1$服从二项分布$B(m,p)$</li>
+<li>在得到$(m_1,m_2)$的数据后，$p$的后验分布为$$f(p|m_1,m_2)=Beta(p|k+m_1,n-k+1+m_2)$$</li>
 </ul>
 </li>
 <li><p>结合贝叶斯</p>
 <ul>
 <li>$$Beta(p|k,n-k+1)+Count(m_1,m_2)=Beta(p|k+m_1,n-k+1+m_2)$$</li>
-<li>更一般的，对于非负实数$$\alpha$$和$$\beta$$：有如下关系$$Beta(p|\alpha,\beta)+Count(m_1,m_2)=Beta(p|\alpha+m_1,\beta+m_2)$$，其中$$Count(m_1,m_2)$$对应$$B(m,p)$$</li>
+<li>更一般的，对于非负实数$\alpha$和$\beta$：有如下关系$$Beta(p|\alpha,\beta)+Count(m_1,m_2)=Beta(p|\alpha+m_1,\beta+m_2)$$，其中$Count(m_1,m_2)$对应$B(m,p)$</li>
 <li>针对这种观测到的数据符合以下条件的，就是Beta-Binomial共轭，换言之，Beta分布是二项式分布的共轭先验概率分布<ul>
 <li>条件一：二项分布</li>
 <li>条件二：参数的先验分布和后验分布都是Beta分布</li>
@@ -676,7 +675,7 @@
 <li>二项分布和Beta分布是共轭分布意味着，如果我们为二项分布的参数p选取的先验分布是Beta分布，那么以p为参数的二项分布用贝叶斯估计得到的后验分布仍然服从Beta分布</li>
 </ul>
 </li>
-<li><p>$$\alpha$$和$$\beta$$可以认为是形状参数</p>
+<li><p>$\alpha$和$\beta$可以认为是形状参数</p>
 </li>
 </ul>
 </li>
@@ -685,28 +684,28 @@
 <p>  比如，某观测数据服从概率分布P(θ)(先验)时，当观测到新的X数据(样本信息)时，我们一般会遇到如下问题：</p>
 <ul>
 <li>可否根据新观测数据X，更新参数θ？</li>
-<li>根据新观测数据可以在多大程度上改变参数θ，即$$\theta \leftarrow \theta + \triangle \theta$$</li>
+<li>根据新观测数据可以在多大程度上改变参数θ，即$\theta \leftarrow \theta + \triangle \theta$</li>
 <li>当重新估计θ的时候，给出新参数值θ的新概率分布，即P(θ|x)。</li>
 </ul>
 <h2 id="2-4从Beta分布推广到Dirichlet分布"><a href="#2-4从Beta分布推广到Dirichlet分布" class="headerlink" title="2.4从Beta分布推广到Dirichlet分布"></a>2.4从Beta分布推广到Dirichlet分布</h2><p>见pdf</p>
-<p>结论是：对于Beta分布的随机变量，其均值(期望)可以用$$\dfrac{\alpha}{\alpha+\beta}$$来估计</p>
-<p>类比到Dirichlet分布：如果$$\mathop{p}\limits^{\rightarrow}\sim Dir(\mathop{t}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow})$$，那么有$$E(\mathop{p}\limits^{\rightarrow})=(\dfrac{\alpha_1}{\sum^K_{i=1}\alpha_i},\dfrac{\alpha_2}{\sum^K_{i=1}\alpha_i},…,\dfrac{\alpha_3}{\sum^K_{i=1}\alpha_i})$$</p>
+<p>结论是：对于Beta分布的随机变量，其均值(期望)可以用$\dfrac{\alpha}{\alpha+\beta}$来估计</p>
+<p>类比到Dirichlet分布：如果$\mathop{p}\limits^{\rightarrow}\sim Dir(\mathop{t}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow})$，那么有$$E(\mathop{p}\limits^{\rightarrow})=(\dfrac{\alpha_1}{\sum^K_{i=1}\alpha_i},\dfrac{\alpha_2}{\sum^K_{i=1}\alpha_i},…,\dfrac{\alpha_3}{\sum^K_{i=1}\alpha_i})$$</p>
 <h1 id="3-Dirichlet分布"><a href="#3-Dirichlet分布" class="headerlink" title="3.Dirichlet分布"></a>3.Dirichlet分布</h1><p>是beta分布在高纬度上的推广</p>
 <p>$$f(x_1,x_2,…,x_k;\alpha_1,\alpha_1,…,\alpha_k)=\dfrac{1}{B(\alpha)}\prod_{i=1}^kx_{i}^{a^i-1}$$</p>
 <p>其中$$B(\alpha)=\dfrac{\prod_{i=1}^k\Gamma(a^i)}{\Gamma(\sum_{i=1}^k)a^i},\sum x_i=1$$</p>
 <h2 id="3-1Dirichlet分布"><a href="#3-1Dirichlet分布" class="headerlink" title="3.1Dirichlet分布"></a>3.1Dirichlet分布</h2><p>This content is only supported in a Feishu Docs</p>
 <h2 id="3-2Dirichlet-Multinomial共轭"><a href="#3-2Dirichlet-Multinomial共轭" class="headerlink" title="3.2Dirichlet-Multinomial共轭"></a>3.2Dirichlet-Multinomial共轭</h2><ul>
 <li>问题引入：在2.2的问题2的基础上继续深入<ul>
-<li><strong>问题3</strong>：随机变量$$X_1,X_2,…,X_n\sim^{idd}Uniform(0,1)$$，把这n个随机变量排序后得到顺序统计量$$X_{(1)},X_{(2)},…,X_{(n)}$$，问$$(X_{(k_1)},X_{k_1+k_2})$$的联合分布是什么<ul>
+<li><strong>问题3</strong>：随机变量$X_1,X_2,…,X_n\sim^{idd}Uniform(0,1)$，把这n个随机变量排序后得到顺序统计量$X_{(1)},X_{(2)},…,X_{(n)}$，问$(X_{(k_1)},X_{k_1+k_2})$的联合分布是什么<ul>
 <li>计算见pdf</li>
 </ul>
 </li>
 <li>为论证Dirichlet分布是多项式分布的共轭先验概率分布，在问题3的基础上继续深入<ul>
 <li>问题4：<ul>
-<li>随机变量$$X_1,X_2,…,X_n\sim^{idd}Uniform(0,1)$$，把这n个随机变量排序后得到顺序统计量$$X_{(1)},X_{(2)},…,X_{(n)}$$</li>
-<li>令$$p_1=X_{k_1},p_2=X(k_1+k_2),p_3=1-p_1-p_2$$，现在要猜测$$\mathop{p}\limits^{\rightarrow}=(p_1,p_2,p_3)$$</li>
-<li>$$Y_1,Y_2,…,Y_m\sim^{idd}Uniform(0,1)$$，$$Y_i$$中落到$$(0,p_1],[p_1,p_2),[p_2,1]$$三个区间的个数分别为$$m_1,m_2,m_3$$，$$m=m_1+m_2+m_3$$</li>
-<li>问后验分布$$P(\mathop{p}\limits^{\rightarrow}|Y_1,Y_2,…Y_m)$$的分布是什么</li>
+<li>随机变量$X_1,X_2,…,X_n\sim^{idd}Uniform(0,1)$，把这n个随机变量排序后得到顺序统计量$X_{(1)},X_{(2)},…,X_{(n)}$</li>
+<li>令$p_1=X_{k_1},p_2=X(k_1+k_2),p_3=1-p_1-p_2$，现在要猜测$$\mathop{p}\limits^{\rightarrow}=(p_1,p_2,p_3)$$</li>
+<li>$Y_1,Y_2,…,Y_m\sim^{idd}Uniform(0,1)$，$Y_i$中落到$(0,p_1],[p_1,p_2),[p_2,1]$三个区间的个数分别为$m_1,m_2,m_3$，$m=m_1+m_2+m_3$</li>
+<li>问后验分布$P(\mathop{p}\limits^{\rightarrow}|Y_1,Y_2,…Y_m)$的分布是什么</li>
 <li>讨论见pdf</li>
 </ul>
 </li>
@@ -715,13 +714,13 @@
 </ul>
 </li>
 <li>与贝叶斯结合推理：<ul>
-<li>要猜测参数$$\mathop{p}\limits^{\rightarrow}=(p_1,p_2,p_3)$$，其先验分布为$$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow})$$</li>
-<li>$$Y_1,Y_2,…,Y_m\sim^{idd}Uniform(0,1)$$，$$Y_i$$中落到$$(0,p_1],[p_1,p_2),[p_2,1]$$三个区间的个数分别为$$m_1,m_2,m_3$$，所以$$\mathop{m}\limits^{\rightarrow}=(m_1,m_2,m_3)$$服从多项分布$$Mult(\mathop{m}\limits^{\rightarrow}|\mathop{p}\limits^{\rightarrow})$$</li>
-<li>给定了来自数据提供的$$\mathop{m}\limits^{\rightarrow}$$后，$$\mathop{p}\limits^{\rightarrow}$$的后验分布变为$$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow}+\mathop{m}\limits^{\rightarrow})$$</li>
+<li>要猜测参数$\mathop{p}\limits^{\rightarrow}=(p_1,p_2,p_3)$，其先验分布为$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow})$</li>
+<li>$Y_1,Y_2,…,Y_m\sim^{idd}Uniform(0,1)$，$Y_i$中落到$(0,p_1],[p_1,p_2),[p_2,1]$三个区间的个数分别为$m_1,m_2,m_3$，所以$\mathop{m}\limits^{\rightarrow}=(m_1,m_2,m_3)$服从多项分布$Mult(\mathop{m}\limits^{\rightarrow}|\mathop{p}\limits^{\rightarrow})$</li>
+<li>给定了来自数据提供的$\mathop{m}\limits^{\rightarrow}$后，$\mathop{p}\limits^{\rightarrow}$的后验分布变为$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow}+\mathop{m}\limits^{\rightarrow})$</li>
 <li>直观表述：<ol>
-<li>$$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow})+MultCount(\mathop{m}\limits^{\rightarrow})=Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow}+\mathop{m}\limits^{\rightarrow})$$</li>
-<li>令$$\mathop{\alpha}\limits^{\rightarrow}=\mathop{k}\limits^{\rightarrow}$$，可以把$$\mathop{\alpha}\limits^{\rightarrow}$$从整数集合延拓到实数集合，从而得到更一般的表达：</li>
-<li>$$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow})+MultCount(\mathop{m}\limits^{\rightarrow})=Dir(\mathop{p}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow}+\mathop{m}\limits^{\rightarrow})$$</li>
+<li>$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow})+MultCount(\mathop{m}\limits^{\rightarrow})=Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow}+\mathop{m}\limits^{\rightarrow})$</li>
+<li>令$\mathop{\alpha}\limits^{\rightarrow}=\mathop{k}\limits^{\rightarrow}，可以把$$\mathop{\alpha}\limits^{\rightarrow}$从整数集合延拓到实数集合，从而得到更一般的表达：</li>
+<li>$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow})+MultCount(\mathop{m}\limits^{\rightarrow})=Dir(\mathop{p}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow}+\mathop{m}\limits^{\rightarrow})$</li>
 </ol>
 </li>
 </ul>
@@ -730,8 +729,8 @@
 <li>观测到的数据符合多项分布</li>
 <li>参数的先验分布和后验分布都是Dirichlet分布</li>
 <li>就是Dirichlet-Multinomial共轭</li>
-<li>一般形式的Dirichlet分布定义和对于给定的$$\mathop{p}\limits^{\rightarrow}$$和$$N$$，其多项式分布见pdf</li>
-<li>Dirichlet分布$$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow})$$和多项分布$$MultCount(\mathop{n}\limits^{\rightarrow}|\mathop{p}\limits^{\rightarrow},N)$$是共轭关系</li>
+<li>一般形式的Dirichlet分布定义和对于给定的$\mathop{p}\limits^{\rightarrow}$和$N$，其多项式分布见pdf</li>
+<li>Dirichlet分布$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow})$和多项分布$MultCount(\mathop{n}\limits^{\rightarrow}|\mathop{p}\limits^{\rightarrow},N)$是共轭关系</li>
 </ul>
 </li>
 </ul>
@@ -742,28 +741,28 @@
 <li>$$D(w_1,…,w_M)$$表示语料库，其中的$$M$$是语料库中的文档数（固定值）</li>
 <li>$$\mathbf{w}=(w_1,w_2,…,w_N)$$表示文档，其中的$$N$$表示一个文档中的词数（随机变量）</li>
 </ul>
-<h2 id="4-1各个模型基础"><a href="#4-1各个模型基础" class="headerlink" title="4.1各个模型基础"></a>4.1各个模型基础</h2><h3 id="4-1-1Unigram-model"><a href="#4-1-1Unigram-model" class="headerlink" title="4.1.1Unigram model"></a>4.1.1Unigram model</h3><p>对于文档$$\mathbf{w}=(w_1,w_2,…,w_N)$$，用$$p(w_n)$$表示词$$w_n$$的先验概率，生成文档$$\mathbf{w}$$的概率为：$$p(\mathbf{w})=\sum^N_{n=1}p(w_n)$$</p>
+<h2 id="4-1各个模型基础"><a href="#4-1各个模型基础" class="headerlink" title="4.1各个模型基础"></a>4.1各个模型基础</h2><h3 id="4-1-1Unigram-model"><a href="#4-1-1Unigram-model" class="headerlink" title="4.1.1Unigram model"></a>4.1.1Unigram model</h3><p>对于文档$\mathbf{w}=(w_1,w_2,…,w_N)$，用$p(w_n)$表示词$w_n$的先验概率，生成文档$\mathbf{w}$的概率为：$p(\mathbf{w})=\sum^N_{n=1}p(w_n)$</p>
 <p>图模型为</p>
 <ul>
 <li><p>图模型一</p>
 <ul>
 <li><p>(图中被涂色的w(word)表示可观测变量，N表示一篇文档中总共N个单词，M表示M篇文档)</p>
 </li>
-<li><p><img src="https://oa7vrw2neqh.feishu.cn/space/api/box/stream/download/asynccode/?code=OTIxYWIzMTEwZGM3ZjQzNTc3ZWFkZDI5OWU1MmNkNDRfTTFURDl0YUxjTXRsTmFsczNHUWNvNzVqbkxZQWhtNnZfVG9rZW46RmVGTWJhTFhMb1IzUmx4Z2wxYmNiSW10bmZjXzE2OTA0NjAwNjY6MTY5MDQ2MzY2Nl9WNA" alt="img"></p>
+<li><p><img src="/../../../../medias/blog_picture/LDA/6.PNG"></p>
 </li>
 </ul>
 </li>
 <li><p>图模型二</p>
 <ul>
-<li><p><img src="https://oa7vrw2neqh.feishu.cn/space/api/box/stream/download/asynccode/?code=Y2Y2MzhiNDUwODkxOWY3ODVhMTdjZDcyNmQ1M2Y2ZjlfOGhKczJ0Rkl3SW03WE1CZzJEYVBnUXlZR3JTMFJiaDZfVG9rZW46T29KVWJXSG5vb0EyaGx4cllUemNMdGRvbmNoXzE2OTA0NjAwNjY6MTY5MDQ2MzY2Nl9WNA" alt="img"></p>
+<li><p><img src="/../../../../medias/blog_picture/LDA/7.PNG"></p>
 </li>
-<li><p>nigram model假设文本中的词服从Multinomial分布，而我们已经知道Multinomial分布的先验分布为Dirichlet分布。上图中的$$w_n$$表示在文本中观察到的第n个词，$$n\in[1,N]$$表示该文本中一共有$$N$$个单词。加上方框表示重复，即一共有$$N$$个这样的随机变量$$w_n$$。其中，$$p$$和$$\alpha$$是隐含未知变量：</p>
+<li><p>nigram model假设文本中的词服从Multinomial分布，而我们已经知道Multinomial分布的先验分布为Dirichlet分布。上图中的$w_n$表示在文本中观察到的第n个词，$n\in[1,N]$表示该文本中一共有$N$个单词。加上方框表示重复，即一共有$N$个这样的随机变量$w_n$。其中，$p$和$\alpha$是隐含未知变量：</p>
 </li>
-<li><p>$$p$$是词服从的Multinomial分布的参数</p>
+<li><p>$p$是词服从的Multinomial分布的参数</p>
 </li>
-<li><p>$$\alpha$$是Dirichlet分布(即Multinomial分布的先验分布)的参数</p>
+<li><p>$\alpha$是Dirichlet分布(即Multinomial分布的先验分布)的参数</p>
 </li>
-<li><p>​      一般$$\alpha$$由经验事先给定(先验)，$$p$$由观察到的文本中出现的词学习得到(样本)，表示文本中出现每个词的概率</p>
+<li><p>一般$\alpha$由经验事先给定(先验)，$p$由观察到的文本中出现的词学习得到(样本)，表示文本中出现每个词的概率</p>
 </li>
 </ul>
 </li>
@@ -1295,7 +1294,7 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/07/22/hello-world/">
+                <a href="/2023/11/02/hello-world/">
                     <div class="card-image">
                         
                         
@@ -1312,7 +1311,7 @@
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-07-22
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-02
                         </span>
                         <span class="publish-author">
                             
