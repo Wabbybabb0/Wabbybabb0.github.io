@@ -597,7 +597,7 @@
                 <h1 id="1-Image-Classification"><a href="#1-Image-Classification" class="headerlink" title="1 Image Classification"></a>1 Image Classification</h1><p>一张100x100pixels的图片其实是一个3D-tensor：<br>①图片的高<code>100</code>②图片的宽<code>100</code>③3 channels<code>RGB</code><br>![[Pasted image 20231104203002.png|350]]<br>每一个数值代表某一个颜色某一个pixel的强度</p>
 <h1 id="2-Image-Feature-Observation"><a href="#2-Image-Feature-Observation" class="headerlink" title="2 Image Feature Observation"></a>2 Image Feature Observation</h1><h2 id="2-1-Observation-1"><a href="#2-1-Observation-1" class="headerlink" title="2.1 Observation 1"></a>2.1 Observation 1</h2><ol>
 <li>Identifying some critical patterns<br> 比如说一只鸟，只用看鸟嘴、眼睛和脚也能大致辨认出来<br> A neuron does not have to see the whole image</li>
-<li>Simplification<br> 设定一个区域为Receptive field，每一个neuron只关心自己的Receptive field。<br> Receptive field can be overlapped<br> neuron can have the same receptive field<br> <img src="/%E5%85%A5%E9%97%A8%E2%80%94%E2%80%94%E2%80%94%E2%80%94CNN(%E6%9D%8E%E5%AE%8F%E6%AF%85)/Pasted_image_20231104204207.png"></li>
+<li>Simplification<br> 设定一个区域为Receptive field，每一个neuron只关心自己的Receptive field。<br> Receptive field can be overlapped<br> neuron can have the same receptive field<br> <img src="/./%E5%85%A5%E9%97%A8%E2%80%94%E2%80%94%E2%80%94%E2%80%94CNN(%E6%9D%8E%E5%AE%8F%E6%AF%85)/Pasted_image_20231104204207.png"></li>
 <li>Simplification 1-Typical Setting</li>
 <li>会看all channels，不用提深度，高和宽合起来叫kernel size</li>
 <li>Each receptive field has a set of neurons</li>
