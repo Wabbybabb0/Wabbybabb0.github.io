@@ -597,7 +597,7 @@
                 <h1 id="1-Image-Classification"><a href="#1-Image-Classification" class="headerlink" title="1 Image Classification"></a>1 Image Classification</h1><p>一张100x100pixels的图片其实是一个3D-tensor：<br>①图片的高<code>100</code>②图片的宽<code>100</code>③3 channels<code>RGB</code><br>![[Pasted image 20231104203002.png|350]]<br>每一个数值代表某一个颜色某一个pixel的强度</p>
 <h1 id="2-Image-Feature-Observation"><a href="#2-Image-Feature-Observation" class="headerlink" title="2 Image Feature Observation"></a>2 Image Feature Observation</h1><h2 id="2-1-Observation-1"><a href="#2-1-Observation-1" class="headerlink" title="2.1 Observation 1"></a>2.1 Observation 1</h2><ol>
 <li>Identifying some critical patterns<br> 比如说一只鸟，只用看鸟嘴、眼睛和脚也能大致辨认出来<br> A neuron does not have to see the whole image</li>
-<li>Simplification<br> 设定一个区域为Receptive field，每一个neuron只关心自己的Receptive field。<br> Receptive field can be overlapped<br> neuron can have the same receptive field<br> <img src="/./CNN/Pasted_image_20231104204207.png"></li>
+<li>Simplification<br> 设定一个区域为Receptive field，每一个neuron只关心自己的Receptive field。<br> Receptive field can be overlapped<br> neuron can have the same receptive field<br> <img src="/./%E5%85%A5%E9%97%A8%E2%80%94%E2%80%94%E2%80%94%E2%80%94CNN(%E6%9D%8E%E5%AE%8F%E6%AF%85)/Pasted_image_20231104204207.png"></li>
 <li>Simplification 1-Typical Setting</li>
 <li>会看all channels，不用提深度，高和宽合起来叫kernel size</li>
 <li>Each receptive field has a set of neurons</li>
@@ -680,7 +680,7 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/11/19/ru-men-cnn-li-hong-yi/">https://wabbybabb0.github.io/2023/11/19/ru-men-cnn-li-hong-yi/</a>
+                    <a href="https://wabbybabb0.github.io/2023/11/19/cnn/">https://wabbybabb0.github.io/2023/11/19/cnn/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -901,7 +901,60 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/11/19/cnn/">
+                <a href="/2023/12/27/ru-fen-alexnet-mo-xing-fu-xian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/2.png" class="responsive-img" alt="入坟———AlexNet模型复现">
+                        
+                        <span class="card-title">入坟———AlexNet模型复现</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            阅读了《Imagenet classification with deep convolutional neural networks》后在b站找了个视频取复现AlexNet模型
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-27
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
+                                    人工智能
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                        <span class="chip bg-color">人工智能</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
+                        <span class="chip bg-color">卷积神经网络</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/11/19/ru-men-cnn-li-hong-yi/">
                     <div class="card-image">
                         
                         
@@ -917,9 +970,9 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-19
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -945,55 +998,6 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
                     
                     <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
                         <span class="chip bg-color">卷积神经网络</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2023/11/02/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/7.png" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-02
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            WB
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Typora/">
-                        <span class="chip bg-color">Typora</span>
-                    </a>
-                    
-                    <a href="/tags/Markdown/">
-                        <span class="chip bg-color">Markdown</span>
                     </a>
                     
                 </div>
