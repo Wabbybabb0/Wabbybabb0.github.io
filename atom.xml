@@ -44,6 +44,33 @@
   </entry>
   
   <entry>
+    <title>入门————CNN(李宏毅)</title>
+    <link href="https://wabbybabb0.github.io/2023/11/19/ru-men-convolutional-neural-network-li-hong-yi/"/>
+    <id>https://wabbybabb0.github.io/2023/11/19/ru-men-convolutional-neural-network-li-hong-yi/</id>
+    <published>2023-11-19T06:10:00.000Z</published>
+    <updated>2023-12-09T12:48:07.022Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;1-Image-Classification&quot;&gt;&lt;a href=&quot;#1-Image-Classification&quot; class=&quot;headerlink&quot; title=&quot;1 Image Classification&quot;&gt;&lt;/a&gt;1 Image</summary>
+        
+      
+    
+    
+    
+    <category term="人工智能" scheme="https://wabbybabb0.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    
+    <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="深度学习" scheme="https://wabbybabb0.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Hello World</title>
     <link href="https://wabbybabb0.github.io/2023/11/02/hello-world/"/>
     <id>https://wabbybabb0.github.io/2023/11/02/hello-world/</id>
@@ -100,11 +127,11 @@
   </entry>
   
   <entry>
-    <title>DMIR考核仓库</title>
+    <title>入坟————DMIR考核仓库</title>
     <link href="https://wabbybabb0.github.io/2023/05/02/ru-fen-dmir-kao-he/"/>
     <id>https://wabbybabb0.github.io/2023/05/02/ru-fen-dmir-kao-he/</id>
     <published>2023-05-02T02:13:00.000Z</published>
-    <updated>2023-07-27T12:13:22.428Z</updated>
+    <updated>2023-12-09T09:32:27.067Z</updated>
     
     
       
@@ -340,9 +367,9 @@
     
     
     
-    <category term="C#" scheme="https://wabbybabb0.github.io/tags/C/"/>
-    
     <category term="闲着没事干" scheme="https://wabbybabb0.github.io/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/"/>
+    
+    <category term="C#" scheme="https://wabbybabb0.github.io/tags/C/"/>
     
   </entry>
   
@@ -367,9 +394,9 @@
     <category term="C#" scheme="https://wabbybabb0.github.io/categories/C/"/>
     
     
-    <category term="C#" scheme="https://wabbybabb0.github.io/tags/C/"/>
-    
     <category term="闲着没事干" scheme="https://wabbybabb0.github.io/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/"/>
+    
+    <category term="C#" scheme="https://wabbybabb0.github.io/tags/C/"/>
     
   </entry>
   
@@ -395,9 +422,9 @@
     <category term="C#" scheme="https://wabbybabb0.github.io/categories/C/"/>
     
     
-    <category term="C#" scheme="https://wabbybabb0.github.io/tags/C/"/>
-    
     <category term="闲着没事干" scheme="https://wabbybabb0.github.io/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/"/>
+    
+    <category term="C#" scheme="https://wabbybabb0.github.io/tags/C/"/>
     
   </entry>
   
@@ -534,32 +561,6 @@
     <category term="数组" scheme="https://wabbybabb0.github.io/tags/%E6%95%B0%E7%BB%84/"/>
     
     <category term="指针" scheme="https://wabbybabb0.github.io/tags/%E6%8C%87%E9%92%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>入土————DS1302时钟</title>
-    <link href="https://wabbybabb0.github.io/2022/11/12/ru-tu-ds1302-shi-zhong/"/>
-    <id>https://wabbybabb0.github.io/2022/11/12/ru-tu-ds1302-shi-zhong/</id>
-    <published>2022-11-12T03:04:00.000Z</published>
-    <updated>2023-07-27T02:04:16.659Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;strong&gt;DS1302&lt;/strong&gt;&lt;/p&gt;
-&lt;h1 id=&quot;一-引脚分装&quot;&gt;&lt;a href=&quot;#一-引脚分装&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="51单片机" scheme="https://wabbybabb0.github.io/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/"/>
-    
-    
-    <category term="51单片机" scheme="https://wabbybabb0.github.io/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/"/>
     
   </entry>
   

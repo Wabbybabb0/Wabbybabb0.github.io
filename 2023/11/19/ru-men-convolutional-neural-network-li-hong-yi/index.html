@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小白————类和命名空间, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="入门————CNN(李宏毅), Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小白————类和命名空间 | Wabbybabbo的摸鱼圣地</title>
+    <title>入门————CNN(李宏毅) | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小白————类和命名空间</h1>
+                    <h1 class="description center-align post-title">入门————CNN(李宏毅)</h1>
                 </div>
             </div>
         </div>
@@ -522,12 +522,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                                <span class="chip bg-color">闲着没事干</span>
+                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                                <span class="chip bg-color">人工智能</span>
                             </a>
                         
-                            <a href="/tags/C/">
-                                <span class="chip bg-color">C#</span>
+                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                <span class="chip bg-color">深度学习</span>
                             </a>
                         
                     </div>
@@ -538,8 +538,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/C/" class="post-category">
-                                C#
+                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
+                                人工智能
                             </a>
                         
                     </div>
@@ -551,21 +551,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-01-10
+                    2023-11-19
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-27
+                    2023-12-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    486
+                    886
                 </div>
                 
 
@@ -590,78 +590,66 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一-类"><a href="#一-类" class="headerlink" title="一.类"></a>一.类</h2><p>是对<code>现实世界事物</code>进行<strong>抽象</strong>所得到的结果</p>
-<h4 id="1-类和对象的关系👇"><a href="#1-类和对象的关系👇" class="headerlink" title="1.类和对象的关系👇"></a>1.类和对象的关系👇</h4><ul>
-<li><p><code>对象</code>也叫<code>实例</code>，是<code>类</code>经过“实例化”后得到的内存中是实体</p>
-<ul>
-<li>e.g. “飞机”和“一架飞机”，前者是概念，后者是实体</li>
-<li>e.g. 蓝图和建筑</li>
-</ul>
+                <h1 id="1-Image-Classification"><a href="#1-Image-Classification" class="headerlink" title="1 Image Classification"></a>1 Image Classification</h1><p>一张100x100pixels的图片其实是一个3D-tensor：<br>①图片的高<code>100</code>②图片的宽<code>100</code>③3 channels<code>RGB</code><br>![[Pasted image 20231104203002.png|350]]<br>每一个数值代表某一个颜色某一个pixel的强度</p>
+<h1 id="2-Image-Feature-Observation"><a href="#2-Image-Feature-Observation" class="headerlink" title="2 Image Feature Observation"></a>2 Image Feature Observation</h1><h2 id="2-1-Observation-1"><a href="#2-1-Observation-1" class="headerlink" title="2.1 Observation 1"></a>2.1 Observation 1</h2><ol>
+<li>Identifying some critical patterns<br> 比如说一只鸟，只用看鸟嘴、眼睛和脚也能大致辨认出来<br> A neuron does not have to see the whole image</li>
+<li>Simplification<br> 设定一个区域为Receptive field，每一个neuron只关心自己的Receptive field。<br> Receptive field can be overlapped<br> neuron can have the same receptive field<br> ![](../../../../medias/blog_picture/Pasted image 20231104204207.png)</li>
+<li>Simplification 1-Typical Setting</li>
+<li>会看all channels，不用提深度，高和宽合起来叫kernel size</li>
+<li>Each receptive field has a set of neurons</li>
+<li>平移receptive field，步长为stride，receprive field有重叠，防止交界处有pattern没被neuron侦测到</li>
+<li>平移时超出范围了，用填补0代替超出的范围(方法不唯一)</li>
+</ol>
+<h2 id="2-2-Observation-2"><a href="#2-2-Observation-2" class="headerlink" title="2.2 Observation 2"></a>2.2 Observation 2</h2><ol>
+<li>The same patterns appear in different regions<br> 👇solution: parameter sharing<br> 线条代表weight，相同颜色代表weight一样，守备的receptive field不一样，参数一样，因为输入不一样，所以输出也不一样<br> ![[Pasted image 20231104215341.png|475]]</li>
+<li>Simplification 2-Typical Setting<ol>
+<li>每一个receptive field都有一组neurons</li>
+<li>相同颜色的圆圈代表共享一样的参数的neurons</li>
+<li>每一个receptive field都只有一组参数，这些参数叫filter x<br> ![[Pasted image 20231104215840.png|500]]</li>
+</ol>
 </li>
-<li><p><code>实例化</code>，使用<code>new</code>操作符创建类的实例</p>
-<ul>
-<li><pre><code class="c#">new + 类名();//实例化格式
-<pre class="line-numbers language-none"><code class="language-none">
-* ```c#
-  (new Form()).ShowDialog();//实例化例子<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</code></pre>
+</ol>
+<h2 id="2-3-Obeservation-3"><a href="#2-3-Obeservation-3" class="headerlink" title="2.3 Obeservation 3"></a>2.3 Obeservation 3</h2><p>Subsampling the pixels will not change the object<br>e.g.拿掉image奇数行和偶数列的pixels，图片变成原来的$\frac{1}{4}$大小</p>
+<h1 id="3-Benefit-of-Convolutional-Layer"><a href="#3-Benefit-of-Convolutional-Layer" class="headerlink" title="3 Benefit of Convolutional Layer"></a>3 Benefit of Convolutional Layer</h1><ul>
+<li><code>Fully Connected Layer</code>不需要看整个图片，只需要重要的pattern👉<code>receptive field</code>某一些neurons一定要一摸一样👉<code>parameter sharing</code></li>
+<li><code>receptive field</code>+<code>parameter sharing</code>=<code>convolutional layer</code>，虽然会有较大的model bias，但是convolutional layer是专门为影像设计的，所以用在image上偏差不会很大</li>
+<li>用<code>convolutional layer</code>的network叫做<code>CNN</code></li>
+</ul>
+<h1 id="4-Multiple-Convolutional-Layers"><a href="#4-Multiple-Convolutional-Layers" class="headerlink" title="4 Multiple Convolutional Layers"></a>4 Multiple Convolutional Layers</h1><ul>
+<li>n个filters可形成feature map with n channels</li>
+<li>![[Pasted image 20231104223016.png|425]]<ol>
+<li>先是将<code>RGB</code>图片放入convolution里，假设有64个filter(每个filter都是3x3x3)，那么就会得到一个 feature map(可以看作是一个新的图片，只是他的channels有64个) </li>
+<li>再把feature map放入convolution里，filter的大小为：3x3x<strong>64</strong>(filter的高度就是它要处理的image的channel)</li>
+</ol>
 </li>
+<li>filter比较小的情况下也能让network看比较大范围的pattern<br>   ![[Pasted image 20231104224407.png|400]]<br>   右下角蓝色圆圈的是其中一个filter，右上角是image，image左上角红色框对应filter左上角红色框，image右下角红色框对应filter右下角红色框。feature map的3x3对应image的5x5<br>![[Pasted image 20231104225301.png|475]]</li>
 </ul>
-</li>
-<li><p>引用变量与实例的关系</p>
-<ul>
-<li><pre><code class="c#">
-</code></pre>
-</li>
+<h1 id="5-Pooling-Max-Pooling"><a href="#5-Pooling-Max-Pooling" class="headerlink" title="5 Pooling - Max Pooling"></a>5 Pooling - Max Pooling</h1><p>在feature map中，n x n个数字一组<br>![[Pasted image 20231104225853.png|275]]👉![[Pasted image 20231104225920.png|275]]<br>max pooling就是选一组里最大的那个数<br>做完convolution之后通常会搭配pooling，pooling不改变channels，但是改变长宽</p>
+<h1 id="6-The-whole-CNN"><a href="#6-The-whole-CNN" class="headerlink" title="6 The whole CNN"></a>6 The whole CNN</h1><p>Flatten：将pooling的output本来矩阵的样子拉直</p>
+<h1 id="7-Application-Playing-Go"><a href="#7-Application-Playing-Go" class="headerlink" title="7 Application: Playing Go"></a>7 Application: Playing Go</h1><ul>
+<li>Alpha Go uses 5x5 for first layer，可能是5x5的范围比较重要</li>
+<li>同样可能存在相同的patters在不同的regions里</li>
+<li>不用pooling</li>
 </ul>
-<p>  Form myForm;				//引用变量	小朋友<br>  myForm = new Form();		//实例化	 =小朋友牵着气球<br>  myForm.Text = “My Form!”;	//标题文本<br>  myForm.ShowDialog();		//显示表单</p>
-<pre><code>
-* 引用变量与实例的关系可以视作小朋友和气球的关系
-</code></pre>
-</li>
+<h1 id="8-实操"><a href="#8-实操" class="headerlink" title="8 实操"></a>8 实操</h1><h2 id="8-1-Code"><a href="#8-1-Code" class="headerlink" title="8.1 Code"></a>8.1 Code</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torchvision<span class="token punctuation">.</span>transforms <span class="token keyword">as</span> transforms
+
+image_data <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  <span class="token comment"># Your image data here</span>
+
+<span class="token comment"># Applying the transformations</span>
+transform <span class="token operator">=</span> transforms<span class="token punctuation">.</span>Compose<span class="token punctuation">(</span><span class="token punctuation">[</span>
+    transforms<span class="token punctuation">.</span>ToTensor<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    transforms<span class="token punctuation">.</span>Normalize<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0.1307</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">0.3081</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+transformed_data <span class="token operator">=</span> transform<span class="token punctuation">(</span>image_data<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="8-2-原理"><a href="#8-2-原理" class="headerlink" title="8.2 原理"></a>8.2 原理</h2><p>![[Pasted image 20231113221316.png]]</p>
+<h1 id="9-Advanced-CNN"><a href="#9-Advanced-CNN" class="headerlink" title="9 Advanced CNN"></a>9 Advanced CNN</h1><ul>
+<li>当训练次数过多时会发生过拟合，因此并不是训练次数越多模型准确度越高</li>
+<li>解决梯度消失(过拟合)，使用<strong>Residual net</strong></li>
 </ul>
-<h4 id="2-类的三大成员"><a href="#2-类的三大成员" class="headerlink" title="2.类的三大成员"></a>2.类的三大成员</h4><ul>
-<li><strong>属性Property</strong><ul>
-<li>存储数据，组合起来表示类或对象当前的状态</li>
-<li>e.g. 身高很高，财富充裕，长相不错，组合为高富帅</li>
-</ul>
-</li>
-<li><strong>方法Method</strong><ul>
-<li>表示类或对象“能做什么”</li>
-</ul>
-</li>
-<li><strong>事件Event</strong></li>
-</ul>
-<h3 id="3-静态成员与实例成员"><a href="#3-静态成员与实例成员" class="headerlink" title="3.静态成员与实例成员"></a>3.静态成员与实例成员</h3><ul>
-<li><strong>静态Static</strong>成员表示它是<code>类的成员</code></li>
-<li><strong>实例</strong>成员表示它是<code>对象的成员</code></li>
-<li><strong>绑定Bing</strong>指的是编译器如何把一个成员与类或对象关联起来<ul>
-<li>**.**成员访问操作符</li>
-</ul>
-</li>
-</ul>
-<h2 id="二-名称空间"><a href="#二-名称空间" class="headerlink" title="二.名称空间"></a>二.名称空间</h2><p>把类用良好的结构组合在一起，以树形结构组织类</p>
-<p><strong>包：某市	→	类库：图书馆	→	名称空间：书架	→	类：书	→	方法：目录</strong></p>
-<h2 id="三-类库"><a href="#三-类库" class="headerlink" title="三.类库"></a>三.类库</h2><p>类库的引用</p>
-<ul>
-<li><p>DLL引用(无源代码，黑盒类库)</p>
-<ul>
-<li><p>在<strong>解决方案</strong>中的<strong>依赖项</strong>右键<strong>添加项目引用</strong>中可以添加以<code>dll</code>为后缀的文件作为类库引用</p>
-</li>
-<li><p>NuGet</p>
-<ul>
-<li>只有DLL没有源代码很危险，比如引用了一个<code>类库</code>，但是这个<code>类库</code>中一些代码还有一些<code>底层的东西</code>没有引用进来导致报错</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>项目引用(有源代码，白盒类库)</p>
-<ul>
-<li>同上，但是是在<code>程序集中</code></li>
-</ul>
-</li>
-</ul>
-<p><img src="/../../../../medias/blog_picture/C#/1.png"></p>
+<p>![[Pasted image 20231119135500.png|300]]<br>$z=H(x)$<br>$\dfrac{\partial z}{x}=\dfrac{\partial F(x)}{\partial x} + \dfrac{\partial x}{\partial x}=\dfrac{\partial F(x)}{\partial x}+1$<br>梯度=$\dfrac{\partial L}{\partial z}\times\dfrac{\partial z}{\partial x}$<br>当$\dfrac{\partial F}{\partial x}$很小的时候，$\dfrac{\partial z}{\partial x}$不会在0的附近</p>
 
                 
             </div>
@@ -688,7 +676,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/01/10/xiao-bai-lei-he-ming-ming-kong-jian/">https://wabbybabb0.github.io/2023/01/10/xiao-bai-lei-he-ming-ming-kong-jian/</a>
+                    <a href="https://wabbybabb0.github.io/2023/11/19/ru-men-convolutional-neural-network-li-hong-yi/">https://wabbybabb0.github.io/2023/11/19/ru-men-convolutional-neural-network-li-hong-yi/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -726,12 +714,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                                    <span class="chip bg-color">闲着没事干</span>
+                                <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                                    <span class="chip bg-color">人工智能</span>
                                 </a>
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C#</span>
+                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                                    <span class="chip bg-color">深度学习</span>
                                 </a>
                             
                         </div>
@@ -905,31 +893,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/01/11/xiao-bai-ji-ben-yuan-su-he-shu-ju-lei-xing/">
+                <a href="/2023/12/27/ru-fen-alexnet-mo-xing-fu-xian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.png" class="responsive-img" alt="小白————基本元素和类型">
+                        <img src="/medias/featureimages/2.png" class="responsive-img" alt="入坟———AlexNet模型复现">
                         
-                        <span class="card-title">小白————基本元素和类型</span>
+                        <span class="card-title">入坟———AlexNet模型复现</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大一咸鱼自学C#
+                            阅读了《Imagenet classification with deep convolutional neural networks》后在b站找了个视频取复现AlexNet模型
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-11
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-12-27
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C/" class="post-category">
-                                    C#
+                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
+                                    人工智能
                                 </a>
                             
                             
@@ -939,12 +927,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                        <span class="chip bg-color">闲着没事干</span>
+                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                        <span class="chip bg-color">人工智能</span>
                     </a>
                     
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C#</span>
+                    <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
+                        <span class="chip bg-color">卷积神经网络</span>
                     </a>
                     
                 </div>
@@ -958,24 +946,24 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/27/ru-tu-at24c02/">
+                <a href="/2023/11/02/hello-world/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="入土————AT24C02">
+                        <img src="/medias/featureimages/7.png" class="responsive-img" alt="Hello World">
                         
-                        <span class="card-title">入土————AT24C02</span>
+                        <span class="card-title">Hello World</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            51单片机学习之AT24C02(因为中途寄了后面没学完)
+                            
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-02
                             </span>
                         <span class="publish-author">
                             
@@ -988,8 +976,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
-                        <span class="chip bg-color">51单片机</span>
+                    <a href="/tags/Typora/">
+                        <span class="chip bg-color">Typora</span>
+                    </a>
+                    
+                    <a href="/tags/Markdown/">
+                        <span class="chip bg-color">Markdown</span>
                     </a>
                     
                 </div>
