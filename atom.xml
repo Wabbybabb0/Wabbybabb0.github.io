@@ -45,6 +45,33 @@
   
   <entry>
     <title>入门————CNN(李宏毅)</title>
+    <link href="https://wabbybabb0.github.io/2023/11/19/ru-men-convolutional-neural-network-li-hong-yi/"/>
+    <id>https://wabbybabb0.github.io/2023/11/19/ru-men-convolutional-neural-network-li-hong-yi/</id>
+    <published>2023-11-19T06:10:00.000Z</published>
+    <updated>2023-12-09T12:50:23.952Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;1-Image-Classification&quot;&gt;&lt;a href=&quot;#1-Image-Classification&quot; class=&quot;headerlink&quot; title=&quot;1 Image Classification&quot;&gt;&lt;/a&gt;1 Image</summary>
+        
+      
+    
+    
+    
+    <category term="人工智能" scheme="https://wabbybabb0.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    
+    <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
+    <category term="深度学习" scheme="https://wabbybabb0.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>入门————CNN(李宏毅)</title>
     <link href="https://wabbybabb0.github.io/2023/11/19/ru-men-cnn-li-hong-yi/"/>
     <id>https://wabbybabb0.github.io/2023/11/19/ru-men-cnn-li-hong-yi/</id>
     <published>2023-11-19T06:10:00.000Z</published>
@@ -529,38 +556,6 @@
     <category term="C语言" scheme="https://wabbybabb0.github.io/tags/C%E8%AF%AD%E8%A8%80/"/>
     
     <category term="链表" scheme="https://wabbybabb0.github.io/tags/%E9%93%BE%E8%A1%A8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>小白————连续储存数组</title>
-    <link href="https://wabbybabb0.github.io/2022/11/13/xiao-bai-lian-xu-chu-cun-shu-zu/"/>
-    <id>https://wabbybabb0.github.io/2022/11/13/xiao-bai-lian-xu-chu-cun-shu-zu/</id>
-    <published>2022-11-13T06:20:00.000Z</published>
-    <updated>2023-07-27T07:10:27.473Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;一-数组&quot;&gt;&lt;a href=&quot;#一-数组&quot; class=&quot;headerlink&quot; title=&quot;一.数组&quot;&gt;&lt;/a&gt;一.数组&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;存放类型相同，大小相等的元素&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&quot;二-代码部分&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="C语言" scheme="https://wabbybabb0.github.io/categories/C%E8%AF%AD%E8%A8%80/"/>
-    
-    
-    <category term="C语言" scheme="https://wabbybabb0.github.io/tags/C%E8%AF%AD%E8%A8%80/"/>
-    
-    <category term="数组" scheme="https://wabbybabb0.github.io/tags/%E6%95%B0%E7%BB%84/"/>
-    
-    <category term="指针" scheme="https://wabbybabb0.github.io/tags/%E6%8C%87%E9%92%88/"/>
     
   </entry>
   
