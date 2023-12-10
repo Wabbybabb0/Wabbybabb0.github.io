@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小白————类和命名空间, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="读写文件, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小白————类和命名空间 | Wabbybabbo的摸鱼圣地</title>
+    <title>读写文件 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小白————类和命名空间</h1>
+                    <h1 class="description center-align post-title">读写文件</h1>
                 </div>
             </div>
         </div>
@@ -522,12 +522,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                                <span class="chip bg-color">闲着没事干</span>
+                            <a href="/tags/C%E8%AF%AD%E8%A8%80/">
+                                <span class="chip bg-color">C语言</span>
                             </a>
                         
-                            <a href="/tags/C/">
-                                <span class="chip bg-color">C#</span>
+                            <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                                <span class="chip bg-color">闲着没事干</span>
                             </a>
                         
                     </div>
@@ -538,8 +538,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/C/" class="post-category">
-                                C#
+                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
+                                C语言
                             </a>
                         
                     </div>
@@ -551,21 +551,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-01-10
+                    2023-02-10
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-27
+                    2023-12-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    486
+                    783
                 </div>
                 
 
@@ -590,78 +590,87 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一-类"><a href="#一-类" class="headerlink" title="一.类"></a>一.类</h2><p>是对<code>现实世界事物</code>进行<strong>抽象</strong>所得到的结果</p>
-<h4 id="1-类和对象的关系👇"><a href="#1-类和对象的关系👇" class="headerlink" title="1.类和对象的关系👇"></a>1.类和对象的关系👇</h4><ul>
-<li><p><code>对象</code>也叫<code>实例</code>，是<code>类</code>经过“实例化”后得到的内存中是实体</p>
-<ul>
-<li>e.g. “飞机”和“一架飞机”，前者是概念，后者是实体</li>
-<li>e.g. 蓝图和建筑</li>
-</ul>
-</li>
-<li><p><code>实例化</code>，使用<code>new</code>操作符创建类的实例</p>
-<ul>
-<li><pre><code class="c#">new + 类名();//实例化格式
-<pre class="line-numbers language-none"><code class="language-none">
-* ```c#
-  (new Form()).ShowDialog();//实例化例子<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</code></pre>
-</li>
-</ul>
-</li>
-<li><p>引用变量与实例的关系</p>
-<ul>
-<li><pre><code class="c#">
-</code></pre>
-</li>
-</ul>
-<p>  Form myForm;				//引用变量	小朋友<br>  myForm = new Form();		//实例化	 =小朋友牵着气球<br>  myForm.Text = “My Form!”;	//标题文本<br>  myForm.ShowDialog();		//显示表单</p>
-<pre><code>
-* 引用变量与实例的关系可以视作小朋友和气球的关系
-</code></pre>
-</li>
-</ul>
-<h4 id="2-类的三大成员"><a href="#2-类的三大成员" class="headerlink" title="2.类的三大成员"></a>2.类的三大成员</h4><ul>
-<li><strong>属性Property</strong><ul>
-<li>存储数据，组合起来表示类或对象当前的状态</li>
-<li>e.g. 身高很高，财富充裕，长相不错，组合为高富帅</li>
-</ul>
-</li>
-<li><strong>方法Method</strong><ul>
-<li>表示类或对象“能做什么”</li>
-</ul>
-</li>
-<li><strong>事件Event</strong></li>
-</ul>
-<h3 id="3-静态成员与实例成员"><a href="#3-静态成员与实例成员" class="headerlink" title="3.静态成员与实例成员"></a>3.静态成员与实例成员</h3><ul>
-<li><strong>静态Static</strong>成员表示它是<code>类的成员</code></li>
-<li><strong>实例</strong>成员表示它是<code>对象的成员</code></li>
-<li><strong>绑定Bing</strong>指的是编译器如何把一个成员与类或对象关联起来<ul>
-<li>**.**成员访问操作符</li>
-</ul>
-</li>
-</ul>
-<h2 id="二-名称空间"><a href="#二-名称空间" class="headerlink" title="二.名称空间"></a>二.名称空间</h2><p>把类用良好的结构组合在一起，以树形结构组织类</p>
-<p><strong>包：某市	→	类库：图书馆	→	名称空间：书架	→	类：书	→	方法：目录</strong></p>
-<h2 id="三-类库"><a href="#三-类库" class="headerlink" title="三.类库"></a>三.类库</h2><p>类库的引用</p>
-<ul>
-<li><p>DLL引用(无源代码，黑盒类库)</p>
-<ul>
-<li><p>在<strong>解决方案</strong>中的<strong>依赖项</strong>右键<strong>添加项目引用</strong>中可以添加以<code>dll</code>为后缀的文件作为类库引用</p>
-</li>
-<li><p>NuGet</p>
-<ul>
-<li>只有DLL没有源代码很危险，比如引用了一个<code>类库</code>，但是这个<code>类库</code>中一些代码还有一些<code>底层的东西</code>没有引用进来导致报错</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p>项目引用(有源代码，白盒类库)</p>
-<ul>
-<li>同上，但是是在<code>程序集中</code></li>
-</ul>
-</li>
-</ul>
-<p><img src="/../../../../medias/blog_picture/C#/1.png"></p>
+                <h3 id="一-文件的当前位置指针"><a href="#一-文件的当前位置指针" class="headerlink" title="一.文件的当前位置指针"></a>一.文件的当前位置指针</h3><p>文件结构类型<strong>FILE</strong></p>
+<p>其中FILE(结构体)包含</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span>_ptr<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><strong>ptr</strong>表示当前的位置指针，指向当前的读写位置</p>
+<h3 id="二-跟踪文件的当前位置指针"><a href="#二-跟踪文件的当前位置指针" class="headerlink" title="二.跟踪文件的当前位置指针"></a>二.跟踪文件的当前位置指针</h3><h4 id="ftell函数"><a href="#ftell函数" class="headerlink" title="ftell函数"></a>ftell函数</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">long</span> <span class="token function">ftell</span><span class="token punctuation">(</span>FILE <span class="token operator">*</span>filepointer<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果操作成功，返回filepointer文件地当前位置指针，<code>即相对于文件开头的位移量(字节数)</code></p>
+<p>否则返回-1L</p>
+<h4 id="feof函数"><a href="#feof函数" class="headerlink" title="feof函数"></a>feof函数</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">feof</span><span class="token punctuation">(</span>FILE <span class="token operator">*</span>filepointer<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>测试filepointer文件地位置指针是否指向文件的末尾</p>
+<p>如果filepointer文件的位置指针已指向文件的末尾，则返回逻辑真，否则返回逻辑假</p>
+<h3 id="三-定位文件的当前位置指针"><a href="#三-定位文件的当前位置指针" class="headerlink" title="三.定位文件的当前位置指针"></a>三.定位文件的当前位置指针</h3><h4 id="rewind函数"><a href="#rewind函数" class="headerlink" title="rewind函数"></a>rewind函数</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">rewind</span><span class="token punctuation">(</span>FILE <span class="token operator">*</span>filepointer<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>rewind函数将filepointer文件的当前位置指针强行定位到文件的开头</p>
+<h4 id="fseek函数"><a href="#fseek函数" class="headerlink" title="fseek函数"></a>fseek函数</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fseek</span><span class="token punctuation">(</span>FILE <span class="token operator">*</span>filepointer<span class="token punctuation">,</span> <span class="token keyword">long</span> offest<span class="token punctuation">,</span> <span class="token keyword">int</span> origin<span class="token punctuation">)</span>
+<span class="token comment">//filepointer是文件指针</span>
+<span class="token comment">/**
+*offset是偏移量，类型为long int
+文件开头------SEEK_SET--0
+文件当前位置---SEEK_CUR--1
+文件末尾------SEEK_END--2
+//origin是起始位置，类型为int</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>fseek将filepointer文件的当前位置指针移动到<code>距离origin的offset位置处</code></p>
+<p>offset&gt;0，表示新位置在origin后，反之亦然</p>
+<p>若操作成功则返回0，否则返回非0</p>
+<h3 id="四-文件的打开与关闭"><a href="#四-文件的打开与关闭" class="headerlink" title="四.文件的打开与关闭"></a>四.文件的打开与关闭</h3><h4 id="fopen-函数"><a href="#fopen-函数" class="headerlink" title="fopen()函数"></a>fopen()函数</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c">FILE <span class="token operator">*</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>filename<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>mode<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//filename是要打开的文件名，文件名前可以带路径</span>
+<span class="token comment">//mode是打开方式</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>如果文件打开成功，则返回指向该文件的指针</p>
+<p>如果文件打开失败，则返回空指针NULL</p>
+<p>e.g.</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">FILE <span class="token operator">*</span>fp<span class="token punctuation">;</span>
+fp <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"f1.txt"</span><span class="token punctuation">,</span><span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//推荐写法</span>
+<span class="token comment">//r:文件一定要已存在</span>
+fp <span class="token operator">=</span> <span class="token function">fopen</span><span class="token punctuation">(</span><span class="token string">"c:\\aaa\\f1.txt"</span><span class="token punctuation">,</span> <span class="token string">"w+"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//不推荐写法</span>
+<span class="token comment">//w+:若文件不存在则创建文件，可读可写</span>
+<span class="token keyword">char</span> filename<span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"file\\f1.txt"</span><span class="token punctuation">;</span>
+<span class="token comment">//存储到当前目录的file子目录下</span>
+fp <span class="token operator">=</span> <span class="token function">open</span><span class="token punctuation">(</span>filename<span class="token punctuation">,</span> <span class="token string">"a+"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//a+:若文件不存在则创建文件，可读可写</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h4 id="fclose-函数"><a href="#fclose-函数" class="headerlink" title="fclose()函数"></a>fclose()函数</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fclose</span><span class="token punctuation">(</span>FILE <span class="token operator">*</span>filepointer<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>如果正常关闭，返回0，否则返回非0</p>
+<h3 id="五-文件读写"><a href="#五-文件读写" class="headerlink" title="五.文件读写"></a>五.文件读写</h3><h4 id="fgetc函数—字符方式文件读写"><a href="#fgetc函数—字符方式文件读写" class="headerlink" title="fgetc函数—字符方式文件读写"></a>fgetc函数—字符方式文件读写</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fgetc</span><span class="token punctuation">(</span>FILE <span class="token operator">*</span>filepointer<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>fgetc从filepointer文件的<code>当前位置</code>读出一个字符，同时将文件的<code>位置指针_ptr</code>后移一个字节。读出的字节一般要保存到一个字符型变量中</p>
+<p>如果读取成功，返回<strong>读取的字节值</strong>；</p>
+<p>如果读到文件尾或出错，返回<strong>EOF</strong></p>
+<h4 id="fgets函数—字符串方式文件读写"><a href="#fgets函数—字符串方式文件读写" class="headerlink" title="fgets函数—字符串方式文件读写"></a>fgets函数—字符串方式文件读写</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">fgets</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>str<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">,</span> FILE <span class="token operator">*</span>filepointer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//*str是读出的字符串要存放的地方</span>
+<span class="token comment">//n:读取长度为n-1，在末尾加上'\0'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+<p>读取成功，返回指向字符串的指针</p>
+<p>失败或出错，返回NULL</p>
+<h4 id="fprintf函数和fscanf函数—格式化读取"><a href="#fprintf函数和fscanf函数—格式化读取" class="headerlink" title="fprintf函数和fscanf函数—格式化读取"></a>fprintf函数和fscanf函数—格式化读取</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fscanf</span><span class="token punctuation">(</span>FILE <span class="token operator">*</span>filepointer<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span>format<span class="token punctuation">[</span><span class="token punctuation">,</span>adress<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">fprintf</span><span class="token punctuation">(</span>FILE <span class="token operator">*</span>filepointer<span class="token punctuation">,</span><span class="token keyword">char</span> <span class="token operator">*</span>format<span class="token punctuation">[</span><span class="token punctuation">,</span>adress<span class="token punctuation">,</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>e.g.</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> x<span class="token punctuation">;</span>
+<span class="token keyword">char</span> <span class="token operator">*</span>str<span class="token punctuation">;</span>
+<span class="token function">fscanf</span><span class="token punctuation">(</span>fp<span class="token punctuation">,</span><span class="token string">"%d%s"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>x<span class="token punctuation">,</span>str<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//从文件中读取</span>
+
+<span class="token keyword">int</span> y<span class="token punctuation">;</span>
+<span class="token keyword">float</span> y <span class="token operator">=</span><span class="token number">5.8</span><span class="token punctuation">;</span>
+<span class="token function">fprintf</span><span class="token punctuation">(</span>fp<span class="token punctuation">,</span><span class="token string">"%d,%6.2f"</span><span class="token punctuation">,</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//写入文件中</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>失败返回EOF</p>
+<h4 id="fwrite函数和fread函数—二进制方式文件读写"><a href="#fwrite函数和fread函数—二进制方式文件读写" class="headerlink" title="fwrite函数和fread函数—二进制方式文件读写"></a>fwrite函数和fread函数—二进制方式文件读写</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token function">fwrite</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">,</span><span class="token keyword">unsigned</span> size<span class="token punctuation">,</span> <span class="token keyword">unsigned</span> n<span class="token punctuation">,</span> FILE <span class="token operator">*</span>filepointer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//ptr:数据存储位置</span>
+<span class="token comment">//size:数据所占字节数</span>
+<span class="token comment">//n:写入n个数据</span>
+<span class="token comment">//filepointer:向这个文件写</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>fread同理</p>
 
                 
             </div>
@@ -688,7 +697,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/01/10/xiao-bai-lei-he-ming-ming-kong-jian/">https://wabbybabb0.github.io/2023/01/10/xiao-bai-lei-he-ming-ming-kong-jian/</a>
+                    <a href="https://wabbybabb0.github.io/2023/02/10/wen-jian/">https://wabbybabb0.github.io/2023/02/10/wen-jian/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -726,12 +735,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                                    <span class="chip bg-color">闲着没事干</span>
+                                <a href="/tags/C%E8%AF%AD%E8%A8%80/">
+                                    <span class="chip bg-color">C语言</span>
                                 </a>
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C#</span>
+                                <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                                    <span class="chip bg-color">闲着没事干</span>
                                 </a>
                             
                         </div>
@@ -919,31 +928,31 @@
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/01/11/xiao-bai-ji-ben-yuan-su-he-shu-ju-lei-xing/">
+                <a href="/2023/03/25/ru-fen-qg-kao-he-zhi-xiao-zu-zuo-ye/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.png" class="responsive-img" alt="小白————基本元素和类型">
+                        <img src="/medias/featureimages/1.png" class="responsive-img" alt="入坟————QG工作室训练营————小组作业仓库">
                         
-                        <span class="card-title">小白————基本元素和类型</span>
+                        <span class="card-title">入坟————QG工作室训练营————小组作业仓库</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大一咸鱼自学C#
+                            直接把哥们给充实了
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-11
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-03-25
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C/" class="post-category">
-                                    C#
+                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
+                                    人工智能
                                 </a>
                             
                             
@@ -953,12 +962,20 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                        <span class="chip bg-color">闲着没事干</span>
+                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                        <span class="chip bg-color">人工智能</span>
                     </a>
                     
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C#</span>
+                    <a href="/tags/QG%E8%80%83%E6%A0%B8/">
+                        <span class="chip bg-color">QG考核</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%B3%A2%E5%A3%AB%E9%A1%BF%E6%88%BF%E4%BB%B7%E9%A2%84%E6%B5%8B/">
+                        <span class="chip bg-color">波士顿房价预测</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%B1%E8%AF%86/">
+                        <span class="chip bg-color">多智能体共识</span>
                     </a>
                     
                 </div>
@@ -972,29 +989,33 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/27/ru-tu-at24c02/">
+                <a href="/2023/02/08/wan-nian-li/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="入土————AT24C02">
+                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="万年历">
                         
-                        <span class="card-title">入土————AT24C02</span>
+                        <span class="card-title">万年历</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            51单片机学习之AT24C02(因为中途寄了后面没学完)
+                            大云屋软件组考核题之一，寒假没事做于是试着写一个
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-27
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-08
                             </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            WB
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
+                                    C语言
+                                </a>
+                            
                             
                         </span>
                     </div>
@@ -1002,8 +1023,12 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
-                        <span class="chip bg-color">51单片机</span>
+                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
+                        <span class="chip bg-color">C语言</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                        <span class="chip bg-color">闲着没事干</span>
                     </a>
                     
                 </div>

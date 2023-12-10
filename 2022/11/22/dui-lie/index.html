@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小白————操作符, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="队列, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小白————操作符 | Wabbybabbo的摸鱼圣地</title>
+    <title>队列 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/16.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小白————操作符</h1>
+                    <h1 class="description center-align post-title">队列</h1>
                 </div>
             </div>
         </div>
@@ -522,18 +522,27 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                                <span class="chip bg-color">闲着没事干</span>
+                            <a href="/tags/C%E8%AF%AD%E8%A8%80/">
+                                <span class="chip bg-color">C语言</span>
                             </a>
                         
-                            <a href="/tags/C/">
-                                <span class="chip bg-color">C#</span>
+                            <a href="/tags/%E9%98%9F%E5%88%97/">
+                                <span class="chip bg-color">队列</span>
                             </a>
                         
                     </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
+                                C语言
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -542,21 +551,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-01-13
+                    2022-11-22
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-27
+                    2023-12-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    753
                 </div>
                 
 
@@ -581,399 +590,190 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="一-操作符"><a href="#一-操作符" class="headerlink" title="一.操作符"></a>一.操作符</h2><p><strong>操作符函数是方法函数的简记法</strong></p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace CreatOperator
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Person person1 = new Person();
-            Person person2 = new Person();
-            person1.Name = "Deer";
-            person2.Name = "Deer's wife";
-            List&lt;Person&gt; nation = Person.GetMarry(person1,person2);
-            //上面这行改成
-            //List&lt;Person&gt; nation = person1 + person2;
-
-            foreach (var p in nation)
-            {
-                Console.WriteLine(p.Name);
-            }
-        }
-    }
-    
-    class Person
-    {
-        public string Name;
-
-        public static List&lt;Person&gt;GetMarry(Person p1,Person p2)
-        //上面这行改成 public static List&lt;Person&gt; operator+(Person p1,Person p2)
-        {
-            List&lt;Person&gt; people = new List&lt;Person&gt;();
-            people.Add(p1);
-            people.Add(p2);
-            for (int i = 0; i &lt; 11; i++)
-            {
-                Person child = new Person();
-                child.Name = p1.Name + "&amp;" + p2.Name + "s child";
-                people.Add(child);
-            }
-            return people;
-        }
-    }
-}
-
-//两种方法的结果一样<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>只有圆括号来提高优先级</p>
-<h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int[] myIntArray = new int[]{};//[]填数组大小，{}(初始化器)填具体数值<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h4 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Type t = typeof(int);
-Console.WriteLine(t.Namespace);
-Console.WriteLine(t.FullName);
-Console.WriteLine(t.Name);
-/**
-System
-System.Int32
-Int32
-*/<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="default"><a href="#default" class="headerlink" title="default"></a>default</h4><p>获取一个类型的默认值</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = default(int);
-Console.WriteLine(x);
-//0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = default(Form);
-Console.WriteLine(myForm==null);
-//true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">class Program
-{
-	static void Main(string[] args)
-    {
-        Level level = default(Level);
-        Console.WriteLine(level);
-    }
-}
-//①
-enum Level
-{
-	Low,
-	Mid,
-	High
-}
-//Low
-
-//②
-enum Level
-{
-	Mid,
-	Low,
-	High
-}
-//Mid
-
-//③
-enum Level
-{
-	Mid = 1,
-	Low = 0,
-	High = 2
-}
-//Low
-
-//④
-enum Level
-{
-	Low = 1,
-	Mid = 2,
-	High = 3
-}
-//0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="var"><a href="#var" class="headerlink" title="var"></a>var</h4><p>声明隐式类型变量</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = 100;//显式
-
-var y = 100;//隐式	根据赋的值“100”来给y判断类型
-Console.WriteLine(y.GetType().Name);
-//Int32<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="new"><a href="#new" class="headerlink" title="new"></a>new</h4><ul>
-<li>调用实例构造器</li>
+                <h1 id="一-概念"><a href="#一-概念" class="headerlink" title="一.概念"></a>一.概念</h1><h2 id="1-前front-后rear"><a href="#1-前front-后rear" class="headerlink" title="1.前front 后rear"></a>1.前front 后rear</h2><ul>
+<li><p>出队，从头出</p>
+</li>
+<li><p>入队，从尾入</p>
+</li>
 </ul>
-<p>帮助我们在内存当中<code>创建类型的实例</code></p>
-<p>有<code>()</code>时表示<code>调用它的实例构造器</code></p>
-<p>如果在new操作符<code>左边有赋值符号</code>的话，那么new操作符会把自己拿到的这个<code>实例的内存地址</code>通过<code>赋值操作符</code>交给负责访问这个实例的<code>变量</code></p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = new Form();
-//myForm为该实例的变量<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
+<h2 id="2-分类"><a href="#2-分类" class="headerlink" title="2.分类"></a>2.分类</h2><p>链式队列，静态队列，循环队列</p>
 <ul>
-<li>调用实例的初始化器</li>
+<li>链式队列–用链表实现</li>
+<li>静态队列–用数组实现，通常都必须是循环队列</li>
 </ul>
-<p>花括号<code>{}</code>内可以为这个实例的属性设置它的值，可以通过<code>,</code>来同时设置多个属</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = new Form(){Text."Hello"};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>👆👇</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = new Form();
-myForm.Text = "Hello"; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
+<h2 id="3-问题"><a href="#3-问题" class="headerlink" title="3.问题"></a>3.问题</h2><h3 id="①静态队列为什么必须是循环队列"><a href="#①静态队列为什么必须是循环队列" class="headerlink" title="①静态队列为什么必须是循环队列"></a>①静态队列为什么<strong>必须是循环队列</strong></h3><p>r→							r→		</p>
+<p>​		d								d</p>
+<p>​		c						f→	c</p>
+<p>​		b		==&gt;			  	b</p>
+<p>f→   a							 	a</p>
+<p>👆a和b出队之后，对于数组a来说，a[0]、a[1]这两个空间就被浪费了，因为f和r一直在往上移动，所以相当于a[0]、a[1]不能再使用了。用传统数组来实现队列，无论是入队还是出队，参数都只能增不能减</p>
+<h3 id="②循环队列需要几个参数及各个参数的含义"><a href="#②循环队列需要几个参数及各个参数的含义" class="headerlink" title="②循环队列需要几个参数及各个参数的含义"></a>②循环队列需要<strong>几个参数</strong>及各个<strong>参数的含义</strong></h3><ul>
+<li><p>需要<strong>2个</strong>参数来确定 <strong>front</strong> <strong>rear</strong></p>
+</li>
+<li><p>2个参数在不同场合有<strong>不同的的定义</strong></p>
 <ul>
-<li>一次性访问，没必要创建变量访问实例</li>
-</ul>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">new Form(){Text = "Hello"}.ShowDialog();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>👆👇</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = new Form();
-myForm.Text = "Hello";
-myForm.ShowDialog();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>匿名类型创建对象</li>
-</ul>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">var person = new{Name = "Mr.Okay", Age = 18};//自动判断类型
-Console.WriteLine(person.Age);
-Console.WriteLine(person.Name);
-Console.WriteLine(person.GetType().Name);
-//Mr.Okay
-//18
-//&lt;&gt;f__AnonymousType0`2
-//类型的解释：
-//&lt;&gt;f__AnonymousType是约定的一个前缀
-//0指的是在程序中创建的第一个
-//`2指的是这个类型是一个泛型类，构成这个类型时需要两个类型来构成它，一个是string，一个是int<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>子类隐藏父类(关键字)(了解即可)</li>
-</ul>
-<h4 id="checked-unchecked"><a href="#checked-unchecked" class="headerlink" title="checked&amp;unchecked"></a>checked&amp;unchecked</h4><p>检查是否异常</p>
-<h4 id="取非操作符"><a href="#取非操作符" class="headerlink" title="!取非操作符"></a>!取非操作符</h4><p>实际应用，检查</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace CreatOperator
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Student stu = new Student(null);
-            Console.WriteLine(stu.Name);
-        }
-    }
-
-    class Student
-    {
-        public string Name;
-        public Student(string initName)
-        {
-            if(!string.IsNullOrEmpty(initName))
-            {
-                this.Name = initName;
-            }
-            else 
-            {
-                throw new ArgumentException("initName cannot be null or empty");
-            }
-        }
-    }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="T-x强制转换类型操作符"><a href="#T-x强制转换类型操作符" class="headerlink" title="(T)x强制转换类型操作符"></a>(T)x强制转换类型操作符</h4><h2 id="二-数据类型转换"><a href="#二-数据类型转换" class="headerlink" title="二.数据类型转换"></a>二.数据类型转换</h2><h4 id="convert"><a href="#convert" class="headerlink" title="convert"></a>convert</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">string str1 = Console.ReadLine();
-string str2 = Console.ReadLine();
-int x = Convert.ToInt32(str1);
-int y = Convert.ToInt32(str2);
-Console.WriteLine(str1 + str2);
-Console.WriteLine(x + y);
-
-//12
-//34
-//1234
-//46s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="隐式类型转换"><a href="#隐式类型转换" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h4><ul>
-<li>不丢失精度的转换</li>
-</ul>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = int.MaxValue;
-long y = x;
-Console.WriteLine(y);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>C#语言数据文档6.1.2有隐式数值转换</p>
-<p><img src="/../../../../medias/blog_picture/C#/5.png"></p>
-<ul>
-<li>子类向父类的转换</li>
-</ul>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace CreatOperator
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Teacher t = new Teacher();
-            Human h = t;//h仍只有Eat和Animal
-            Animal a = h;//访问的是Animal，引用不了实例h，只有Eat
-            a.Eat();
-        }
-    }
-	//父类
-    class Animal
-    {
-        public void Eat()
-        {
-            Console.WriteLine("Eating");
-        }
-    }
-	//子类
-    class Human:Animal
-    {
-        public void Think()
-        {
-            Console.WriteLine("Who am I?");
-        }
-    }
-	//子类的子类
-    class Teacher : Human
-    {
-        public void Teach()
-        {
-            Console.WriteLine("I teach programming.");
-        }
-    }
-
-}
-//Eating<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<ul>
-<li>装箱</li>
-</ul>
-<h4 id="显式类型转换"><a href="#显式类型转换" class="headerlink" title="显式类型转换"></a>显式类型转换</h4><ul>
-<li>有可能丢失精度的转换<strong>cast</strong>(铸造)</li>
-</ul>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Console.WriteLine(ushort.MaxValue);
-uint x = 65536;
-ushort y = (ushort)x;//强制把较大的值装到小的空间里
-Console.WriteLine(y);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>拆箱</li>
-<li>convert<ul>
-<li>数值类型往字符串类型转换</li>
+<li><p>场合：</p>
+<blockquote>
+<p> 1）队列初始化</p>
+<p>​		front和rear的值都是<strong>零</strong></p>
+<p>2）队列非空</p>
+<p>​		front代表的是队列的<strong>第一个元素</strong></p>
+<p>​		rear代表的是队列的<strong>最后一个有效元素的下一个</strong></p>
+<p>3）队列空</p>
+<p>​		front和rear的<strong>值相等</strong>，但不一定是零</p>
+</blockquote>
+</li>
 </ul>
 </li>
 </ul>
-<h4 id="类型转换操作符"><a href="#类型转换操作符" class="headerlink" title="类型转换操作符"></a>类型转换操作符</h4><p>显式类型转换是一个目标类型的实例的构造器，写在被转换的这个数据类型里</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace CreatOperator
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Stone stone = new Stone();
-            stone.Age = 5000;
-            Monkey wukongSun = (Monkey)stone;
-            //目标是把一个Stone类型的转变为Monkey类型的
-            Console.WriteLine(wukongSun.Age);
-        }
-    }
-    class Stone
-    {
-        public int Age;
-        //显式类型转换是一个目标类型的实例的构造器，写在被转换的这个数据类型里
-        //Monkey(Stone stone)就是一个构造器
-        public static explicit operator Monkey(Stone stone)
-        {
-            Monkey m = new Monkey();
-            m.Age = stone.Age / 500;//构建Monkey和Stone的关系
-            return m;
-        }
-    }
-
-    class Monkey
-    {
-        public int Age;
-    }
-}
-//10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>对比隐式类型转换</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace CreatOperator
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Stone stone = new Stone();
-            stone.Age = 5000;
-            Monkey wukongSun = stone;		//此处去掉了(Monkey)stone的(Monkey)
-            Console.WriteLine(wukongSun.Age);
-        }
-    }
-    class Stone
-    {
-        public int Age;
-        public static implicit operator Monkey(Stone stone)//此处将"explicit"改为"implicit"
-        {
-            Monkey m = new Monkey();
-            m.Age = stone.Age / 500;
-            return m;
-        }
-    }
-
-    class Monkey
-    {
-        public int Age;
-    }
-}
-//10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="is"><a href="#is" class="headerlink" title="is"></a>is</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Stone stone = new Stone();
-var result = stone is Stone;//检验的是变量所引用的实例
-Console.WriteLine(result.GetType().FullName);
-Console.WriteLine(result);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="Nullable可空类型"><a href="#Nullable可空类型" class="headerlink" title="Nullable<>可空类型"></a>Nullable&lt;&gt;可空类型</h4><p>例子：一个同学没交作业，但是不是那种做的极差的0分，想给他空着</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Nullable&lt;int&gt; x = null;//没交作业
-x = 100;//交了作业<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>👆👇</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int?x = null;
-x = 100;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>但是如果这个同学一直没交作业，期末需要录入成绩时给0分</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int?x = null;
-int y = x??0;//赋0分<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="ifelse的简写"><a href="#ifelse的简写" class="headerlink" title="?:(ifelse的简写)"></a>?:(ifelse的简写)</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = 80;
-string str = string.Empty;
-str = (x &gt;= 60)?"Pass":"Failed";<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p>👆👇</p>
-<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = 80;
-string str;
-if(x&gt;60)
-{
-    str = "Pass";
-}
+<h3 id="③循环队列出、入队伪算法讲解"><a href="#③循环队列出、入队伪算法讲解" class="headerlink" title="③循环队列出、入队伪算法讲解"></a>③循环队列<strong>出、入队伪算法</strong>讲解</h3><h4 id="1-入队"><a href="#1-入队" class="headerlink" title="1.入队"></a>1.入队</h4><ul>
+<li><p>将值存入r所代表的位置</p>
+</li>
+<li><p>r=(r+1)%数组的长度</p>
+</li>
+</ul>
+<h4 id="2-出队"><a href="#2-出队" class="headerlink" title="2.出队"></a>2.出队</h4><ul>
+<li>f=(f+1)%数组的长度</li>
+</ul>
+<h3 id="④如何判断循环队列是否为空、已满"><a href="#④如何判断循环队列是否为空、已满" class="headerlink" title="④如何判断循环队列是否为空、已满"></a>④如何判断循环队列是否为<strong>空、已满</strong></h3><h4 id="1-空"><a href="#1-空" class="headerlink" title="1.空"></a>1.空</h4><ul>
+<li>f=r</li>
+</ul>
+<h4 id="2-满"><a href="#2-满" class="headerlink" title="2.满"></a>2.满</h4><ul>
+<li><p>Ⅰ多增加一个标识参数(通常不用这个)</p>
+</li>
+<li><p>Ⅱ少用一个元素。本来可以放n个元素，<strong>定义n-1个是满的</strong>(通常使用这种方式)</p>
+<ul>
+<li><p>如何判断队列已满：r和f的值紧挨着，则队列已满</p>
+</li>
+<li><pre><code class="c">if((r+1)%数组的长度==f)
+    //已满
 else
-{
-    str = "Failed";
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    //不满
+<pre class="line-numbers language-none"><code class="language-none">
 
+# 二.代码
+
+```c
+#include&lt;stdio.h&gt;
+#include&lt;stdbool.h&gt;
+#include&lt;malloc.h&gt;
+#include&lt;stdlib.h&gt;
+
+typedef struct Queue{
+	int *pBase;
+	int front;
+	int rear;
+}QUEUE,*PQUEUE;
+
+void init(PQUEUE);			//初始化 
+bool fullQueue(PQUEUE);		//判断队列是否满 
+bool enQueue(PQUEUE,int);	//入队 
+bool emptyQueue(PQUEUE);	//判断队列是否为空
+void traverse(PQUEUE);		//遍历
+bool outQueue(PQUEUE,int*);	//出队 
+
+int main()
+{
+	//int val;
+	int *pVal=(int*)malloc(sizeof(int)*4);
+	 
+	
+	QUEUE Q;
+	init(&amp;Q);
+	enQueue(&amp;Q,1);
+	enQueue(&amp;Q,2);
+	enQueue(&amp;Q,3);
+	enQueue(&amp;Q,4);
+	enQueue(&amp;Q,5);
+	enQueue(&amp;Q,6);
+	enQueue(&amp;Q,7);
+	
+	traverse(&amp;Q);
+	
+	if(outQueue(&amp;Q,pVal))
+		printf("出队的数字是:%d\n",*pVal);
+	//if (outQueue(&amp;Q,&amp;val))
+		//printf("出队的数字是%d\n",val);
+	else
+		printf("出队失败！\n"); 
+	
+	traverse(&amp;Q);
+	free(pVal);
+	pVal=NULL;
+	
+	return 0;
+}
+
+void init(PQUEUE pQ)
+{
+	pQ-&gt;pBase=(int*)malloc(sizeof(int)*6);
+	pQ-&gt;front=0;
+	pQ-&gt;rear=0;
+}
+
+bool fullQueue(PQUEUE pQ)
+{
+	if((pQ-&gt;rear+1)%6==pQ-&gt;front)
+		return true;
+	else
+		return false;
+}
+
+bool enQueue(PQUEUE pQ,int val)
+{
+	if(fullQueue(pQ))
+		return false;
+	else
+	{
+		pQ-&gt;pBase[pQ-&gt;rear]=val;
+		pQ-&gt;rear=(pQ-&gt;rear+1)%6;
+	}
+}
+
+bool emptyQueue(PQUEUE pQ)
+{
+	if(pQ-&gt;rear==pQ-&gt;front)
+		return true;
+	else
+		return false;
+}
+
+void traverse(PQUEUE pQ)
+{
+	if(emptyQueue(pQ))
+	{
+		printf("队列为空\n");
+		exit(-1);
+	}
+	else
+	{
+		int i=pQ-&gt;front;
+		while(pQ-&gt;rear!=i)
+		{
+			printf("%d",pQ-&gt;pBase[i]); 
+			i=(i+1)%6;
+		}
+		printf("\n");
+	}
+	return;
+}
+
+bool outQueue(PQUEUE pQ,int *pVal)
+{
+	if(emptyQueue(pQ))
+		return false;
+	else
+	{
+		*pVal=pQ-&gt;pBase[pQ-&gt;front];
+		pQ-&gt;front=(pQ-&gt;front+1)%6;
+		return true;
+	}
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</code></pre>
+</li>
+</ul>
+</li>
+</ul>
 
                 
             </div>
@@ -1000,7 +800,7 @@ else
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/01/13/xiao-bai-cao-zuo-fu/">https://wabbybabb0.github.io/2023/01/13/xiao-bai-cao-zuo-fu/</a>
+                    <a href="https://wabbybabb0.github.io/2022/11/22/dui-lie/">https://wabbybabb0.github.io/2022/11/22/dui-lie/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -1038,12 +838,12 @@ else
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                                    <span class="chip bg-color">闲着没事干</span>
+                                <a href="/tags/C%E8%AF%AD%E8%A8%80/">
+                                    <span class="chip bg-color">C语言</span>
                                 </a>
                             
-                                <a href="/tags/C/">
-                                    <span class="chip bg-color">C#</span>
+                                <a href="/tags/%E9%98%9F%E5%88%97/">
+                                    <span class="chip bg-color">队列</span>
                                 </a>
                             
                         </div>
@@ -1231,24 +1031,24 @@ else
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/01/21/ru-men-firtgame/">
+                <a href="/2022/11/27/ru-tu-at24c02/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.png" class="responsive-img" alt="入门————FirstGame笔记">
+                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="入土————AT24C02">
                         
-                        <span class="card-title">入门————FirstGame笔记</span>
+                        <span class="card-title">入土————AT24C02</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大一咸鱼学习做个小游戏
+                            51单片机学习之AT24C02(因为中途寄了后面没学完)
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-21
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-27
                         </span>
                         <span class="publish-author">
                             
@@ -1257,6 +1057,14 @@ else
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
+                        <span class="chip bg-color">51单片机</span>
+                    </a>
+                    
                 </div>
                 
             </div>
@@ -1268,31 +1076,31 @@ else
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/01/11/xiao-bai-ji-ben-yuan-su-he-shu-ju-lei-xing/">
+                <a href="/2022/11/20/zhan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.png" class="responsive-img" alt="小白————基本元素和类型">
+                        <img src="/medias/featureimages/10.png" class="responsive-img" alt="栈">
                         
-                        <span class="card-title">小白————基本元素和类型</span>
+                        <span class="card-title">栈</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大一咸鱼自学C#
+                            大一小白WB粗略学习栈
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-11
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-20
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C/" class="post-category">
-                                    C#
+                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
+                                    C语言
                                 </a>
                             
                             
@@ -1302,12 +1110,12 @@ else
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                        <span class="chip bg-color">闲着没事干</span>
+                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
+                        <span class="chip bg-color">C语言</span>
                     </a>
                     
-                    <a href="/tags/C/">
-                        <span class="chip bg-color">C#</span>
+                    <a href="/tags/%E6%A0%88/">
+                        <span class="chip bg-color">栈</span>
                     </a>
                     
                 </div>

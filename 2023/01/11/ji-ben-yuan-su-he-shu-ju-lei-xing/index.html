@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小白————队列, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="基本元素和类型, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小白————队列 | Wabbybabbo的摸鱼圣地</title>
+    <title>基本元素和类型 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小白————队列</h1>
+                    <h1 class="description center-align post-title">基本元素和类型</h1>
                 </div>
             </div>
         </div>
@@ -522,12 +522,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                                <span class="chip bg-color">C语言</span>
+                            <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                                <span class="chip bg-color">闲着没事干</span>
                             </a>
                         
-                            <a href="/tags/%E9%98%9F%E5%88%97/">
-                                <span class="chip bg-color">队列</span>
+                            <a href="/tags/C/">
+                                <span class="chip bg-color">C#</span>
                             </a>
                         
                     </div>
@@ -538,8 +538,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
-                                C语言
+                            <a href="/categories/C/" class="post-category">
+                                C#
                             </a>
                         
                     </div>
@@ -551,21 +551,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-22
+                    2023-01-11
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-27
+                    2023-12-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    753
+                    710
                 </div>
                 
 
@@ -590,191 +590,165 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一-概念"><a href="#一-概念" class="headerlink" title="一.概念"></a>一.概念</h1><h2 id="1-前front-后rear"><a href="#1-前front-后rear" class="headerlink" title="1.前front 后rear"></a>1.前front 后rear</h2><ul>
-<li><p>出队，从头出</p>
+                <h2 id="一-基本元素"><a href="#一-基本元素" class="headerlink" title="一.基本元素"></a>一.基本元素</h2><ul>
+<li>标记Token：对编译器有意义的符号<ul>
+<li>关键字Keyword</li>
+<li>操作符Operator</li>
+<li>标识符Identifier<ul>
+<li>允许“@”字符作为前缀以使关键字能够用作标识符</li>
+</ul>
 </li>
-<li><p>入队，从尾入</p>
+<li>标点符号</li>
+<li>文本(字面值)</li>
+</ul>
+</li>
+<li>注释与空白<ul>
+<li>CTRL+K CTRL+C👉注释</li>
+<li>CTRL+K CTRL+U👉取消注释</li>
+<li>CTRL+K CTRL+D👉设置文档格式(自动对齐)</li>
+</ul>
 </li>
 </ul>
-<h2 id="2-分类"><a href="#2-分类" class="headerlink" title="2.分类"></a>2.分类</h2><p>链式队列，静态队列，循环队列</p>
+<h2 id="二-数据类型"><a href="#二-数据类型" class="headerlink" title="二.数据类型"></a>二.数据类型</h2><ul>
+<li><p>值类型</p>
 <ul>
-<li>链式队列–用链表实现</li>
-<li>静态队列–用数组实现，通常都必须是循环队列</li>
+<li>结构体Structures</li>
+<li>枚举Enumerations<ul>
+<li>只能从一个集合中选取有效值</li>
 </ul>
-<h2 id="3-问题"><a href="#3-问题" class="headerlink" title="3.问题"></a>3.问题</h2><h3 id="①静态队列为什么必须是循环队列"><a href="#①静态队列为什么必须是循环队列" class="headerlink" title="①静态队列为什么必须是循环队列"></a>①静态队列为什么<strong>必须是循环队列</strong></h3><p>r→							r→		</p>
-<p>​		d								d</p>
-<p>​		c						f→	c</p>
-<p>​		b		==&gt;			  	b</p>
-<p>f→   a							 	a</p>
-<p>👆a和b出队之后，对于数组a来说，a[0]、a[1]这两个空间就被浪费了，因为f和r一直在往上移动，所以相当于a[0]、a[1]不能再使用了。用传统数组来实现队列，无论是入队还是出队，参数都只能增不能减</p>
-<h3 id="②循环队列需要几个参数及各个参数的含义"><a href="#②循环队列需要几个参数及各个参数的含义" class="headerlink" title="②循环队列需要几个参数及各个参数的含义"></a>②循环队列需要<strong>几个参数</strong>及各个<strong>参数的含义</strong></h3><ul>
-<li><p>需要<strong>2个</strong>参数来确定 <strong>front</strong> <strong>rear</strong></p>
 </li>
-<li><p>2个参数在不同场合有<strong>不同的的定义</strong></p>
+</ul>
+</li>
+<li><p>引用类型</p>
 <ul>
-<li><p>场合：</p>
-<blockquote>
-<p> 1）队列初始化</p>
-<p>​		front和rear的值都是<strong>零</strong></p>
-<p>2）队列非空</p>
-<p>​		front代表的是队列的<strong>第一个元素</strong></p>
-<p>​		rear代表的是队列的<strong>最后一个有效元素的下一个</strong></p>
-<p>3）队列空</p>
-<p>​		front和rear的<strong>值相等</strong>，但不一定是零</p>
-</blockquote>
+<li><p>类Classes</p>
+</li>
+<li><p>接口Interfaces</p>
+</li>
+<li><p>委托Delegates</p>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="③循环队列出、入队伪算法讲解"><a href="#③循环队列出、入队伪算法讲解" class="headerlink" title="③循环队列出、入队伪算法讲解"></a>③循环队列<strong>出、入队伪算法</strong>讲解</h3><h4 id="1-入队"><a href="#1-入队" class="headerlink" title="1.入队"></a>1.入队</h4><ul>
-<li><p>将值存入r所代表的位置</p>
-</li>
-<li><p>r=(r+1)%数组的长度</p>
-</li>
-</ul>
-<h4 id="2-出队"><a href="#2-出队" class="headerlink" title="2.出队"></a>2.出队</h4><ul>
-<li>f=(f+1)%数组的长度</li>
-</ul>
-<h3 id="④如何判断循环队列是否为空、已满"><a href="#④如何判断循环队列是否为空、已满" class="headerlink" title="④如何判断循环队列是否为空、已满"></a>④如何判断循环队列是否为<strong>空、已满</strong></h3><h4 id="1-空"><a href="#1-空" class="headerlink" title="1.空"></a>1.空</h4><ul>
-<li>f=r</li>
-</ul>
-<h4 id="2-满"><a href="#2-满" class="headerlink" title="2.满"></a>2.满</h4><ul>
-<li><p>Ⅰ多增加一个标识参数(通常不用这个)</p>
-</li>
-<li><p>Ⅱ少用一个元素。本来可以放n个元素，<strong>定义n-1个是满的</strong>(通常使用这种方式)</p>
-<ul>
-<li><p>如何判断队列已满：r和f的值紧挨着，则队列已满</p>
-</li>
-<li><pre><code class="c">if((r+1)%数组的长度==f)
-    //已满
-else
-    //不满
-<pre class="line-numbers language-none"><code class="language-none">
+<h2 id="三-变量"><a href="#三-变量" class="headerlink" title="三.变量"></a>三.变量</h2><p>👇从表面看，变量是用来<strong>存储数据</strong>的</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x;
+x = 100;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-# 二.代码
+<p>实际上，<strong>变量表示了存储位置，并且每个变量都有一个类型，以决定什么样的值能够存入变量</strong></p>
+<p>👆了解为，x是一个<code>标签</code>，对应着内存中的一个地址，100这个值就存在该地址</p>
+<p><strong>变量 = <code>以变量名所对应的内存地址为起点</code>、<code>以其数据类型所要求的存储空间为长度</code>的一块内存区域</strong></p>
+<p><img src="/../../../../medias/blog_picture/C#/2.png" alt="堆，栈，地址的理解"></p>
+<p>引用变量存的是实例的地址</p>
+<h4 id="装箱和拆箱"><a href="#装箱和拆箱" class="headerlink" title="装箱和拆箱"></a>装箱和拆箱</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">//装箱
+int x = 100;
+object obj;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-```c
-#include&lt;stdio.h&gt;
-#include&lt;stdbool.h&gt;
-#include&lt;malloc.h&gt;
-#include&lt;stdlib.h&gt;
+<p>当发现obj引用的实例在堆上而不在栈上时，把该实例对应的值的内存大小在栈上找一块空间，再把这个地址存储回obj的内存空间</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">//拆箱
+int y = (int)obj;
+Console.WriteLine(y);
 
-typedef struct Queue{
-	int *pBase;
-	int front;
-	int rear;
-}QUEUE,*PQUEUE;
+//100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-void init(PQUEUE);			//初始化 
-bool fullQueue(PQUEUE);		//判断队列是否满 
-bool enQueue(PQUEUE,int);	//入队 
-bool emptyQueue(PQUEUE);	//判断队列是否为空
-void traverse(PQUEUE);		//遍历
-bool outQueue(PQUEUE,int*);	//出队 
-
-int main()
+<p><img src="/../../../../medias/blog_picture/C#/3.png" alt="装箱和拆箱"></p>
+<h2 id="四-方法"><a href="#四-方法" class="headerlink" title="四.方法"></a>四.方法</h2><p>方法是类或结构体的成员</p>
+<p>方法相当于自定义函数</p>
+<p><img src="/../../../../medias/blog_picture/C#/4.png"></p>
+<p>👆复用，如果要更改3.14159为3.14或者Math.PI可以直接在GetCircleArea处改</p>
+<p>实例方法👇</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Calculator c = new Calculator();
+c.Add(2.0,3.0);
+class Calculator
 {
-	//int val;
-	int *pVal=(int*)malloc(sizeof(int)*4);
-	 
-	
-	QUEUE Q;
-	init(&amp;Q);
-	enQueue(&amp;Q,1);
-	enQueue(&amp;Q,2);
-	enQueue(&amp;Q,3);
-	enQueue(&amp;Q,4);
-	enQueue(&amp;Q,5);
-	enQueue(&amp;Q,6);
-	enQueue(&amp;Q,7);
-	
-	traverse(&amp;Q);
-	
-	if(outQueue(&amp;Q,pVal))
-		printf("出队的数字是:%d\n",*pVal);
-	//if (outQueue(&amp;Q,&amp;val))
-		//printf("出队的数字是%d\n",val);
-	else
-		printf("出队失败！\n"); 
-	
-	traverse(&amp;Q);
-	free(pVal);
-	pVal=NULL;
-	
-	return 0;
+    public double Add(double a,double b);
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>静态方法</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Calculator c = new Calculator();
+//c.Add(2.0,3.0);此时这句话无用
+class Calculator
+{
+    public static double Add(double a,double b);
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="五-构造器"><a href="#五-构造器" class="headerlink" title="五.构造器"></a>五.构造器</h2><p><strong>不带以0为默认参数的构造器</strong></p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace ConstructExample
+{
+    class Program
+    {
+        static void Main(string[]args)
+        {
+            Student stu = new Student;
+            Console.WriteLine(stu.ID);
+            Console.WriteLine(stu.Name);
+        }
+    }
+    class Student
+    {
+        //不带参数的构造体
+    	public Student()
+        {
+            this.ID = 1;
+            this.Name = "No name";
+        }
+        //
+        public int ID;
+        public string Name;
+    }
 }
 
-void init(PQUEUE pQ)
-{
-	pQ-&gt;pBase=(int*)malloc(sizeof(int)*6);
-	pQ-&gt;front=0;
-	pQ-&gt;rear=0;
-}
+//1
+//No Name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-bool fullQueue(PQUEUE pQ)
+<p><strong>强制程序员给构造器设置参数</strong>，在这种情况下如果不想设置参数但是要调用该方法，就需要自定义一个默认参数，如上图所示</p>
+<pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace ConstructExample
 {
-	if((pQ-&gt;rear+1)%6==pQ-&gt;front)
-		return true;
-	else
-		return false;
-}
+    class Program
+    {
+        static void Main(string[]args)
+        {
+            Student stu = new Student(1,"No name");//不能再写成new Student();
+            Console.WriteLine(stu.ID);
+            Console.WriteLine(stu.Name);
+        }
+    }
+    class Student
+    {
+        //不带参数的构造体
+    	public Student(int initId,string initName)
+        {
+            this.ID = initId;
+            this.Name = initName;
+        }
+        //
+        public int ID;
+        public string Name;
+    }
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-bool enQueue(PQUEUE pQ,int val)
+<p><strong>构造器快捷键：ctor+tab*2</strong>ctor=Code snippet(小片段)</p>
+<h4 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">class Calculator
 {
-	if(fullQueue(pQ))
-		return false;
-	else
-	{
-		pQ-&gt;pBase[pQ-&gt;rear]=val;
-		pQ-&gt;rear=(pQ-&gt;rear+1)%6;
-	}
-}
+    //①
+    public double Add(int a, int b)
+    {
+        return a + b;
+    }
+    //②
+    public int Add(int a, int b)
+    {
+        return a + b;
+    }
+    ③
+    public double Add(int a, int b, int c)
+    {
+        return a + b + c;
+    } 
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-bool emptyQueue(PQUEUE pQ)
-{
-	if(pQ-&gt;rear==pQ-&gt;front)
-		return true;
-	else
-		return false;
-}
-
-void traverse(PQUEUE pQ)
-{
-	if(emptyQueue(pQ))
-	{
-		printf("队列为空\n");
-		exit(-1);
-	}
-	else
-	{
-		int i=pQ-&gt;front;
-		while(pQ-&gt;rear!=i)
-		{
-			printf("%d",pQ-&gt;pBase[i]); 
-			i=(i+1)%6;
-		}
-		printf("\n");
-	}
-	return;
-}
-
-bool outQueue(PQUEUE pQ,int *pVal)
-{
-	if(emptyQueue(pQ))
-		return false;
-	else
-	{
-		*pVal=pQ-&gt;pBase[pQ-&gt;front];
-		pQ-&gt;front=(pQ-&gt;front+1)%6;
-		return true;
-	}
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</code></pre>
-</li>
-</ul>
-</li>
-</ul>
-
+<p>👆①与②不能共存，重载与方法的类型无关</p>
+<p>①和③、②和③可共存</p>
+<h2 id="调用方法实际上是压栈的过程"><a href="#调用方法实际上是压栈的过程" class="headerlink" title="调用方法实际上是压栈的过程"></a>调用方法实际上是压栈的过程</h2>
                 
             </div>
             <hr/>
@@ -800,7 +774,7 @@ bool outQueue(PQUEUE pQ,int *pVal)
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2022/11/22/xiao-bai-dui-lie/">https://wabbybabb0.github.io/2022/11/22/xiao-bai-dui-lie/</a>
+                    <a href="https://wabbybabb0.github.io/2023/01/11/ji-ben-yuan-su-he-shu-ju-lei-xing/">https://wabbybabb0.github.io/2023/01/11/ji-ben-yuan-su-he-shu-ju-lei-xing/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -838,12 +812,12 @@ bool outQueue(PQUEUE pQ,int *pVal)
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                                    <span class="chip bg-color">C语言</span>
+                                <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                                    <span class="chip bg-color">闲着没事干</span>
                                 </a>
                             
-                                <a href="/tags/%E9%98%9F%E5%88%97/">
-                                    <span class="chip bg-color">队列</span>
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C#</span>
                                 </a>
                             
                         </div>
@@ -1031,24 +1005,24 @@ bool outQueue(PQUEUE pQ,int *pVal)
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/11/27/ru-tu-at24c02/">
+                <a href="/2023/01/13/cao-zuo-fu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="入土————AT24C02">
+                        <img src="/medias/featureimages/13.png" class="responsive-img" alt="操作符">
                         
-                        <span class="card-title">入土————AT24C02</span>
+                        <span class="card-title">操作符</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            51单片机学习之AT24C02(因为中途寄了后面没学完)
+                            大一咸鱼寒假自学C#
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-27
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-01-13
                         </span>
                         <span class="publish-author">
                             
@@ -1061,8 +1035,12 @@ bool outQueue(PQUEUE pQ,int *pVal)
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
-                        <span class="chip bg-color">51单片机</span>
+                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                        <span class="chip bg-color">闲着没事干</span>
+                    </a>
+                    
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C#</span>
                     </a>
                     
                 </div>
@@ -1076,31 +1054,31 @@ bool outQueue(PQUEUE pQ,int *pVal)
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/20/xiao-bai-zhan/">
+                <a href="/2023/01/10/lei-he-ming-ming-kong-jian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/7.png" class="responsive-img" alt="小白————栈">
+                        <img src="/medias/featureimages/6.png" class="responsive-img" alt="类和命名空间">
                         
-                        <span class="card-title">小白————栈</span>
+                        <span class="card-title">类和命名空间</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大一小白WB粗略学习栈
+                            大一咸鱼寒假自学C#
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-20
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-01-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
-                                    C语言
+                            <a href="/categories/C/" class="post-category">
+                                    C#
                                 </a>
                             
                             
@@ -1110,12 +1088,12 @@ bool outQueue(PQUEUE pQ,int *pVal)
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                        <span class="chip bg-color">C语言</span>
+                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                        <span class="chip bg-color">闲着没事干</span>
                     </a>
                     
-                    <a href="/tags/%E6%A0%88/">
-                        <span class="chip bg-color">栈</span>
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C#</span>
                     </a>
                     
                 </div>

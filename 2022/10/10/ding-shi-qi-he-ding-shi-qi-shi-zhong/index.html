@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小白————栈, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="定时器和定时器时钟, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小白————栈 | Wabbybabbo的摸鱼圣地</title>
+    <title>定时器和定时器时钟 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/7.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小白————栈</h1>
+                    <h1 class="description center-align post-title">定时器和定时器时钟</h1>
                 </div>
             </div>
         </div>
@@ -522,12 +522,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                                <span class="chip bg-color">C语言</span>
+                            <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
+                                <span class="chip bg-color">51单片机</span>
                             </a>
                         
-                            <a href="/tags/%E6%A0%88/">
-                                <span class="chip bg-color">栈</span>
+                            <a href="/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/">
+                                <span class="chip bg-color">大云屋考核</span>
                             </a>
                         
                     </div>
@@ -538,8 +538,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
-                                C语言
+                            <a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/" class="post-category">
+                                51单片机
                             </a>
                         
                     </div>
@@ -551,21 +551,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-20
+                    2022-10-10
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-27
+                    2023-12-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    969
+                    1.7k
                 </div>
                 
 
@@ -590,269 +590,269 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一-栈和堆"><a href="#一-栈和堆" class="headerlink" title="一.栈和堆"></a>一.栈和堆</h1><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">double</span> <span class="token operator">*</span>q<span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+                <h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><p><img src="/../../../../medias/blog_picture/51/46.png" alt="定时器框图"></p>
+<p><img src="/../../../../medias/blog_picture/51/47.png"></p>
+<p>按视频中的去理解，up主的板子晶振为12MHz，如果分频接了÷12的线路，那么传给计数器的就会是1µs计数一次(计算:<strong>1/(12MHz/12)=1/1*10^9s=1µs</strong>)</p>
+<p>CT选择开关：那里给<strong>1</strong>是<strong>counter计数器</strong>  给<strong>0</strong>是<strong>timer定时器</strong></p>
+<p>GATE那里：三角是异门(1–&gt;0  0—&gt;1)，第二个是或门(只有00情况给0，其余给1)，第三个是与门<strong>跟C的异或与的与意思差不多</strong></p>
+<p><img src="/../../../../medias/blog_picture/51/48.png"></p>
+<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><h3 id="1-TMOD-TIME-MODE"><a href="#1-TMOD-TIME-MODE" class="headerlink" title="1.TMOD(TIME_MODE)"></a>1.TMOD(TIME_MODE)</h3><p><img src="/../../../../medias/blog_picture/51/49.png"></p>
+<p>由于TMOD不可寻址，所以要<strong>整体</strong>表示</p>
+<p>(对于**(不)可寻址<strong>的理解，</strong>可寻址<strong>像之前的点LED灯，直接P2=0x01&lt;==&gt;P2_1=1然后P2_2~8=0，</strong>不可寻址**就是只能一坨地表示，就像P2=0x00这样)</p>
+<p><strong>目的</strong>：我们要实现<strong>定时器0</strong>运行且进入<strong>模式1</strong></p>
+<h4 id="①M0-M1"><a href="#①M0-M1" class="headerlink" title="①M0&amp;M1"></a>①M0&amp;M1</h4><p><img src="/../../../../medias/blog_picture/51/50.png"></p>
+<p>所以<strong>M0–&gt;1</strong>，<strong>M1–&gt;0</strong></p>
+<h4 id="②C-T"><a href="#②C-T" class="headerlink" title="②C/T"></a>②C/T</h4><p><img src="/../../../../medias/blog_picture/51/51.png"></p>
+<p>因为是定时器 <strong>C/T–&gt;0</strong></p>
+<h4 id="③GATE"><a href="#③GATE" class="headerlink" title="③GATE"></a>③GATE</h4><p><img src="/../../../../medias/blog_picture/51/52.png"></p>
+<p>要让TR0参与控制，所以<strong>GATE–&gt;0</strong></p>
+<p><strong>附GATE的运行模式</strong></p>
+<p><img src="/../../../../medias/blog_picture/51/53.png"></p>
+<h4 id="因此"><a href="#因此" class="headerlink" title="因此"></a>因此</h4><pre class="line-numbers language-C" data-language="C"><code class="language-C">TMOD=0X01;//0000 0001<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><strong>*q</strong>就是<strong>栈</strong>里的，<strong>200</strong>是堆里的</p>
-<p>动态分配的都在堆里分配，由程序员手动分配</p>
-<p>静态分配的都在栈里分配，由系统自动分配</p>
-<h2 id="栈："><a href="#栈：" class="headerlink" title="栈："></a>栈：</h2><p>1.定义：</p>
-<ul>
-<li>实现“先进后出”的存储结构</li>
-</ul>
-<p>2.分类：</p>
-<ul>
-<li>静态栈 </li>
-<li>动态栈：内核就是链表</li>
-</ul>
-<p>3.算法</p>
-<ul>
-<li>出栈</li>
-<li>压栈</li>
-</ul>
-<p>4.变量</p>
-<ul>
-<li>pTop</li>
-<li>pBottom</li>
-</ul>
-<p><strong>栈空</strong>：pTop==pBottom</p>
-<p>5.应用</p>
-<ul>
-<li>函数调用</li>
-<li>中断</li>
-<li>表达式求值</li>
-<li>内存分配</li>
-<li>缓冲处理</li>
-<li>迷宫</li>
-</ul>
-<h1 id="二-代码"><a href="#二-代码" class="headerlink" title="二.代码"></a>二.代码</h1><h2 id="1-两个结构体的的定义"><a href="#1-两个结构体的的定义" class="headerlink" title="1.两个结构体的的定义"></a>1.两个结构体的的定义</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
-	<span class="token keyword">int</span> data<span class="token punctuation">;</span>
-	<span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>pNext<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>NODE<span class="token punctuation">,</span><span class="token operator">*</span>PNODE<span class="token punctuation">;</span>
+<h4 id="TMOD的优化"><a href="#TMOD的优化" class="headerlink" title="TMOD的优化"></a>TMOD的优化</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c">TMOD <span class="token operator">&amp;=</span> <span class="token number">0xF0</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时器模式       0xF0--&gt;1111 0000</span>
+TMOD <span class="token operator">|=</span> <span class="token number">0x01</span><span class="token punctuation">;</span>      <span class="token comment">//                    0x01--&gt;0000 0001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Stack</span><span class="token punctuation">{</span>
-	PNODE pTop<span class="token punctuation">;</span>
-	PNODE pBottom<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>STACK<span class="token punctuation">,</span><span class="token operator">*</span>PSTACK<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>由于TMOD是<strong>同时控制定时器0和定时器1</strong>，我们希望在控制定时器0的时候，<strong>不影响到可能正在工作的定时器1</strong>，于是用到了以下操作</p>
+<p>e.g.</p>
+<p>原TMOD=1010 0011—我们希望把它转换为—&gt;1010 0001</p>
+<p><strong>1st——-1010 0011 &amp; 1111 0000 =1010 0000</strong></p>
+<p><strong>理解</strong>：<strong>n &amp; 1 <strong>时，n为几就返回几(此时不影响定时器1)；</strong>n &amp; 0 <strong>时，全为0(有点</strong>初始化</strong>定时器0的感觉)</p>
+<p><strong>2nd——1010 0000 | 0000 0001 =1010 0001</strong></p>
+<p><strong>理解</strong>：<strong>n | 0 <strong>时，n为几就返回几(还是不影响定时器1)；</strong>0 | n</strong> 时，n为几也返回几(n是人工决定的，这时可以自行操控定时器0了)</p>
+<h3 id="2-TCON"><a href="#2-TCON" class="headerlink" title="2.TCON"></a>2.TCON</h3><p><img src="/../../../../medias/blog_picture/51/54.png"></p>
+<h4 id="①TR0"><a href="#①TR0" class="headerlink" title="①TR0"></a>①TR0</h4><p><img src="/../../../../medias/blog_picture/51/55.png"></p>
+<p><strong>省流</strong>：GATE=0 &amp;&amp; TR0=1时允许T0计数，开始工作</p>
+<pre class="line-numbers language-none"><code class="language-none">TR0=1;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>👉对于Stack的理解：</p>
-<p>Stack这个结构体里有两个成员——<strong>名字叫pTop和pBottom、类型为NODE指针</strong></p>
-<h2 id="2-初始化"><a href="#2-初始化" class="headerlink" title="2.初始化"></a>2.初始化</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>						<span class="token comment">//传参：栈的地址</span>
+
+
+<h4 id="②TF0"><a href="#②TF0" class="headerlink" title="②TF0"></a>②TF0</h4><p><img src="/../../../../medias/blog_picture/51/56.png"></p>
+<p><strong>省流</strong>：TF0=1时就产生中断，所以要=0，防止刚配置好就产生中断</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">TF0<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h4 id="③TH0-TL0"><a href="#③TH0-TL0" class="headerlink" title="③TH0&amp;TL0"></a>③TH0&amp;TL0</h4><p><img src="/../../../../medias/blog_picture/51/57.png"></p>
+<p>来自弹幕大佬：两个寄存器TH0、TL0为<strong>二进制八位</strong>(2^8)，<strong>单独</strong>可计256次，<strong>低八位计满256次后高八位进1</strong>，所以<strong>除以256</strong>可得<strong>高八位</strong>得次数，<strong>取余</strong>就是<strong>低八位</strong>的次数，合并在一起就是所赋的初始值</p>
+<p>来自UP主：<strong>123</strong>要放到两个<strong>容量</strong>为100的盒子里，<strong>高位次</strong>的盒子存储—<strong>123/100=1</strong>，<strong>低位次</strong>的盒子存储—<strong>123%100=23</strong>，<strong>合并</strong>之后就是123(初始值)</p>
+<p><strong>对应项目，就是两个容量为256的小盒子要存储64535这个庞然大物</strong></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">TH0<span class="token operator">=</span><span class="token number">64535</span><span class="token operator">/</span><span class="token number">256</span><span class="token punctuation">;</span><span class="token comment">//high，拿出高八位</span>
+TL0<span class="token operator">=</span><span class="token number">64535</span><span class="token operator">%</span><span class="token number">256</span><span class="token punctuation">;</span><span class="token comment">//low，拿出低八位</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+
+
+<h4 id="④ET0-EA-PT0"><a href="#④ET0-EA-PT0" class="headerlink" title="④ET0&amp;EA&amp;PT0"></a>④ET0&amp;EA&amp;PT0</h4><p><img src="/../../../../medias/blog_picture/51/58.png"></p>
+<p>把通道打通</p>
+<pre class="line-numbers language-C" data-language="C"><code class="language-C">ET0=1;
+EA=1;
+PT0=0;//虽然默认PT0为0，但还是说明一下比较好<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h2 id="3-Time0-c"><a href="#3-Time0-c" class="headerlink" title="3.Time0.c"></a>3.Time0.c</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+
+<span class="token comment">/**
+  * @brief  定时器0初始化，1ms@11.0592MH
+  * @param  无
+  * @retval 无
+  */</span>
+<span class="token keyword">void</span> <span class="token function">Timer0Init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>		<span class="token comment">//1毫秒@11.0592MHz</span>
 <span class="token punctuation">{</span>
-	pS<span class="token operator">-&gt;</span>pTop<span class="token operator">=</span><span class="token punctuation">(</span>PNODE<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>NODE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//给栈顶申请内存空间</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"内存分配失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
-	<span class="token punctuation">{</span>
-		pS<span class="token operator">-&gt;</span>pBottom<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>				<span class="token comment">//此时pT和pB指向同一个内存</span>
-		pS<span class="token operator">-&gt;</span>pTop<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>				<span class="token comment">//让pT和pB指向同一个节点且该节点的指针域存放的是NULL，该节点作为一个头结点。</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	TMOD <span class="token operator">&amp;=</span> <span class="token number">0xF0</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时器模式       0xF0--&gt;1111 0000</span>
+	TMOD <span class="token operator">|=</span> <span class="token number">0x01</span><span class="token punctuation">;</span>     <span class="token comment">//                     0x0x--&gt;0000 0001</span>
+	TL0 <span class="token operator">=</span> <span class="token number">0x66</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+	TH0 <span class="token operator">=</span> <span class="token number">0xFC</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+    <span class="token comment">/**
+    64535/256=252
+    252--10进制转16进制--&gt;FC
+    
+    64535%256=23
+    23--10进制转16进制--&gt;17
+    但是我们这个有0.04%的偏差，所以...问题...应该不大吧...
+    */</span>
+	TF0 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>		<span class="token comment">//清除TF0标志</span>
+	TR0 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>		<span class="token comment">//定时器0开始计时</span>
+	ET0<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>          <span class="token comment">//允许中断</span>
+	EA<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
+	PT0<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-<h2 id="3-压栈"><a href="#3-压栈" class="headerlink" title="3.压栈"></a>3.压栈</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">push</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>
+<span class="token comment">/*
+定时器中断函数模板
+void Timer0_Routine() interrupt 1
+{
+	static unsigned int T0Count;//为了不丢失这个数字
+	TL0 = 0x66;		//设置定时初值
+	TH0 = 0xFC;		//设置定时初值
+	T0Count++;
+	if(T0Count&gt;=1000)
+	{
+		//这里要写具体实现什么
+		T0Count=0;
+	}
+}
+*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>对定时器中断函数模板的理解：</p>
+<p>首先，中断程序本身可视为一个while循环，会一直执行这个函数</p>
+<p>其次，对于秒数，这个计时器(TH0 TL0)<strong>最高可达到65535µs</strong>，我们设置定时初值时，用的是64535，它<strong>距离65535还有1000才即将溢出归零</strong>，所以我们让计时器计时1000µs(=1ms)，**每过1ms，T0Count++**，当它加了1000次，此时已经过去1000ms(=1s)</p>
+<p>最后，进入if执行具体实现，然后把T0Count归零，进入下一次中断程序(循环)</p>
+<h3 id="4-新学两个函数"><a href="#4-新学两个函数" class="headerlink" title="4.新学两个函数"></a>4.新学两个函数</h3><p><strong>要用到#include&lt;INTRINS.H&gt;头文件</strong></p>
+<h4 id="crol函数-cror函数-头尾都要"><a href="#crol函数-cror函数-头尾都要" class="headerlink" title="crol函数&amp;cror函数(..头尾都要_.."></a>crol函数&amp;cror函数(..头尾都要_..</h4><p>循环移位</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">char</span> a<span class="token operator">=</span><span class="token number">0x80</span><span class="token punctuation">;</span>
+a<span class="token operator">=</span><span class="token function">_crol_</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//a为0x01，循环回去开头了</span>
+<span class="token comment">//如果是&lt;&lt;的话，移到边界就溢出越界</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
+<h3 id="5-最终呈现"><a href="#5-最终呈现" class="headerlink" title="5.最终呈现"></a>5.最终呈现</h3><h4 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Timer0.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Key.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;INTRINS.H&gt;</span></span>
+
+
+<span class="token keyword">unsigned</span> <span class="token keyword">char</span> KeyNum<span class="token punctuation">,</span>LEDMode<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	PNODE pNew<span class="token operator">=</span><span class="token punctuation">(</span>PNODE<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>NODE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>			<span class="token comment">//为新节点申请空间</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pNew<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+	P2<span class="token operator">=</span><span class="token number">0xFE</span><span class="token punctuation">;</span><span class="token comment">//P2是LED模块噢，一端接了VCC，那么只有给P2_n赋值为0的时候才亮，0xFE转二进制为1111 1110</span>
+	<span class="token function">Timer0Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"内存分配失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
-	<span class="token punctuation">{</span>
-		pNew<span class="token operator">-&gt;</span>data<span class="token operator">=</span>val<span class="token punctuation">;</span>
-		pNew<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>			
-		pS<span class="token operator">-&gt;</span>pTop<span class="token operator">=</span>pNew<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">pNew<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>👆理解：</p>
-<p>第一个元素，**pNew-&gt;pNext=pS-&gt;pTop;<strong>和</strong>pNew-&gt;pNext=pS-&gt;pBottom;**都可以 <code>理解为插入的新节点的指针域和pT、pB是一样的，即指向一样，都指向头结点</code></p>
-<p><strong>但是从第二个节点开始</strong>，他的指针域存放的应该得是上一个节点的地址，对应图上的就是<code>右边蓝色的箭头应该==左边被蓝色x覆盖的红色箭头</code>，即<strong>pNew-&gt;pNext=pS-&gt;pTop;</strong></p>
-<h2 id="4-遍历"><a href="#4-遍历" class="headerlink" title="4.遍历"></a>4.遍历</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">traverse</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	PNODE p<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token operator">!=</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span> 
-		p<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span> 
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="5-出栈"><a href="#5-出栈" class="headerlink" title="5.出栈"></a>5.出栈</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">pop</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">==</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"栈为空！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
-	<span class="token punctuation">{</span>
-		PNODE a<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>
-		pS<span class="token operator">-&gt;</span>pTop<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
-		<span class="token function">free</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		a<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>这个应该也很好理解：删除a指向的节点，pTop负责往下走，防止因为删掉上面的节点而丢失下面的节点的地址</p>
-<h2 id="6-清空"><a href="#6-清空" class="headerlink" title="6.清空"></a>6.清空</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">clear</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">==</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"栈为空！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
-	<span class="token punctuation">{</span>
-		PNODE p<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>
-		<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token operator">!=</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
+		KeyNum<span class="token operator">=</span><span class="token function">Key</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>KeyNum<span class="token punctuation">)</span>
 		<span class="token punctuation">{</span>
-			pS<span class="token operator">-&gt;</span>pTop<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
-			<span class="token function">free</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
-			p<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
-			p<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>KeyNum<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
+			<span class="token punctuation">{</span>
+				LEDMode<span class="token operator">++</span><span class="token punctuation">;</span>
+				<span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">&gt;=</span><span class="token number">2</span><span class="token punctuation">)</span>LEDMode<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+			<span class="token punctuation">}</span>
+
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span>
 
-<p>大致思路和出栈相似，就是多了个循环，再调换一下语句顺序即可</p>
-<h2 id="7-完整代码"><a href="#7-完整代码" class="headerlink" title="7.完整代码"></a>7.完整代码</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;malloc.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdbool.h&gt;</span> </span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdlib.h&gt;</span></span>
-
-<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
-	<span class="token keyword">int</span> data<span class="token punctuation">;</span>
-	<span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>pNext<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>NODE<span class="token punctuation">,</span><span class="token operator">*</span>PNODE<span class="token punctuation">;</span>
-
-<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Stack</span><span class="token punctuation">{</span>
-	PNODE pTop<span class="token punctuation">;</span>
-	PNODE pBottom<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>STACK<span class="token punctuation">,</span><span class="token operator">*</span>PSTACK<span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span>PSTACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">push</span><span class="token punctuation">(</span>PSTACK<span class="token punctuation">,</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">traverse</span><span class="token punctuation">(</span>PSTACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">pop</span><span class="token punctuation">(</span>PSTACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">clear</span><span class="token punctuation">(</span>PSTACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
-bool <span class="token function">empty</span><span class="token punctuation">(</span>PSTACK<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">//定时器和主程序的耦合性比较大，所以直接放到主函数使用</span>
+<span class="token keyword">void</span> <span class="token function">Timer0_Routine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">1</span>
 <span class="token punctuation">{</span>
-	STACK S<span class="token punctuation">;</span>
-	<span class="token function">init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>S<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">static</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> T0Count<span class="token punctuation">;</span><span class="token comment">//为了不丢失这个数字</span>
+	TL0 <span class="token operator">=</span> <span class="token number">0x66</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+	TH0 <span class="token operator">=</span> <span class="token number">0xFC</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+	T0Count<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>T0Count<span class="token operator">&gt;=</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token comment">//0.5s亮一次</span>
+	<span class="token punctuation">{</span>
+		T0Count<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>
+			P2<span class="token operator">=</span><span class="token function">_crol_</span><span class="token punctuation">(</span>P2<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
+			P2<span class="token operator">=</span><span class="token function">_cror_</span><span class="token punctuation">(</span>P2<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>针对<strong>流水</strong>效果，我们添加了这些</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>T0Count<span class="token operator">&gt;=</span><span class="token number">500</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		T0Count<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>           
+			P2<span class="token operator">=</span><span class="token function">_crol_</span><span class="token punctuation">(</span>P2<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//往左流</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
+			P2<span class="token operator">=</span><span class="token function">_cror_</span><span class="token punctuation">(</span>P2<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//往右流</span>
+	<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>配合主函数食用</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">char</span> KeyNum<span class="token punctuation">,</span>LEDMode<span class="token punctuation">;</span> <span class="token comment">//一开始初始化了KeyNum和LEDMode，这两个玩意初始值都为0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>那么，当开关被按下的时候，<strong>LEDMode==0</strong>，开始往左流，对应下面这句</p>
+<pre class="line-numbers language-none"><code class="language-none">if(LEDMode==0)           
+	P2=_crol_(P2,1);//往左流<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>然后接收KeyNum，当我不按P3_1时，LEDMode就一直为0，一直往左流</p>
+<p>我按下P3_1时，配合Key.c食用，此时<strong>返回KeyNumber=1</strong></p>
+<h4 id="Key-c"><a href="#Key-c" class="headerlink" title="Key.c"></a>Key.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
+
+<span class="token comment">/**
+  * @brief  获取独立按键键码
+  * @param  无
+  * @retval 按下按键的键码，范围：0~4，无按键按下时返回值为0
+  */</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token function">Key</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">unsigned</span> <span class="token keyword">char</span> KeyNumber<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
 	
-	<span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>S<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">push</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>S<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">traverse</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>S<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>P3_1<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P3_1<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token comment">//介里介里！</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>P3_0<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P3_0<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">2</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>P3_2<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P3_2<span class="token operator">==</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">3</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>P3_3<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P3_3<span class="token operator">==</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">4</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
+
 	
-	<span class="token function">pop</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>S<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n出栈后结果为；\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">traverse</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>S<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	
-	<span class="token function">clear</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>S<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">traverse</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>S<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>S<span class="token punctuation">)</span><span class="token punctuation">)</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"清除成功！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">else</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"清除失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> KeyNumber<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
+<p><strong>KeyNum==1</strong>后，执行</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>KeyNum<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	pS<span class="token operator">-&gt;</span>pTop<span class="token operator">=</span><span class="token punctuation">(</span>PNODE<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>NODE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"内存分配失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
-	<span class="token punctuation">{</span>
-		pS<span class="token operator">-&gt;</span>pBottom<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>
-		pS<span class="token operator">-&gt;</span>pTop<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
+	LEDMode<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">&gt;=</span><span class="token number">2</span><span class="token punctuation">)</span>LEDMode<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<span class="token keyword">void</span> <span class="token function">push</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	PNODE pNew<span class="token operator">=</span><span class="token punctuation">(</span>PNODE<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>NODE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pNew<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"内存分配失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
-	<span class="token punctuation">{</span>
-		pNew<span class="token operator">-&gt;</span>data<span class="token operator">=</span>val<span class="token punctuation">;</span>
-		pNew<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>			
-		pS<span class="token operator">-&gt;</span>pTop<span class="token operator">=</span>pNew<span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<p>这时候LEDMode++，<strong>LEDMode==1</strong></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
+	P2<span class="token operator">=</span><span class="token function">_cror_</span><span class="token punctuation">(</span>P2<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//往右流</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
-<span class="token keyword">void</span> <span class="token function">traverse</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	PNODE p<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>
-	<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token operator">!=</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span> 
-		p<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span> 
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
+<p>再次按下P3_1时，LEDMode++，<strong>LEDMode==2</strong>，然后执行if让LEDMode归零</p>
+<h1 id="定时器时钟"><a href="#定时器时钟" class="headerlink" title="定时器时钟"></a>定时器时钟</h1><h3 id="main-c-1"><a href="#main-c-1" class="headerlink" title="main.c"></a>main.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"LCD1602.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Timer0.h"</span></span>
 
-<span class="token keyword">void</span> <span class="token function">pop</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
+<span class="token keyword">unsigned</span> <span class="token keyword">char</span> Sec<span class="token punctuation">,</span>Min<span class="token punctuation">,</span>Hour<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">==</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
+	<span class="token function">LCD_Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">Timer0Init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_ShowString</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"Clock:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">LCD_ShowString</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"  :  :"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"栈为空！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
-	<span class="token punctuation">{</span>
-		PNODE a<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>
-		pS<span class="token operator">-&gt;</span>pTop<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
-		<span class="token function">free</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		a<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+		<span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>Hour<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span>Min<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">7</span><span class="token punctuation">,</span>Sec<span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 
-bool <span class="token function">empty</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">Timer0_Routine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">1</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">==</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
-		<span class="token keyword">return</span> true<span class="token punctuation">;</span>
-	<span class="token keyword">else</span>
-		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">void</span> <span class="token function">clear</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">==</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
+	<span class="token keyword">static</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> T0Count<span class="token punctuation">;</span><span class="token comment">//为了不丢失这个数字</span>
+	TL0 <span class="token operator">=</span> <span class="token number">0x66</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+	TH0 <span class="token operator">=</span> <span class="token number">0xFC</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时初值</span>
+	T0Count<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>T0Count<span class="token operator">&gt;=</span><span class="token number">1000</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"栈为空！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
-	<span class="token punctuation">{</span>
-		PNODE p<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>
-		<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token operator">!=</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
+		T0Count<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+		Sec<span class="token operator">++</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>Sec<span class="token operator">&gt;=</span><span class="token number">60</span><span class="token punctuation">)</span>
 		<span class="token punctuation">{</span>
-			pS<span class="token operator">-&gt;</span>pTop<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
-			<span class="token function">free</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
-			p<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
-			p<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span>
+			Sec<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+			Min<span class="token operator">++</span><span class="token punctuation">;</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>Min<span class="token operator">&gt;=</span><span class="token number">60</span><span class="token punctuation">)</span>
+			<span class="token punctuation">{</span>
+				Min <span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+				Hour<span class="token operator">++</span><span class="token punctuation">;</span>
+				<span class="token keyword">if</span><span class="token punctuation">(</span>Hour<span class="token operator">&gt;=</span><span class="token number">24</span><span class="token punctuation">)</span>
+				<span class="token punctuation">{</span>
+					Hour<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+				<span class="token punctuation">}</span>
+			<span class="token punctuation">}</span>
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
+<p>这个，不难理解，dddd</p>
 
                 
             </div>
@@ -879,7 +879,7 @@ bool <span class="token function">empty</span><span class="token punctuation">(<
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2022/11/20/xiao-bai-zhan/">https://wabbybabb0.github.io/2022/11/20/xiao-bai-zhan/</a>
+                    <a href="https://wabbybabb0.github.io/2022/10/10/ding-shi-qi-he-ding-shi-qi-shi-zhong/">https://wabbybabb0.github.io/2022/10/10/ding-shi-qi-he-ding-shi-qi-shi-zhong/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -917,12 +917,12 @@ bool <span class="token function">empty</span><span class="token punctuation">(<
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                                    <span class="chip bg-color">C语言</span>
+                                <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
+                                    <span class="chip bg-color">51单片机</span>
                                 </a>
                             
-                                <a href="/tags/%E6%A0%88/">
-                                    <span class="chip bg-color">栈</span>
+                                <a href="/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/">
+                                    <span class="chip bg-color">大云屋考核</span>
                                 </a>
                             
                         </div>
@@ -1110,31 +1110,31 @@ bool <span class="token function">empty</span><span class="token punctuation">(<
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/11/22/xiao-bai-dui-lie/">
+                <a href="/2022/10/11/ru-tu-chuan-kou-tong-xin/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.png" class="responsive-img" alt="小白————队列">
+                        <img src="/medias/featureimages/8.png" class="responsive-img" alt="入土————串口通信">
                         
-                        <span class="card-title">小白————队列</span>
+                        <span class="card-title">入土————串口通信</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大一小白WB粗略学习队列
+                            大云屋单片机考核之51单片机学习————串口通信(好难好抽象T^T)
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-22
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-10-11
                         </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
-                                    C语言
+                            <a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/" class="post-category">
+                                    51单片机
                                 </a>
                             
                             
@@ -1144,12 +1144,12 @@ bool <span class="token function">empty</span><span class="token punctuation">(<
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                        <span class="chip bg-color">C语言</span>
+                    <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
+                        <span class="chip bg-color">51单片机</span>
                     </a>
                     
-                    <a href="/tags/%E9%98%9F%E5%88%97/">
-                        <span class="chip bg-color">队列</span>
+                    <a href="/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/">
+                        <span class="chip bg-color">大云屋考核</span>
                     </a>
                     
                 </div>
@@ -1163,31 +1163,31 @@ bool <span class="token function">empty</span><span class="token punctuation">(<
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/18/xiao-bai-lian-biao/">
+                <a href="/2022/10/10/ru-men-ju-zhen-jian-pan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.png" class="responsive-img" alt="小白————链表">
+                        <img src="/medias/featureimages/13.png" class="responsive-img" alt="入门————矩阵键盘">
                         
-                        <span class="card-title">小白————链表</span>
+                        <span class="card-title">入门————矩阵键盘</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大一小白WB粗略学习链表
+                            大云屋考核之51单片机学习————矩阵键盘
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-18
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-10
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
-                                    C语言
+                            <a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/" class="post-category">
+                                    51单片机
                                 </a>
                             
                             
@@ -1197,12 +1197,12 @@ bool <span class="token function">empty</span><span class="token punctuation">(<
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                        <span class="chip bg-color">C语言</span>
+                    <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
+                        <span class="chip bg-color">51单片机</span>
                     </a>
                     
-                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
-                        <span class="chip bg-color">链表</span>
+                    <a href="/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/">
+                        <span class="chip bg-color">大云屋考核</span>
                     </a>
                     
                 </div>

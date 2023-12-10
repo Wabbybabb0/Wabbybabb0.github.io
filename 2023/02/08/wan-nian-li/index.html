@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小白————连续储存数组, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="万年历, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小白————连续储存数组 | Wabbybabbo的摸鱼圣地</title>
+    <title>万年历 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/14.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小白————连续储存数组</h1>
+                    <h1 class="description center-align post-title">万年历</h1>
                 </div>
             </div>
         </div>
@@ -526,12 +526,8 @@
                                 <span class="chip bg-color">C语言</span>
                             </a>
                         
-                            <a href="/tags/%E6%95%B0%E7%BB%84/">
-                                <span class="chip bg-color">数组</span>
-                            </a>
-                        
-                            <a href="/tags/%E6%8C%87%E9%92%88/">
-                                <span class="chip bg-color">指针</span>
+                            <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                                <span class="chip bg-color">闲着没事干</span>
                             </a>
                         
                     </div>
@@ -555,21 +551,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-13
+                    2023-02-08
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-27
+                    2023-12-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    342
                 </div>
                 
 
@@ -594,212 +590,122 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="一-数组"><a href="#一-数组" class="headerlink" title="一.数组"></a>一.数组</h1><ul>
-<li>存放类型相同，大小相等的元素</li>
-</ul>
-<h1 id="二-代码部分"><a href="#二-代码部分" class="headerlink" title="二.代码部分"></a>二.代码部分</h1><h2 id="1-对于传参"><a href="#1-对于传参" class="headerlink" title="1.对于传参"></a>1.对于传参</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
+                <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_CRT_SECURE_NO_WARNINGS</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdbool.h&gt;</span></span>
 
-<span class="token keyword">struct</span> <span class="token class-name">Arr</span><span class="token punctuation">{</span>
-	<span class="token keyword">int</span> <span class="token operator">*</span>pBase<span class="token punctuation">;</span>	<span class="token comment">//存储的是数组第一个元素的地址 </span>
-	<span class="token keyword">int</span> len<span class="token punctuation">;</span>	<span class="token comment">//数组所能容纳的最大元素的个数 </span>
-	<span class="token keyword">int</span> cnt<span class="token punctuation">;</span>	<span class="token comment">//当前数组有效元素的个数 </span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">printMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">printMonthBody</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">getStartDay</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">getTotalNumOfDays</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+bool <span class="token function">isLeapYear</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-<span class="token keyword">void</span> <span class="token function">initArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">struct</span> <span class="token class-name">Arr</span> arr<span class="token punctuation">;</span>
-	
-	<span class="token function">initArr</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>				<span class="token comment">//地址只用第一个字节的地址表示，第一个字节的地址占4个字节 </span>
-	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span>arr<span class="token punctuation">.</span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> year<span class="token punctuation">,</span> month<span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"请输入要查询的年份：\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">scanf_s</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>year<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"请输入要查询的月份：\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">scanf_s</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printMonth</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">initArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">)</span>	<span class="token comment">//此时指向arr的第一个地址，现在pArr存放的是arr第一个字节的地址 </span>
+<span class="token keyword">void</span> <span class="token function">printMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token punctuation">(</span><span class="token operator">*</span>pArr<span class="token punctuation">)</span><span class="token punctuation">.</span>len<span class="token operator">=</span><span class="token number">99</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d年%d月份的日历\n"</span><span class="token punctuation">,</span>year<span class="token punctuation">,</span>month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"--------------------------------\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"日\t一\t二\t三\t四\t五\t六\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printMonthBody</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">initArr</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token comment">/*
-对于这一行，如果写的是👇
-initArr(arr);
-在定义变量时传参传的是(struct Arr array)
-此时返回到主函数里的arr的len是垃圾值，因为是静态分配内存，当调用完initArr之后传参的就不存在了
-所以要用到"&amp;arr"，将指针的地址传给initArr中
-那么在initArr函数里，*pArr就是arr
-这样做的优点：对比用arr传参(需要用到12个字节)，这样子传参省空间(arr的第一个地址只占4个字节)
-*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="2-对结构体的理解"><a href="#2-对结构体的理解" class="headerlink" title="2.对结构体的理解"></a>2.对结构体的理解</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">Arr</span><span class="token punctuation">{</span>
-	<span class="token keyword">int</span> <span class="token operator">*</span>pBase<span class="token punctuation">;</span>	<span class="token comment">//存储的是数组第一个元素的地址 </span>
-	<span class="token keyword">int</span> len<span class="token punctuation">;</span>	<span class="token comment">//数组所能容纳的最大元素的个数 </span>
-	<span class="token keyword">int</span> cnt<span class="token punctuation">;</span>	<span class="token comment">//当前数组有效元素的个数 </span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>👉因为数组名就是数组首地址元素，所以在定义*<em>int <em>pBase</em></em> 时，pBase是指针变量，也就是地址，同时它是一个数组名</p>
-<p>👉其实也可以理解为，这个结构体，主体部分是pBase，其他成员是这个数组的一些属性的说明</p>
-<p>👉为了把这些属性和数组主体联系起来，搞了一个结构体把它们放在一起</p>
-<h2 id="3-初始化"><a href="#3-初始化" class="headerlink" title="3.初始化"></a>3.初始化</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">initArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">,</span><span class="token keyword">int</span> length<span class="token punctuation">)</span><span class="token comment">//此时指向arr的第一个地址，现在pArr存放的是arr第一个字节的地址 </span>
+<span class="token keyword">void</span> <span class="token function">printMonthBody</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	pArr<span class="token operator">-&gt;</span>pBase<span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token operator">*</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span> 
-	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token operator">==</span>pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">)</span>
+	<span class="token keyword">int</span> week <span class="token operator">=</span> <span class="token function">getStartDay</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> days <span class="token operator">=</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> i<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> date <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> circulation <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token comment">//第一行的日期</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> week <span class="token operator">%</span> <span class="token number">7</span><span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"  \t"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> week<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">7</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"动态内存分配失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span> date<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">//从第二行开始的日期</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> date<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> days<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		pArr<span class="token operator">-&gt;</span>len<span class="token operator">=</span>length<span class="token punctuation">;</span>
-		pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span><span class="token punctuation">;</span><span class="token comment">//告诉程序这个函数结束了 </span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>👉pBase是一个数组，先给他分配空间</p>
-<ul>
-<li>对pBase内存是否分配成功要做一个判定</li>
-<li>判定成功了就给他这个结构体赋值</li>
-</ul>
-<h2 id="4-打印"><a href="#4-打印" class="headerlink" title="4.打印"></a>4.打印</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">showArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>pArr<span class="token punctuation">)</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"数组为空！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">else</span>
-	<span class="token punctuation">{</span>
-		<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>circulation <span class="token operator">==</span> <span class="token number">7</span><span class="token punctuation">)</span>
 		<span class="token punctuation">{</span>
-			<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d "</span><span class="token punctuation">,</span>pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			circulation <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 		<span class="token punctuation">}</span>
-			
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		circulation<span class="token operator">++</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	
+<span class="token punctuation">}</span>
 
-
-
-<h2 id="5-判断数组里是否有元素"><a href="#5-判断数组里是否有元素" class="headerlink" title="5.判断数组里是否有元素"></a>5.判断数组里是否有元素</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">getStartDay</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> true<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> week<span class="token punctuation">;</span>
+	week <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">getTotalNumOfDays</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">7</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>week <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">7</span><span class="token punctuation">;</span>
 	<span class="token keyword">else</span>
-		<span class="token keyword">return</span> false<span class="token punctuation">;</span>	
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+		<span class="token keyword">return</span> week<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-<h2 id="6-判断数组是否是满的"><a href="#6-判断数组是否是满的" class="headerlink" title="6.判断数组是否是满的"></a>6.判断数组是否是满的</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">isFull</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">==</span>pArr<span class="token operator">-&gt;</span>len<span class="token punctuation">)</span>
-		<span class="token keyword">return</span> true<span class="token punctuation">;</span>
-	<span class="token keyword">else</span>
-		<span class="token keyword">return</span> false<span class="token punctuation">;</span>	
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="7-追加元素"><a href="#7-追加元素" class="headerlink" title="7.追加元素"></a>7.追加元素</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">appendArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span><span class="token comment">//val是要加入的元素</span>
-<span class="token punctuation">{</span>
-	<span class="token comment">//满时返回false，不加</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span>pArr<span class="token punctuation">)</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
-	<span class="token comment">//不满时追加</span>
-	pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">]</span><span class="token operator">=</span>val<span class="token punctuation">;</span> 
-	<span class="token punctuation">(</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">)</span><span class="token operator">++</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>👉cnt的值=最后一个元素的下标+1</p>
-<p>👉最后记得要给有效值+1</p>
-<h2 id="8-插入元素"><a href="#8-插入元素" class="headerlink" title="8.插入元素"></a>8.插入元素</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">insertArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">getTotalNumOfDays</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">int</span> i<span class="token punctuation">;</span>
-	
-	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isFull</span><span class="token punctuation">(</span>pArr<span class="token punctuation">)</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
-	
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pos<span class="token operator">&lt;</span><span class="token number">1</span><span class="token operator">||</span>pos<span class="token operator">&gt;</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
-	 
-	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">&gt;=</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token operator">--</span>i<span class="token punctuation">)</span>
+	<span class="token keyword">int</span> yearChange <span class="token operator">=</span> year<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> sum1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> sum2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> daysOfYear<span class="token punctuation">;</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> year <span class="token operator">-</span> <span class="token number">1800</span><span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isLeapYear</span><span class="token punctuation">(</span>yearChange<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			daysOfYear <span class="token operator">=</span> <span class="token number">366</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span>
+			daysOfYear <span class="token operator">=</span> <span class="token number">365</span><span class="token punctuation">;</span>
+		sum1 <span class="token operator">+=</span> daysOfYear<span class="token punctuation">;</span>
+		yearChange<span class="token operator">--</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-	pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>val<span class="token punctuation">;</span>
-	<span class="token punctuation">(</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">)</span><span class="token operator">++</span><span class="token punctuation">;</span>
-	<span class="token keyword">return</span> true<span class="token punctuation">;</span>
-<span class="token punctuation">}</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> month <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
+		sum2 <span class="token operator">+=</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	sum <span class="token operator">=</span> sum1 <span class="token operator">+</span> sum2<span class="token punctuation">;</span>
+	<span class="token keyword">return</span> sum<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
-<ul>
-<li>满了、输入的位置不符合数组现有的→返回错误，在主程序里不执行</li>
-</ul>
-<p>👉对于for里的</p>
-<ul>
-<li><strong>i=pArr-&gt;cnt-1</strong> i对应着下标</li>
-<li><strong>i=pos-1</strong> 插入时只变动要插入位置的该位上和该位后的元素</li>
-<li><strong>–i</strong> 进行插入的逻辑是，先对最后一位操作，最后一位先往后移动，然后前面的再往后移动，最后空出一个位置给要插入的元素插入</li>
-</ul>
-<p>👉然后</p>
-<ul>
-<li><p>前一个元素移动到后一个元素上</p>
-</li>
-<li><p>放置新元素</p>
-</li>
-<li><p>有效值+1</p>
-</li>
-</ul>
-<h2 id="9-删除元素"><a href="#9-删除元素" class="headerlink" title="9.删除元素"></a>9.删除元素</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">deleteArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">,</span><span class="token keyword">int</span> <span class="token operator">*</span>pVal<span class="token punctuation">)</span>
+<span class="token keyword">int</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">int</span> i<span class="token punctuation">;</span> 
-	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">isEmpty</span><span class="token punctuation">(</span>pArr<span class="token punctuation">)</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
-	<span class="token keyword">if</span><span class="token punctuation">(</span>pos<span class="token operator">&lt;</span><span class="token number">1</span><span class="token operator">||</span>pos<span class="token operator">&gt;</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">)</span>
-		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
-		
-	<span class="token operator">*</span>pVal<span class="token operator">=</span>pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span>pos<span class="token punctuation">;</span>i<span class="token operator">&lt;</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">;</span><span class="token operator">++</span>i<span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">=</span>pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">--</span><span class="token punctuation">;</span>
-	<span class="token keyword">return</span> true<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>空的、输入不符合数组现有的→返回错误，再主程序中不执行</li>
-</ul>
-<p>感觉跟插入一个意思….</p>
-<h2 id="10-元素倒置"><a href="#10-元素倒置" class="headerlink" title="10.元素倒置"></a>10.元素倒置</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">inversionArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-	<span class="token keyword">int</span> j<span class="token operator">=</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token keyword">int</span> t<span class="token punctuation">;</span>
 	
-	<span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">&lt;</span>j<span class="token punctuation">)</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>month <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">3</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">5</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">7</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">8</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">10</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">12</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">31</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>month <span class="token operator">==</span> <span class="token number">4</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">6</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">9</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">11</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token number">31</span><span class="token punctuation">;</span>
+	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>month <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		t<span class="token operator">=</span>pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-		pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-		pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>t<span class="token punctuation">;</span>
-		i<span class="token operator">++</span><span class="token punctuation">;</span>
-		j<span class="token operator">--</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isLeapYear</span><span class="token punctuation">(</span>year<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token keyword">return</span> <span class="token number">29</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span>
+			<span class="token keyword">return</span> <span class="token number">28</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span>
 
-<h2 id="11-元素排序"><a href="#11-元素排序" class="headerlink" title="11.元素排序"></a>11.元素排序</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">sortArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span><span class="token operator">*</span> pArr<span class="token punctuation">)</span>
+bool <span class="token function">isLeapYear</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">int</span> i<span class="token punctuation">,</span>j<span class="token punctuation">,</span>t<span class="token punctuation">;</span>
-	
-	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token keyword">for</span><span class="token punctuation">(</span>j<span class="token operator">=</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>j<span class="token operator">&lt;</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span>
-		<span class="token punctuation">{</span>
-			t<span class="token operator">=</span>pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-			pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">=</span>pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
-			pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">=</span>t<span class="token punctuation">;</span>
-		<span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>year <span class="token operator">%</span> <span class="token number">4</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> true<span class="token punctuation">;</span>
+	<span class="token keyword">else</span>
+		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
 
 
                 
@@ -827,7 +733,7 @@ initArr(arr);
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2022/11/13/xiao-bai-lian-xu-chu-cun-shu-zu/">https://wabbybabb0.github.io/2022/11/13/xiao-bai-lian-xu-chu-cun-shu-zu/</a>
+                    <a href="https://wabbybabb0.github.io/2023/02/08/wan-nian-li/">https://wabbybabb0.github.io/2023/02/08/wan-nian-li/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -869,12 +775,8 @@ initArr(arr);
                                     <span class="chip bg-color">C语言</span>
                                 </a>
                             
-                                <a href="/tags/%E6%95%B0%E7%BB%84/">
-                                    <span class="chip bg-color">数组</span>
-                                </a>
-                            
-                                <a href="/tags/%E6%8C%87%E9%92%88/">
-                                    <span class="chip bg-color">指针</span>
+                                <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                                    <span class="chip bg-color">闲着没事干</span>
                                 </a>
                             
                         </div>
@@ -1062,24 +964,24 @@ initArr(arr);
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2022/11/18/xiao-bai-lian-biao/">
+                <a href="/2023/02/10/wen-jian/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.png" class="responsive-img" alt="小白————链表">
+                        <img src="/medias/featureimages/15.png" class="responsive-img" alt="读写文件">
                         
-                        <span class="card-title">小白————链表</span>
+                        <span class="card-title">读写文件</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大一小白WB粗略学习链表
+                            云屋考核时用到了读写文件，于是寒假闲着就去查了一些资料粗略记录了一下
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-18
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-02-10
                         </span>
                         <span class="publish-author">
                             
@@ -1100,8 +1002,8 @@ initArr(arr);
                         <span class="chip bg-color">C语言</span>
                     </a>
                     
-                    <a href="/tags/%E9%93%BE%E8%A1%A8/">
-                        <span class="chip bg-color">链表</span>
+                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                        <span class="chip bg-color">闲着没事干</span>
                     </a>
                     
                 </div>
@@ -1115,31 +1017,31 @@ initArr(arr);
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/11/12/ru-tu-ds1302-shi-zhong/">
+                <a href="/2023/02/07/pai-xu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.png" class="responsive-img" alt="入土————DS1302时钟">
+                        <img src="/medias/featureimages/15.png" class="responsive-img" alt="排序算法">
                         
-                        <span class="card-title">入土————DS1302时钟</span>
+                        <span class="card-title">排序算法</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            51单片机学习之DS1302时钟
+                            2023年寒假在家无聊找了几个排序学习它们的思路，现在已经忘光了(苦笑)
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-12
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-07
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/" class="post-category">
-                                    51单片机
+                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
+                                    C语言
                                 </a>
                             
                             
@@ -1149,8 +1051,12 @@ initArr(arr);
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
-                        <span class="chip bg-color">51单片机</span>
+                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
+                        <span class="chip bg-color">C语言</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                        <span class="chip bg-color">闲着没事干</span>
                     </a>
                     
                 </div>

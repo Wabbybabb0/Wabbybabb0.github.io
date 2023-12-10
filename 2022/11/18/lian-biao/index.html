@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="小白————万年历, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="链表, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>小白————万年历 | Wabbybabbo的摸鱼圣地</title>
+    <title>链表 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -401,12 +401,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/15.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">小白————万年历</h1>
+                    <h1 class="description center-align post-title">链表</h1>
                 </div>
             </div>
         </div>
@@ -526,8 +526,8 @@
                                 <span class="chip bg-color">C语言</span>
                             </a>
                         
-                            <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                                <span class="chip bg-color">闲着没事干</span>
+                            <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                                <span class="chip bg-color">链表</span>
                             </a>
                         
                     </div>
@@ -551,21 +551,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-02-08
+                    2022-11-18
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-07-27
+                    2023-12-10
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    342
+                    1.4k
                 </div>
                 
 
@@ -590,122 +590,318 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_CRT_SECURE_NO_WARNINGS</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
+                <h1 id="一-typedef"><a href="#一-typedef" class="headerlink" title="一.typedef"></a>一.typedef</h1><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Student</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span> sid<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>ST<span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">Student</span> student<span class="token punctuation">;</span><span class="token comment">//&lt;==&gt;ST student;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Student</span><span class="token punctuation">{</span>
+    <span class="token keyword">int</span> sid<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> age<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token operator">*</span>PST<span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">Student</span> <span class="token operator">*</span>p<span class="token punctuation">;</span><span class="token comment">//&lt;==&gt;PST *p;</span>
+<span class="token comment">//PST&lt;==&gt;struct Student *</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-C" data-language="C"><code class="language-C">typedef struct Student{
+    int sid;
+    int age;
+}*PST,ST;
+//效果是上面的整合<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="二-链表"><a href="#二-链表" class="headerlink" title="二.链表"></a>二.链表</h1><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h2><ul>
+<li>n个节点离散分配</li>
+<li>批次通过指针相连</li>
+<li>每隔节点只有一个前驱节点，每个节点只有一个后续节点</li>
+<li>首节点没有前驱节点，尾节点没有后续节点</li>
+<li>[离散存储]</li>
+</ul>
+<h2 id="2-专业术语"><a href="#2-专业术语" class="headerlink" title="2.专业术语"></a>2.专业术语</h2><ul>
+<li>首节点：第一个有效的节点</li>
+<li>尾节点：最后一个有效节点</li>
+<li>头结点：第一个有效节点之前的节点<ul>
+<li>没有存放有效数据</li>
+</ul>
+</li>
+<li>头指针：指向头节点的指针变量</li>
+<li>尾指针：指向尾节点的指针变量</li>
+</ul>
+<h2 id="3-确定一个链表需要的参数"><a href="#3-确定一个链表需要的参数" class="headerlink" title="3.确定一个链表需要的参数"></a>3.确定一个链表需要的参数</h2><p><strong>只需要一个头指针</strong></p>
+<p>👉为什么不用头结点</p>
+<ul>
+<li><p>因为头结点的数据类型和后面有数据域的节点的数据类型是一样的(虽然头结点没有数据域，但是他会有垃圾值，会占内存)</p>
+</li>
+<li><p>头指针只占四个字节来存放头结点的地址</p>
+</li>
+</ul>
+<h2 id="4-节点"><a href="#4-节点" class="headerlink" title="4.节点"></a>4.节点</h2><ul>
+<li>都要有一个指针域和数据域</li>
+<li>结构体的某一个成员指向的是跟它一摸一样的数据类型的数据</li>
+<li>要为创建的每一个节点申请空间</li>
+</ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">Node</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> data<span class="token punctuation">;</span><span class="token comment">//数据域</span>
+    <span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>pNext<span class="token punctuation">;</span><span class="token comment">//指针域</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="5-分类"><a href="#5-分类" class="headerlink" title="5.分类"></a>5.分类</h2><ul>
+<li>单链表</li>
+<li>双链表：每个节点有两个指针域</li>
+<li>循环链表：能通过任何一个节点找到其他节点</li>
+<li>非循环链表</li>
+</ul>
+<h1 id="三-作用"><a href="#三-作用" class="headerlink" title="三.作用"></a>三.作用</h1><h2 id="1-创建-初始化"><a href="#1-创建-初始化" class="headerlink" title="1.创建/初始化"></a>1.创建/初始化</h2><ul>
+<li>需要用到的变量：最初创建的链表的长度<strong>len</strong>、每个结构体数据域的数据<strong>val</strong>、头节点<strong>pHead</strong>、尾节点<strong>pTail</strong></li>
+</ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> len<span class="token punctuation">;</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+   <span class="token comment">//xxxxxxx</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">pNew<span class="token operator">-&gt;</span>data<span class="token operator">=</span>val<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<ul>
+<li>pTail=pHead<ul>
+<li>可以理解为用尾指针是针线，把原有链表最后一个节点和新加入的节点连接起来</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-插入"><a href="#2-插入" class="headerlink" title="2.插入"></a>2.插入</h2><ul>
+<li><p>需要用到的参数：头结点，新插入的结构体的位置，新插入的结构体的数据域中的数值</p>
+</li>
+<li><p>需要考虑的问题：要怎么通过输入的<strong>pos</strong>找到要<strong>指向新插入结构体位置的结构体指针</strong></p>
+</li>
+</ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">PNODE p<span class="token operator">=</span>pHead<span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token operator">!=</span><span class="token constant">NULL</span> <span class="token operator">&amp;&amp;</span> i<span class="token operator">&lt;</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>	<span class="token comment">//i&lt;p-1就是让p指向要插入位置的上一个结构体 </span>
+	<span class="token punctuation">{</span>
+		p<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+		i<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token comment">/*
+条件①：确保是在一个不是空的结构体后插入的
+条件②：p要指向即将要插入的位置的前一个结构体
+*/</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>我们要通过遍历的方式找到目标结构体，假设我们要插入到pos=3</p>
+<ul>
+<li><strong>i&lt;pos=1</strong>这里 i=0时 p=第一个有效结构体</li>
+<li>i=1时，p=第二个有效结构体</li>
+<li>i=2不符合循环条件</li>
+<li>所以while结束后，p就是第二个有效结构体的指针变量</li>
+</ul>
+<h2 id="3-删除"><a href="#3-删除" class="headerlink" title="3.删除"></a>3.删除</h2><ul>
+<li><p>删除是通过修改前一个结构体指针的指向来删除的</p>
+</li>
+<li><p>所以删除的位置的前一个指针的指向不能是NULL</p>
+</li>
+<li><p>如果要删除的对象的下一个已经是NULL了，那么就不会继续遍历下去 </p>
+</li>
+<li><p><strong>vs插入</strong>，如果要插入的位置是最后一个，即p-&gt;</p>
+</li>
+</ul>
+<h1 id="四-全部代码"><a href="#四-全部代码" class="headerlink" title="四.全部代码"></a>四.全部代码</h1><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;malloc.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdlib.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdbool.h&gt;</span></span>
 
-<span class="token keyword">void</span> <span class="token function">printMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">void</span> <span class="token function">printMonthBody</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> <span class="token function">getStartDay</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> <span class="token function">getTotalNumOfDays</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token keyword">int</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span> <span class="token keyword">int</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-bool <span class="token function">isLeapYear</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Node</span><span class="token punctuation">{</span>
+	<span class="token keyword">int</span> data<span class="token punctuation">;</span>
+	<span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>pNext<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>NODE<span class="token punctuation">,</span><span class="token operator">*</span>PNODE<span class="token punctuation">;</span>
 
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">//函数声明</span>
+PNODE <span class="token function">creatList</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">traverseList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+bool <span class="token function">isEmpty</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">lengthList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+bool <span class="token function">insertList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+bool <span class="token function">deleteList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">,</span><span class="token keyword">int</span> <span class="token operator">*</span>pVal<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">sortList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">lengthList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">int</span> year<span class="token punctuation">,</span> month<span class="token punctuation">;</span>
-	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"请输入要查询的年份：\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">scanf_s</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>year<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
-	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"请输入要查询的月份：\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">scanf_s</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">printMonth</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span>
+	PNODE pHead<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+	
+	pHead<span class="token operator">=</span><span class="token function">creatList</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">//traverseList(pHead);</span>
+<span class="token comment">/*	
+	if(isEmpty(pHead))
+		printf("链表为空！\n");
+	else
+		printf("链表不空！\n");
+	return 0;
+*/</span>
+<span class="token comment">/*
+	int len=lengthList(pHead);	
+	printf("长链表的长度是%d",len);	
+*/</span>
+	
+	<span class="token comment">//sortList(pHead);</span>
+	<span class="token comment">//traverseList(pHead);</span>
+	
+	<span class="token comment">//insertList(pHead,4,23);</span>
+	<span class="token comment">//traverseList(pHead);</span>
+	
+	<span class="token function">deleteList</span><span class="token punctuation">(</span>pHead<span class="token punctuation">,</span><span class="token number">4</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">traverseList</span><span class="token punctuation">(</span>pHead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">printMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
+PNODE <span class="token function">creatList</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d年%d月份的日历\n"</span><span class="token punctuation">,</span>year<span class="token punctuation">,</span>month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"--------------------------------\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"日\t一\t二\t三\t四\t五\t六\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token function">printMonthBody</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">void</span> <span class="token function">printMonthBody</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">int</span> week <span class="token operator">=</span> <span class="token function">getStartDay</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">int</span> days <span class="token operator">=</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> len<span class="token punctuation">;</span>
 	<span class="token keyword">int</span> i<span class="token punctuation">;</span>
-	<span class="token keyword">int</span> date <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token keyword">int</span> circulation <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-	<span class="token comment">//第一行的日期</span>
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> week <span class="token operator">%</span> <span class="token number">7</span><span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"  \t"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> week<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">7</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token keyword">int</span> val<span class="token punctuation">;</span>
+
+	PNODE pHead<span class="token operator">=</span><span class="token punctuation">(</span>PNODE<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>NODE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>pHead<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span> date<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"内存分配失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	<span class="token comment">//从第二行开始的日期</span>
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> date<span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> days<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+	PNODE pTail<span class="token operator">=</span>pHead<span class="token punctuation">;</span>
+	pTail<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+	
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"请输入您需要生成的链表节点的个数：len="</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span>circulation <span class="token operator">==</span> <span class="token number">7</span><span class="token punctuation">)</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%请输入第%d个节点的值"</span><span class="token punctuation">,</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span><span class="token operator">&amp;</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		PNODE pNew<span class="token operator">=</span><span class="token punctuation">(</span>PNODE<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>NODE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">if</span><span class="token punctuation">(</span>pNew<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
 		<span class="token punctuation">{</span>
-			<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-			circulation <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+			<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"内存分配失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 		<span class="token punctuation">}</span>
-		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		circulation<span class="token operator">++</span><span class="token punctuation">;</span>
+		pNew<span class="token operator">-&gt;</span>data<span class="token operator">=</span>val<span class="token punctuation">;</span>
+		pTail<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span>pNew<span class="token punctuation">;</span>
+		pNew<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+		pTail<span class="token operator">=</span>pNew<span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-	
+	<span class="token keyword">return</span> pHead<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> 
+
+<span class="token keyword">void</span> <span class="token function">traverseList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	PNODE p<span class="token operator">=</span>pHead<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>	
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\t"</span><span class="token punctuation">,</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		p<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> 
 <span class="token punctuation">}</span>
 
-<span class="token keyword">int</span> <span class="token function">getStartDay</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
+bool <span class="token function">isEmpty</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-	<span class="token keyword">int</span> week<span class="token punctuation">;</span>
-	week <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">getTotalNumOfDays</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> month<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">7</span><span class="token punctuation">;</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span>week <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> <span class="token number">7</span><span class="token punctuation">;</span>
-	<span class="token keyword">else</span>
-		<span class="token keyword">return</span> week<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">getTotalNumOfDays</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">int</span> i<span class="token punctuation">;</span>
-	<span class="token keyword">int</span> yearChange <span class="token operator">=</span> year<span class="token punctuation">;</span>
-	<span class="token keyword">int</span> sum1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> sum2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> daysOfYear<span class="token punctuation">;</span>
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> year <span class="token operator">-</span> <span class="token number">1800</span><span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token operator">==</span>pHead<span class="token operator">-&gt;</span>pNext<span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isLeapYear</span><span class="token punctuation">(</span>yearChange<span class="token punctuation">)</span><span class="token punctuation">)</span>
-			daysOfYear <span class="token operator">=</span> <span class="token number">366</span><span class="token punctuation">;</span>
-		<span class="token keyword">else</span>
-			daysOfYear <span class="token operator">=</span> <span class="token number">365</span><span class="token punctuation">;</span>
-		sum1 <span class="token operator">+=</span> daysOfYear<span class="token punctuation">;</span>
-		yearChange<span class="token operator">--</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> month <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
-		sum2 <span class="token operator">+=</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span>year<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-	sum <span class="token operator">=</span> sum1 <span class="token operator">+</span> sum2<span class="token punctuation">;</span>
-	<span class="token keyword">return</span> sum<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">getNumOfDaysInMonth</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">,</span><span class="token keyword">int</span> month<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	
-	<span class="token keyword">if</span> <span class="token punctuation">(</span>month <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">3</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">5</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">7</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">8</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">10</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">12</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> <span class="token number">31</span><span class="token punctuation">;</span>
-	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>month <span class="token operator">==</span> <span class="token number">4</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">6</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">9</span> <span class="token operator">||</span> month <span class="token operator">==</span> <span class="token number">11</span><span class="token punctuation">)</span>
-		<span class="token keyword">return</span> <span class="token number">31</span><span class="token punctuation">;</span>
-	<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>month <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">)</span>
-	<span class="token punctuation">{</span>
-		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">isLeapYear</span><span class="token punctuation">(</span>year<span class="token punctuation">)</span><span class="token punctuation">)</span>
-			<span class="token keyword">return</span> <span class="token number">29</span><span class="token punctuation">;</span>
-		<span class="token keyword">else</span>
-			<span class="token keyword">return</span> <span class="token number">28</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-bool <span class="token function">isLeapYear</span><span class="token punctuation">(</span><span class="token keyword">int</span> year<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">if</span> <span class="token punctuation">(</span>year <span class="token operator">%</span> <span class="token number">4</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
 		<span class="token keyword">return</span> true<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
 	<span class="token keyword">else</span>
 		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span>
 
+<span class="token keyword">int</span> <span class="token function">lengthList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	PNODE p<span class="token operator">=</span>pHead<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> len<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token operator">!=</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token operator">++</span>len<span class="token punctuation">;</span>
+		p<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">return</span> len<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 
+<span class="token keyword">void</span> <span class="token function">sortList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	PNODE p<span class="token operator">=</span>pHead<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+	PNODE q<span class="token punctuation">;</span>
+	
+	<span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>j<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> temp<span class="token punctuation">;</span>
+	<span class="token keyword">int</span> len<span class="token operator">=</span><span class="token function">lengthList</span><span class="token punctuation">(</span>pHead<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span>len<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">for</span><span class="token punctuation">(</span>j<span class="token operator">=</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span>q<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>j<span class="token operator">&lt;</span>len<span class="token punctuation">;</span>j<span class="token operator">++</span><span class="token punctuation">)</span>
+		<span class="token punctuation">{</span>
+			<span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>data <span class="token operator">&gt;</span> q<span class="token operator">-&gt;</span>data<span class="token punctuation">)</span>
+			<span class="token punctuation">{</span>
+				temp<span class="token operator">=</span>p<span class="token operator">-&gt;</span>data<span class="token punctuation">;</span>
+				p<span class="token operator">-&gt;</span>data<span class="token operator">=</span>q<span class="token operator">-&gt;</span>data<span class="token punctuation">;</span>
+				q<span class="token operator">-&gt;</span>data<span class="token operator">=</span>temp<span class="token punctuation">;</span>	
+			<span class="token punctuation">}</span>
+			q<span class="token operator">=</span>q<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+		<span class="token punctuation">}</span>
+		p<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> 
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+bool <span class="token function">insertList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	PNODE p<span class="token operator">=</span>pHead<span class="token punctuation">;</span>
+	
+	<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token operator">!=</span><span class="token constant">NULL</span> <span class="token operator">&amp;&amp;</span> i<span class="token operator">&lt;</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>	<span class="token comment">//i&lt;p-1就是让p指向要插入位置的上一个结构体 </span>
+	<span class="token punctuation">{</span>
+		p<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+		i<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">&gt;</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token operator">||</span><span class="token constant">NULL</span><span class="token operator">==</span>p<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
+	
+	PNODE pNew<span class="token operator">=</span><span class="token punctuation">(</span>PNODE<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>NODE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>pNew<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"分配失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> 
+	pNew<span class="token operator">-&gt;</span>data<span class="token operator">=</span>val<span class="token punctuation">;</span>
+	PNODE q<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+	p<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span>pNew<span class="token punctuation">;</span>
+	pNew<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span>q<span class="token punctuation">;</span>
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span> 
+
+bool <span class="token function">deleteList</span><span class="token punctuation">(</span>PNODE pHead<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">,</span><span class="token keyword">int</span> <span class="token operator">*</span>pVal<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
+	PNODE p<span class="token operator">=</span>pHead<span class="token punctuation">;</span>
+	
+	<span class="token keyword">while</span><span class="token punctuation">(</span>p<span class="token operator">-&gt;</span>pNext<span class="token operator">!=</span><span class="token constant">NULL</span> <span class="token operator">&amp;&amp;</span> i<span class="token operator">&lt;</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>	<span class="token comment">//i&lt;p-1就是让p指向要删除位置的上一个结构体 </span>
+	<span class="token punctuation">{</span>
+		p<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+		i<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>i<span class="token operator">&gt;</span>pos<span class="token operator">-</span><span class="token number">1</span><span class="token operator">||</span><span class="token constant">NULL</span><span class="token operator">==</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">)</span>
+		<span class="token keyword">return</span> false<span class="token punctuation">;</span>
+	
+	PNODE pNew<span class="token operator">=</span><span class="token punctuation">(</span>PNODE<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>NODE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>pNew<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"分配失败！\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">exit</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span> 
+	PNODE q<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+	<span class="token operator">*</span>pVal<span class="token operator">=</span>q<span class="token operator">-&gt;</span>data<span class="token punctuation">;</span>
+	p<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span>p<span class="token operator">-&gt;</span>pNext<span class="token operator">-&gt;</span>pNext<span class="token punctuation">;</span>
+	q<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
                 
@@ -733,7 +929,7 @@ bool <span class="token function">isLeapYear</span><span class="token punctuatio
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/02/08/xiao-bai-wan-nian-li/">https://wabbybabb0.github.io/2023/02/08/xiao-bai-wan-nian-li/</a>
+                    <a href="https://wabbybabb0.github.io/2022/11/18/lian-biao/">https://wabbybabb0.github.io/2022/11/18/lian-biao/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -775,8 +971,8 @@ bool <span class="token function">isLeapYear</span><span class="token punctuatio
                                     <span class="chip bg-color">C语言</span>
                                 </a>
                             
-                                <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                                    <span class="chip bg-color">闲着没事干</span>
+                                <a href="/tags/%E9%93%BE%E8%A1%A8/">
+                                    <span class="chip bg-color">链表</span>
                                 </a>
                             
                         </div>
@@ -964,24 +1160,24 @@ bool <span class="token function">isLeapYear</span><span class="token punctuatio
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2023/02/10/xiao-bai-wen-jian/">
+                <a href="/2022/11/20/zhan/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/6.png" class="responsive-img" alt="小白————文件">
+                        <img src="/medias/featureimages/10.png" class="responsive-img" alt="栈">
                         
-                        <span class="card-title">小白————文件</span>
+                        <span class="card-title">栈</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            云屋考核时用到了读写文件，于是寒假闲着就去查了一些资料粗略记录了一下
+                            大一小白WB粗略学习栈
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-02-10
+                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-20
                         </span>
                         <span class="publish-author">
                             
@@ -1002,8 +1198,8 @@ bool <span class="token function">isLeapYear</span><span class="token punctuatio
                         <span class="chip bg-color">C语言</span>
                     </a>
                     
-                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                        <span class="chip bg-color">闲着没事干</span>
+                    <a href="/tags/%E6%A0%88/">
+                        <span class="chip bg-color">栈</span>
                     </a>
                     
                 </div>
@@ -1017,24 +1213,24 @@ bool <span class="token function">isLeapYear</span><span class="token punctuatio
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/02/07/xiao-bai-pai-xu/">
+                <a href="/2022/11/13/lian-xu-chu-cun-shu-zu/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/1.png" class="responsive-img" alt="小白————排序">
+                        <img src="/medias/featureimages/7.png" class="responsive-img" alt="连续储存数组">
                         
-                        <span class="card-title">小白————排序</span>
+                        <span class="card-title">连续储存数组</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            2023年寒假在家无聊找了几个排序学习它们的思路，现在已经忘光了(苦笑)
+                            大一小白WB尝试理解数组和指针的关系
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-07
+                                <i class="far fa-clock fa-fw icon-date"></i>2022-11-13
                             </span>
                         <span class="publish-author">
                             
@@ -1055,8 +1251,12 @@ bool <span class="token function">isLeapYear</span><span class="token punctuatio
                         <span class="chip bg-color">C语言</span>
                     </a>
                     
-                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
-                        <span class="chip bg-color">闲着没事干</span>
+                    <a href="/tags/%E6%95%B0%E7%BB%84/">
+                        <span class="chip bg-color">数组</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%8C%87%E9%92%88/">
+                        <span class="chip bg-color">指针</span>
                     </a>
                     
                 </div>
