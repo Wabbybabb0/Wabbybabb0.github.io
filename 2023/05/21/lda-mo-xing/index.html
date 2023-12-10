@@ -1,0 +1,1824 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="隐含迪利克雷模型LDA, Wabbybabbo的摸鱼圣地">
+    <meta name="description" content="上班？下班！">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>隐含迪利克雷模型LDA | Wabbybabbo的摸鱼圣地</title>
+    <link rel="icon" type="image/png" href="/grape200x200.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/grape200x200.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Wabbybabbo的摸鱼圣地</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-sharp fa-solid fa-fish" style="zoom: 0.6;"></i>
+      
+      <span>主页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-soild fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>档案</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>分享</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/musics">
+          
+          <i class="fas fa-music" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>音乐</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/movies">
+          
+          <i class="fas fa-film" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>电影</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/books">
+          
+          <i class="fas fa-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>书籍</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/grape200x200.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Wabbybabbo的摸鱼圣地</div>
+        <div class="logo-desc">
+            
+            上班？下班！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-sharp fa-solid fa-fish"></i>
+			
+			主页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-soild fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			档案
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			分享
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/musics " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-music" style="position: absolute;left:50px" ></i>
+			      
+		          <span>音乐</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/movies " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
+			      
+		          <span>电影</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/books " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>书籍</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Wabbybabb0/Wabbybabb0.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Wabbybabb0/Wabbybabb0.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">隐含迪利克雷模型LDA</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                                <span class="chip bg-color">人工智能</span>
+                            </a>
+                        
+                            <a href="/tags/DMIR%E8%80%83%E6%A0%B8/">
+                                <span class="chip bg-color">DMIR考核</span>
+                            </a>
+                        
+                            <a href="/tags/NLP/">
+                                <span class="chip bg-color">NLP</span>
+                            </a>
+                        
+                            <a href="/tags/LDA/">
+                                <span class="chip bg-color">LDA</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
+                                人工智能
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2023-05-21
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2023-12-10
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    6.4k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/v_JULY_v/article/details/41209515?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;utm_relevant_index=2">参考博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://oa7vrw2neqh.feishu.cn/docx/CB0WdZbkioi90JxOFTVczXfmngd">飞书版笔记(带pdf)</a></p>
+<h1 id="1-整体把握"><a href="#1-整体把握" class="headerlink" title="1.整体把握"></a>1.整体把握</h1><p>LDA是一种<strong>主题模型</strong>，可以将文档集中每篇文档的主题以<strong>概率分布</strong>的形式给出，根据给定的一篇文章，反推其主题分布</p>
+<p>一篇文档可以包含多个主题，文档中每一个词都由其中的一个主题生成</p>
+<h2 id="1-1LDA的图模型结构"><a href="#1-1LDA的图模型结构" class="headerlink" title="1.1LDA的图模型结构"></a>1.1LDA的图模型结构</h2><p>  类似贝叶斯网络结构</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702178138892.jpg"></p>
+<h3 id="1-1-1贝叶斯的定义"><a href="#1-1-1贝叶斯的定义" class="headerlink" title="1.1.1贝叶斯的定义"></a>1.1.1贝叶斯的定义</h3><p>  节点表示随机变量${X_1,X_2,…,X_n}$，认为有<strong>因果关系</strong>(或非条件独立)的变量或命题用箭头来连接。如果用一个单箭头来连接，表示其中一个节点是“因(parents)”，另一个是“果(children)”，两节点就会产生一个条件概率值</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177828629.jpg"></p>
+<p>  👆圈表示随机变量(random variables)，用箭头表示条件依赖(conditional dependencies)</p>
+<p>  令$G = (I,E)$表示一个有向无环图(DAG)，其中I代表图形中所有的节点的集合，而E代表有向连接线段的集合，且令$X = (X_i),i ∈ I$为其有向无环图中的某一节点i所代表的随机变量，若节点X的联合概率可以表示成$p(x)=\prod\limits_{i\in I}p(x_i|x_{pa(i)})$，则称$X$为相对于一有向无环图G 的贝叶斯网络，其中，$pa(i)$表示节点i之“因”，或称$pa(i)$是$i$的parents（父母）。</p>
+<p>  联合概率：事件A和事件B同时发生的概率，记为$P(AB)$或$P(A,B)$或$P(A∩B)$</p>
+<p>  对于任意的随机变量，其联合概率可由各自的局部条件概率分布相乘得出：</p>
+<p>  $p(x_1,….,x_K)=p(x_K|x_1,….,x_{K-1})…p(x_2|x_1)p(x_1)$</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177836358.jpg"></p>
+<p>  👆一个简单的贝叶斯网络(a导致b，a和b导致c)</p>
+<p>  $p(a,b,c)=p(c|a.b)p(b|a)p(a)$</p>
+<h2 id="1-2二项式分布"><a href="#1-2二项式分布" class="headerlink" title="1.2二项式分布"></a>1.2二项式分布</h2><p>随机变量只有两个(非正即负)，即重复n次的伯努利实验，记为$X\sim b(n,p)$</p>
+<p>二项分布的概率密度函数为：</p>
+<p>$P(K=k)=(n,k)p^k(1-p)^{n-k}$</p>
+<p> 对于k = 0, 1, 2, …, n，其中的</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177851194(1).jpg"></p>
+<p>是二项式系数（这就是二项分布的名称的由来），又记为$\dfrac{n!}{k!(n-k)!}$</p>
+<h2 id="1-3多项式分布"><a href="#1-3多项式分布" class="headerlink" title="1.3多项式分布"></a>1.3多项式分布</h2><p>由二项分布扩展到多维的情况</p>
+<p>随机变量取值不是0-1，而是有多种离散值的可能(1,2,3,…,k)</p>
+<p>假设有$i$个离散值，那么有$\sum_{i=1}^kp_i=1,p_i&gt;0$</p>
+<p>多项式分布的概率密度函数为：$P(x_1,x_2,…,x_k;n,p_1,p_2,…,p_k)=\dfrac{n!}{x_1!…x_k!}p^{x_1}…p^{x_k}$</p>
+<h2 id="1-4Gamma分布"><a href="#1-4Gamma分布" class="headerlink" title="1.4Gamma分布"></a>1.4Gamma分布</h2><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/69606875">Beta函数和Gamma函数的关系</a></p>
+<p>Gamma函数实际意义：阶乘一般化，将阶乘推广到实数域</p>
+<p>This content is only supported in a Feishu Docs</p>
+<h1 id="2-Beta分布"><a href="#2-Beta分布" class="headerlink" title="2.Beta分布"></a>2.Beta分布</h1><p>This content is only supported in a Feishu Docs</p>
+<h2 id="2-1Beta分布"><a href="#2-1Beta分布" class="headerlink" title="2.1Beta分布"></a>2.1Beta分布</h2><p>beta是指一组定义在$(0,1)$区间的连续概率分布，有两个参数$\alpha$和$\beta$，且$\alpha,\beta&gt;0$</p>
+<p>二项分布的共轭先验分布</p>
+<p>给定参数$\alpha&gt;0$和$\beta&gt;0$，取值范围为[0,1]的随机变量 x 的概率密度函数：$f(x;\alpha,\beta)=\dfrac{1}{B(\alpha,\beta)}x^{\alpha-1}(1-x)^{\beta-1}$</p>
+<p>其中$\dfrac{1}{B(\alpha,\beta)}=\dfrac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)},\Gamma(z)=\int_0^\infty t^{z-1}e^{-t}dt$</p>
+<p>见pdf</p>
+<h2 id="2-2Beta-Binomial共轭"><a href="#2-2Beta-Binomial共轭" class="headerlink" title="2.2Beta-Binomial共轭"></a>2.2Beta-Binomial共轭</h2><ul>
+<li>问题引入：<ul>
+<li><strong>问题1</strong>：随机变量$X_1,X_2,…,X_n\sim^{idd}Uniform(0,1)$，把这n个随机变量排序后得到顺序统计量$X_{(1)},X_{(2)},…,X_{(n)}$，问$X_{(k)}$的分布是什么</li>
+<li><strong>问题2</strong>：$X_{(k)}$的分布是什么 &lt;==&gt; 猜测$p=X_{(k)}$，<ul>
+<li>$Y_1,Y_2,…,Y_n\sim^{idd}Uniform(0,1)$,$Y_i$中有$m_1$个比$p$小，$m_2$个比$p$大，问$P(p|Y_1,Y_2,…Y_m)$的分布是什么</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分析：<ul>
+<li>换言之，$Y_i$中有$m_1$个比$X_{(k)}$小，有$m_2$个比$X_{(k)}$大，所以$X_{(k)}$是$X_1,X_2,…,X_n,Y_1,Y_2,…,Y_n\sim^{idd}Uniform(0,1)$中第$k+m_1$大的数</li>
+<li>事件服从Beta分布</li>
+<li>可知$p=X_{(k)}$的密度概率函数为：$Beta(p|k+m_1,n-k+1+m_2)$</li>
+</ul>
+</li>
+<li>与贝叶斯结合过程<ul>
+<li><p>贝叶斯派思考问题的固定模式：</p>
+</li>
+<li><p><strong>先验分布</strong>$\pi(\theta)$<strong>+ 样本信息</strong>$X$$\rightarrow$<strong>后验分布</strong>$\pi(\theta|x)$</p>
+</li>
+<li><p>在得到新的样本信息之前，人们对$\theta$的认知是先验分布$\pi(\theta)$，在得到新的样本信息</p>
+<p>$X$后，人们对$\theta$的认知为$\pi(\theta|x)$</p>
+</li>
+<li><p>过程</p>
+<ul>
+<li>为了猜测$p=X_{(k)}$，在获得一定的观测数据前，我们对$p$的认知是：$f(p)=Beta(p|k,n-k+1)$，此称为$p$的先验分布</li>
+<li>为了获得结果$Y_i$中有$m_1$个比$p$小，$m_2$个比$p$大，针对$Y_i$做了$m$次伯努利实验，所以$m_1$服从二项分布$B(m,p)$</li>
+<li>在得到$(m_1,m_2)$的数据后，$p$的后验分布为$f(p|m_1,m_2)=Beta(p|k+m_1,n-k+1+m_2)$</li>
+</ul>
+</li>
+<li><p>结合贝叶斯</p>
+<ul>
+<li>$Beta(p|k,n-k+1)+Count(m_1,m_2)=Beta(p|k+m_1,n-k+1+m_2)$</li>
+<li>更一般的，对于非负实数$\alpha$和$\beta$：有如下关系$Beta(p|\alpha,\beta)+Count(m_1,m_2)=Beta(p|\alpha+m_1,\beta+m_2)$，其中$Count(m_1,m_2)$对应$B(m,p)$</li>
+<li>针对这种观测到的数据符合以下条件的，就是Beta-Binomial共轭，换言之，Beta分布是二项式分布的共轭先验概率分布<ul>
+<li>条件一：二项分布</li>
+<li>条件二：参数的先验分布和后验分布都是Beta分布</li>
+<li>共轭先验分布→2.3</li>
+</ul>
+</li>
+<li>二项分布和Beta分布是共轭分布意味着，如果我们为二项分布的参数p选取的先验分布是Beta分布，那么以p为参数的二项分布用贝叶斯估计得到的后验分布仍然服从Beta分布</li>
+</ul>
+</li>
+<li><p>$\alpha$和$\beta$可以认为是形状参数</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-3共轭先验分布"><a href="#2-3共轭先验分布" class="headerlink" title="2.3共轭先验分布"></a>2.3共轭先验分布</h2><p>如果后验概率和先验概率满足同样的分布律，那么先验分布和后验分布被叫做共轭分布，同时，先验分布叫做似然函数的共轭先验分布。</p>
+<p>  比如，某观测数据服从概率分布P(θ)(先验)时，当观测到新的X数据(样本信息)时，我们一般会遇到如下问题：</p>
+<ul>
+<li>可否根据新观测数据X，更新参数θ？</li>
+<li>根据新观测数据可以在多大程度上改变参数θ，即$\theta \leftarrow \theta + \triangle \theta$</li>
+<li>当重新估计θ的时候，给出新参数值θ的新概率分布，即P(θ|x)。</li>
+</ul>
+<h2 id="2-4从Beta分布推广到Dirichlet分布"><a href="#2-4从Beta分布推广到Dirichlet分布" class="headerlink" title="2.4从Beta分布推广到Dirichlet分布"></a>2.4从Beta分布推广到Dirichlet分布</h2><p>见pdf</p>
+<p>结论是：对于Beta分布的随机变量，其均值(期望)可以用$\dfrac{\alpha}{\alpha+\beta}$来估计</p>
+<p>类比到Dirichlet分布：如果$\mathop{p}\limits^{\rightarrow}\sim Dir(\mathop{t}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow})$，那么有$E(\mathop{p}\limits^{\rightarrow})=(\dfrac{\alpha_1}{\sum^K_{i=1}\alpha_i},\dfrac{\alpha_2}{\sum^K_{i=1}\alpha_i},…,\dfrac{\alpha_3}{\sum^K_{i=1}\alpha_i})$</p>
+<h1 id="3-Dirichlet分布"><a href="#3-Dirichlet分布" class="headerlink" title="3.Dirichlet分布"></a>3.Dirichlet分布</h1><p>是beta分布在高纬度上的推广</p>
+<p>$f(x_1,x_2,…,x_k;\alpha_1,\alpha_1,…,\alpha_k)=\dfrac{1}{B(\alpha)}\prod_{i=1}^kx_{i}^{a^i-1}$</p>
+<p>其中$B(\alpha)=\dfrac{\prod_{i=1}^k\Gamma(a^i)}{\Gamma(\sum_{i=1}^k)a^i},\sum x_i=1$</p>
+<h2 id="3-1Dirichlet分布"><a href="#3-1Dirichlet分布" class="headerlink" title="3.1Dirichlet分布"></a>3.1Dirichlet分布</h2><p>This content is only supported in a Feishu Docs</p>
+<h2 id="3-2Dirichlet-Multinomial共轭"><a href="#3-2Dirichlet-Multinomial共轭" class="headerlink" title="3.2Dirichlet-Multinomial共轭"></a>3.2Dirichlet-Multinomial共轭</h2><ul>
+<li>问题引入：在2.2的问题2的基础上继续深入<ul>
+<li><strong>问题3</strong>：随机变量$X_1,X_2,…,X_n\sim^{idd}Uniform(0,1)$，把这n个随机变量排序后得到顺序统计量$X_{(1)},X_{(2)},…,X_{(n)}$，问$(X_{(k_1)},X_{k_1+k_2})$的联合分布是什么<ul>
+<li>计算见pdf</li>
+</ul>
+</li>
+<li>为论证Dirichlet分布是多项式分布的共轭先验概率分布，在问题3的基础上继续深入<ul>
+<li>问题4：<ul>
+<li>随机变量$X_1,X_2,…,X_n\sim^{idd}Uniform(0,1)$，把这n个随机变量排序后得到顺序统计量$X_{(1)},X_{(2)},…,X_{(n)}$</li>
+<li>令$p_1=X_{k_1},p_2=X(k_1+k_2),p_3=1-p_1-p_2$，现在要猜测$\mathop{p}\limits^{\rightarrow}=(p_1,p_2,p_3)$</li>
+<li>$Y_1,Y_2,…,Y_m\sim^{idd}Uniform(0,1)$，$Y_i$中落到$(0,p_1],[p_1,p_2),[p_2,1]$三个区间的个数分别为$m_1,m_2,m_3$，$m=m_1+m_2+m_3$</li>
+<li>问后验分布$P(\mathop{p}\limits^{\rightarrow}|Y_1,Y_2,…Y_m)$的分布是什么</li>
+<li>讨论见pdf</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>与贝叶斯结合推理：<ul>
+<li>要猜测参数$\mathop{p}\limits^{\rightarrow}=(p_1,p_2,p_3)$，其先验分布为$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow})$</li>
+<li>$Y_1,Y_2,…,Y_m\sim^{idd}Uniform(0,1)$，$Y_i$中落到$(0,p_1],[p_1,p_2),[p_2,1]$三个区间的个数分别为$m_1,m_2,m_3$，所以$\mathop{m}\limits^{\rightarrow}=(m_1,m_2,m_3)$服从多项分布$Mult(\mathop{m}\limits^{\rightarrow}|\mathop{p}\limits^{\rightarrow})$</li>
+<li>给定了来自数据提供的$\mathop{m}\limits^{\rightarrow}$后，$\mathop{p}\limits^{\rightarrow}$的后验分布变为$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow}+\mathop{m}\limits^{\rightarrow})$</li>
+<li>直观表述：<ol>
+<li>$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow})+MultCount(\mathop{m}\limits^{\rightarrow})=Dir(\mathop{p}\limits^{\rightarrow}|\mathop{k}\limits^{\rightarrow}+\mathop{m}\limits^{\rightarrow})$</li>
+<li>令$\mathop{\alpha}\limits^{\rightarrow}=\mathop{k}\limits^{\rightarrow}，可以把$\mathop{\alpha}\limits^{\rightarrow}$从整数集合延拓到实数集合，从而得到更一般的表达：</li>
+<li>$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow})+MultCount(\mathop{m}\limits^{\rightarrow})=Dir(\mathop{p}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow}+\mathop{m}\limits^{\rightarrow})$</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>结论：<ul>
+<li>观测到的数据符合多项分布</li>
+<li>参数的先验分布和后验分布都是Dirichlet分布</li>
+<li>就是Dirichlet-Multinomial共轭</li>
+<li>一般形式的Dirichlet分布定义和对于给定的$\mathop{p}\limits^{\rightarrow}$和$N$，其多项式分布见pdf</li>
+<li>Dirichlet分布$Dir(\mathop{p}\limits^{\rightarrow}|\mathop{\alpha}\limits^{\rightarrow})$和多项分布$MultCount(\mathop{n}\limits^{\rightarrow}|\mathop{p}\limits^{\rightarrow},N)$是共轭关系</li>
+</ul>
+</li>
+</ul>
+<h1 id="4-LDA模型"><a href="#4-LDA模型" class="headerlink" title="4.LDA模型"></a>4.LDA模型</h1><p><strong>定义的变量</strong></p>
+<ul>
+<li>$w$表示词，$V$表示所有单词的个数（固定值）</li>
+<li>$z$表示主题，是主题的个数（预先给定，固定值）</li>
+<li>$D(w_1,…,w_M)$表示语料库，其中的$M$是语料库中的文档数（固定值）</li>
+<li>$\mathbf{w}=(w_1,w_2,…,w_N)$表示文档，其中的$N$表示一个文档中的词数（随机变量）</li>
+</ul>
+<h2 id="4-1各个模型基础"><a href="#4-1各个模型基础" class="headerlink" title="4.1各个模型基础"></a>4.1各个模型基础</h2><h3 id="4-1-1Unigram-model"><a href="#4-1-1Unigram-model" class="headerlink" title="4.1.1Unigram model"></a>4.1.1Unigram model</h3><p>对于文档$\mathbf{w}=(w_1,w_2,…,w_N)$，用$p(w_n)$表示词$w_n$的先验概率，生成文档$\mathbf{w}$的概率为：$p(\mathbf{w})=\sum^N_{n=1}p(w_n)$</p>
+<p>图模型为</p>
+<ul>
+<li><p>图模型一</p>
+<ul>
+<li>(图中被涂色的w(word)表示可观测变量，N表示一篇文档中总共N个单词，M表示M篇文档)</li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177856933.jpg"></li>
+</ul>
+</li>
+<li><p>图模型二</p>
+<ul>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177862768.jpg"></li>
+<li>nigram model假设文本中的词服从Multinomial分布，而我们已经知道Multinomial分布的先验分布为Dirichlet分布。上图中的$w_n$表示在文本中观察到的第n个词，$n\in[1,N]$表示该文本中一共有$N$个单词。加上方框表示重复，即一共有$N$个这样的随机变量$w_n$。其中，$p$和$\alpha$是隐含未知变量：</li>
+<li>$p$是词服从的Multinomial分布的参数</li>
+<li>$\alpha$是Dirichlet分布(即Multinomial分布的先验分布)的参数</li>
+<li>一般$\alpha$由经验事先给定(先验)，$p$由观察到的文本中出现的词学习得到(样本)，表示文本中出现每个词的概率</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-1-2Mixture-of-unigrams-model"><a href="#4-1-2Mixture-of-unigrams-model" class="headerlink" title="4.1.2Mixture of unigrams model"></a>4.1.2Mixture of unigrams model</h3><p>该模型的生成过程是：给某个文档先选择一个主题$z$，再根据该主题生成文档，该文档中的所有词都来自一个主题。假设主题有$z_1,…z_k$，生成文档$\mathbf{w}$的概率为：</p>
+<p>$p(\mathbf{w})=p(z_1)\prod^N_{n=1}p(w_n|z_1)+…+p(z_k)\prod^N_{n=1}p(w_n|z_k)=\sum_zp(z)\prod^N_{n=1}p(w_n|z)$</p>
+<p>图模型为：(图中被涂色的w表示可观测变量，未被涂色的z表示未知的隐变量，N表示一篇文档中总共N个单词，M表示M篇文档)</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177867686(1).jpg"></p>
+<h2 id="4-2PLSA模型"><a href="#4-2PLSA模型" class="headerlink" title="4.2PLSA模型"></a>4.2PLSA模型</h2><p>建议直接<a target="_blank" rel="noopener" href="https://blog.csdn.net/v_JULY_v/article/details/41209515?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;utm_relevant_index=2">看这个</a></p>
+<h3 id="4-2-1pLSA模型下生成文档"><a href="#4-2-1pLSA模型下生成文档" class="headerlink" title="4.2.1pLSA模型下生成文档"></a>4.2.1pLSA模型下生成文档</h3><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177872673.jpg"></p>
+<h3 id="4-2-2根据文档反推其主题分布"><a href="#4-2-2根据文档反推其主题分布" class="headerlink" title="4.2.2根据文档反推其主题分布"></a>4.2.2根据文档反推其主题分布</h3><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177893244.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177906171.jpg"></p>
+<h3 id="4-2-3EM算法"><a href="#4-2-3EM算法" class="headerlink" title="4.2.3EM算法"></a>4.2.3EM算法</h3><p>This content is only supported in a Feishu Docs</p>
+<h4 id="4-2-3-1EM算法的简单介绍"><a href="#4-2-3-1EM算法的简单介绍" class="headerlink" title="4.2.3.1EM算法的简单介绍"></a>4.2.3.1EM算法的简单介绍</h4><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78311644">EM算法</a></p>
+<p>隐变量$Z=(z_1,z_2,z_3,z_4,z_5)$代表每一轮所使用的硬币</p>
+<p>所以第一步先估算$Z$，这步同时是E-step</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177911648.jpg"></p>
+<p>👆流程：</p>
+<ol>
+<li>随机初始化$\theta_A=0.6$和$\theta_B=0.5$(E-step)</li>
+<li>H代表正面，T代表反面；对于第一轮来说，实际的情况是5个正的5个反的，进行如下计算<ol>
+<li>$P_A=\dfrac{0.6^5<em>0.4^5}{(0.6^5</em>0.4^5)+(0.5^5+0.5^5)}=0.45$</li>
+<li>$P_B=\dfrac{(0.5^5+0.5^5)}{(0.6^5*0.4^5)+(0.5^5+0.5^5)}=0.55$<ul>
+<li>​    对于第一轮抛掷，该枚硬币是硬币A的概率为0.45，是硬币B的概率为0.55，其他轮同理，这一步得到了Z的概率分布</li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177916936.jpg"></li>
+</ul>
+</li>
+</ol>
+</li>
+<li>利用期望求硬币A和硬币B的贡献，对于第一轮来说<ol>
+<li>H：0.45*5=2.25</li>
+<li>T：0.55*5=2.75</li>
+<li>其他轮同理</li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177922766.jpg"></li>
+<li>用极大似然估计来估计新的$\theta_A$和$\theta_B$，这步就是M-Step<ul>
+<li>$\theta_A=\dfrac{21.3}{21.3+8.6}=0.71$</li>
+<li>$\theta_B=\dfrac{11.7}{11.7+8.4}=0.58$</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>如此反复迭代，可以算出最终的参数值</li>
+<li>$L(\theta)$与$J(z,Q)$的关系<ol>
+<li>这张图的意思是</li>
+<li>先固定$\theta$，调整$Q(z)$使下界$J(z,Q)$上升至与$L(\theta)$在该$\theta$值下相同(由绿线到蓝线)</li>
+<li>然后固定$Q(z)$，调整$\theta$使下界$J(z,Q)$达到最大值</li>
+<li>再固定$\theta$…</li>
+<li>直到收敛到似然函数$L(\theta)$的最大值时，得到该处的$\theta^{*}$</li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177927472.jpg"></li>
+</ol>
+</li>
+<li>EM算法的整体框架</li>
+</ol>
+<p>Repeat until convergence{</p>
+<p>  (E-step) For each </p>
+<p>$i$</p>
+<p>,set</p>
+<p>​    $Q_i(z):=p(z^{(i)}|x^{(i)};\theta)$                                   找隐变量的分布(直线往上移)</p>
+<p>​     (M-step) Set</p>
+<p>​    $\theta:=arg max_{\theta}\sum_i\sum_{z^{(i)}}log\dfrac{p(x^{(i)},z^{(i)};\theta)}{Q_i(z^{(i)})}$   找新的$\theta$(点位往左右移)</p>
+<p>}</p>
+<h4 id="4-2-3-2EM算法估计pLSA的两个未知参数"><a href="#4-2-3-2EM算法估计pLSA的两个未知参数" class="headerlink" title="4.2.3.2EM算法估计pLSA的两个未知参数"></a>4.2.3.2EM算法估计pLSA的两个未知参数</h4><p>从<strong>矩阵角度</strong>描述带估计的两个未知变量$P(w_j|z_k)$和$P(z_k|d_i)$</p>
+<p>词表$V$有$j$个词项；所有主题$Z$有$k$个主题；有$i$篇文章</p>
+<ul>
+<li>假定用$\phi_k$表示词表$V$在主题$z_k$上的一个多项分布，则$\phi_k$可以表示成一个向量，每个元素$\phi_{k,j}$表示词项$w_j$出现在主题$z_k$中的概率，即：<ul>
+<li>$P(w_j|z_k)=\phi_{k,j}$，$\sum_{w_j\in V}\phi_{k,j}=1$</li>
+</ul>
+</li>
+<li>假定用$\theta_i$表示所有主题$K$在文档$d_i$上的一个多项分布，则$\theta_i$可以表示成一个向量，每个元素$\theta_{i,k}$表示主题$z_k$出现在文档$d_i$中的概率，即：<ul>
+<li>$P(z_k|d_i)=\theta_{i,k}$，$\sum_{z_k\in K}\theta_{i,k}=1$</li>
+</ul>
+</li>
+</ul>
+<p>$P(w_j|z_k)$和$P(z_k|d_i)$转换成了两个矩阵，换言之，我们要求解的参数就是这两个矩阵：</p>
+<ul>
+<li>$\Phi=[\phi_1,…\phi_K], z_k\in Z$</li>
+<li>$\Theta=[\theta_i,…,\theta_M],d_i\in D$</li>
+</ul>
+<p>词和词之间是相互独立的，整篇文档$N$个词的分布为：</p>
+<ul>
+<li>$P(W|d_i)=\prod_{j=1}^NP(d_i,w_j)^{n(d_i,w_j)}$</li>
+</ul>
+<p>文档和文档之间也是相互独立的，整个语料库($M$篇文档,每篇文档$N$个词)中词的分布为</p>
+<ul>
+<li>$P(W|D)=\prod_{i=1}^M\prod_{j=1}^NP(d_i,w_j)^{n(d_i,w_j)}$</li>
+</ul>
+<p>其中，</p>
+<p>$n(d_i,w_j)$表示词项$w_j$在文档$d_i$中的词频</p>
+<p>$n(d_i)$表示文档$d_i$中文档词的总数</p>
+<p>显然有$n(d_i)=\sum_{w_j\in V}n(d_i,w_j)$，一篇文档中词的总数等于词表中每个词出现的次数之和</p>
+<p>整个语料库的词分布的对数似然函数：</p>
+<p>$\begin{align} l(\Phi,\Theta)&amp;=\sum_{i=1}^{M}\sum_{j=1}^Nn(d_i,w_j)logP(d_i,w_j)\ &amp;=\sum_{i=1}^Mn(d_i)\left(logP(d_i)+\sum_{j=1}^N\dfrac{n(d_i,w_j)}{n(d_i)}log\sum_{k=1}^KP(w_j|z_k)P(z_k|d_i)\right)\ &amp;=\sum_{i=1}^Mn(d_i)\left(logP(d_i)+\sum_{j=1}^N\dfrac{n(d_i,w_j)}{n(d_i)}log\sum_{k=1}^K\phi_{k,j}\theta_{i,k}\right) \end{align}$</p>
+<ul>
+<li>(1)对应的是$L(\theta)\geq\sum_{i=1}^n\sum_z^ZQ_i(z)log\dfrac{P(x_i,z;\theta)}{Q_i(z)}$，其中$Q_i(z)$表示的是样本$i$隐含变量$z$的某种分布；$log\dfrac{P(x_i,z;\theta)}{Q_i(z)}$表示的是对数似然函数</li>
+<li>(2)分别求文本的对数似然函数和词的对数似然函数，见pdf</li>
+<li>(3)就是上面得到的以矩阵的形式表达多项式分布</li>
+</ul>
+<p>多元函数在有约束条件$\sum_{j=1}^{M}\theta_{k,j}=1$和$\sum_{k=1}^K\phi_{i,k}=1$下求极值，用拉格朗日乘数法(即通过引入拉格朗日乘子将约束条件和多元(目标)函数融合到一起，转化为无约束条件的极值问题)见pdf</p>
+<p>总结：</p>
+<ol>
+<li>为求得$P(w_j|z_k)$和$P(z_k|d_i)$，因此用EM算法去估计$\theta=(P(w_j|z_k),z_k|d_i)$这个参数</li>
+<li>$\phi_{k,j}$表示词项$w_j$出现在主题$z_k$中的频率，即$P(w_j|z_k)=\phi_{k,j}$，从而把$P(w_j|z_k)$转换成矩阵$\Phi$</li>
+<li>$\theta_{i,k}$表示主题$z_k$出现在文档$d_i$中的频率，即$P(z_k|d_i)=\theta_{k,i}$，从而把$P(z_k|d_i)$转换成矩阵$\Theta$</li>
+<li>最后通过EM算法求出两个矩阵</li>
+</ol>
+<h5 id="4-2-3-2-1拉格朗日乘数法"><a href="#4-2-3-2-1拉格朗日乘数法" class="headerlink" title="4.2.3.2.1拉格朗日乘数法"></a>4.2.3.2.1拉格朗日乘数法</h5><ol>
+<li>没有约束条件</li>
+</ol>
+<p>目标函数$f(x,y)$是一座山的高度，约束$g(x,y)$是镶嵌在山上的一条曲线，如下图</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177933575.jpg"></p>
+<p>红线是约束曲线</p>
+<p>目的：找红线上的最低点</p>
+<p>步骤：</p>
+<ul>
+<li>从第0条线开始往上数，数到第三条，与约束曲线有交点，比第三条低的地方都不在约束范围内，所以这是约束曲线的最低点</li>
+<li>约束曲线不会和等高线相交，一定是相切，如果是相交的话，约束曲线有一部分在最低点的曲线的下端(即目标曲线并不能包括约束曲线的最低点)，如下图中约束曲线有一部分在B区域，但是B区域比等高线低<ul>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177938067.jpg"></li>
+</ul>
+</li>
+<li>那么两条线只能相切，意味他们的法线平行&lt;==&gt;法向量只差一个任意的常数乘子(取-$\lambda$)：<ul>
+<li>∇$f(x,y)=-\lambda$∇$g(x,y)$</li>
+<li>∇$f(x,y)+\lambda$∇$g(x,y)=0$</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/55532322">有约束条件</a></li>
+</ol>
+<p>见pdf</p>
+<h2 id="4-3LDA模型"><a href="#4-3LDA模型" class="headerlink" title="4.3LDA模型"></a>4.3LDA模型</h2><h3 id="4-3-1pLSA和LDA的对比：生成文档与参数估计"><a href="#4-3-1pLSA和LDA的对比：生成文档与参数估计" class="headerlink" title="4.3.1pLSA和LDA的对比：生成文档与参数估计"></a>4.3.1pLSA和LDA的对比：生成文档与参数估计</h3><p>👇频率派vs贝叶斯派</p>
+<p>This content is only supported in a Feishu Docs</p>
+<p><strong>LDA</strong>模型中一篇文档生成的方式：</p>
+<ol>
+<li>按照先验分布$P(d_i)$选择一篇文档$d_i$</li>
+<li>从Dirichlet分布$\alpha$中取样生成文档$d_i$的主题分布$\theta_i$，即主题分布$\theta_i$由超参数为$\alpha$的Dirichlet分布生成①</li>
+<li>从主题的多项式分布$\theta_i$中取样生成文档$d_i$第$j$个词的主题$z_{i,j}$</li>
+<li>从Dirichlet分布$\beta$中取样生成主题$z_{i,j}$对应的词语分布$\phi_{z_i,j}$，即词语分布$\phi_{z_i,j}$由参数为$\beta$的Dirichlet分布生成②</li>
+<li>从词语的多项式分$\phi_{z_i,j}$中采样最终生成词语$w_{i,j}$</li>
+</ol>
+<p>👇LDA和pLSA的区别：</p>
+<ul>
+<li>LDA是pLSA的贝叶斯版本，主题分布和词分布本身都由先验知识随机给定</li>
+<li>①②LDA在pLSA的基础上为主题分布和词分布加了两个Dirichlet先验分布$\alpha$和$\beta$</li>
+<li><strong>pLSA</strong>中主题分布和词分布是唯一确定的，但是<strong>LDA</strong>中主题分布和词分布不再唯一确定不变，即无法确切给出，但是再怎么变化也依然服从一定的分布，即主题分布和词分布由Dirichlet先验随机确定</li>
+<li>文本生成后，两者都要根据文档去推断主题分布和词分布，只是用的参数推断方法不同<ul>
+<li>pLSA中用极大似然估计的思想</li>
+<li>LDA中把两个参数视为随机变量，加入Dirichlet先验</li>
+</ul>
+</li>
+<li>pLSA属于频率派思想，样本随机，参数($\theta_{k,j}$和$\phi_{i,j}$)虽未知但固定；LDA属于贝叶斯派思想，样本固定，参数($\theta_i$和$\phi_{z_i,j}$)未知但不固定，是个随机变量，服从一定的分布(Dirichlet分布)<ul>
+<li><strong>pLSA中</strong><ul>
+<li>主题分布和词分布确定后，以一定概率$\left(P(z_k|d_i),P(w_j|z_k)\right)$分别选取具体的主题和词项，生成好文档</li>
+<li>然后根据生成好的文档反推其主题分布、词分布</li>
+<li>最终用EM算法求解出两个未知但固定的参数的值：<ul>
+<li>$\phi_{k,j}$(由$P(w_j|z_k)$转换而来)</li>
+<li>$\theta_{i,k}$(由$P(z_k|d_i)$转换而来)</li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177942549.jpg"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>LDA****中</strong><ul>
+<li>主题分布和词分布是随机变量(即文档$d_i$产生主题$z_k$和主题$z_k$产生词项$w_j$的概率都是随机变量)</li>
+<li>Dirichlet先验为文档$d_i$生成主题分布$\Theta$，然后根据主题分布$\Theta$产生主题$z_k$</li>
+<li>从无穷多个主题分布中按照Dirichlet先验随机抽取出某个主题分布出来</li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177951260.jpg"></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>例子<ul>
+<li>好比，去一朋友家：<ul>
+<li>按照<strong>频率派</strong>的思想，我估计他在家的概率是1/2，不在家的概率也是1/2，是个<strong>定值</strong>。</li>
+<li>而按照贝叶斯派的思想，他在家不在家的概率不再认为是个定值1/2，而是随机变量。比如按照我们的经验（比如当天周末），猜测他在家的概率是0.6，但这个0.6不是说就是完全确定的，也有可能是0.7。如此，贝叶斯派没法确切给出参数的确定值（0.3,0.4，0.6,0.7，0.8,0.9都有可能），但至少明白在哪个范围或哪些取值（0.6,0.7，0.8,0.9）更有可能，哪个范围或哪些取值（0.3,0.4） 不太可能。进一步，贝叶斯估计中，参数的多个估计值服从一定的先验分布，而后根据实践获得的数据（例如周末不断跑他家），不断修正之前的参数估计，从先验分布慢慢过渡到后验分布。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3-2LDA生成文档–三维坐标系"><a href="#4-3-2LDA生成文档–三维坐标系" class="headerlink" title="4.3.2LDA生成文档–三维坐标系"></a>4.3.2LDA生成文档–三维坐标系</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/v_JULY_v/article/details/41209515?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;utm_relevant_index=2">看</a></p>
+<h3 id="4-3-3pLSA和LDA概率图对比"><a href="#4-3-3pLSA和LDA概率图对比" class="headerlink" title="4.3.3pLSA和LDA概率图对比"></a>4.3.3pLSA和LDA概率图对比</h3><p>z跟w都得是小写，阴影圆圈表示可观测的变量，非阴影圆圈表示隐变量或参数，箭头表示两变量间的条件依赖性，方框表示重复抽样，方框右下角的数字代表重复抽样的次数</p>
+<ul>
+<li>pLSA<ul>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177955942.jpg"></li>
+</ul>
+</li>
+<li>LDA <ul>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177960834(1).jpg"></li>
+<li>假定语料库中共有M篇文章，每篇文章下的Topic的主题分布是一个从参数为$\alpha$的Dirichlet先验分布中采样得到的Multinomial分布，每个Topic下的词分布是一个从参数$\beta$为的Dirichlet先验分布中采样得到的Multinomial分布。</li>
+<li>对于某篇文章中的第n个词，首先从该文章中出现的每个主题的Multinomial分布中选择或采样一个主题，然后再在这个主题对应的词的Multinomial分布中选择或采样一个词。不断重复这个随机生成过程，直到M篇文章全部生成完成。</li>
+<li>M 篇文档会对应于 M 个独立的 Dirichlet-Multinomial 共轭结构，K 个 topic 会对应于 K 个独立的 Dirichlet-Multinomial 共轭结构<ul>
+<li>$\alpha\rightarrow\theta\rightarrow z$表示生成文档中的所有词对应的主题<ul>
+<li>$\alpha\rightarrow\theta$对应的是Dirichlet分布</li>
+<li>$\theta\rightarrow z$对应的是Multinomial分布</li>
+<li>​      因此整体是一个Dirichlet-Multinomial共轭结构</li>
+</ul>
+</li>
+<li>$\beta\rightarrow\theta\rightarrow w$表示某个主题对应的词<ul>
+<li>同上</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3-4pLSA和LDA参数估计方法的对比"><a href="#4-3-4pLSA和LDA参数估计方法的对比" class="headerlink" title="4.3.4pLSA和LDA参数估计方法的对比"></a>4.3.4pLSA和LDA参数估计方法的对比</h3><ul>
+<li>pLSA<ul>
+<li>使用EM算法估计$\Phi$和$\Theta$，使用的思想是极大似然估计</li>
+</ul>
+</li>
+<li>LDA<ul>
+<li>估计$\Phi$和$\Theta$可用变分(Variational inference)-EM算法<strong>，</strong>也可以用gibbs采样<strong>，</strong>前者的思想是最大后验估计MAP（MAP与MLE类似，都把未知参数当作固定的值），后者的思想是贝叶斯估计</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3-5Gibbs采样"><a href="#4-3-5Gibbs采样" class="headerlink" title="4.3.5Gibbs采样"></a>4.3.5Gibbs采样</h3><p>Gibbs抽样是马尔可夫链蒙特卡尔理论（MCMC）中用来获取一系列近似等于指定多维概率分布（比如2个或者多个随机变量的联合概率分布）观察样本的算法。</p>
+<h1 id="5-代码实现"><a href="#5-代码实现" class="headerlink" title="5.代码实现"></a>5.代码实现</h1><p>This content is only supported in a Feishu Docs</p>
+<h2 id="5-1corpora-Dictionary-texts"><a href="#5-1corpora-Dictionary-texts" class="headerlink" title="5.1corpora.Dictionary(texts):"></a>5.1<strong>corpora.Dictionary(texts)</strong>:</h2><p>为每个出现在语料库中的单词分配了一个独一无二的编号id</p>
+<h2 id="5-2dictionary-doc2bow"><a href="#5-2dictionary-doc2bow" class="headerlink" title="5.2dictionary.doc2bow():"></a>5.2<strong>dictionary.doc2bow()</strong>:</h2><p>把文档变成一个稀疏向量，[(0,1), (1,1)]，表明id为0，1的词汇出现了一次，而其他词汇没有出现</p>
+<h2 id="5-3models-Ldamodel"><a href="#5-3models-Ldamodel" class="headerlink" title="5.3models.Ldamodel:"></a>5.3<strong>models.Ldamodel</strong>:</h2><p><strong>参数：</strong></p>
+<p>corpus：一组文档的语料库，是list of list of tuple的形式，每个list内的元素是(word_id, count)，表示一个文档中每个词出现的次数</p>
+<p>num_topics：主题数量</p>
+<p>id2word：将每个词的id映射到该词的字符串表示</p>
+<p>passes：在拟合模型中要执行的迭代次数</p>
+<p>random_state：随机数生成器的种子</p>
+<h2 id="5-4ldamodel-show-topics"><a href="#5-4ldamodel-show-topics" class="headerlink" title="5.4ldamodel.show_topics"></a>5.4ldamodel.show_topics</h2><p>用于展示LDA模型的主题函数</p>
+<h3 id="5-4-1x"><a href="#5-4-1x" class="headerlink" title="5.4.1x"></a>5.4.1x</h3><p>格式：</p>
+<p>[</p>
+<p>(主题1，[(关键词1.1，概率1.1),(关键词1.2，概率1.2)…])，</p>
+<p>(主题2，[(关键词2.1，概率2.1),(关键词2.2，概率2.2)…])，</p>
+<p>()，</p>
+<p>….]</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177965964(1).jpg"></p>
+<h3 id="5-4-2tp"><a href="#5-4-2tp" class="headerlink" title="5.4.2tp"></a>5.4.2tp</h3><p>tp[0]–&gt;主题</p>
+<p>tp[1]–&gt;[(关键词1，概率1),(关键词2，概率2)…]</p>
+<h3 id="5-4-3打印每个主题下每个单词的概率"><a href="#5-4-3打印每个主题下每个单词的概率" class="headerlink" title="5.4.3打印每个主题下每个单词的概率"></a>5.4.3打印每个主题下每个单词的概率</h3><p>This content is only supported in a Feishu Docs</p>
+<p>👇用.split()函数</p>
+<ul>
+<li>先按照”+”号进行拆分</li>
+<li>然后对于以”+”号拆分出来的东西，再以”*”号进行拆分</li>
+<li>打印格式：”单词”(单词出现的概率)</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177971365.jpg"></p>
+<h3 id="5-4-4计算一致性"><a href="#5-4-4计算一致性" class="headerlink" title="5.4.4计算一致性"></a>5.4.4计算一致性</h3><p><strong>CoherenceModel(model, texts, dictionary, coherence)</strong></p>
+<p>model：指定用于计算一致性的主题模型对象(ldamodel)</p>
+<p>text：指定一个文本列表</p>
+<p>dictionary：指定一个词典对象</p>
+<p>coherence：指定要计算的一致性指标</p>
+<ul>
+<li>C_V：衡量主题内部的一致性和主题之间的互异性</li>
+</ul>
+<p>返回的是一致性评分，分数越高，表示主题模型的主题更具有一致性，一致性评分仅用于比较不同主题模型之间的一致性</p>
+<p>This content is only supported in a Feishu Docs</p>
+<p>发现，当主题数目为10的时候，十个不同的主题之间的coherence值较大，一致性较高。这四个主题下的关键词能够很好地概括所有文档的关键词</p>
+<h1 id="6-没懂的地方"><a href="#6-没懂的地方" class="headerlink" title="6.没懂的地方"></a>6.没懂的地方</h1><ol>
+<li>第四行到第五行</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177981781.jpg"></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">WB</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://wabbybabb0.github.io/2023/05/21/lda-mo-xing/">https://wabbybabb0.github.io/2023/05/21/lda-mo-xing/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">WB</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                                    <span class="chip bg-color">人工智能</span>
+                                </a>
+                            
+                                <a href="/tags/DMIR%E8%80%83%E6%A0%B8/">
+                                    <span class="chip bg-color">DMIR考核</span>
+                                </a>
+                            
+                                <a href="/tags/NLP/">
+                                    <span class="chip bg-color">NLP</span>
+                                </a>
+                            
+                                <a href="/tags/LDA/">
+                                    <span class="chip bg-color">LDA</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">给WB来包辣条</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <div class="card" data-aos="fade-up">
+    <div id="utteranc-container" class="card-content">
+        <script src="https://utteranc.es/client.js"
+                repo="Wabbybabb0/commit-utterance"
+                issue-term="pathname"
+                theme="github-light"
+                crossorigin="anonymous"
+                async>
+        </script>
+    </div>
+</div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2023/11/04/cnn-li-hong-yi/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.png" class="responsive-img" alt="CNN(李宏毅)">
+                        
+                        <span class="card-title">CNN(李宏毅)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            卷积神经网络初学
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-04
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
+                                    人工智能
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                        <span class="chip bg-color">人工智能</span>
+                    </a>
+                    
+                    <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
+                        <span class="chip bg-color">卷积神经网络</span>
+                    </a>
+                    
+                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">深度学习</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/02/10/wen-jian/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/15.png" class="responsive-img" alt="读写文件">
+                        
+                        <span class="card-title">读写文件</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            云屋考核时用到了读写文件，于是寒假闲着就去查了一些资料粗略记录了一下
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-02-10
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
+                                    C语言
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
+                        <span class="chip bg-color">C语言</span>
+                    </a>
+                    
+                    <a href="/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/">
+                        <span class="chip bg-color">闲着没事干</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Wabbybabbo的摸鱼圣地<br />'
+            + '文章作者: Wabbybabbo<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="8590828427"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023</span>
+            
+            <span id="year">2023</span>
+            <a href="/about" target="_blank">Wabbybabbo</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Wabbybabb0" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:Wabbybabb0@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=497056512" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 497056512" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
