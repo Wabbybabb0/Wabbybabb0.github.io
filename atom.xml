@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Wabbybabbo的摸鱼圣地</title>
   
-  
+  <subtitle>🐟</subtitle>
   <link href="https://wabbybabb0.github.io/atom.xml" rel="self"/>
   
   <link href="https://wabbybabb0.github.io/"/>
@@ -145,11 +145,11 @@
     <category term="NLP" scheme="https://wabbybabb0.github.io/categories/NLP/"/>
     
     
+    <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
+    
     <category term="DMIR考核" scheme="https://wabbybabb0.github.io/tags/DMIR%E8%80%83%E6%A0%B8/"/>
     
     <category term="NLP" scheme="https://wabbybabb0.github.io/tags/NLP/"/>
-    
-    <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
   </entry>
   
@@ -184,6 +184,35 @@
   </entry>
   
   <entry>
+    <title>入坟————QG工作室训练营————大组作业仓库</title>
+    <link href="https://wabbybabb0.github.io/2023/03/25/ru-fen-qg-kao-he-zhi-da-zu-zuo-ye/"/>
+    <id>https://wabbybabb0.github.io/2023/03/25/ru-fen-qg-kao-he-zhi-da-zu-zuo-ye/</id>
+    <published>2023-03-25T03:24:00.000Z</published>
+    <updated>2023-07-27T09:49:12.513Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="数据结构" scheme="https://wabbybabb0.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    
+    <category term="C语言" scheme="https://wabbybabb0.github.io/tags/C%E8%AF%AD%E8%A8%80/"/>
+    
+    <category term="数据结构" scheme="https://wabbybabb0.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
+    
+    <category term="QG考核" scheme="https://wabbybabb0.github.io/tags/QG%E8%80%83%E6%A0%B8/"/>
+    
+  </entry>
+  
+  <entry>
     <title>入坟————QG工作室训练营————小组作业仓库</title>
     <link href="https://wabbybabb0.github.io/2023/03/25/ru-fen-qg-kao-he-zhi-xiao-zu-zuo-ye/"/>
     <id>https://wabbybabb0.github.io/2023/03/25/ru-fen-qg-kao-he-zhi-xiao-zu-zuo-ye/</id>
@@ -206,40 +235,11 @@
     
     <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
+    <category term="QG考核" scheme="https://wabbybabb0.github.io/tags/QG%E8%80%83%E6%A0%B8/"/>
+    
     <category term="波士顿房价预测" scheme="https://wabbybabb0.github.io/tags/%E6%B3%A2%E5%A3%AB%E9%A1%BF%E6%88%BF%E4%BB%B7%E9%A2%84%E6%B5%8B/"/>
     
     <category term="多智能体共识" scheme="https://wabbybabb0.github.io/tags/%E5%A4%9A%E6%99%BA%E8%83%BD%E4%BD%93%E5%85%B1%E8%AF%86/"/>
-    
-    <category term="QG考核" scheme="https://wabbybabb0.github.io/tags/QG%E8%80%83%E6%A0%B8/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>入坟————QG工作室训练营————大组作业仓库</title>
-    <link href="https://wabbybabb0.github.io/2023/03/25/ru-fen-qg-kao-he-zhi-da-zu-zuo-ye/"/>
-    <id>https://wabbybabb0.github.io/2023/03/25/ru-fen-qg-kao-he-zhi-da-zu-zuo-ye/</id>
-    <published>2023-03-25T03:24:00.000Z</published>
-    <updated>2023-07-27T09:49:12.513Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="数据结构" scheme="https://wabbybabb0.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
-    
-    
-    <category term="QG考核" scheme="https://wabbybabb0.github.io/tags/QG%E8%80%83%E6%A0%B8/"/>
-    
-    <category term="C语言" scheme="https://wabbybabb0.github.io/tags/C%E8%AF%AD%E8%A8%80/"/>
-    
-    <category term="数据结构" scheme="https://wabbybabb0.github.io/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"/>
     
   </entry>
   
