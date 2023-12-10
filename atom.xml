@@ -100,31 +100,6 @@
   </entry>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://wabbybabb0.github.io/2023/11/02/hello-world/"/>
-    <id>https://wabbybabb0.github.io/2023/11/02/hello-world/</id>
-    <published>2023-11-02T07:20:28.932Z</published>
-    <updated>2023-07-25T10:33:46.552Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Typora" scheme="https://wabbybabb0.github.io/tags/Typora/"/>
-    
-    <category term="Markdown" scheme="https://wabbybabb0.github.io/tags/Markdown/"/>
-    
-  </entry>
-  
-  <entry>
     <title>隐含迪利克雷模型LDA</title>
     <link href="https://wabbybabb0.github.io/2023/05/21/lda-mo-xing/"/>
     <id>https://wabbybabb0.github.io/2023/05/21/lda-mo-xing/</id>
@@ -152,36 +127,6 @@
     <category term="NLP" scheme="https://wabbybabb0.github.io/tags/NLP/"/>
     
     <category term="LDA" scheme="https://wabbybabb0.github.io/tags/LDA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>忙碌的五月————考核，比赛与病痛</title>
-    <link href="https://wabbybabb0.github.io/2023/05/01/2023.5-yue-zong-jie/"/>
-    <id>https://wabbybabb0.github.io/2023/05/01/2023.5-yue-zong-jie/</id>
-    <published>2023-05-01T02:13:00.000Z</published>
-    <updated>2023-07-27T09:44:56.306Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;ul&gt;
-&lt;li&gt;在五一劳动节发布的考核题(为期一个月)&lt;/li&gt;
-&lt;li&gt;4月29到5月7的数模校赛&lt;/li&gt;
-&lt;li&gt;5月4到5月10🐏了&lt;/li&gt;
-&lt;li&gt;5月13焊接比赛&lt;/li&gt;
-&lt;li&gt;剩下的时间补之前的课内和开始做DMIR考核**(浓缩的不是精华，是寿命T^T)*</summary>
-        
-      
-    
-    
-    
-    <category term="月总结" scheme="https://wabbybabb0.github.io/categories/%E6%9C%88%E6%80%BB%E7%BB%93/"/>
-    
-    
-    <category term="月总结" scheme="https://wabbybabb0.github.io/tags/%E6%9C%88%E6%80%BB%E7%BB%93/"/>
     
   </entry>
   
@@ -555,6 +500,60 @@
     <category term="51单片机" scheme="https://wabbybabb0.github.io/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/"/>
     
     <category term="大云屋考核" scheme="https://wabbybabb0.github.io/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>蜂鸣器</title>
+    <link href="https://wabbybabb0.github.io/2022/10/18/feng-ming-qi/"/>
+    <id>https://wabbybabb0.github.io/2022/10/18/feng-ming-qi/</id>
+    <published>2022-10-18T06:23:00.000Z</published>
+    <updated>2023-12-10T08:05:48.851Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;蜂鸣器&quot;&gt;&lt;a href=&quot;#蜂鸣器&quot; class=&quot;headerlink&quot; title=&quot;蜂鸣器&quot;&gt;&lt;/a&gt;蜂鸣器&lt;/h1&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="51单片机" scheme="https://wabbybabb0.github.io/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/"/>
+    
+    
+    <category term="51单片机" scheme="https://wabbybabb0.github.io/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/"/>
+    
+    <category term="大云屋考核" scheme="https://wabbybabb0.github.io/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Calculator简易计算器</title>
+    <link href="https://wabbybabb0.github.io/2022/10/13/jian-yi-ji-suan-qi/"/>
+    <id>https://wabbybabb0.github.io/2022/10/13/jian-yi-ji-suan-qi/</id>
+    <published>2022-10-12T23:56:00.000Z</published>
+    <updated>2023-12-10T07:58:00.826Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;pre class=&quot;line-numbers language-c&quot; data-language=&quot;c&quot;&gt;&lt;code class=&quot;language-c&quot;&gt;&lt;span class=&quot;token macro property&quot;&gt;&lt;span class=&quot;token</summary>
+        
+      
+    
+    
+    
+    <category term="C语言" scheme="https://wabbybabb0.github.io/categories/C%E8%AF%AD%E8%A8%80/"/>
+    
+    
+    <category term="大云屋考核" scheme="https://wabbybabb0.github.io/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/"/>
+    
+    <category term="C语言" scheme="https://wabbybabb0.github.io/tags/C%E8%AF%AD%E8%A8%80/"/>
     
   </entry>
   
