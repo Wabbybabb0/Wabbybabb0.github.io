@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="目标检测(环境配置), Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="mlc-llm 香橙派部署过程, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>目标检测(环境配置) | Wabbybabbo的摸鱼圣地</title>
+    <title>mlc-llm 香橙派部署过程 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -357,12 +357,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">目标检测(环境配置)</h1>
+                    <h1 class="description center-align post-title">mlc-llm 香橙派部署过程</h1>
                 </div>
             </div>
         </div>
@@ -482,12 +482,8 @@
                                 <span class="chip bg-color">人工智能</span>
                             </a>
                         
-                            <a href="/tags/Linux/">
-                                <span class="chip bg-color">Linux</span>
-                            </a>
-                        
-                            <a href="/tags/Ubuntu/">
-                                <span class="chip bg-color">Ubuntu</span>
+                            <a href="/tags/NLP/">
+                                <span class="chip bg-color">NLP</span>
                             </a>
                         
                     </div>
@@ -511,7 +507,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-12-04
+                    2024-01-27
                 </div>
                 
 
@@ -525,7 +521,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.2k
+                    1.3k
                 </div>
                 
 
@@ -550,162 +546,113 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>附本菜鸡在windows上运行成功的(通过电脑摄像头的)yolo<a target="_blank" rel="noopener" href="https://github.com/Wabbybabb0/yolov5-5.0_hat_person">目标检测</a></p>
-<p><strong>配置环境的时候想清楚放在哪个盘，特别是虚拟机，放C盘很可能会g</strong></p>
-<p>目前因为芯片问题卡住了，还会持续更新的….(也许是24年？)</p>
-<h1 id="1-项目代码结构整"><a href="#1-项目代码结构整" class="headerlink" title="1 项目代码结构整"></a>1 项目代码结构整</h1><ul>
-<li>data：主要是存放一些超参数的配置文件（这些文件（yaml文件）是用来配置训练集和测试集还有验证集的路径的，其中还包括目标检测的种类数和种类的名称）；还有一些官方提供测试的图片。如果是训练自己的数据集的话，那么就需要修改其中的yaml文件。但是自己的数据集不建议放在这个路径下面，而是建议把数据集放到yolov5项目的同级目录下面。</li>
-<li>models：里面主要是一些网络构建的配置文件和函数，其中包含了该项目的四个不同的版本，分别为是s、m、l、x。从名字就可以看出，这几个版本的大小。他们的检测测度分别都是从快到慢，但是精确度分别是从低到高。这就是所谓的鱼和熊掌不可兼得。如果训练自己的数据集的话，就需要修改这里面相对应的yaml文件来训练自己模型。</li>
-<li>utils：存放的是工具类的函数，里面有loss函数，metrics函数，plots函数等等。</li>
-<li>weights：放置训练好的权重参数。</li>
-<li>detect.py：利用训练好的权重参数进行目标检测，可以进行图像、视频和摄像头的检测。</li>
-<li>train.py：训练自己的数据集的函数。</li>
-<li>test.py：测试训练的结果的函数。</li>
-<li>requirements.txt：这是一个文本文件，里面写着使用yolov5项目的环境依赖包的一些版本，可以利用该文本导入相应版本的包。</li>
+                <h1 id="1-Prepare"><a href="#1-Prepare" class="headerlink" title="1 Prepare"></a>1 Prepare</h1><h2 id="1-1-Installation"><a href="#1-1-Installation" class="headerlink" title="1.1 Installation"></a>1.1 Installation</h2><p><strong>- Download and istall the Ubuntu 22.04 for your board from <a target="_blank" rel="noopener" href="https://github.com/Joshua-Riek/ubuntu-rockchip/releases/tag/v1.22">here</a></strong>(pick “Orange Pi 5 Plus”)<br>(:ps 在这个版本里，我无法使用串口，apt update会出现无法解析域名等问题，于是最后用了<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1cQR1pcca0P-xuQbTrnGXAw?pwd=pjhv#list/path=%2Fsharelink1077680202-1101560075650855%2FUbuntu&amp;parentPath=%2Fsharelink1077680202-1101560075650855">香橙派官方的系统——1.0.8_ubuntu_jammy_desktop_xfce_linux5.10.150</a><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127153142.png?token=GHSAT0AAAAAACMZN3FAFZLUSVSPXALE5AZKZNUZJMQ"></p>
+<ol>
+<li>在烧录前，需要准备一张SD卡(我用的32G)，准备[烧录软件balenaEtcher](<a target="_blank" rel="noopener" href="https://etcher.balena.io/#download-etcher">balenaEtcher - Flash OS images to SD cards &amp; USB drives</a>)</li>
+<li>如何知道自己是否烧录成功？<ul>
+<li>使用串口[CSDN——使用香橙派连接电脑，串口和SSH](<a target="_blank" rel="noopener" href="https://blog.csdn.net/itt21044ZCY/article/details/132742245#:~:text=%E9%A6%99%E6%A9%99%E6%B4%BE%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%E7%94%B5%E8%84%91%20%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%EF%BC%9AGND%E6%8E%A5GND%EF%BC%8CTX%E6%8E%A5RX%EF%BC%8CRX%E6%8E%A5TX%20%E4%B8%B2%E5%8F%A3%E7%9A%84%20TX%20%E5%92%8C%20RX%20%E6%98%AF%E9%9C%80%E8%A6%81%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5%E7%9A%84%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%83%B3%E4%BB%94%E7%BB%86%E5%8C%BA%E5%88%86%20TX%E5%92%8C,TX%20%E5%92%8C%20RX%20%E5%85%88%E9%9A%8F%E4%BE%BF%E6%8E%A5%E4%B8%8A%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%B5%8B%E8%AF%95%E4%B8%B2%E5%8F%A3%E6%B2%A1%E6%9C%89%E8%BE%93%E5%87%BA%E5%86%8D%E4%BA%A4%E6%8D%A2%E4%B8%8B%20TX%20%E5%92%8C%20RX%20%E7%9A%84%E9%A1%BA%E5%BA%8F%EF%BC%8C%E8%BF%99%E6%A0%B7%E5%B0%B1%E6%80%BB%E6%9C%89%E4%B8%80%E7%A7%8D%E9%A1%BA%E5%BA%8F%E6%98%AF%E5%AF%B9%E7%9A%84">香橙派连接电脑，串口与SSH_香橙派 ssh-CSDN博客</a>)</li>
+<li>使用另一个显示屏查看</li>
 </ul>
-<h1 id="2-从github上拉取的包"><a href="#2-从github上拉取的包" class="headerlink" title="2 从github上拉取的包"></a>2 从github上拉取的包</h1><h2 id="2-1-最好创建一个新的虚拟环境，因为yolo对一些库有版本要求"><a href="#2-1-最好创建一个新的虚拟环境，因为yolo对一些库有版本要求" class="headerlink" title="2.1 最好创建一个新的虚拟环境，因为yolo对一些库有版本要求"></a>2.1 最好创建一个新的虚拟环境，因为<code>yolo</code>对一些库有版本要求</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1cD4y1H7Tk/?spm_id_from=333.337.search-card.all.click&amp;vd_source=1e1c4d48c6129699686897a835e568ea">创建虚拟环境–b站视频教程</a>，视频评论区置顶处下有pdf讲义，可下载。不想看视频的可以直接点<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Xnhv-NSmtggYqKlg3uAlMg#list/path=%2F">讲义链接</a><br>其中：</p>
-<ul>
-<li>注意<code>NVIDA</code>、<code>CUDA</code>、<code>pytorch</code>的型号是否互相兼容</li>
-<li>注意网络问题，有时候关掉梯子会好点</li>
-<li>源的问题，找到一个阿里云比较好用的：<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip config <span class="token builtin class-name">set</span> global.index-url https://mirrors.aliyun.com/pypi/simple 
-
-pip config <span class="token builtin class-name">set</span> install.trusted-host mirrors.aliyun.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
-<li>记录途中用到的<code>whl</code>路径<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> D:<span class="token punctuation">\</span>whl<span class="token punctuation">\</span>torch-1.12.0+cu116-cp39-cp39-win_amd64.whl
-pip <span class="token function">install</span> D:<span class="token punctuation">\</span>whl<span class="token punctuation">\</span>torchvision-0.13.0+cu116-cp39-cp39-win_amd64.whl
-pip <span class="token function">install</span> D:<span class="token punctuation">\</span>whl<span class="token punctuation">\</span>torchaudio-0.12.0+cu116-cp39-cp39-win_amd64.whl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+</li>
+<li>烧录成功后，通过上面两种办法知道香橙派的ip地址(如果是用显示屏的，在官方文档里查阅“设置静态IP地址的方法”)，我自己的修改为了192.168.1.201，如下图所示，用自己的电脑ping一下香橙派<img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240126214418.png?token=GHSAT0AAAAAACMZN3FAPKNB4P4DNVDJEP56ZNUZDYA"></li>
+<li>使用vscode连接香橙派[CSDN——使用Visual Studio Code远程连接香橙派](<a target="_blank" rel="noopener" href="https://blog.csdn.net/mjmmm/article/details/133981063#:~:text=%E7%82%B9%E5%87%BB%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9A%20%E4%B8%AD%E9%97%B4%E4%B8%8A%E6%96%B9%E9%80%89%E6%8B%A9%E2%80%9Csmart_bin%E2%80%9D%EF%BC%9A,%E7%82%B9%E5%87%BB%E2%80%9C%E7%A1%AE%E5%AE%9A%E2%80%9D%EF%BC%9A%20%E5%86%8D%E6%AC%A1%E9%80%89%E6%8B%A9%E2%80%9CLinux%E2%80%9D%EF%BC%8C%E5%B9%B6%E8%BE%93%E5%85%A5%E9%A6%99%E6%A9%99%E6%B4%BE%E5%AF%86%E7%A0%81%EF%BC%9A%20%E6%AD%A4%E6%97%B6%EF%BC%8C%E5%B0%B1%E6%88%90%E5%8A%9F%E8%BF%9E%E6%8E%A5%E4%B8%8A%E4%BA%86smart_bin%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8VSCODE%E5%AF%B9%E4%BA%8E%E4%BB%A3%E7%A0%81%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E6%93%8D%E4%BD%9C%E4%BA%86%EF%BC%81">小插曲 – 使用Visual Studio Code远程连接香橙派_visual code 连接 inspect-CSDN博客</a>)<ul>
+<li>踩坑点：注意Ubuntu上是否开启了ssh</li>
+<li>更新软件包<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>下载<code>open ssh</code><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> openssh-server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>下载完成后查看<code>ssh</code>是否打开<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">ps</span> <span class="token parameter variable">-e</span> <span class="token operator">|</span><span class="token function">grep</span> <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+连接成功后会出现下面的图<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240126222152.png?token=GHSAT0AAAAAACMZN3FAOC6UKS3EJSY3PV3AZNUZJ2Q"></li>
 </ul>
-<h2 id="2-2-修改代码时的一些注意事项"><a href="#2-2-修改代码时的一些注意事项" class="headerlink" title="2.2 修改代码时的一些注意事项"></a>2.2 修改代码时的一些注意事项</h2><ol>
-<li><code>train.py</code>、<code>dectect.py</code>可以面向CSDN编程</li>
-</ol>
-<ul>
-<li>e.g.报错No module named ‘yaml‘  ，在终端输入如下指令<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> pyyaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>注意是在终端处下载还是在<code>Anaconda Prompt</code>处下载</li>
-<li>注意<code>conda install</code>还是<code>pip install</code>，注意先激活虚拟环境再安装包<code>conda activate xxx</code></li>
-</ul>
-<ol start="2">
-<li>注意路径问题：<ol>
-<li>绝对路径：在<code>train.py</code>中的三行代码里最好使用绝对路径<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205120324.png"></li>
-<li>相对路径：在<code>detect.py</code>中的<code>weights</code>，在我使用绝对路径的时候是无法实现想要的效果的，但是更改为<code>weights/best.pt</code>(使用最佳模型做测试)时可以正常运行</li>
-</ol>
 </li>
 </ol>
-<h1 id="3-配置VMware和Ubuntu"><a href="#3-配置VMware和Ubuntu" class="headerlink" title="3 配置VMware和Ubuntu"></a>3 配置VMware和Ubuntu</h1><p>下面是两个安装教程，可以结合食用：</p>
-<h2 id="3-1VMware虚拟机安装Linux教程："><a href="#3-1VMware虚拟机安装Linux教程：" class="headerlink" title="3.1VMware虚拟机安装Linux教程："></a>3.1<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_52799373/article/details/124324077">VMware虚拟机安装Linux教程</a>：</h2><p>(以下是该教程的虚拟机和iso选择，可根据个人需要进行更改，但是配置过程大差不差)</p>
+<p><strong>- Download and install&nbsp;<code>libmali-g610.so</code></strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /usr/lib <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">wget</span> https://github.com/JeffyCN/mirrors/raw/libmali/lib/aarch64-linux-gnu/libmali-valhall-g610-g6p0-x11-wayland-gbm.so<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <ol>
-<li>虚拟机：VMware16 pro</li>
-<li>Linux系统iso镜像：CentOS-7.5-x86_64</li>
-</ol>
-<h2 id="3-2-VMware虚拟机安装Ubuntu20-04详细图文教程"><a href="#3-2-VMware虚拟机安装Ubuntu20-04详细图文教程" class="headerlink" title="3.2 VMware虚拟机安装Ubuntu20.04详细图文教程"></a>3.2 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41805734/article/details/120698714">VMware虚拟机安装Ubuntu20.04详细图文教程</a></h2><p>(以下是该教程的虚拟机和iso选择，可根据个人需要进行更改，但是配置过程大差不差)</p>
-<ol>
-<li>虚拟机：VMware16</li>
-<li>Linux系统iso镜像：Ubuntu20.04</li>
-</ol>
-<h2 id="3-3-一些说明"><a href="#3-3-一些说明" class="headerlink" title="3.3 一些说明"></a>3.3 一些说明</h2><p>正如上面一位博主所说“不必刻意用旧版”</p>
-<ol>
-<li><p>关于虚拟机：可选择VMware 17，<a target="_blank" rel="noopener" href="https://www.vmware.com/cn/products/workstation-player/workstation-player-evaluation.html">VMware官方网站</a></p>
-</li>
-<li><p>关于iso镜像：新手推荐下Ubuntu，可以去<a target="_blank" rel="noopener" href="https://ubuntu.com/download/desktop">Ubuntu官方网站</a><br> 这里附上<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/ubuntu-releases/20.04/">Ubuntu20.04</a>的链接(是国内镜像源，下载会快些)!<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701762736537.png"></p>
-</li>
-<li><p>设置内核和内存时可以最好设置好之后就不改了，因为修改内存或硬盘大小之后重启可能会b溃，本人在下图修改硬盘大小之后无法再打开虚拟机<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205155730.png"></p>
-</li>
-</ol>
-<h2 id="3-4-宿主机与虚拟机互传文件"><a href="#3-4-宿主机与虚拟机互传文件" class="headerlink" title="3.4 宿主机与虚拟机互传文件"></a>3.4 宿主机与虚拟机互传文件</h2><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15309736/5424668">windows主机和ubuntu互传文件的4种方法</a><br>本人选择第二个方法：</p>
-<ol>
-<li>ubuntu安装FTP服务<br> 在ubuntu终端输入如下命令<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> vsftpd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>安装完后检查<code>/etc /vsftpd.conf</code>配置文件<br>输入如下命令打开配置文件：（注意此处在网址上输入的是<code>sudo vi</code>，但是本人不太会使用<code>vi</code>编辑器，也找不到<code>vi</code>编辑器的使用方法，因此使用了<code>vim</code>，<code>vim</code>编辑器的的指令在下文4.9有提到）<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/bsftpd.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>windows安装和配置FIleZilla<br>点击<a target="_blank" rel="noopener" href="https://www.filezilla.cn/download">FileZilla下载中心</a>下载客户端</li>
-<li>FileZilla软件配置：<br>打开FileZilla软件，选择：文件-&gt;站点管理器-&gt;点击新增站点，然后配置连接参数，如下图：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701834260705.png"><br>主机处输入的是ubuntu的IPv4地址，查找方式如下：</li>
-</ol>
-<ul>
-<li>点击设置<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701834357072.png"></li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701834466524.png"></li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701834503573.png"></li>
+<li>我的香橙派无法访问github，于是采用主机下载文件后用FileZilla传输文件到虚拟机上，用了之前方法但是显示无法连接<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127093218.png?token=GHSAT0AAAAAACMZN3FBQQ2PO4UGRNN7KLQQZNUZKEQ"></li>
+<li>更改协议后连接成功，协议如下图所示<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127094737.png?token=GHSAT0AAAAAACMZN3FAJE4L2EE5YYQFSXYAZNUZKQA"></li>
+<li>在主机上点击<a target="_blank" rel="noopener" href="https://github.com/JeffyCN/mirrors/tree/libmali/lib/aarch64-linux-gnu">网站</a>找到libmali-valhall-g610-g6p0-x11-wayland-gbm.so并下载</li>
+<li>FileZilla出现“无法启动传输”字样 <img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127100058.png?token=GHSAT0AAAAAACMZN3FA2Y543MF5RNKZQNDGZNUZMHQ"><ul>
+<li>原因：文件权限不足</li>
+<li>解决：修改远程站点文件的权限<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">777</span> 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127100350.png?token=GHSAT0AAAAAACMZN3FAQTZPJBHIPOB7RMCCZNUZMRQ"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127100646.png?token=GHSAT0AAAAAACMZN3FBNHFIWLO2WIRJIPASZNUZMTQ"></li>
 </ul>
-<ol start="5">
-<li>可以看到ubuntu下的文件(右边)<br>![](<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted">https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted</a> image 20231206114943.png)</li>
+</li>
 </ol>
-<h1 id="4-Ubuntu22-04配置anaconda"><a href="#4-Ubuntu22-04配置anaconda" class="headerlink" title="4 Ubuntu22.04配置anaconda"></a>4 Ubuntu22.04配置anaconda</h1><h2 id="4-1-配置过程"><a href="#4-1-配置过程" class="headerlink" title="4.1 配置过程"></a>4.1 配置过程</h2><p><a target="_blank" rel="noopener" href="https://www.xtuos.com/6527.html">参考来源</a></p>
-<ol>
-<li><p>首先，通过在终端中运行以下命令，确保所有系统包都是最新的。</p>
+<p><strong>- Check if file&nbsp;<code>mali_csffw.bin</code>&nbsp;exist under path&nbsp;<code>/lib/firmware</code>, if not download it with command:</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /lib/firmware <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">wget</span> https://github.com/JeffyCN/mirrors/raw/libmali/firmware/g610/mali_csffw.bin<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我找到了这个文件所以就不用下载了，<a target="_blank" rel="noopener" href="https://github.com/JeffyCN/mirrors/tree/libmali/firmware/g610">文件下载处</a><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127101202.png?token=GHSAT0AAAAAACMZN3FBZQDL7T2Q3CNI5XEEZNUZM7Q"></p>
+<p><strong>- Download OpenCL ICD loader and manually add libmali to ICD</strong></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update
-<span class="token function">sudo</span> <span class="token function">apt</span> upgrade
-<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">wget</span> apt-transport-https gnupg2 software-properties-common<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>在 Ubuntu 22.04 上安装 Anaconda Python。<br>默认情况下，Anaconda 在 Ubuntu 22.04 基础存储库中不可用。现在运行以下命令将 Anaconda 的最新稳定版本下载到您的 Ubuntu 系统：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205114818.png"><br>下载Anaconda安装程序后，现在使用以下命令运行脚本：</p>
-</li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">bash</span> Anaconda3-2022.05-Linux-x86_64.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> mesa-opencl-icd
+<span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/OpenCL/vendors
+<span class="token builtin class-name">echo</span> <span class="token string">"/usr/lib/libmali-valhall-g610-g6p0-x11-wayland-gbm.so"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/OpenCL/vendors/mali.icd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="1-2-Validata-Installation"><a href="#1-2-Validata-Installation" class="headerlink" title="1.2 Validata Installation"></a>1.2 Validata Installation</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">clinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>按照向导说明完成 Anaconda 安装过程(可以一路按”Enter”)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Welcome to Anaconda3 <span class="token number">2022.05</span>
+<h2 id="1-3-Preparation"><a href="#1-3-Preparation" class="headerlink" title="1.3 Preparation"></a>1.3 Preparation</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># clone mlc-llm from GitHub</span>
+<span class="token function">git</span> clone <span class="token parameter variable">--recursive</span> https://github.com/mlc-ai/mlc-llm.git <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> mlc-llm
+<span class="token comment"># Download prebuilt weights and libs</span>
+<span class="token function">git</span> lfs <span class="token function">install</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> dist/prebuilt <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> dist/prebuilt
+<span class="token function">git</span> clone https://github.com/mlc-ai/binary-mlc-llm-libs.git lib
+<span class="token function">git</span> clone https://huggingface.co/mlc-ai/mlc-chat-RedPajama-INCITE-Chat-3B-v1-q4f16_1
+<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/<span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-In order to <span class="token builtin class-name">continue</span> the installation process, please review the license
-agreement.
-Please, press ENTER to <span class="token builtin class-name">continue</span>
-<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果遇到这个443问题，点击[链接](<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40296909/article/details/134285451">解决使用git时遇到Failed to connect to github.com port 443 after 21090 ms: Couldn’t connect to server_git couldn’t connect to server-CSDN博客</a>)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127140733.png?token=GHSAT0AAAAAACMZN3FB2ZN2T7DY2PBLCJ6UZNUZNOA"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy <span class="token number">127.0</span>.0.1:7890
+<span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy <span class="token number">127.0</span>.0.1:7890
+<span class="token comment"># 注意7890要改成自己的电脑上的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
-<p>下一步是指明安装路径，默认指向根目录。如果您具有 root 访问权限，则可以将其保留在那里，但您也可以将其安装在您帐户的 HOME 目录中：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Anaconda3 will now be installed into this location:
-/root/anaconda3
 
-- Press ENTER to confirm the location
-- Press CTRL-C to abort the installation
-- Or specify a different location below
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> lfs <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在这一步之前</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> git-lfs<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<span class="token punctuation">[</span>/root/anaconda3<span class="token punctuation">]</span> <span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>注意地址是：<code>/home/wabbybabbo(你自己的用户名)/anaconda3</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205201819.png"></p>
-<ol start="3">
-<li><p>安装 Anaconda 后，下一步是通过运行以下命令来使用“ ”文件中添加的环境设置：<code>.bashrc</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>验证Anaconda安装：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda list<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>如果要更新运行的整个环境(非必要)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda update-all<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>查看虚拟机上的虚拟环境有哪些</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda info <span class="token parameter variable">--envs</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>可以看到这时候有一个名为<code>base</code>的虚拟环境<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205155441.png"></p>
-</li>
-</ol>
-<h2 id="4-2-其他指令"><a href="#4-2-其他指令" class="headerlink" title="4.2 其他指令"></a>4.2 其他指令</h2><h3 id="4-2-1-unbutu一些指令"><a href="#4-2-1-unbutu一些指令" class="headerlink" title="4.2.1 unbutu一些指令"></a>4.2.1 unbutu一些指令</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zjc910997316/article/details/82983251">来源</a></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> www  <span class="token comment"># 到www目录；  </span>
-<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>   <span class="token comment"># 到上一级目录；  </span>
-<span class="token builtin class-name">cd</span> -    <span class="token comment"># 返回到上次的目录，类似windows返回 ；  </span>
-<span class="token builtin class-name">cd</span> /    <span class="token comment"># 回到根目录。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h3 id="4-2-2-Linux-vim编辑器的指令"><a href="#4-2-2-Linux-vim编辑器的指令" class="headerlink" title="4.2.2 Linux vim编辑器的指令"></a>4.2.2 Linux vim编辑器的指令</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xie_xiansheng/article/details/78134626">来源</a></p>
-<ul>
-<li>编写：按<code>a</code></li>
-<li>退出：先按<code>ESC</code>键，跳到命令模式，再根据选择输入下面的(记得输入冒号)<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">:w      <span class="token comment"># 保存文件但不退出vi</span>
-:w <span class="token function">file</span> <span class="token comment"># 将修改另外保存到file中，不退出vi</span>
-:w<span class="token operator">!</span>     <span class="token comment"># 强制保存，不推出vi</span>
-:wq     <span class="token comment"># 保存文件并退出vi</span>
-:wq<span class="token operator">!</span>    <span class="token comment"># 强制保存文件，并退出vi</span>
-:q      <span class="token comment"># 不保存文件，退出vi</span>
-:q<span class="token operator">!</span>     <span class="token comment"># 不保存文件，强制退出vi</span>
-:e<span class="token operator">!</span>     <span class="token comment"># 放弃所有修改，从上次保存文件开始再编辑</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-</ul>
-<h3 id="4-2-3-进入和退出conda-base环境"><a href="#4-2-3-进入和退出conda-base环境" class="headerlink" title="4.2.3 进入和退出conda base环境"></a>4.2.3 进入和退出<code>conda base</code>环境</h3><p>进入<code>conda base</code>环境：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> ~/anaconda3/bin/activate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>退出<code>conda base</code>环境：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda deactivate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205205557.png"></p>
-<h1 id="5-yolo模型部署到orangepi-3"><a href="#5-yolo模型部署到orangepi-3" class="headerlink" title="5 yolo模型部署到orangepi 3"></a>5 yolo模型部署到orangepi 3</h1><p>附上两个参考网站：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_55217834/article/details/130583886"># 香橙派5 RK3588 yolov5模型转换rknn及部署踩坑全记录 orangepi 5</a>、<a target="_blank" rel="noopener" href="http://years.love/yolov5.html">linux板上运行yolov5 目标检测</a></p>
-<h2 id="5-1-所谓的yolov5目录"><a href="#5-1-所谓的yolov5目录" class="headerlink" title="5.1 所谓的yolov5目录"></a>5.1 所谓的yolov5目录</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205161134.png"><br> 这个<strong>yolov5目录</strong>在本人的电脑上，这个文件是这样的<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205161233.png"></p>
-<h2 id="5-2-路径问题"><a href="#5-2-路径问题" class="headerlink" title="5.2 路径问题"></a>5.2 路径问题</h2><p> <code>weight</code>和<code>data/coco128</code>改成自己的weight和data的路径</p>
-<h2 id="5-3-生成的-onnx文件"><a href="#5-3-生成的-onnx文件" class="headerlink" title="5.3 生成的.onnx文件"></a>5.3 生成的<code>.onnx</code>文件</h2><p> 生成的yolov5n.onnx文件在本人电脑上的位置在这里，名为<code>best.onnx</code><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205161724.png"></p>
-<h2 id="5-4-在Ubuntu创建虚拟环境"><a href="#5-4-在Ubuntu创建虚拟环境" class="headerlink" title="5.4 在Ubuntu创建虚拟环境"></a>5.4 在Ubuntu创建虚拟环境</h2><ol start="4">
-<li>创建名为<code>rknn</code>的虚拟环境时输入<code>conda create -name rknn python=3.9</code>报错了，但是输入<code>conda create -n rknn python=3.9</code>就不会，很奇怪</li>
-</ol>
-<h2 id="5-5-Ubuntu解压缩"><a href="#5-5-Ubuntu解压缩" class="headerlink" title="5.5 Ubuntu解压缩"></a>5.5 Ubuntu解压缩</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/songbinxu/article/details/80435665">参考网址</a><br>本人用到的是</p>
+<pre class="line-numbers language-none"><code class="language-none">git clone --recursive https://github.com/mlc-ai/mlc-llm.git &amp;&amp; cd mlc-llm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我采用在本地拉取后再传输到香橙派上，建议是先压缩再传输，再在香橙派上解压(.zip)<br>👇在宿主机中创建文件并进入文件<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127143842.png?token=GHSAT0AAAAAACMZN3FBLB2D2ARFFLEVXROIZNUZNXA"><br>👇会直接在你(主机)选中的目录下(我这里的是mlc-llm)下有一个lib文件<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127144257.png?token=GHSAT0AAAAAACMZN3FBPXNKQBILA3DUTINWZNUZN3A"><br>将主机中的lib压缩后拖进宿主机的lib文件下<br>👇在宿主机中进入lib并将刚才的压缩包解压缩</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">unzip</span> FileName.zip <span class="token comment"># 解压</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127152142.png?token=GHSAT0AAAAAACMZN3FB7H5VCKNTZEOGJQKKZNUZOMA"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://huggingface.co/mlc-ai/mlc-chat-Llama-2-13b-chat-hf-q4f16_1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>👆在主机上下载，下载完毕后采用👇命令传输到香橙派上，好处是可以看到传输的过程(这个文件有13多个G)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127151212.png?token=GHSAT0AAAAAACMZN3FAOCBRB3GU2NONADRYZNUZPAA"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> <span class="token parameter variable">-r</span> ./mlc-chat-Llama-2-13b-chat-hf-q4f16_1 orangepi@192.168.1.202:/home/orangepi/Project/MLC-LLM/dist/prebuit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p>再之后的跟着上面的两个博客走，基本上没什么坑了</p>
-<h1 id="6-遇到的其他问题"><a href="#6-遇到的其他问题" class="headerlink" title="6 遇到的其他问题"></a>6 遇到的其他问题</h1><p>在开机时黑屏且遇到了：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38132831/article/details/77932173">SMbus Host Controller not enabled</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> <span class="token parameter variable">-r</span> 相对路径下需要传输的文件 主机名@ip:被传输文件的目的文件<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+
+
+<h1 id="2-Try-out-the-CLI"><a href="#2-Try-out-the-CLI" class="headerlink" title="2 Try out the CLI"></a>2 Try out the CLI</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> mlc-llm/
+<span class="token comment"># create build directory</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> build <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> build
+<span class="token comment"># generate build configuration</span>
+python3 <span class="token punctuation">..</span>/cmake/gen_cmake_config.py
+<span class="token comment"># build `mlc_chat_cli`</span>
+cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> cmake <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">--parallel</span> <span class="token variable"><span class="token variable">$(</span>nproc<span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python3 <span class="token punctuation">..</span>/cmake/gen_cmake_config.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这一步中，<code>CUDA</code>、<code>Vulkan</code>、<code>ROCm</code>、<code>Metal</code>全选<code>n</code>，其余选<code>y</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> cmake <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">--parallel</span> <span class="token variable"><span class="token variable">$(</span>nproc<span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在这一步可能会报两次错<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127155002.png?token=GHSAT0AAAAAACMZN3FBRTYYHYIH2E62ZU6OZNUZSFQ"></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> cmake<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>还有一个报错没找到图，大概意思是找不到cargo，install一个就好</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">cargo</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127155902.png?token=GHSAT0AAAAAACMZN3FAYYQZEDY6OGKMGY64ZNUZSLQ"><br>解决方法<a href="%5BUbuntu%E4%B8%8BRust%E6%9B%B4%E6%8D%A2Cargo%E8%BD%AF%E4%BB%B6%E6%BA%90_cargo%E6%8D%A2%E6%BA%90%E9%98%BF%E9%87%8C-CSDN%E5%8D%9A%E5%AE%A2%5D(https://blog.csdn.net/iamzhoujunjia/article/details/113835347)">更换Cargo软件源</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> <span class="token environment constant">$HOME</span>/.cargo/config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>👆我的是新建的一个文件</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 中科大</span>
+<span class="token punctuation">[</span>source.crates-io<span class="token punctuation">]</span>
+registry <span class="token operator">=</span> <span class="token string">"https://github.com/rust-lang/crates.io-index"</span>
+replace-with <span class="token operator">=</span> <span class="token string">'ustc'</span>
+<span class="token punctuation">[</span>source.ustc<span class="token punctuation">]</span>
+registry <span class="token operator">=</span> <span class="token string">"git://mirrors.ustc.edu.cn/crates.io-index"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>再次执行。可以看到有后续的进度</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> cmake <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">--parallel</span> <span class="token variable"><span class="token variable">$(</span>nproc<span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127161834.png?token=GHSAT0AAAAAACMZN3FBJMZAMPEQBVNP24SYZNUZSZA"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127162004.png?token=GHSAT0AAAAAACMZN3FAGRIGMJFPETH4RNGIZNUZS3Q"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127162200.png?token=GHSAT0AAAAAACMZN3FBNBOTWZ3QKRGX4VA6ZNUZS7Q"></p>
+<p>👆这一步是让我们看是否有三个文件，分别对应右图中绿色的三个</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./build/mlc_chat_cli <span class="token parameter variable">--model</span> Llama-2-13b-chat-hf-q4f16_1 –device mali<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<p>报错：找不到<code>mlc-chat-config.json</code><br>解决问题<a target="_blank" rel="noopener" href="https://github.com/mlc-ai/mlc-llm/issues/730">Github——Cannot find “mlc-chat-config.json” in path “”dist”/RedPajama-INCITE-Chat-3B-v1-q4f16_1</a>：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127164042.png?token=GHSAT0AAAAAACMZN3FBHG73INKIUJJZHG6OZNUZTSA"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127164305.png?token=GHSAT0AAAAAACMZN3FAXRNTJDXU3HM5FTIUZNUZTXA"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127164020.png?token=GHSAT0AAAAAACMZN3FBCKZEMAX4L556UKZ6ZNUZT6Q"><br>原因：<code>mlc-chat-config.json</code>在<code>mlc-llm</code>的上一级文件里的<code>mlc-chat-Llama-2-13b-chat-hf-q4f16_1</code>文件中，一开始是在<code>mlc-llm</code>中<code>bulid</code>中运行，因为无法调用/访问<code>mlc-llm</code>的同级文件所以报错。所以换成<code>MLC-LLM</code>来调用<code>mlc_chat_cli</code>，即<code>dist</code>的上一级</p>
+<p><strong>大功告成！</strong><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127170657.png?token=GHSAT0AAAAAACMZN3FAXC5W3RMJIDOFXTLQZNUZUJQ"></p>
 
                 
             </div>
@@ -732,7 +679,7 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/12/04/mu-biao-jian-ce/">https://wabbybabb0.github.io/2023/12/04/mu-biao-jian-ce/</a>
+                    <a href="https://wabbybabb0.github.io/2024/01/27/mlc-llm-orangepi-bu-shu-guo-cheng/">https://wabbybabb0.github.io/2024/01/27/mlc-llm-orangepi-bu-shu-guo-cheng/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -774,12 +721,8 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                                     <span class="chip bg-color">人工智能</span>
                                 </a>
                             
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
-                                <a href="/tags/Ubuntu/">
-                                    <span class="chip bg-color">Ubuntu</span>
+                                <a href="/tags/NLP/">
+                                    <span class="chip bg-color">NLP</span>
                                 </a>
                             
                         </div>
@@ -963,9 +906,10 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2024/01/27/mlc-llm-orangepi-bu-shu-guo-cheng/">
                     <div class="card-image">
@@ -983,9 +927,9 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-01-27
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -998,6 +942,7 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -1020,24 +965,24 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/11/28/alexnet-mo-xing-fu-xian/">
+                <a href="/2023/12/04/mu-biao-jian-ce/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.png" class="responsive-img" alt="AlexNet模型复现">
+                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="目标检测(环境配置)">
                         
-                        <span class="card-title">AlexNet模型复现</span>
+                        <span class="card-title">目标检测(环境配置)</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            阅读了《Imagenet classification with deep convolutional neural networks》后复现AlexNet模型
+                            yolov5 person和帽子的分类、配置Ubuntu以及部署到香橙派上
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-04
                             </span>
                         <span class="publish-author">
                             
@@ -1058,8 +1003,12 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                         <span class="chip bg-color">人工智能</span>
                     </a>
                     
-                    <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                        <span class="chip bg-color">卷积神经网络</span>
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Ubuntu/">
+                        <span class="chip bg-color">Ubuntu</span>
                     </a>
                     
                 </div>
