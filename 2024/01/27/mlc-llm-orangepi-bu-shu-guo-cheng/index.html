@@ -514,14 +514,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-01-27
+                    2024-01-28
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.3k
+                    1.2k
                 </div>
                 
 
@@ -548,14 +548,14 @@
             <div id="articleContent">
                 <h1 id="1-Prepare"><a href="#1-Prepare" class="headerlink" title="1 Prepare"></a>1 Prepare</h1><h2 id="1-1-Installation"><a href="#1-1-Installation" class="headerlink" title="1.1 Installation"></a>1.1 Installation</h2><p><strong>- Download and istall the Ubuntu 22.04 for your board from <a target="_blank" rel="noopener" href="https://github.com/Joshua-Riek/ubuntu-rockchip/releases/tag/v1.22">here</a></strong>(pick “Orange Pi 5 Plus”)<br>(:ps 在这个版本里，我无法使用串口，apt update会出现无法解析域名等问题，于是最后用了<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1cQR1pcca0P-xuQbTrnGXAw?pwd=pjhv#list/path=%2Fsharelink1077680202-1101560075650855%2FUbuntu&amp;parentPath=%2Fsharelink1077680202-1101560075650855">香橙派官方的系统——1.0.8_ubuntu_jammy_desktop_xfce_linux5.10.150</a><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127153142.png"></p>
 <ol>
-<li>在烧录前，需要准备一张SD卡(我用的32G)，准备[烧录软件balenaEtcher](<a target="_blank" rel="noopener" href="https://etcher.balena.io/#download-etcher">balenaEtcher - Flash OS images to SD cards &amp; USB drives</a>)</li>
+<li>在烧录前，需要准备一张SD卡(我用的32G)，准备<a target="_blank" rel="noopener" href="https://etcher.balena.io/#download-etcher">烧录软件balenaEtcher</a></li>
 <li>如何知道自己是否烧录成功？<ul>
-<li>使用串口[CSDN——使用香橙派连接电脑，串口和SSH](<a target="_blank" rel="noopener" href="https://blog.csdn.net/itt21044ZCY/article/details/132742245#:~:text=%E9%A6%99%E6%A9%99%E6%B4%BE%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%E7%94%B5%E8%84%91%20%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%EF%BC%9AGND%E6%8E%A5GND%EF%BC%8CTX%E6%8E%A5RX%EF%BC%8CRX%E6%8E%A5TX%20%E4%B8%B2%E5%8F%A3%E7%9A%84%20TX%20%E5%92%8C%20RX%20%E6%98%AF%E9%9C%80%E8%A6%81%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5%E7%9A%84%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%83%B3%E4%BB%94%E7%BB%86%E5%8C%BA%E5%88%86%20TX%E5%92%8C,TX%20%E5%92%8C%20RX%20%E5%85%88%E9%9A%8F%E4%BE%BF%E6%8E%A5%E4%B8%8A%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%B5%8B%E8%AF%95%E4%B8%B2%E5%8F%A3%E6%B2%A1%E6%9C%89%E8%BE%93%E5%87%BA%E5%86%8D%E4%BA%A4%E6%8D%A2%E4%B8%8B%20TX%20%E5%92%8C%20RX%20%E7%9A%84%E9%A1%BA%E5%BA%8F%EF%BC%8C%E8%BF%99%E6%A0%B7%E5%B0%B1%E6%80%BB%E6%9C%89%E4%B8%80%E7%A7%8D%E9%A1%BA%E5%BA%8F%E6%98%AF%E5%AF%B9%E7%9A%84">香橙派连接电脑，串口与SSH_香橙派 ssh-CSDN博客</a>)</li>
+<li>使用串口<a target="_blank" rel="noopener" href="https://blog.csdn.net/itt21044ZCY/article/details/132742245#:~:text=%E9%A6%99%E6%A9%99%E6%B4%BE%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%E7%94%B5%E8%84%91%20%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%EF%BC%9AGND%E6%8E%A5GND%EF%BC%8CTX%E6%8E%A5RX%EF%BC%8CRX%E6%8E%A5TX%20%E4%B8%B2%E5%8F%A3%E7%9A%84%20TX%20%E5%92%8C%20RX%20%E6%98%AF%E9%9C%80%E8%A6%81%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5%E7%9A%84%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%83%B3%E4%BB%94%E7%BB%86%E5%8C%BA%E5%88%86%20TX%E5%92%8C,TX%20%E5%92%8C%20RX%20%E5%85%88%E9%9A%8F%E4%BE%BF%E6%8E%A5%E4%B8%8A%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%B5%8B%E8%AF%95%E4%B8%B2%E5%8F%A3%E6%B2%A1%E6%9C%89%E8%BE%93%E5%87%BA%E5%86%8D%E4%BA%A4%E6%8D%A2%E4%B8%8B%20TX%20%E5%92%8C%20RX%20%E7%9A%84%E9%A1%BA%E5%BA%8F%EF%BC%8C%E8%BF%99%E6%A0%B7%E5%B0%B1%E6%80%BB%E6%9C%89%E4%B8%80%E7%A7%8D%E9%A1%BA%E5%BA%8F%E6%98%AF%E5%AF%B9%E7%9A%84">CSDN——使用香橙派连接电脑，串口和SSH</a></li>
 <li>使用另一个显示屏查看</li>
 </ul>
 </li>
 <li>烧录成功后，通过上面两种办法知道香橙派的ip地址(如果是用显示屏的，在官方文档里查阅“设置静态IP地址的方法”)，我自己的修改为了192.168.1.201，如下图所示，用自己的电脑ping一下香橙派<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240126214418.png"></li>
-<li>使用vscode连接香橙派[CSDN——使用Visual Studio Code远程连接香橙派](<a target="_blank" rel="noopener" href="https://blog.csdn.net/mjmmm/article/details/133981063#:~:text=%E7%82%B9%E5%87%BB%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9A%20%E4%B8%AD%E9%97%B4%E4%B8%8A%E6%96%B9%E9%80%89%E6%8B%A9%E2%80%9Csmart_bin%E2%80%9D%EF%BC%9A,%E7%82%B9%E5%87%BB%E2%80%9C%E7%A1%AE%E5%AE%9A%E2%80%9D%EF%BC%9A%20%E5%86%8D%E6%AC%A1%E9%80%89%E6%8B%A9%E2%80%9CLinux%E2%80%9D%EF%BC%8C%E5%B9%B6%E8%BE%93%E5%85%A5%E9%A6%99%E6%A9%99%E6%B4%BE%E5%AF%86%E7%A0%81%EF%BC%9A%20%E6%AD%A4%E6%97%B6%EF%BC%8C%E5%B0%B1%E6%88%90%E5%8A%9F%E8%BF%9E%E6%8E%A5%E4%B8%8A%E4%BA%86smart_bin%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8VSCODE%E5%AF%B9%E4%BA%8E%E4%BB%A3%E7%A0%81%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E6%93%8D%E4%BD%9C%E4%BA%86%EF%BC%81">小插曲 – 使用Visual Studio Code远程连接香橙派_visual code 连接 inspect-CSDN博客</a>)<ul>
+<li>使用vscode连接香橙派<a target="_blank" rel="noopener" href="https://blog.csdn.net/mjmmm/article/details/133981063#:~:text=%E7%82%B9%E5%87%BB%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9A%20%E4%B8%AD%E9%97%B4%E4%B8%8A%E6%96%B9%E9%80%89%E6%8B%A9%E2%80%9Csmart_bin%E2%80%9D%EF%BC%9A,%E7%82%B9%E5%87%BB%E2%80%9C%E7%A1%AE%E5%AE%9A%E2%80%9D%EF%BC%9A%20%E5%86%8D%E6%AC%A1%E9%80%89%E6%8B%A9%E2%80%9CLinux%E2%80%9D%EF%BC%8C%E5%B9%B6%E8%BE%93%E5%85%A5%E9%A6%99%E6%A9%99%E6%B4%BE%E5%AF%86%E7%A0%81%EF%BC%9A%20%E6%AD%A4%E6%97%B6%EF%BC%8C%E5%B0%B1%E6%88%90%E5%8A%9F%E8%BF%9E%E6%8E%A5%E4%B8%8A%E4%BA%86smart_bin%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8VSCODE%E5%AF%B9%E4%BA%8E%E4%BB%A3%E7%A0%81%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E6%93%8D%E4%BD%9C%E4%BA%86%EF%BC%81">CSDN——使用Visual Studio Code远程连接香橙派</a><ul>
 <li>踩坑点：注意Ubuntu上是否开启了ssh</li>
 <li>更新软件包<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li>下载<code>open ssh</code><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> openssh-server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
@@ -596,7 +596,7 @@
 <span class="token function">git</span> clone https://huggingface.co/mlc-ai/mlc-chat-RedPajama-INCITE-Chat-3B-v1-q4f16_1
 <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/<span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>如果遇到这个443问题，点击[链接](<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40296909/article/details/134285451">解决使用git时遇到Failed to connect to github.com port 443 after 21090 ms: Couldn’t connect to server_git couldn’t connect to server-CSDN博客</a>)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127140733.png"></p>
+<p>如果遇到这个443问题，点击<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40296909/article/details/134285451">链接</a><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127140733.png"></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy <span class="token number">127.0</span>.0.1:7890
 <span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy <span class="token number">127.0</span>.0.1:7890
 <span class="token comment"># 注意7890要改成自己的电脑上的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -635,7 +635,7 @@ cmake <span class="token punctuation">..</span> <span class="token operator">&am
 <p>还有一个报错没找到图，大概意思是找不到cargo，install一个就好</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">cargo</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127155902.png"><br>解决方法<a href="%5BUbuntu%E4%B8%8BRust%E6%9B%B4%E6%8D%A2Cargo%E8%BD%AF%E4%BB%B6%E6%BA%90_cargo%E6%8D%A2%E6%BA%90%E9%98%BF%E9%87%8C-CSDN%E5%8D%9A%E5%AE%A2%5D(https://blog.csdn.net/iamzhoujunjia/article/details/113835347)">更换Cargo软件源</a></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127155902.png"><br>解决方法<a target="_blank" rel="noopener" href="https://blog.csdn.net/iamzhoujunjia/article/details/113835347">更换Cargo软件源</a></p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> <span class="token environment constant">$HOME</span>/.cargo/config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>👆我的是新建的一个文件</p>
 <pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 中科大</span>
