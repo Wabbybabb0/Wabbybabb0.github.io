@@ -6,7 +6,7 @@
   <link href="https://wabbybabb0.github.io/atom.xml" rel="self"/>
   
   <link href="https://wabbybabb0.github.io/"/>
-  <updated>2025-03-13T07:53:13.506Z</updated>
+  <updated>2025-03-13T15:00:51.351Z</updated>
   <id>https://wabbybabb0.github.io/</id>
   
   <author>
@@ -17,11 +17,11 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
-    <link href="https://wabbybabb0.github.io/2025/03/13/cudac/"/>
-    <id>https://wabbybabb0.github.io/2025/03/13/cudac/</id>
-    <published>2025-03-13T14:47:51.433Z</published>
-    <updated>2025-03-13T07:53:13.506Z</updated>
+    <title>CUDA编程：基础与实践学习笔记</title>
+    <link href="https://wabbybabb0.github.io/2024/08/02/cudac/"/>
+    <id>https://wabbybabb0.github.io/2024/08/02/cudac/</id>
+    <published>2024-08-02T02:29:00.000Z</published>
+    <updated>2025-03-13T15:00:51.351Z</updated>
     
     
       
@@ -34,6 +34,12 @@
     
     
     
+    <category term="高性能处理" scheme="https://wabbybabb0.github.io/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E5%A4%84%E7%90%86/"/>
+    
+    
+    <category term="CUDA" scheme="https://wabbybabb0.github.io/tags/CUDA/"/>
+    
+    <category term="GPU" scheme="https://wabbybabb0.github.io/tags/GPU/"/>
     
   </entry>
   
