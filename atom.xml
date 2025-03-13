@@ -6,7 +6,7 @@
   <link href="https://wabbybabb0.github.io/atom.xml" rel="self"/>
   
   <link href="https://wabbybabb0.github.io/"/>
-  <updated>2024-10-19T06:22:11.371Z</updated>
+  <updated>2025-03-13T07:53:13.506Z</updated>
   <id>https://wabbybabb0.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="https://wabbybabb0.github.io/2025/03/13/cudac/"/>
+    <id>https://wabbybabb0.github.io/2025/03/13/cudac/</id>
+    <published>2025-03-13T14:47:51.433Z</published>
+    <updated>2025-03-13T07:53:13.506Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;第二章-CUDA中的线程组织&quot;&gt;&lt;a href=&quot;#第二章-CUDA中的线程组织&quot; class=&quot;headerlink&quot; title=&quot;第二章 CUDA中的线程组织&quot;&gt;&lt;/a&gt;第二章</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>mlc-llm 香橙派部署过程</title>
@@ -529,33 +550,6 @@
     
     
     <category term="51单片机" scheme="https://wabbybabb0.github.io/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>LCD1602</title>
-    <link href="https://wabbybabb0.github.io/2022/10/30/lcd1602/"/>
-    <id>https://wabbybabb0.github.io/2022/10/30/lcd1602/</id>
-    <published>2022-10-30T02:04:00.000Z</published>
-    <updated>2023-12-10T08:05:24.080Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;LCD1602-16-2&quot;&gt;&lt;a href=&quot;#LCD1602-16-2&quot; class=&quot;headerlink&quot; title=&quot;LCD1602(16*2)&quot;&gt;&lt;/a&gt;LCD1602(16*2)&lt;/h1&gt;&lt;h2 id=&quot;一-原理部分&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    <category term="51单片机" scheme="https://wabbybabb0.github.io/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/"/>
-    
-    
-    <category term="51单片机" scheme="https://wabbybabb0.github.io/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/"/>
-    
-    <category term="大云屋考核" scheme="https://wabbybabb0.github.io/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/"/>
     
   </entry>
   
