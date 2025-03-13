@@ -614,7 +614,7 @@
 </tbody></table>
 <h1 id="第四章-CUDA程序的错误检验"><a href="#第四章-CUDA程序的错误检验" class="headerlink" title="第四章 CUDA程序的错误检验"></a>第四章 CUDA程序的错误检验</h1><ul>
 <li>在定义宏时，如果一行写不下，则需要在末尾写”\"，表示续行</li>
-<li>用自定义的宏函数<code>CHECK</code>检查运行时API<img src="/photo/Pasted%20image%2020240829162039.png"></li>
+<li>用自定义的宏函数<code>CHECK</code>检查运行时API<img src="https://raw.githubusercontent.com/Wabbybabb0/Note/refs/heads/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240829162039.png?token=GHSAT0AAAAAAC7KAB5H3IZENVL3XO2O62LGZ6S66VA"></li>
 <li>用以下两句检查核函数<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">CHECK</span><span class="token punctuation">(</span><span class="token function">cudaGetLastError</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 捕捉第二个语句之前的最后一个错误</span>
 <span class="token function">CHECK</span><span class="token punctuation">(</span><span class="token function">cudaDeviceSynchronize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 捕捉是否有无法同步主机与设备的错误。因为核函数的调用是异步的，即主机发出调用核函数的命令后会执行后面的语句，不会等待核函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 只要在核函数的调用之后 还有其他任何能<strong>返回错误值的API函数</strong>进行同步调用，都能触发主机与设备的同步并捕捉到核函数调用中可能发生的错误。</li>
@@ -622,29 +622,29 @@
 <p>一般情况下，如果需要获得准确的出错位置，需要显式同步。例如调用<code>cudaDeviceSynchronize()</code>函数，或者设置</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">$ export CUDA_LAUNCH_BLOCKING<span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>设置完毕后，所有核函数的调用都是同步的，但是最好只用于调试程序，因为这样会影响程序的性能。</p>
-<p>❓这个<code>cuda-memcheck</code>没给我check出来错误<br><img src="/photo/Pasted%20image%2020240829164737.png"></p>
+<p>❓这个<code>cuda-memcheck</code>没给我check出来错误<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240829164737.png?token=GHSAT0AAAAAAC7KAB5GH4FCVEGI7V7P7STWZ6S667A"></p>
 <h1 id="第五章-获得GPU加速的关键"><a href="#第五章-获得GPU加速的关键" class="headerlink" title="第五章 获得GPU加速的关键"></a>第五章 获得GPU加速的关键</h1><h3 id="5-1-1-为C-程序计时"><a href="#5-1-1-为C-程序计时" class="headerlink" title="5.1.1 为C++程序计时"></a>5.1.1 为C++程序计时</h3><p>选择浮点数精度</p>
 <ul>
-<li>单精度浮点数的运行时间👇<br><img src="/photo/Pasted%20image%2020240829200351.png" alt="单精度浮点数"></li>
-<li>双精度浮点数的运行时间👇<br><img src="/photo/Pasted%20image%2020240829200445.png" alt="双精度浮点数"></li>
+<li>单精度浮点数的运行时间👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240829200351.png?token=GHSAT0AAAAAAC7KAB5H26M4WRTZZMZAXEL2Z6S67EQ" alt="单精度浮点数"></li>
+<li>双精度浮点数的运行时间👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240829200445.png?token=GHSAT0AAAAAAC7KAB5GBY7HJCM4EHEFCXQEZ6S67SA" alt="双精度浮点数"></li>
 </ul>
 <h3 id="5-1-2-为CUDA程序计时"><a href="#5-1-2-为CUDA程序计时" class="headerlink" title="5.1.2 为CUDA程序计时"></a>5.1.2 为CUDA程序计时</h3><ol>
 <li>仅核函数</li>
 </ol>
 <ul>
-<li>单精度👇<br><img src="/photo/Pasted%20image%2020240829201703.png"></li>
-<li>双精度👇<br><img src="/photo/Pasted%20image%2020240829201718.png"></li>
+<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240829201703.png?token=GHSAT0AAAAAAC7KAB5G2HDQNH3HHSLEGJBYZ6S7AHQ"></li>
+<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240829201718.png?token=GHSAT0AAAAAAC7KAB5HXLEABB5QR7J5SJTEZ6S7AOQ"></li>
 </ul>
 <ol start="2">
 <li>核函数与数据复制</li>
 </ol>
 <ul>
-<li>单精度👇<br><img src="/photo/Pasted%20image%2020240829203507.png"></li>
-<li>双精度👇<br><img src="/photo/Pasted%20image%2020240829203524.png"><br>对比是否加入了数据复制的用时，可以发现：</li>
+<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240829203507.png?token=GHSAT0AAAAAAC7KAB5HZBMGTQEL7T3BX7JCZ6S7ATA"></li>
+<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240829203524.png?token=GHSAT0AAAAAAC7KAB5GPOYRFMCBITJO43MCZ6S7AYA"><br>对比是否加入了数据复制的用时，可以发现：</li>
 <li>核函数的运行时间比数据复制时间要短的多，约占2.5%</li>
 <li>如果一个程序的任务仅仅将来自主机端的两个数组相加，再将结果传到主机端，使用GPU的话效率更加低下，(CUDA程序相较于C++程序性能降低</li>
 </ul>
-<p>关于<code>nvprof</code><br>是一个可用于对CUDA程序进行更多性能剖析的CUDA工具箱里的可执行文件，如果设备计算能力大于8.0不可用，输入<code>nsys nvprof</code>可用<br><img src="/photo/Pasted%20image%2020240829205829.png"></p>
+<p>关于<code>nvprof</code><br>是一个可用于对CUDA程序进行更多性能剖析的CUDA工具箱里的可执行文件，如果设备计算能力大于8.0不可用，输入<code>nsys nvprof</code>可用<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240829205829.png?token=GHSAT0AAAAAAC7KAB5H34G6NITTJ7H2TDE4Z6S7A5Q"></p>
 <ul>
 <li>第一列是每类操作(第七列Name)占用时间百分比</li>
 <li>第二列时每类操作所用的时间</li>
@@ -671,15 +671,15 @@
 <li>CPU</li>
 </ol>
 <ul>
-<li>单精度👇<br><img src="/photo/Pasted%20image%2020240830164803.png"></li>
-<li>双精度👇<br><img src="/photo/Pasted%20image%2020240830164907.png"></li>
+<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240830164803.png?token=GHSAT0AAAAAAC7KAB5GYBQCWGMOWIBUNPXKZ6S7CCQ"></li>
+<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240830164907.png?token=GHSAT0AAAAAAC7KAB5GKKY532SLQZNF5NCWZ6S7CHQ"></li>
 </ul>
 <ol start="2">
 <li>GPU<br>原本执行程序是<code>.\arithmetic2gpu</code>，因为有<code>const int N = atoi(argv[1]);</code>，所以变成<code>.\arithmetic2gpu N</code>，N可以是任何数字，在命令行中手动输入，将会被读取到程序中的N</li>
 </ol>
 <ul>
-<li>单精度👇<br><img src="/photo/Pasted%20image%2020240830210914.png"></li>
-<li>双精度👇<br><img src="/photo/Pasted%20image%2020240830211004.png"></li>
+<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240830210914.png?token=GHSAT0AAAAAAC7KAB5HMPA6RZ7GX5FJTX66Z6S7C4Q"></li>
+<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240830211004.png?token=GHSAT0AAAAAAC7KAB5GPK2XS7SF7EGI6B5EZ6S7DEQ"></li>
 </ul>
 <h3 id="5-2-3-并行规模"><a href="#5-2-3-并行规模" class="headerlink" title="5.2.3 并行规模"></a>5.2.3 并行规模</h3><p>并行规模可用GPU中总的线程数目来衡量<br>小结：</p>
 <ul>
@@ -768,7 +768,7 @@ __global__ <span class="token keyword">void</span> <span class="token function">
 <li>共享内存对整个<strong>线程块</strong>可见，每个线程块拥有一个共享内存变量的副本，共享内存变量的值在不同的线程块中可以不同。一个线程块中的所有线程都可以访问该线程块的共享变量副本，但是不能访问其他线程块的共享内存变量副本</li>
 <li>主要作用是减少对全局内存的访问</li>
 </ul>
-<h2 id="6-4-用CUDA运行时API函数查询设备"><a href="#6-4-用CUDA运行时API函数查询设备" class="headerlink" title="6.4 用CUDA运行时API函数查询设备"></a>6.4 用CUDA运行时API函数查询设备</h2><p><img src="/photo/Pasted%20image%2020240831195051.png"></p>
+<h2 id="6-4-用CUDA运行时API函数查询设备"><a href="#6-4-用CUDA运行时API函数查询设备" class="headerlink" title="6.4 用CUDA运行时API函数查询设备"></a>6.4 用CUDA运行时API函数查询设备</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240831195051.png?token=GHSAT0AAAAAAC7KAB5GSKFQHXIVLET6DJIEZ6S7DOQ"></p>
 <h1 id="第七章-全局内存的合理使用"><a href="#第七章-全局内存的合理使用" class="headerlink" title="第七章 全局内存的合理使用"></a>第七章 全局内存的合理使用</h1><h2 id="7-1-全局内存的合并与非合并访问"><a href="#7-1-全局内存的合并与非合并访问" class="headerlink" title="7.1 全局内存的合并与非合并访问"></a>7.1 全局内存的合并与非合并访问</h2><p>$合并度=\dfrac{线程束请求的字节数}{由该请求导致的所有数据传输处理的字节数}$<br><strong>数据传输对数据地址的要求：在一次数据传输中，从全局内存转移到L2缓存的一片内存首地址一定是一个最小颗粒度(本例是32)的整数倍。</strong></p>
 <ol>
 <li>顺序的合并访问<pre class="line-numbers language-c" data-language="c"><code class="language-c">__global__ <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">float</span> <span class="token operator">*</span>x<span class="token punctuation">,</span> <span class="token keyword">float</span> <span class="token operator">*</span>y<span class="token punctuation">,</span> <span class="token keyword">float</span> <span class="token operator">*</span>z<span class="token punctuation">)</span>
@@ -840,19 +840,19 @@ add_stride<span class="token operator">&lt;&lt;</span><span class="token operato
     <span class="token punctuation">{</span>
         B<span class="token punctuation">[</span>nx <span class="token operator">*</span> N <span class="token operator">+</span> ny<span class="token punctuation">]</span> <span class="token operator">=</span> A<span class="token punctuation">[</span>ny <span class="token operator">*</span> N <span class="token operator">+</span> nx<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/photo/Pasted%20image%2020240902095334.png" alt="|277"><br><code>transpose2()</code>：对矩阵A中数据的访问(读取)不是顺序的(/非合并的)，对矩阵B中数据的访问(写入)是顺序的(/合并的)</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240902095334.png?token=GHSAT0AAAAAAC7KAB5H3KCI2TTFITY3WHPGZ6S7H2A" alt="|277"><br><code>transpose2()</code>：对矩阵A中数据的访问(读取)不是顺序的(/非合并的)，对矩阵B中数据的访问(写入)是顺序的(/合并的)</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>nx <span class="token operator">&lt;</span> N <span class="token operator">&amp;&amp;</span> ny <span class="token operator">&lt;</span> N<span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
         B<span class="token punctuation">[</span>ny <span class="token operator">*</span> N <span class="token operator">+</span> nx<span class="token punctuation">]</span> <span class="token operator">=</span> A<span class="token punctuation">[</span>nx <span class="token operator">*</span> N <span class="token operator">+</span> ny<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="/photo/Pasted%20image%2020240902095353.png" alt="|277"><br>可以发现<code>transpose2()</code>的用时比<code>transpose1()</code>的更久？<br>书上原话：</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240902095353.png?token=GHSAT0AAAAAAC7KAB5HUXRGB7MXCDAAJ6W6Z6S7IAQ" alt="|277"><br>可以发现<code>transpose2()</code>的用时比<code>transpose1()</code>的更久？<br>书上原话：</p>
 <ul>
 <li>在不能满足读取和写入都是合并的情况下，一般来说应当尽量做到合并地写入</li>
-<li>书上的结果是2比1用时更短，因为编译器能够判断一个全局内存变量<strong>在整个核函数的范围都只可读</strong>，则会自动用函数<code>__ldg()</code>读取全局内存，从而对数据的读取进行<strong>缓存</strong>，缓解非合并访问带来的影响。而对于全局内存的写入则没有类似的函数可用<br>👇用了别人的代码后<br><img src="/photo/Pasted%20image%2020240902100134.png"></li>
+<li>书上的结果是2比1用时更短，因为编译器能够判断一个全局内存变量<strong>在整个核函数的范围都只可读</strong>，则会自动用函数<code>__ldg()</code>读取全局内存，从而对数据的读取进行<strong>缓存</strong>，缓解非合并访问带来的影响。而对于全局内存的写入则没有类似的函数可用<br>👇用了别人的代码后<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240902100134.png?token=GHSAT0AAAAAAC7KAB5G3FJET6P6CFFUGAZEZ6S7IQA"></li>
 </ul>
 <h1 id="第八章-共享内存的合理使用"><a href="#第八章-共享内存的合理使用" class="headerlink" title="第八章 共享内存的合理使用"></a>第八章 共享内存的合理使用</h1><h2 id="8-1-例子：数组归约计算"><a href="#8-1-例子：数组归约计算" class="headerlink" title="8.1 例子：数组归约计算"></a>8.1 例子：数组归约计算</h2><ul>
 <li>C++实现计算长度较大的累加计算时，会出现”大数吃小数“的现象</li>
-<li>CUDA实现比C++实现上述内容时要稳健得多<br>单精度👇<br><img src="/photo/Pasted%20image%2020240911215856.png" alt="|325"><br><img src="/photo/Pasted%20image%2020240911220431.png" alt="325"><br>上面两个出现大数吃小数的情况</li>
+<li>CUDA实现比C++实现上述内容时要稳健得多<br>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240911215856.png?token=GHSAT0AAAAAAC7KAB5HPT5VHI7HFTLCIYISZ6S7IUA" alt="|325"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240911220431.png?token=GHSAT0AAAAAAC7KAB5GZLNKZ5FBSICAKXPYZ6S7IZQ" alt="325"><br>上面两个出现大数吃小数的情况</li>
 </ul>
 <table>
 <thead>
@@ -953,7 +953,7 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 		d_y<span class="token punctuation">[</span>tid<span class="token punctuation">]</span> <span class="token operator">=</span> s_y<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<img src="/photo/345a4268a6a5f1d9ad0e183fb311f40.jpg"></li>
+<img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/345a4268a6a5f1d9ad0e183fb311f40.jpg?token=GHSAT0AAAAAAC7KAB5GSKYJEHWEED76FAYAZ6S7JEQ"></li>
 <li>一般来说，在核函数中对共享内存访问的次数越多，则由于使用共享内存带来的加速效果越明显</li>
 <li>因为有<code>n&lt;N</code>的判断，该函数能够处理<code>N</code>不是线程块大小的整数倍的情形</li>
 </ul>
@@ -967,7 +967,7 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 </ul>
 </li>
 </ul>
-<p>单精度👇<br><img src="/photo/Pasted%20image%2020240919200305.png" alt="|375"><br>双精度👇<br><img src="/photo/Pasted%20image%2020240919200331.png" alt="375"></p>
+<p>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240919200305.png?token=GHSAT0AAAAAAC7KAB5HIPKTRBN2ZRGCNXNCZ6S7JIA" alt="|375"><br>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240919200331.png?token=GHSAT0AAAAAAC7KAB5H6Q6SU3SRL3UREQZ6Z6S7JOQ" alt="375"></p>
 <h2 id="8-2-使用共享内存进行矩阵转置"><a href="#8-2-使用共享内存进行矩阵转置" class="headerlink" title="8.2 使用共享内存进行矩阵转置"></a>8.2 使用共享内存进行矩阵转置</h2><p>利用共享内存可以改善全局内存的访问模式，使得对全局内存的读和写都是合并的</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">__gobal__ <span class="token keyword">void</span> <span class="token function">transpose1</span><span class="token punctuation">(</span><span class="token keyword">const</span> real <span class="token operator">*</span>A<span class="token punctuation">,</span> real <span class="token operator">*</span>B<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -1022,8 +1022,8 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 
 <h2 id="8-3-避免共享内存的bank冲突"><a href="#8-3-避免共享内存的bank冲突" class="headerlink" title="8.3 避免共享内存的bank冲突"></a>8.3 避免共享内存的bank冲突</h2><p>为了获得高的内存带宽，共享内存在物理上被分为32个(刚好等于一个线程束中的线程数目32)同样宽度的、能被同时访问的内存bank</p>
 <ul>
-<li>单精度👇<br><img src="/photo/Pasted%20image%2020240913182434.png" alt="|350"></li>
-<li>双精度👇<br><img src="/photo/Pasted%20image%2020240913182530.png" alt="|350"><br><code>bank</code>宽度为4字节的架构，$\dfrac{128字节(定义的共享内存数组的大小)}{32bank(大小和一个线程束中的线程数目相同)}=4字节/bank$</li>
+<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240913182434.png?token=GHSAT0AAAAAAC7KAB5HX3O7FKJBF3JROJMYZ6S7KDA" alt="|350"></li>
+<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240913182530.png?token=GHSAT0AAAAAAC7KAB5HUQSC4FWK54BNEFVWZ6S7KHA" alt="|350"><br><code>bank</code>宽度为4字节的架构，$\dfrac{128字节(定义的共享内存数组的大小)}{32bank(大小和一个线程束中的线程数目相同)}=4字节/bank$</li>
 <li>只要同一个线程束内的多个线程<strong>不同时</strong>访问同一个<code>bank</code>中不同层的数据，该线程束对共享内存的访问就只需要<strong>一次</strong>内存事务</li>
 <li>当同一线程的多个线程数试图访问同一个<code>bank</code>中不同层(n层)的数据(将导致n次内存事务)，会发生bank冲突(n路bank冲突)</li>
 <li>上面的<code>transpose with shared memory bank conflit</code>是发生了32路bank冲突<ul>
@@ -1033,7 +1033,7 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 </li>
 <li>于是将<code>__shared__ real S[TILE_DIM][TILE_DIM]</code>改为<code>__shared__ real S[TILE_DIM][TILE_DIM + 1]</code><ul>
 <li>同一个线程束的32个线程(连续的32个<code>threadIdx.x</code>)对应<code>S</code>中跨度为33的数据</li>
-<li>如果第一个线程访问第一个<code>bank</code>的第一层，第二个线程则会访问第二个<code>bank</code>的第二层，而不是第一个<code>bank</code>的第二层，以此类推，没有<code>bank</code>冲突<br><img src="/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_1.jpg"><br><img src="/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_2.jpg"><br><img src="/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_3.jpg"><br><img src="/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_4.jpg"><br><img src="/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_5.jpg"></li>
+<li>如果第一个线程访问第一个<code>bank</code>的第一层，第二个线程则会访问第二个<code>bank</code>的第二层，而不是第一个<code>bank</code>的第二层，以此类推，没有<code>bank</code>冲突<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_1.jpg?token=GHSAT0AAAAAAC7KAB5G4GHY36VSXVZADHPQZ6S7KMA"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_2.jpg?token=GHSAT0AAAAAAC7KAB5HOGHEMWPERFKDJIMMZ6S7KVQ"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_3.jpg?token=GHSAT0AAAAAAC7KAB5GODSSQZX3ELFCIRH6Z6S7K2Q"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_4.jpg?token=GHSAT0AAAAAAC7KAB5HSDIMELDVMWI4PZHYZ6S7K6A"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_5.jpg?token=GHSAT0AAAAAAC7KAB5H67SBSJVXY34TVANOZ6S7LDQ"></li>
 </ul>
 </li>
 </ul>
@@ -1078,7 +1078,7 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 </li>
 <li>释放<code>d_x</code>和<code>h_x</code>的内存</li>
 </ul>
-<p>单精度👇<br><img src="/photo/Pasted%20image%2020240919200542.png" alt="375"><br>双精度👇<br><img src="/photo/Pasted%20image%2020240919200554.png" alt="375"><br>确实是比先前的提升约2ms</p>
+<p>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240919200542.png?token=GHSAT0AAAAAAC7KAB5HD6P4NKF6CKPZEJVSZ6S7LIA" alt="375"><br>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240919200554.png?token=GHSAT0AAAAAAC7KAB5GH7PUH7DEJ33TBY2OZ6S7LOA" alt="375"><br>确实是比先前的提升约2ms</p>
 <h2 id="9-3-例子：邻居列表的建立"><a href="#9-3-例子：邻居列表的建立" class="headerlink" title="9.3 例子：邻居列表的建立"></a>9.3 例子：邻居列表的建立</h2><p><code>MN</code>是每个原子的最多邻居原子数<br><code>NN[n]</code>是第n个粒子的邻居个数<br><code>NL[n * MN + k]</code>是第n个粒子的第k个邻居的指标</p>
 <h3 id="9-3-1-C-版本的开发"><a href="#9-3-1-C-版本的开发" class="headerlink" title="9.3.1 C++版本的开发"></a>9.3.1 C++版本的开发</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">find_neighbor</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>NN<span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token operator">*</span>NL<span class="token punctuation">,</span> <span class="token keyword">const</span> real<span class="token operator">*</span> x<span class="token punctuation">,</span> <span class="token keyword">const</span> real<span class="token operator">*</span> y<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -1139,14 +1139,14 @@ int tmp2 = atomicAdd(&amp;d_NN[n2], 1);
 d_NL[n2 * MN + tmp1] = n1;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 使用临时变量<code>tmp1</code>和<code>tmp2</code>保存<code>d_NN[n1]</code>和<code>d_NN[n2]</code>的旧值</li>
 </ul>
-<p>单精度👇<br><img src="/photo/Pasted%20image%2020240921115244.png" alt="375"><br>双精度👇<br><img src="/photo/Pasted%20image%2020240921115308.png" alt="375"></p>
+<p>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240921115244.png?token=GHSAT0AAAAAAC7KAB5GUTT3QZ5BAHGQLT3QZ6S7LWQ" alt="375"><br>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240921115308.png?token=GHSAT0AAAAAAC7KAB5HWLX63PU2YMLVUB3EZ6S7L2Q" alt="375"></p>
 <p>在核函数<code>find_neighbor_no_atomic</code>中，<br>①将<code>d_NL[n1 * MN + count++]</code>改为<code>d_NL[(count++) * N + n1]</code><br>②<code>const int n1 = blockIdx.x * blockDim.x + threadIdx.x;</code></p>
 <ul>
 <li>前者的索引中：每个线程的地址跨度为<code>MN</code></li>
 <li>后者的索引中：每个线程在每次循环时访问相邻的内存位置</li>
 </ul>
-<p>对于<code>find_neighbor_not_atomic</code><br>①将<code>if((distance_square) &lt; cutoff_square &amp;&amp; (n2 != n1))</code><br><img src="/photo/Pasted%20image%2020240921115244.png" alt="375"><br>改为<code>if((n2 != n1) &amp;&amp; (distance_square) &lt; cutoff_square)</code>，用时变多<br><img src="/photo/Pasted%20image%2020240921170942.png" alt="375"></p>
-<p>对比使用寄存器变量与不使用寄存器变量<br>使用👇<br><img src="/photo/Pasted%20image%2020240921115244.png" alt="375"><br>不使用👇，用时变多<br><img src="/photo/Pasted%20image%2020240921171012.png" alt="375"></p>
+<p>对于<code>find_neighbor_not_atomic</code><br>①将<code>if((distance_square) &lt; cutoff_square &amp;&amp; (n2 != n1))</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240921115244.png?token=GHSAT0AAAAAAC7KAB5GYMBXAZFEN5IT5PDAZ6S7MVQ" alt="375"><br>改为<code>if((n2 != n1) &amp;&amp; (distance_square) &lt; cutoff_square)</code>，用时变多<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240921170942.png?token=GHSAT0AAAAAAC7KAB5H3EI2WVSPOD24LVZYZ6S7M3A" alt="375"></p>
+<p>对比使用寄存器变量与不使用寄存器变量<br>使用👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240921115244.png?token=GHSAT0AAAAAAC7KAB5HTCMN2S3NMK6M7UXQZ6S7NMQ" alt="375"><br>不使用👇，用时变多<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240921171012.png?token=GHSAT0AAAAAAC7KAB5H2UKYVDZ74CTQC53WZ6S7NQA" alt="375"></p>
 <h1 id="第十章-线程束基本函数与协作组"><a href="#第十章-线程束基本函数与协作组" class="headerlink" title="第十章 线程束基本函数与协作组"></a>第十章 线程束基本函数与协作组</h1><h2 id="10-1-单指令-多线程执行模式"><a href="#10-1-单指令-多线程执行模式" class="headerlink" title="10.1 单指令-多线程执行模式"></a>10.1 单指令-多线程执行模式</h2><p>并发和同步：</p>
 <ul>
 <li>并发：侧重任务的(逻辑)同时进行，在同一段时间内<strong>多个任务交替进行</strong></li>
@@ -1353,7 +1353,7 @@ Thread <span class="token number">31</span> got value <span class="token number"
 <td></td>
 </tr>
 </tbody></table>
-<p><img src="/photo/Pasted%20image%2020240922162221.png"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240922162221.png?token=GHSAT0AAAAAAC7KAB5GEBUFNETDHMQRKL2UZ6S7NYA"></p>
 <ul>
 <li><code>all_sync(FULL_MASK):0</code>，线程0的<code>tid</code>为0，不是全部参与的线程的<code>predicate</code>值都为1，所以为0</li>
 <li><code>all_sync(mask1):1</code>，线程0没有参与，全部参与的线程的<code>predicate</code>值都为1，所以为1</li>
@@ -1429,7 +1429,7 @@ thread_block_tile<span class="token operator">&lt;</span><span class="token numb
     <span class="token function">atomicAdd</span><span class="token punctuation">(</span>d_y<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>把线程划分32个线程一组的，其他的与洗牌函数的步骤差不多，只是使用的方法不一样，所以他们两种方法的用时也差不多</p>
-<p>单精度👇<br><img src="/photo/Pasted%20image%2020240922220201.png" alt="275"><br><img src="/photo/Pasted%20image%2020240922220210.png" alt="275"><br><img src="/photo/Pasted%20image%2020240922220219.png" alt="275"><br>双精度👇<br><img src="/photo/Pasted%20image%2020240922220240.png" alt="275"><br><img src="/photo/Pasted%20image%2020240922220254.png" alt="275"><br><img src="/photo/Pasted%20image%2020240922220302.png" alt="275"></p>
+<p>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240922220201.png?token=GHSAT0AAAAAAC7KAB5GZTRVMPHE7TOBLLYQZ6S7OGA" alt="275"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240922220210.png?token=GHSAT0AAAAAAC7KAB5GYCR2TKOIY7GYEIRKZ6S7OKA" alt="275"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240922220219.png?token=GHSAT0AAAAAAC7KAB5GDCCBMSSDH7PDKVMGZ6S7OLA" alt="275"><br>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240922220240.png?token=GHSAT0AAAAAAC7KAB5H4KRDTNAOOVVZVY26Z6S7OMA" alt="275"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240922220254.png?token=GHSAT0AAAAAAC7KAB5GL4LXS4DG4ZVUWQY4Z6S7ONA" alt="275"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240922220302.png?token=GHSAT0AAAAAAC7KAB5GCKGPHG66GXPZQT3AZ6S7ONQ" alt="275"></p>
 <h2 id="10-5-数组规约程序的进一步优化"><a href="#10-5-数组规约程序的进一步优化" class="headerlink" title="10.5 数组规约程序的进一步优化"></a>10.5 数组规约程序的进一步优化</h2><h3 id="10-5-1-提高线程利用率"><a href="#10-5-1-提高线程利用率" class="headerlink" title="10.5.1 提高线程利用率"></a>10.5.1 提高线程利用率</h3><p>“如果能够提高归约之前所做计算的比例，则应该可以从整体上升对线程的利用率…，可以在归约之前将多个全局内存数组的数据累加到一个共享内存数组的一个元素中”</p>
 <p>“不要让一个线程处理相邻的若干数据，因为这必然导致全局内存的非合并访问”，如何理解这句话(这句话本人读了好一会才理明白)：</p>
 <ul>
@@ -1456,7 +1456,7 @@ thread_block_tile<span class="token operator">&lt;</span><span class="token numb
 </ul>
 </li>
 </ul>
-<p>单精度👇<br><img src="/photo/Pasted%20image%2020240924211910.png" alt="375"><br>双精度👇<br><img src="/photo/Pasted%20image%2020240924211937.png" alt="375"><br>可以发现优化后在时间和精度上都有所提升！</p>
+<p>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240924211910.png?token=GHSAT0AAAAAAC7KAB5GP4ZZCVGJBWY72GUMZ6S7O7Q" alt="375"><br>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240924211937.png?token=GHSAT0AAAAAAC7KAB5GEZOHBDFLSLA5OVD2Z6S7PBQ" alt="375"><br>可以发现优化后在时间和精度上都有所提升！</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">reduce_cp<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span>GRID_SIZE<span class="token punctuation">,</span> BLOCK_SIZE<span class="token punctuation">,</span> smem<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>d_x<span class="token punctuation">,</span> d_y<span class="token punctuation">,</span> N<span class="token punctuation">)</span><span class="token punctuation">;</span>
 reduce_cp<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1024</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>real<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1024</span><span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>d_y<span class="token punctuation">,</span> d_y<span class="token punctuation">,</span> GRID_SIZE<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 有GRID_SIZE个块需要归约</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <ul>
@@ -1502,7 +1502,7 @@ __device__ <span class="token keyword">float</span> static_y<span class="token p
 <span class="token keyword">float</span> <span class="token operator">*</span>d_y<span class="token punctuation">;</span>
 <span class="token function">cudaGetSymbolAddress</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>d_y<span class="token punctuation">,</span> <span class="token string">"static_y"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 </ul>
-<p>单精度👇<br><img src="/photo/Pasted%20image%2020240926190202.png" alt="375"><br>双精度👇<br><img src="/photo/Pasted%20image%2020240926190218.png" alt="375"><br>用时比使用动态全局内存更短！</p>
+<p>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240926190202.png?token=GHSAT0AAAAAAC7KAB5G23WGGCHJTDST4AZMZ6S7PMA" alt="375"><br>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240926190218.png?token=GHSAT0AAAAAAC7KAB5HKYM2YMYF3XXGFLUAZ6S7PNA" alt="375"><br>用时比使用动态全局内存更短！</p>
 <h1 id="第十一章-CUDA流"><a href="#第十一章-CUDA流" class="headerlink" title="第十一章 CUDA流"></a>第十一章 CUDA流</h1><p>核函数外部的并行主要指：</p>
 <ul>
 <li>核函数计算与数据传输之间的并行</li>
@@ -1552,7 +1552,7 @@ sum<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;
 <li><code>N_shared</code>是核函数中使用的<strong>动态共享内存</strong>的<strong>字节数</strong></li>
 <li><code>stream_id</code>是CUDA流的编号</li>
 </ul>
-<p>可能是设备不同的问题，和书上的结果不太一样<br><img src="/photo/Pasted%20image%2020240928191804.png" alt="500"><br>结果(书上的)：<br>CUDA流并发多个核函数可以提升GPU硬件的利用率，减少闲置的SM，从而从整体上获得性能提升</p>
+<p>可能是设备不同的问题，和书上的结果不太一样<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/Pasted%20image%2020240928191804.png?token=GHSAT0AAAAAAC7KAB5GEZXCO6PRYACOM2NYZ6S7PYQ" alt="500"><br>结果(书上的)：<br>CUDA流并发多个核函数可以提升GPU硬件的利用率，减少闲置的SM，从而从整体上获得性能提升</p>
 <h2 id="11-4-用非默认CUDA流重叠核函数的执行与数据传递"><a href="#11-4-用非默认CUDA流重叠核函数的执行与数据传递" class="headerlink" title="11.4 用非默认CUDA流重叠核函数的执行与数据传递"></a>11.4 用非默认CUDA流重叠核函数的执行与数据传递</h2><p>若需要实现核函数执行与数据传输的并发(重叠)</p>
 <ul>
 <li>必须让这两个操作处于不同的非默认流</li>
@@ -1739,7 +1739,7 @@ thrust<span class="token operator">::</span><span class="token function">device_
 <li>第二层函数处理矩阵和矢量之间的运算</li>
 <li>第三层函数处理矩阵之间的运算</li>
 </ul>
-<h3 id="14-3-2-例子：矩阵乘法"><a href="#14-3-2-例子：矩阵乘法" class="headerlink" title="14.3.2 例子：矩阵乘法"></a>14.3.2 例子：矩阵乘法</h3><p><img src="/photo/249b3070465d0ba1c51fff0da2c2ac6.jpg" alt="|400"><br>使用<code>cuBLAS</code>时使用<code>&lt;cublas_v2.h&gt;</code>作为头文件<br>在初始化<code>h_A</code>、<code>h_B</code>、<code>h_C</code>时用一维矢量来表示矩阵</p>
+<h3 id="14-3-2-例子：矩阵乘法"><a href="#14-3-2-例子：矩阵乘法" class="headerlink" title="14.3.2 例子：矩阵乘法"></a>14.3.2 例子：矩阵乘法</h3><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Note/main/%E5%AD%A6%E4%B9%A0/Infra/CUDA%20C/photo/249b3070465d0ba1c51fff0da2c2ac6.jpg?token=GHSAT0AAAAAAC7KAB5HZYT5A4HHQEF3X7YSZ6S7QAQ" alt="|400"><br>使用<code>cuBLAS</code>时使用<code>&lt;cublas_v2.h&gt;</code>作为头文件<br>在初始化<code>h_A</code>、<code>h_B</code>、<code>h_C</code>时用一维矢量来表示矩阵</p>
 <ol>
 <li>主机数组和设备数组的复制</li>
 </ol>
