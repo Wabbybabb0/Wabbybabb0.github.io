@@ -357,7 +357,7 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
@@ -514,7 +514,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-12-10
+                    2025-03-14
                 </div>
                 
 
@@ -548,13 +548,13 @@
             <div id="articleContent">
                 <h1 id="1-Example-Application"><a href="#1-Example-Application" class="headerlink" title="1 Example Application"></a>1 Example Application</h1><h2 id="1-1-Slot-Filling"><a href="#1-1-Slot-Filling" class="headerlink" title="1.1 Slot Filling"></a>1.1 Slot Filling</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106133700.png"><br>👆句子中只有<strong>Taipei</strong>和<strong>November</strong> $2^{nd}$ 属于两个slot中，其余词汇不属于任何slot</p>
 <h2 id="1-2通过feedforward-network实现slot-filling"><a href="#1-2通过feedforward-network实现slot-filling" class="headerlink" title="1.2通过feedforward network实现slot filling"></a>1.2通过feedforward network实现slot filling</h2><p>Input : a word<br>(Each word is represented as a vector):</p>
-<pre><code>1. 1-of-N encoding
-2. beyond 1-of-N encoding
-    1. dimension for "other"：在1-of-N encoding多加一个dimension，这个dimension代表other(没见过的词汇)
-        ![](https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107222413.png)
-    2.word hashing
-    ![](https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106134607.png)
-</code></pre>
+<ol>
+<li>1-of-N encoding</li>
+<li>beyond 1-of-N encoding<ol>
+<li>dimension for “other”：在1-of-N encoding多加一个dimension，这个dimension代表other(没见过的词汇)<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107222413.png"><br> 2.word hashing<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106134607.png"></li>
+</ol>
+</li>
+</ol>
 <p>Output：probability distribution that the input word belonging to the slots</p>
 <h2 id="1-3Problem"><a href="#1-3Problem" class="headerlink" title="1.3Problem"></a>1.3Problem</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106135520.png"><br>input Taipei这个词汇，要么都是destination几率最高，要么都是place of departure几率最高👉我们希望nerual network是有记忆力的👉如果他能记住arrive和leave那他的output就可以不同</p>
 <h2 id="1-4-Solution"><a href="#1-4-Solution" class="headerlink" title="1.4 Solution"></a>1.4 Solution</h2><p>使用Recurrent Neural Network时，要先给memory的起始值<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106140426.png"><br>👆初始值为0，输入为1，绿色neuron接收1、1和0、0<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106140717.png"><br>👆$y_1=4$、$y_2=4$<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106140826.png"><br>👆绿色neuron里memory的值变成2<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106140937.png"><br>👆第二次输入[1,1]<br>如果input的顺序不一样，output的内容也会不一样</p>
@@ -929,7 +929,7 @@
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/11.png" class="responsive-img" alt="CNN(李宏毅)">
+                        <img src="/medias/featureimages/3.png" class="responsive-img" alt="CNN(李宏毅)">
                         
                         <span class="card-title">CNN(李宏毅)</span>
                     </div>
@@ -959,16 +959,16 @@
                 
                 <div class="card-action article-tags">
                     
+                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
+                        <span class="chip bg-color">深度学习</span>
+                    </a>
+                    
                     <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
                         <span class="chip bg-color">人工智能</span>
                     </a>
                     
                     <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
                         <span class="chip bg-color">卷积神经网络</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                        <span class="chip bg-color">深度学习</span>
                     </a>
                     
                 </div>
