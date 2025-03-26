@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="mlc-llm 香橙派部署过程, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="Multi-head Latent Attention模型理解, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>mlc-llm 香橙派部署过程 | Wabbybabbo的摸鱼圣地</title>
+    <title>Multi-head Latent Attention模型理解 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -357,12 +357,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/22.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">mlc-llm 香橙派部署过程</h1>
+                    <h1 class="description center-align post-title">Multi-head Latent Attention模型理解</h1>
                 </div>
             </div>
         </div>
@@ -478,12 +478,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                                <span class="chip bg-color">人工智能</span>
+                            <a href="/tags/DeepSeek/">
+                                <span class="chip bg-color">DeepSeek</span>
                             </a>
                         
-                            <a href="/tags/NLP/">
-                                <span class="chip bg-color">NLP</span>
+                            <a href="/tags/GPU/">
+                                <span class="chip bg-color">GPU</span>
                             </a>
                         
                     </div>
@@ -494,8 +494,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                人工智能
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                高性能计算
                             </a>
                         
                     </div>
@@ -507,21 +507,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2024-01-27
+                    2025-03-19
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2024-10-19
+                    2025-03-26
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.4k
+                    3.6k
                 </div>
                 
 
@@ -546,138 +546,83 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>参考网站：<a target="_blank" rel="noopener" href="https://blog.mlc.ai/2023/08/09/GPU-Accelerated-LLM-on-Orange-Pi">GPU-Accelerated LLM on a $100 Orange Pi</a>、<a target="_blank" rel="noopener" href="https://llm.mlc.ai/docs/install/gpu.html#orange-pi-5-rk3588-based-sbc">Orange Pi 5 (RK3588 based SBC)¶</a></p>
-<p>资料来源：<a target="_blank" rel="noopener" href="https://github.com/mlc-ai/mlc-llm">Github——mlc-llm</a></p>
-<p>相关论坛：<a target="_blank" rel="noopener" href="https://www.reddit.com/r/MachineLearning/comments/15r1vy5/project_gpuaccelerated_llm_on_a_100_orange_pi/?rdt=33752&amp;onetap_auto=true">Reddit——GPU-Accelerated LLM on a $100 Orange Pi</a></p>
-<h1 id="1-Prepare"><a href="#1-Prepare" class="headerlink" title="1 Prepare"></a>1 Prepare</h1><h2 id="1-1-Installation"><a href="#1-1-Installation" class="headerlink" title="1.1 Installation"></a>1.1 Installation</h2><p><strong>- Download and istall the Ubuntu 22.04 for your board from <a target="_blank" rel="noopener" href="https://github.com/Joshua-Riek/ubuntu-rockchip/releases/tag/v1.22">here</a></strong>(pick “Orange Pi 5 Plus”)<br>(:ps 在这个版本里，我无法使用串口，apt update会出现无法解析域名等问题，于是最后用了<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1cQR1pcca0P-xuQbTrnGXAw?pwd=pjhv#list/path=%2Fsharelink1077680202-1101560075650855%2FUbuntu&amp;parentPath=%2Fsharelink1077680202-1101560075650855">香橙派官方的系统——1.0.8_ubuntu_jammy_desktop_xfce_linux5.10.150</a><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127153142.png"></p>
-<ol>
-<li>在烧录前，需要准备一张SD卡(我用的32G)，准备<a target="_blank" rel="noopener" href="https://etcher.balena.io/#download-etcher">烧录软件balenaEtcher</a></li>
-<li>如何知道自己是否烧录成功？<ul>
-<li>使用串口<a target="_blank" rel="noopener" href="https://blog.csdn.net/itt21044ZCY/article/details/132742245#:~:text=%E9%A6%99%E6%A9%99%E6%B4%BE%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%E7%94%B5%E8%84%91%20%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%EF%BC%9AGND%E6%8E%A5GND%EF%BC%8CTX%E6%8E%A5RX%EF%BC%8CRX%E6%8E%A5TX%20%E4%B8%B2%E5%8F%A3%E7%9A%84%20TX%20%E5%92%8C%20RX%20%E6%98%AF%E9%9C%80%E8%A6%81%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5%E7%9A%84%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%83%B3%E4%BB%94%E7%BB%86%E5%8C%BA%E5%88%86%20TX%E5%92%8C,TX%20%E5%92%8C%20RX%20%E5%85%88%E9%9A%8F%E4%BE%BF%E6%8E%A5%E4%B8%8A%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%B5%8B%E8%AF%95%E4%B8%B2%E5%8F%A3%E6%B2%A1%E6%9C%89%E8%BE%93%E5%87%BA%E5%86%8D%E4%BA%A4%E6%8D%A2%E4%B8%8B%20TX%20%E5%92%8C%20RX%20%E7%9A%84%E9%A1%BA%E5%BA%8F%EF%BC%8C%E8%BF%99%E6%A0%B7%E5%B0%B1%E6%80%BB%E6%9C%89%E4%B8%80%E7%A7%8D%E9%A1%BA%E5%BA%8F%E6%98%AF%E5%AF%B9%E7%9A%84">CSDN——使用香橙派连接电脑，串口和SSH</a></li>
-<li>使用另一个显示屏查看</li>
+                <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.04434">DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model</a></p>
+<p>相关论文：<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.04434">DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model</a></p>
+<p>本文内容围绕多头注意力机制的演变过程，着重记录MLA的设计原理，对<a target="_blank" rel="noopener" href="https://spaces.ac.cn/archives/10091">缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA</a>、<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1BYXRYWEMj?spm_id_from=333.1245.0.0">DeepSeek-v2 MLA 原理讲解</a>的内容进行整合与分析，在我理解MLA的过程中，他们给予了很好的启迪！</p>
+<p>假设所有输入都为行向量，输入序列为$\textbf{x}_1, \textbf{x}_2, …, \textbf{x}_l$，其中$\textbf{x}_i\in \mathbb{R}^{1\times d}$</p>
+<ul>
+<li>$l$：token数量</li>
+<li>$d$：<code>embdeding dimension</code></li>
+</ul>
+<h1 id="1-MHA-Multi-Head-Attention"><a href="#1-MHA-Multi-Head-Attention" class="headerlink" title="1 MHA(Multi Head Attention)"></a>1 MHA(Multi Head Attention)</h1><p>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}_t^{(h)}]$$</p>
+<ul>
+<li>$\textbf{o}<em>t$：当前<strong>t</strong>oken的注意力输出<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}}{\sqrt{d_k}})\textbf{v}_i^{(s)}$$</li>
+<li>$\textbf{o}_t^{(s)}$：当前token的第$s$个<code>head</code>的注意力输出，$h$ 个<code>head</code>拼接得到$O_t$，其中：<br>$$\textbf{q}_i^{(s)}=\textbf{x}_i\textbf{W}_q^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{k}_i^{(s)}=\textbf{x}_i\textbf{W}_k^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_k^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{v}_i^{(s)}=\textbf{x}_i\textbf{W}_v^{(s)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}_v^{(s)}\in \mathbb{R}^{d\times d_v}$$</li>
+<li>$\textbf{W}_q^{(s)}$、$\textbf{W}_k^{(s)}$、$\textbf{W}_v^{(s)}$：分别为第$s$个<code>head</code>的query、key、value的权重矩阵，</li>
+<li>$d_k=d_v=d/h$</li>
+</ul>
+<p>MHA使每个Head都有对应的$K$和$V$，模型对token的理解效果是比较好的，而问题在于，虽然有KV Cache，但是随着句子序列变长，Key和Value的缓存的成本和推理时通信的短板会变大，下图的解释会更详细点。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/MLA/Pasted%20image%2020250322123448.png" alt="《缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA》一文中对KV Cache的分析"></p>
+<h1 id="2-MQA-Multi-Query-Attention"><a href="#2-MQA-Multi-Query-Attention" class="headerlink" title="2 MQA(Multi Query Attention)"></a>2 MQA(Multi Query Attention)</h1><p>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}]$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}, \textbf{v}</em>{i\leq t}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^T}{\sqrt{d_k}})\textbf{v}_i$$<br>$$\textbf{q}_i^{(s)}=\textbf{x}_i\textbf{W}_q^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{k}_i=\textbf{x}_i\textbf{W}_k\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_k\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{v}_i=\textbf{x}_i\textbf{W}_q\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}_v\in \mathbb{R}^{d\times d_v}$$</p>
+<ul>
+<li>$\textbf{W}_k$、$\textbf{W}_v$：所有<code>head</code>共享的key、value权重矩阵</li>
+</ul>
+<p>与MHA相比，每个Head都共享同一组$K$和$V$，</p>
+<ul>
+<li>显存：其KV Cache为MHA的$\dfrac{1}{h}$，是目前很节省的方法，</li>
+<li>效果：根据《<a target="_blank" rel="noopener" href="https://spaces.ac.cn/archives/10091">缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA</a>》提到的，损失是有限的，参数量通过加大其他模块的规模来补足。</li>
+</ul>
+<h1 id="3-GQA-Grouped-Query-Attention"><a href="#3-GQA-Grouped-Query-Attention" class="headerlink" title="3 GQA(Grouped Query Attention)"></a>3 GQA(Grouped Query Attention)</h1><p>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}]$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(\lceil sg/h \rceil)}, \textbf{v}</em>{i\leq t}^{(\lceil sg/h \rceil)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(\lceil sg/h \rceil)}T}{\sqrt{d_k}})\textbf{v}_i^{(\lceil sg/h \rceil)}$$<br>$$\textbf{q}_i^{(s)}=\textbf{x}_i\textbf{W}_q^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{k}_i^{(\lceil sg/h \rceil)}=\textbf{x}_i\textbf{W}_k^{(\lceil sg/h \rceil)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_k^{(\lceil sg/h \rceil)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{v}_i^{(\lceil sg/h \rceil)}=\textbf{x}_i\textbf{W}_q^{(\lceil sg/h \rceil)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}_v^{(\lceil sg/h \rceil)}\in \mathbb{R}^{d\times d_v}$$</p>
+<ul>
+<li>$\lceil · \rceil$是向上取整</li>
+<li>$\textbf{W}_q^{(s)}$、$\textbf{W}_k^{(s)}$、$\textbf{W}_v^{(s)}$：分别为第$s$个<code>head</code>的query、key、value的权重矩阵，</li>
+<li>$d_k=d_v=d/h$</li>
+</ul>
+<p>作为显存的压缩和效果都在MHA和MQA之间的版本，GQA将<code>head</code>分为$g$个组($g$可以整除$h$)，每组共享同一对$K$、$V$。当$g=1$时就是MQA，$g=h$时就是MHA。当$1&lt;g&lt;h$时，效果不如MHA，显存压缩没有MQA那么猛，但是KV Cache压缩到MHA的$g/h$，效果比MQA好，是一个折中的版本。</p>
+<h1 id="4-MLA-Multi-head-Latent-Attention"><a href="#4-MLA-Multi-head-Latent-Attention" class="headerlink" title="4 MLA(Multi-head Latent Attention)"></a>4 MLA(Multi-head Latent Attention)</h1><p>对KV Cache做低秩投影，通过投影矩阵$\textbf{W}_c$将$\textbf{x}_i$投影为$\textbf{c}_i$<br><a target="_blank" rel="noopener" href="https://spaces.ac.cn/archives/10091">缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA</a>文章中认为”DeepSeek-V2的技术报告里是从低秩投影的角度引入MLA的……然而，笔者认为低秩投影这个角度并不贴近本质，因为要说低秩投影的话，事实上只要我们将GQA的所有K、V叠在一起，就会发现GQA也相当于在做低秩投影：<br>$$[\textbf{k}_i^{(1)}, …,\textbf{k}_i^{(g)}, \textbf{v}_i^{(1)},…,\textbf{v}_i^{(g)}] = \textbf{x}_i[\textbf{W}_k^{(1)},…,\textbf{W}_k^{(g)},\textbf{W}_v^{(1)},…,\textbf{W}_v^{(g)}]$$</p>
+<ul>
+<li>$[\textbf{k}_i^{(1)}, …,\textbf{k}_i^{(g)}, \textbf{v}_i^{(1)},…,\textbf{v}_i^{(g)}] = \textbf{c}_i\in \mathbb{R}^{1\times d_c}$，将所有的$\textbf{k}_i^{(s)}$、$\textbf{v}_i^{(s)}$拼在一起记为$\textbf{c}_i$，</li>
+<li>$[\textbf{W}_k^{(1)},…,\textbf{W}_k^{(g)},\textbf{W}_v^{(1)},…,\textbf{W}_v^{(g)}] = \textbf{W}_c\in \mathbb{R}^{d\times d_c}$，将相应的投影矩阵拼在一起记为$\textbf{W}_c$，</li>
+<li>$d_c=g(d_k+d_v)&lt;d=h(d_k+d_v)$，所以$\textbf{x}_i$到$\textbf{c}_i$的变换就是一个低秩投影，<br><strong>所以，MLA的本质改进不是低秩投影，而是低秩投影之后的工作</strong>“</li>
+</ul>
+<h2 id="4-1-MLA的最初构想"><a href="#4-1-MLA的最初构想" class="headerlink" title="4.1 MLA的最初构想"></a>4.1 MLA的最初构想</h2><p>得到$\textbf{c}_i$后，GQA将其对半分为K和V，将它们分别均分为$g$份，每一份复制$h/g$次，凑够$h$份K和V，然后将其投入到计算Attention和KV Cache，MLA对$\textbf{c}_i$不是简单的分割和复制，他对$\textbf{c}_i$又进行了一次投影，“增强了模型的能力”：<br>$$\textbf{u}_t = \textbf{o}_t\textbf{W}_o,\ \ \ \ \ \textbf{W}_o\in \mathbb{R}^{d\times hd_k}$$</p>
+<ul>
+<li>$\textbf{W}_o$是输出投影矩阵，这里的$hd_k\neq d$<br>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}] \in \mathbb{R}^{1\times d}$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}}{\sqrt{d_k}})\textbf{v}_i^{(s)}$$<br>$$\textbf{c}_i=\textbf{x}_i\textbf{W}_c\in\mathbb{R}^{1\times d_c}$$<br>$$\textbf{q}_i^{(s)}=\textbf{x}_i\textbf{W}_q^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{k}<em>i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{d_c\times d_k}$$<br>$$\textbf{v}<em>i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{d_c\times d_v}$$</li>
+<li>$\textbf{W}<em>{Uk}^{(s)}$、$\textbf{W}</em>{Uv}^{(s)}$：分别为第$s$个<code>head</code>的key、value的再投影权重矩阵，为了“增强了模型的能力”<br>然而，原本已经低秩的$\textbf{c}<em>i$在$\textbf{W}</em>{Uk}^{(s)}$和$\textbf{W}_{Uv}^{(s)}$作用下被up-projection了，即$\textbf{k}_i^{(s)}$和$\textbf{v}_i^{(s)}$原本的<code>head</code>分组不存在了，一组<code>head</code>之间不再共享$K$、$V$，“出于节省计算和通信成本的考虑，我们一般会缓存的是投影后的$\textbf{k}_i$、$\textbf{v}_i$的而不是投影前的$\textbf{c}_i$或$\textbf{x}_i$”，所以，此做法的KV Cache与MHA无异，没有显存节省的作用。</li>
+</ul>
+<p>虽然在训练阶段MLA的优化空间不大，但是在推理阶段中：<br>$$\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}=(\textbf{x}_t\textbf{W}_q^{(s)})\cdot (\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)})^T=\textbf{x}_t(\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T})\textbf{c}_i^T$$<br>$\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T}$作为$Q$的投影矩阵，K Cache的内容可以从$\textbf{k}_i$变为$\textbf{c}_i$；根据$\textbf{v}_i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uv}^{(s)}$和$\textbf{u}_t^{(s)} = \textbf{o}_t^{(s)}\textbf{W}_o^{(s)}$，输出的计算过程包含$\textbf{c}<em>i\textbf{W}</em>{Uv}\textbf{W}<em>O$，那么$\textbf{W}</em>{Uv}\textbf{W}_O$作为$V$的投影矩阵，$\textbf{v}_i$可以用$\textbf{c}_i$代替，即V Cache的内容从$\textbf{v}_i$也变为$\textbf{c}_i$。<br>那么KV Cache的内容就是$\textbf{c}_i$，它与$(s)$无关 ，是所有<code>head</code>共享的，控制好$g/h$的值，在推理阶段达到GQA或MQA的效果。<br>实际上，因为up-projection提高了模型的效果，同时在推理阶段KV Cache效果与GQA相同($1&lt;g&lt;h$)。在效果和显存的平衡下，“如果我们只需要跟GQA相近的能力，那么是不是就可以再次减少KV Cache了？换言之，$d_c$没必要取$g(dk+dv)$，而是取更小的值，从而进一步压缩KV Cache，这就是MLA的核心思想”。</p>
+<h2 id="4-2-RoPE的兼容"><a href="#4-2-RoPE的兼容" class="headerlink" title="4.2 RoPE的兼容"></a>4.2 RoPE的兼容</h2><p>RoPE与绝对位置相关，通过绝对位置计算两个token之间的相对位置信息：<br>$$\textbf{R}_m\textbf{R}<em>n^T=\textbf{R}</em>{m-n}$$<br>MLA加上RoPE之后：<br>$$\textbf{q}_i^{(s)}=x_iW_q^{(s)}\textbf{R}_i, \ \ \ \ \ \textbf{k}_i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}\textbf{R}_i$$<br>$$\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}=(x_tW_q^{(s)}\textbf{R}<em>t)(\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}\textbf{R}<em>i)^T=x_tW_q^{(s)}\textbf{R}</em>{t-i}{W}</em>{Uk}^{(s)T}\textbf{c}_i^T$$<br>不能固定$\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T}$值作为$Q$的投影矩阵。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/MLA/Pasted%20image%2020250323150831.png" alt="《缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA》一文中探讨的其他方法"><br>后来解决办法为每个<code>head</code>的$\textbf{Q}$和$\textbf{K}$新增$d_r$个维度来添加RoPE的信息，其中$\textbf{K}$新增的信息由每个<code>head</code>共享<br>$$\textbf{u}_t = \textbf{o}_t\textbf{W}_o,\ \ \ \ \ \textbf{W}_o\in \mathbb{R}^{d\times hd_k}$$<br>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}] \in \mathbb{R}^{1\times d}$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}}{\sqrt{d_k+d_r}})\textbf{v}_i^{(s)}$$</p>
+<ul>
+<li>dot-product的scaling变成了$\sqrt{d_k+d_r}$<br>$$RoPE(\textbf{x}<em>i\textbf{W}</em>{qR}^{(s)})=\textbf{x}<em>i\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>i,\ \ \ \ \ \textbf{W}</em>{qR}^{(s)}\in \mathbb{R}^{d\times d_r}$$<br>$$RoPE(\textbf{x}<em>i\textbf{W}</em>{kR})=\textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}<em>i,\ \ \ \ \ \textbf{W}</em>{kR}\in \mathbb{R}^{d\times d_r}$$<br>$$\textbf{c}_i=\textbf{x}_i\textbf{W}_c\in\mathbb{R}^{1\times d_c}$$<br>$$\textbf{q}_i^{(s)}=[\textbf{x}_i\textbf{W}_q^{(s)}, \textbf{x}<em>i\textbf{W}</em>{qR}^{(s)}\textbf{R}_i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_r}$$<br>$$\textbf{k}<em>i^{(s)}=[\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}, \textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{d\times d_r}$$<br>$$\textbf{v}<em>i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{d_c\times d_v}$$<br>👇可以看到保留了$Q$的固定投影$\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T}$和相对位置信息$\textbf{R}</em>{t-i}$<br>$$\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}=(\textbf{x}_t\textbf{W}_q^{(s)})(\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)})^T+(\textbf{x}<em>t\textbf{W}</em>{qR}^{(s)}\textbf{R}_t)(\textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}_i)^T$$<br>$$=\textbf{x}<em>t(\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T})\textbf{c}<em>i^T+\textbf{x}<em>t\textbf{W}</em>{qR}^{(s)}(\textbf{R}</em>{t-i})\textbf{W}</em>{kR}^T\textbf{x}_i^T$$</li>
+</ul>
+<h2 id="4-3-MLA最终版本"><a href="#4-3-MLA最终版本" class="headerlink" title="4.3 MLA最终版本"></a>4.3 MLA最终版本</h2><p>“in order to reduce the activation memory during training”，最后MLA在训练阶段对$Q$的输入$\textbf{x}_i$也做了低秩投影，即$$\textbf{c}<em>i’=\textbf{x}<em>i\textbf{W}</em>{Dq}\in \mathbb{R}^{1\times d_c’},\ \ \ \ \ \textbf{W}</em>{Dq}\in \mathbb{R}^{d\times d_c’}$$$$\textbf{q}<em>i^{(s)}=[\textbf{c}<em>i’\textbf{W}</em>{Uq}^{(s)}, \textbf{c}<em>i’\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}</em>{Uq}^{(s)}\in \mathbb{R}^{d_c’\times d_k},\textbf{W}</em>{qR}^{(s)}\in \mathbb{R}^{d_c’\times d_k}$$最终版本的训练阶段：<br>$$\textbf{u}_t = \textbf{o}_t\textbf{W}_o,\ \ \ \ \ \textbf{W}_o\in \mathbb{R}^{d\times hd_k}$$<br>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}] \in \mathbb{R}^{1\times d}$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}}{\sqrt{d_k+d_r}})\textbf{v}_i^{(s)}$$<br>$$\textbf{c}_i=\textbf{x}_i\textbf{W}_c\in\mathbb{R}^{d_c},\ \ \ \ \ \textbf{W}_c\in\mathbb{R}^{d\times d_c}$$<br>$$\textbf{c}<em>i’=\textbf{x}<em>i\textbf{W}</em>{Dq}\in \mathbb{R}^{1\times d_c’},\ \ \ \ \ \textbf{W}</em>{Dq}\in \mathbb{R}^{d\times d_c’}$$<br>$$\textbf{q}<em>i^{(s)}=[\textbf{c}<em>i’\textbf{W}</em>{Uq}^{(s)}, \textbf{c}<em>i’\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}</em>{Uq}^{(s)}\in \mathbb{R}^{d_c’\times d_k},\textbf{W}</em>{qR}^{(s)}\in \mathbb{R}^{d_c’\times d_k}$$<br>$$\textbf{k}_i^{(s)}=[\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}, \textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{d_c\times d_k}$$<br>$$\textbf{v}<em>i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{d_c\times d_v}$$<br>$$\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}=(\textbf{c}’<em>t\textbf{W}</em>{Uq}^{(s)})(\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)})^T+(\textbf{c}<em>t\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>t)(\textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}<em>i)^T$$<br>$$=\textbf{c}’<em>t(\textbf{W}</em>{Uq}^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T})\textbf{c}<em>i^T+\textbf{c}’<em>t\textbf{W}</em>{qR}^{(s)}(\textbf{R}</em>{t-i})\textbf{W}</em>{kR}^T\textbf{x}_i^T$$</p>
+<p>最终版本的推理阶段：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/MLA/Pasted%20image%2020250323222539.png">$$\textbf{u}_t = [\textbf{o}_t^{(1)}\textbf{W}_o^{‘(1)},\textbf{o}_t^{(2)}\textbf{W}_o^{‘(2)},…,\textbf{o}_t^{(h)}\textbf{W}_o^{‘(h)}]$$<br>$$\textbf{W}’_o=[\textbf{W}_o^{‘(1)},\textbf{W}_o^{‘(2)},…,\textbf{W}_o^{‘(h)}],\ \ \ \ \ \textbf{W}’_o\in \mathbb{R}^{d\times hd_k}$$</p>
+<ul>
+<li>$\textbf{W}’_o$融合了$\textbf{W}_o$和$\textbf{W}<em>v^{(g)}$得到的，在推理阶段是固定值<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}, \textbf{v}</em>{i\leq t}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t\textbf{k}_i^T}{\sqrt{d_k+d_r}})\textbf{v}_i,\ \ \ \ \ \textbf{v}_i=\textbf{c}_i\in \mathbb{R}^{1\times d_c}$$<br>$$\textbf{c}_i=\textbf{x}_i\textbf{W}<em>c\in\mathbb{R}^{d_c},\ \ \ \ \ \textbf{W}<em>c\in\mathbb{R}^{d\times d_c}$$<br>$$\textbf{c}<em>i’=\textbf{x}<em>i\textbf{W}</em>{Dq}\in \mathbb{R}^{1\times d_c’},\ \ \ \ \ \textbf{W}</em>{Dq}\in \mathbb{R}^{d\times d_c’}$$<br>$$\textbf{q}<em>i^{(s)}=[\textbf{c}<em>i’\textbf{W}</em>{Uq}^{(s)}\textbf{W}</em>{Uk}^{(s)T}, \textbf{c}<em>i’\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_c+d_r]},\ \ \ \ \  \textbf{W}</em>{Uq}^{(s)}\in \mathbb{R}^{d_c’\times d_k},\textbf{W}</em>{qR}^{(s)}\in \mathbb{R}^{d_c’\times d_k},\textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{d_c\times d_k}$$</li>
+<li>$\textbf{W}<em>{Uq}^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T}$作为$Q$的投影矩阵<br>$$\textbf{k}_i=[\textbf{c}_i, \textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}_i]\in \mathbb{R}^{1\times [d_c+d_r]}$$</li>
+<li>$\textbf{k}$在存储时不需要考虑不同<code>head</code></li>
+</ul>
+<p>对于单个token：</p>
+<ul>
+<li>MLA推理时需要的缓存：<ul>
+<li>$\textbf{v}_i=\textbf{c}_i\in \mathbb{R}^{1\times d_c}$</li>
+<li>$\textbf{k}_=[\textbf{c}_i, \textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}_i]\in \mathbb{R}^{1\times [d_c+d_r]}$，$d_c+d_r=512+64=576$</li>
 </ul>
 </li>
-<li>烧录成功后，通过上面两种办法知道香橙派的ip地址(如果是用显示屏的，在官方文档里查阅“设置静态IP地址的方法”)，我自己的修改为了192.168.1.201，如下图所示，用自己的电脑ping一下香橙派<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240126214418.png"></li>
-<li>使用vscode连接香橙派<a target="_blank" rel="noopener" href="https://blog.csdn.net/mjmmm/article/details/133981063#:~:text=%E7%82%B9%E5%87%BB%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9A%20%E4%B8%AD%E9%97%B4%E4%B8%8A%E6%96%B9%E9%80%89%E6%8B%A9%E2%80%9Csmart_bin%E2%80%9D%EF%BC%9A,%E7%82%B9%E5%87%BB%E2%80%9C%E7%A1%AE%E5%AE%9A%E2%80%9D%EF%BC%9A%20%E5%86%8D%E6%AC%A1%E9%80%89%E6%8B%A9%E2%80%9CLinux%E2%80%9D%EF%BC%8C%E5%B9%B6%E8%BE%93%E5%85%A5%E9%A6%99%E6%A9%99%E6%B4%BE%E5%AF%86%E7%A0%81%EF%BC%9A%20%E6%AD%A4%E6%97%B6%EF%BC%8C%E5%B0%B1%E6%88%90%E5%8A%9F%E8%BF%9E%E6%8E%A5%E4%B8%8A%E4%BA%86smart_bin%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8VSCODE%E5%AF%B9%E4%BA%8E%E4%BB%A3%E7%A0%81%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E6%93%8D%E4%BD%9C%E4%BA%86%EF%BC%81">CSDN——使用Visual Studio Code远程连接香橙派</a><ul>
-<li>踩坑点：注意Ubuntu上是否开启了ssh</li>
-<li>更新软件包<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>下载<code>open ssh</code><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> openssh-server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>下载完成后查看<code>ssh</code>是否打开<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">ps</span> <span class="token parameter variable">-e</span> <span class="token operator">|</span><span class="token function">grep</span> <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-连接成功后会出现下面的图<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240126222152.png"></li>
+<li>MHA版本的缓存：$2\times d_k\times h=2\times 128\times128=32768$</li>
 </ul>
-</li>
-</ol>
-<p><strong>- Download and install&nbsp;<code>libmali-g610.so</code></strong></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /usr/lib <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">wget</span> https://github.com/JeffyCN/mirrors/raw/libmali/lib/aarch64-linux-gnu/libmali-valhall-g610-g6p0-x11-wayland-gbm.so<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<ol>
-<li>我的香橙派无法访问github，于是采用主机下载文件后用FileZilla传输文件到虚拟机上，用了之前方法但是显示无法连接<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127093218.png"></li>
-<li>更改协议后连接成功，协议如下图所示<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127094737.png"></li>
-<li>在主机上点击<a target="_blank" rel="noopener" href="https://github.com/JeffyCN/mirrors/tree/libmali/lib/aarch64-linux-gnu">网站</a>找到libmali-valhall-g610-g6p0-x11-wayland-gbm.so并下载</li>
-<li>FileZilla出现“无法启动传输”字样 <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127100058.png"><ul>
-<li>原因：文件权限不足</li>
-<li>解决：修改远程站点文件的权限<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">777</span> 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127100350.png"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127100646.png"></li>
+<p>👇图思想来源<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1BYXRYWEMj?spm_id_from=333.1245.0.0">DeepSeek-v2 MLA 原理讲解</a><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/MLA/de420aa56bd3f8b22e26f54c9ee1f37.jpg" alt="MLA投影过程(粗略)"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/MLA/Pasted%20image%2020250323194944.png" alt="《缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA》一文中对MLA计算量增加和效率的讨论"></p>
+<ul>
+<li>在第一个token生成阶段需要并行处理输入的所有token，虽然计算量增加，但是KV Cache相应减少，无功无过。</li>
+<li>在后续每个token生成阶段，每次只输入一个，增加的计算量不会被放大，每次需要传输的KV相比原来是减少的。</li>
 </ul>
-</li>
-</ol>
-<p><strong>- Check if file&nbsp;<code>mali_csffw.bin</code>&nbsp;exist under path&nbsp;<code>/lib/firmware</code>, if not download it with command:</strong></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /lib/firmware <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">wget</span> https://github.com/JeffyCN/mirrors/raw/libmali/firmware/g610/mali_csffw.bin<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>我找到了这个文件所以就不用下载了，<a target="_blank" rel="noopener" href="https://github.com/JeffyCN/mirrors/tree/libmali/firmware/g610">文件下载处</a><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127101202.png"></p>
-<p><strong>- Download OpenCL ICD loader and manually add libmali to ICD</strong></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update
-<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> mesa-opencl-icd
-<span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/OpenCL/vendors
-<span class="token builtin class-name">echo</span> <span class="token string">"/usr/lib/libmali-valhall-g610-g6p0-x11-wayland-gbm.so"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/OpenCL/vendors/mali.icd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<h2 id="1-2-Validata-Installation"><a href="#1-2-Validata-Installation" class="headerlink" title="1.2 Validata Installation"></a>1.2 Validata Installation</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">clinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h2 id="1-3-Prepare"><a href="#1-3-Prepare" class="headerlink" title="1.3 Prepare"></a>1.3 Prepare</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># clone mlc-llm from GitHub</span>
-<span class="token function">git</span> clone <span class="token parameter variable">--recursive</span> https://github.com/mlc-ai/mlc-llm.git <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> mlc-llm
-<span class="token comment"># Download prebuilt weights and libs</span>
-<span class="token function">git</span> lfs <span class="token function">install</span>
-<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> dist/prebuilt <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> dist/prebuilt
-<span class="token function">git</span> clone https://github.com/mlc-ai/binary-mlc-llm-libs.git lib
-<span class="token function">git</span> clone https://huggingface.co/mlc-ai/mlc-chat-RedPajama-INCITE-Chat-3B-v1-q4f16_1
-<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/<span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<p>我采用在本地拉取后再传输到香橙派上，建议是先压缩再传输，再在香橙派上解压(.zip)</p>
-<p>在第一步<code>git clone --recursive https://github.com/mlc-ai/mlc-llm.git &amp;&amp; cd mlc-llm</code>如果遇到这个443问题，点击<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40296909/article/details/134285451">链接</a><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127140733.png"></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy <span class="token number">127.0</span>.0.1:7890
-<span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy <span class="token number">127.0</span>.0.1:7890
-<span class="token comment"># 注意7890要改成自己的电脑上的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span class="token parameter variable">--recursive</span> https://github.com/mlc-ai/mlc-llm.git <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> mlc-llm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> lfs <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>在这一步之前先install<code>git-lfs</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> git-lfs<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<p>👇在宿主机中创建文件并进入文件<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127143842.png"><br>👇会直接在你(主机)选中的目录下(我这里的是mlc-llm)下有一个lib文件<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127144257.png"><br>将主机中的lib压缩后拖进宿主机的lib文件下<br>👇在宿主机中cd到lib并将刚才的压缩包解压缩</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">unzip</span> FileName.zip <span class="token comment"># 解压</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127152142.png"></p>
-<p>RedPajama-INCITE-Chat-3B-v1-q4f16_1:<a target="_blank" rel="noopener" href="https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1">https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1</a></p>
-<p>Llama-2-7b-chat-hf-q4f16_1:<a target="_blank" rel="noopener" href="https://huggingface.co/mlc-ai/mlc-chat-Llama-2-7b-chat-hf-q4f16_1">https://huggingface.co/mlc-ai/mlc-chat-Llama-2-7b-chat-hf-q4f16_1</a></p>
-<p>Llama-2-13b-chat-hf-q4f16_1:<a target="_blank" rel="noopener" href="https://huggingface.co/mlc-ai/mlc-chat-Llama-2-13b-chat-hf-q4f16_1">https://huggingface.co/mlc-ai/mlc-chat-Llama-2-13b-chat-hf-q4f16_1</a></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://huggingface.co/mlc-ai/mlc-chat-Llama-2-13b-chat-hf-q4f16_1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>👆在主机上下载(注意这个网址取决于你用什么来作为模型)，下载完毕后采用👇命令传输到香橙派上，好处是可以看到传输的过程(这个文件有13多个G)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127151212.png"></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> <span class="token parameter variable">-r</span> ./mlc-chat-Llama-2-13b-chat-hf-q4f16_1 orangepi@192.168.1.202:/home/orangepi/Project/MLC-LLM/dist/prebuit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> <span class="token parameter variable">-r</span> 相对路径下需要传输的文件 主机名@ip:被传输文件的目的文件<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-
-
-
-
-<h1 id="2-Try-out-the-CLI"><a href="#2-Try-out-the-CLI" class="headerlink" title="2 Try out the CLI"></a>2 Try out the CLI</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> mlc-llm/
-<span class="token comment"># create build directory</span>
-<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> build <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> build
-<span class="token comment"># generate build configuration</span>
-python3 <span class="token punctuation">..</span>/cmake/gen_cmake_config.py
-<span class="token comment"># build `mlc_chat_cli`</span>
-cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> cmake <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">--parallel</span> <span class="token variable"><span class="token variable">$(</span>nproc<span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python3 <span class="token punctuation">..</span>/cmake/gen_cmake_config.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>👆这一步中，<code>CUDA</code>、<code>Vulkan</code>、<code>ROCm</code>、<code>Metal</code>全选<code>n</code>，其余选<code>y</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> cmake <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">--parallel</span> <span class="token variable"><span class="token variable">$(</span>nproc<span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>👆在这一步可能会报两次错<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127155002.png"></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> cmake<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>还有一个报错没找到图，大概意思是找不到cargo，install一个就好👇</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">cargo</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127155902.png"><br>解决方法<a target="_blank" rel="noopener" href="https://blog.csdn.net/iamzhoujunjia/article/details/113835347">更换Cargo软件源</a></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> <span class="token environment constant">$HOME</span>/.cargo/config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>👆我的是新建的一个文件</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 中科大</span>
-<span class="token punctuation">[</span>source.crates-io<span class="token punctuation">]</span>
-registry <span class="token operator">=</span> <span class="token string">"https://github.com/rust-lang/crates.io-index"</span>
-replace-with <span class="token operator">=</span> <span class="token string">'ustc'</span>
-<span class="token punctuation">[</span>source.ustc<span class="token punctuation">]</span>
-registry <span class="token operator">=</span> <span class="token string">"git://mirrors.ustc.edu.cn/crates.io-index"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>再次执行👇可以看到有后续的进度</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> cmake <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">--parallel</span> <span class="token variable"><span class="token variable">$(</span>nproc<span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127161834.png"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127162004.png"></p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127162200.png"></p>
-<p>👆这一步是让我们看是否有三个文件，分别对应右图中绿色的三个</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./build/mlc_chat_cli <span class="token parameter variable">--model</span> Llama-2-13b-chat-hf-q4f16_1 –device mali<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<p>报错：找不到<code>mlc-chat-config.json</code><br>解决问题<a target="_blank" rel="noopener" href="https://github.com/mlc-ai/mlc-llm/issues/730">Github——Cannot find “mlc-chat-config.json” in path “”dist”/RedPajama-INCITE-Chat-3B-v1-q4f16_1</a>：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127164042.png"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127164305.png"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127164020.png"><br>原因：<code>mlc-chat-config.json</code>在<code>mlc-llm</code>的上一级文件里的<code>mlc-chat-Llama-2-13b-chat-hf-q4f16_1</code>文件中，一开始是在<code>mlc-llm</code>中<code>bulid</code>中运行，因为无法调用/访问<code>mlc-llm</code>的同级文件所以报错。所以换成<code>MLC-LLM</code>来调用<code>mlc_chat_cli</code>，即<code>dist</code>的上一级</p>
-<p><strong>大功告成！</strong><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127170657.png"></p>
+<h1 id="5-对比"><a href="#5-对比" class="headerlink" title="5 对比"></a>5 对比</h1><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/MLA/Pasted%20image%2020250323164232.png"></p>
+<ul>
+<li>$d_c’=1536$</li>
+<li>$d_h=d_k=d_v=128,h=128,d=d_h\times h$</li>
+<li>$d_c=4d_h=4\times128=512$</li>
+<li>$d_r=\dfrac{d_h}{2}=128\div2=64$</li>
+<li>DeepSeek-V2的KV Cache($=576$)相当于GQA的$g=2.25$时的大小(GQA一个组的大小$=256$)</li>
+</ul>
 
                 
             </div>
@@ -704,7 +649,7 @@ registry <span class="token operator">=</span> <span class="token string">"git:/
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2024/01/27/mlc-llm-orangepi-bu-shu-guo-cheng/">https://wabbybabb0.github.io/2024/01/27/mlc-llm-orangepi-bu-shu-guo-cheng/</a>
+                    <a href="https://wabbybabb0.github.io/2025/03/19/mla/">https://wabbybabb0.github.io/2025/03/19/mla/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -742,12 +687,12 @@ registry <span class="token operator">=</span> <span class="token string">"git:/
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                                    <span class="chip bg-color">人工智能</span>
+                                <a href="/tags/DeepSeek/">
+                                    <span class="chip bg-color">DeepSeek</span>
                                 </a>
                             
-                                <a href="/tags/NLP/">
-                                    <span class="chip bg-color">NLP</span>
+                                <a href="/tags/GPU/">
+                                    <span class="chip bg-color">GPU</span>
                                 </a>
                             
                         </div>
@@ -931,29 +876,84 @@ registry <span class="token operator">=</span> <span class="token string">"git:/
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2024/08/02/cudac/">
+                <a href="/2025/03/19/mla/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/10.png" class="responsive-img" alt="CUDA编程：基础与实践学习笔记">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Multi-head Latent Attention模型理解">
                         
-                        <span class="card-title">CUDA编程：基础与实践学习笔记</span>
+                        <span class="card-title">Multi-head Latent Attention模型理解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            樊哲勇老师的CUDA编程教程包括CUDA编程的语法知识、优化策略及程序开发实践，对新手很友好！
+                            作为FlashMLA的核心之一，MLA设计了在保持性能的同时着重减少KV Cache的attention机制，十分值得细究！
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-02
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
+                                </a>
+                            
+                            
                         </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/DeepSeek/">
+                        <span class="chip bg-color">DeepSeek</span>
+                    </a>
+                    
+                    <a href="/tags/GPU/">
+                        <span class="chip bg-color">GPU</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/10/08/llm2-tui-li-yin-qing/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.png" class="responsive-img" alt="LLM2框架搭建过程">
+                        
+                        <span class="card-title">LLM2框架搭建过程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            参照"不归牛顿管的熊猫"的课程视频搭建的LLM2框架，目前还在对算子进行调试优化阶段
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-10-08
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -969,69 +969,12 @@ registry <span class="token operator">=</span> <span class="token string">"git:/
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/GPU/">
-                        <span class="chip bg-color">GPU</span>
-                    </a>
-                    
                     <a href="/tags/CUDA/">
                         <span class="chip bg-color">CUDA</span>
                     </a>
                     
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
-            <div class="card">
-                <a href="/2023/12/04/mu-biao-jian-ce/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/1.png" class="responsive-img" alt="目标检测(环境配置)">
-                        
-                        <span class="card-title">目标检测(环境配置)</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            yolov5 person和帽子的分类、配置Ubuntu以及部署到香橙派上
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-04
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                    人工智能
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                        <span class="chip bg-color">人工智能</span>
-                    </a>
-                    
-                    <a href="/tags/Linux/">
-                        <span class="chip bg-color">Linux</span>
-                    </a>
-                    
-                    <a href="/tags/Ubuntu/">
-                        <span class="chip bg-color">Ubuntu</span>
+                    <a href="/tags/LLM/">
+                        <span class="chip bg-color">LLM</span>
                     </a>
                     
                 </div>
