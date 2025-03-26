@@ -541,7 +541,7 @@
 <ul>
 <li>$\textbf{o}_t$：当前<strong>t</strong>oken的注意力输出</li>
 </ul>
-<p>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}) = \sum^t_{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}}{\sqrt{d_k}})\textbf{v}_i^{(s)}$$</p>
+<p>$$\textbf{o}<em>t^{(s)} = \mathrm{Attention}\left(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}\right) = \sum_{i=1}^t \mathrm{softmax}\left(\frac{\textbf{q}_t^{(s)} \textbf{k}_i^{(s)\top}}{\sqrt{d_k}}\right)\textbf{v}_i^{(s)}$$</p>
 <ul>
 <li>$\textbf{o}_t^{(s)}$：当前token的第$s$个<code>head</code>的注意力输出，$h$ 个<code>head</code>拼接得到$O_t$，其中：</li>
 </ul>
@@ -913,48 +913,9 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
-            <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
-            <div class="card">
-                <a href="/2025/03/19/mla-fu-ben/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="测试用">
-                        
-                        <span class="card-title">测试用</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-19
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-user fa-fw"></i>
-                            WB
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-            </div>
-        </div>
-        
-        
         <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
-            </div>
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
                 <a href="/2025/03/19/mla/">
                     <div class="card-image">
@@ -972,9 +933,9 @@
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-19
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-03-19
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -996,6 +957,59 @@
                     
                     <a href="/tags/GPU/">
                         <span class="chip bg-color">GPU</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2024/10/08/llm2-tui-li-yin-qing/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.png" class="responsive-img" alt="LLM2框架搭建过程">
+                        
+                        <span class="card-title">LLM2框架搭建过程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            参照"不归牛顿管的熊猫"的课程视频搭建的LLM2框架，目前还在对算子进行调试优化阶段
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-10-08
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
+                    </a>
+                    
+                    <a href="/tags/LLM/">
+                        <span class="chip bg-color">LLM</span>
                     </a>
                     
                 </div>
