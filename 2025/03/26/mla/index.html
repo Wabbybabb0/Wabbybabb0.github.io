@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="CNN(李宏毅), Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>CNN(李宏毅) | Wabbybabbo的摸鱼圣地</title>
+    <title>Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -357,12 +357,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">CNN(李宏毅)</h1>
+                    <h1 class="description center-align post-title"></h1>
                 </div>
             </div>
         </div>
@@ -476,33 +476,12 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                    <div class="article-tag">
-                        
-                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                                <span class="chip bg-color">人工智能</span>
-                            </a>
-                        
-                            <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                                <span class="chip bg-color">卷积神经网络</span>
-                            </a>
-                        
-                            <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                                <span class="chip bg-color">深度学习</span>
-                            </a>
-                        
-                    </div>
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
                     
                 </div>
                 <div class="col s5 right-align">
-                    
-                    <div class="post-cate">
-                        <i class="fas fa-bookmark fa-fw icon-category"></i>
-                        
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                人工智能
-                            </a>
-                        
-                    </div>
                     
                 </div>
             </div>
@@ -511,21 +490,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-11-04
+                    2025-03-26
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-12-10
+                    2025-03-26
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    830
+                    3.6k
                 </div>
                 
 
@@ -550,73 +529,82 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="1-Image-Classification"><a href="#1-Image-Classification" class="headerlink" title="1 Image Classification"></a>1 Image Classification</h1><p>一张100x100pixels的图片其实是一个3D-tensor：<br>①图片的高<code>100</code>②图片的宽<code>100</code>③3 channels<code>RGB</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104203002.png"><br>每一个数值代表某一个颜色某一个pixel的强度</p>
-<h1 id="2-Image-Feature-Observation"><a href="#2-Image-Feature-Observation" class="headerlink" title="2 Image Feature Observation"></a>2 Image Feature Observation</h1><h2 id="2-1-Observation-1"><a href="#2-1-Observation-1" class="headerlink" title="2.1 Observation 1"></a>2.1 Observation 1</h2><ol>
-<li><p>Identifying some critical patterns<br> 比如说一只鸟，只用看鸟嘴、眼睛和脚也能大致辨认出来<br> A neuron does not have to see the whole image</p>
-</li>
-<li><p>Simplification<br> 设定一个区域为Receptive field，每一个neuron只关心自己的Receptive field。<br> Receptive field can be overlapped<br> neuron can have the same receptive field<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104204207.png"></p>
-</li>
-<li><p>Simplification 1-Typical Setting</p>
-</li>
-<li><p>会看all channels，不用提深度，高和宽合起来叫kernel size</p>
-</li>
-<li><p>Each receptive field has a set of neurons</p>
-</li>
-<li><p>平移receptive field，步长为stride，receprive field有重叠，防止交界处有pattern没被neuron侦测到</p>
-</li>
-<li><p>平移时超出范围了，用填补0代替超出的范围(方法不唯一)</p>
-</li>
-</ol>
-<h2 id="2-2-Observation-2"><a href="#2-2-Observation-2" class="headerlink" title="2.2 Observation 2"></a>2.2 Observation 2</h2><ol>
-<li>The same patterns appear in different regions<br> 👇solution: parameter sharing<br> 线条代表weight，相同颜色代表weight一样，守备的receptive field不一样，参数一样，因为输入不一样，所以输出也不一样<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104215341.png"></li>
-<li>Simplification 2-Typical Setting<ol>
-<li>每一个receptive field都有一组neurons</li>
-<li>相同颜色的圆圈代表共享一样的参数的neurons</li>
-<li>每一个receptive field都只有一组参数，这些参数叫filter x<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104215840.png"></li>
-</ol>
-</li>
-</ol>
-<h2 id="2-3-Obeservation-3"><a href="#2-3-Obeservation-3" class="headerlink" title="2.3 Obeservation 3"></a>2.3 Obeservation 3</h2><p>Subsampling the pixels will not change the object<br>e.g.拿掉image奇数行和偶数列的pixels，图片变成原来的$\frac{1}{4}$大小</p>
-<h1 id="3-Benefit-of-Convolutional-Layer"><a href="#3-Benefit-of-Convolutional-Layer" class="headerlink" title="3 Benefit of Convolutional Layer"></a>3 Benefit of Convolutional Layer</h1><ul>
-<li><code>Fully Connected Layer</code>不需要看整个图片，只需要重要的pattern👉<code>receptive field</code>某一些neurons一定要一摸一样👉<code>parameter sharing</code></li>
-<li><code>receptive field</code>+<code>parameter sharing</code>=<code>convolutional layer</code>，虽然会有较大的model bias，但是convolutional layer是专门为影像设计的，所以用在image上偏差不会很大</li>
-<li>用<code>convolutional layer</code>的network叫做<code>CNN</code></li>
+                <p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2405.04434">DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model</a></p>
+<p>本文内容围绕多头注意力机制的演变过程，着重记录MLA的设计原理，对<a target="_blank" rel="noopener" href="https://spaces.ac.cn/archives/10091">缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA</a>、<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1BYXRYWEMj?spm_id_from=333.1245.0.0">DeepSeek-v2 MLA 原理讲解</a>的内容进行整合与分析，在我理解MLA的过程中，他们给予了很好的启迪！</p>
+<p>假设所有输入都为行向量，输入序列为$\textbf{x}_1, \textbf{x}_2, …, \textbf{x}_l$，其中$\textbf{x}_i\in \mathbb{R}^{1\times d}$</p>
+<ul>
+<li>$l$：token数量</li>
+<li>$d$：<code>embdeding dimension</code></li>
 </ul>
-<h1 id="4-Multiple-Convolutional-Layers"><a href="#4-Multiple-Convolutional-Layers" class="headerlink" title="4 Multiple Convolutional Layers"></a>4 Multiple Convolutional Layers</h1><ul>
-<li>n个filters可形成feature map with n channels</li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104223016.png"><ol>
-<li>先是将<code>RGB</code>图片放入convolution里，假设有64个filter(每个filter都是3x3x3)，那么就会得到一个 feature map(可以看作是一个新的图片，只是他的channels有64个) </li>
-<li>再把feature map放入convolution里，filter的大小为：3x3x<strong>64</strong>(filter的高度就是它要处理的image的channel)</li>
-</ol>
+<h1 id="1-MHA-Multi-Head-Attention"><a href="#1-MHA-Multi-Head-Attention" class="headerlink" title="1 MHA(Multi-Head Attention)"></a>1 MHA(Multi-Head Attention)</h1><p>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}_t^{(h)}]$$</p>
+<ul>
+<li>$\textbf{o}<em>t$：当前<strong>t</strong>oken的注意力输出<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}}{\sqrt{d_k}})\textbf{v}_i^{(s)}$$</li>
+<li>$\textbf{o}_t^{(s)}$：当前token的第$s$个<code>head</code>的注意力输出，$h$ 个<code>head</code>拼接得到$O_t$，其中：<br>$$\textbf{q}_i^{(s)}=\textbf{x}_i\textbf{W}_q^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{k}_i^{(s)}=\textbf{x}_i\textbf{W}_k^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_k^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{v}_i^{(s)}=\textbf{x}_i\textbf{W}_v^{(s)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}_v^{(s)}\in \mathbb{R}^{d\times d_v}$$</li>
+<li>$\textbf{W}_q^{(s)}$、$\textbf{W}_k^{(s)}$、$\textbf{W}_v^{(s)}$：分别为第$s$个<code>head</code>的query、key、value的权重矩阵，</li>
+<li>$d_k=d_v=d/h$</li>
+</ul>
+<p>MHA使每个Head都有对应的$K$和$V$，模型对token的理解效果是比较好的，而问题在于，虽然有KV Cache，但是随着句子序列变长，Key和Value的缓存的成本和推理时通信的短板会变大，下图的解释会更详细点。<br><img src="/photo/Pasted%20image%2020250322123448.png" alt="《缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA》一文中对KV Cache的分析"></p>
+<h1 id="2-MQA"><a href="#2-MQA" class="headerlink" title="2 MQA"></a>2 MQA</h1><p>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}]$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}, \textbf{v}</em>{i\leq t}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^T}{\sqrt{d_k}})\textbf{v}_i$$<br>$$\textbf{q}_i^{(s)}=\textbf{x}_i\textbf{W}_q^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{k}_i=\textbf{x}_i\textbf{W}_k\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_k\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{v}_i=\textbf{x}_i\textbf{W}_q\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}_v\in \mathbb{R}^{d\times d_v}$$</p>
+<ul>
+<li>$\textbf{W}_k$、$\textbf{W}_v$：所有<code>head</code>共享的key、value权重矩阵</li>
+</ul>
+<p>与MHA相比，每个Head都共享同一组$K$和$V$，</p>
+<ul>
+<li>显存：其KV Cache为MHA的$\dfrac{1}{h}$，是目前很节省的方法，</li>
+<li>效果：根据《<a target="_blank" rel="noopener" href="https://spaces.ac.cn/archives/10091">缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA</a>》提到的，损失是有限的，参数量通过加大其他模块的规模来补足。</li>
+</ul>
+<h1 id="3-GQA"><a href="#3-GQA" class="headerlink" title="3 GQA"></a>3 GQA</h1><p>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}]$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(\lceil sg/h \rceil)}, \textbf{v}</em>{i\leq t}^{(\lceil sg/h \rceil)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(\lceil sg/h \rceil)}T}{\sqrt{d_k}})\textbf{v}_i^{(\lceil sg/h \rceil)}$$<br>$$\textbf{q}_i^{(s)}=\textbf{x}_i\textbf{W}_q^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{k}_i^{(\lceil sg/h \rceil)}=\textbf{x}_i\textbf{W}_k^{(\lceil sg/h \rceil)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_k^{(\lceil sg/h \rceil)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{v}_i^{(\lceil sg/h \rceil)}=\textbf{x}_i\textbf{W}_q^{(\lceil sg/h \rceil)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}_v^{(\lceil sg/h \rceil)}\in \mathbb{R}^{d\times d_v}$$</p>
+<ul>
+<li>$\lceil · \rceil$是向上取整</li>
+<li>$\textbf{W}_q^{(s)}$、$\textbf{W}_k^{(s)}$、$\textbf{W}_v^{(s)}$：分别为第$s$个<code>head</code>的query、key、value的权重矩阵，</li>
+<li>$d_k=d_v=d/h$</li>
+</ul>
+<p>作为显存的压缩和效果都在MHA和MQA之间的版本，GQA将<code>head</code>分为$g$个组($g$可以整除$h$)，每组共享同一对$K$、$V$。当$g=1$时就是MQA，$g=h$时就是MHA。当$1&lt;g&lt;h$时，效果不如MHA，显存压缩没有MQA那么猛，但是KV Cache压缩到MHA的$g/h$，效果比MQA好，是一个折中的版本。</p>
+<h1 id="4-MLA"><a href="#4-MLA" class="headerlink" title="4 MLA"></a>4 MLA</h1><p>对KV Cache做低秩投影，通过投影矩阵$\textbf{W}_c$将$\textbf{x}_i$投影为$\textbf{c}_i$<br><a target="_blank" rel="noopener" href="https://spaces.ac.cn/archives/10091">缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA</a>文章中认为”DeepSeek-V2的技术报告里是从低秩投影的角度引入MLA的……然而，笔者认为低秩投影这个角度并不贴近本质，因为要说低秩投影的话，事实上只要我们将GQA的所有K、V叠在一起，就会发现GQA也相当于在做低秩投影：<br>$$[\textbf{k}_i^{(1)}, …,\textbf{k}_i^{(g)}, \textbf{v}_i^{(1)},…,\textbf{v}_i^{(g)}] = \textbf{x}_i[\textbf{W}_k^{(1)},…,\textbf{W}_k^{(g)},\textbf{W}_v^{(1)},…,\textbf{W}_v^{(g)}]$$</p>
+<ul>
+<li>$[\textbf{k}_i^{(1)}, …,\textbf{k}_i^{(g)}, \textbf{v}_i^{(1)},…,\textbf{v}_i^{(g)}] = \textbf{c}_i\in \mathbb{R}^{1\times d_c}$，将所有的$\textbf{k}_i^{(s)}$、$\textbf{v}_i^{(s)}$拼在一起记为$\textbf{c}_i$，</li>
+<li>$[\textbf{W}_k^{(1)},…,\textbf{W}_k^{(g)},\textbf{W}_v^{(1)},…,\textbf{W}_v^{(g)}] = \textbf{W}_c\in \mathbb{R}^{d\times d_c}$，将相应的投影矩阵拼在一起记为$\textbf{W}_c$，</li>
+<li>$d_c=g(d_k+d_v)&lt;d=h(d_k+d_v)$，所以$\textbf{x}_i$到$\textbf{c}_i$的变换就是一个低秩投影，<br><strong>所以，MLA的本质改进不是低秩投影，而是低秩投影之后的工作</strong>“</li>
+</ul>
+<h2 id="4-1-MLA的最初构想"><a href="#4-1-MLA的最初构想" class="headerlink" title="4.1 MLA的最初构想"></a>4.1 MLA的最初构想</h2><p>得到$\textbf{c}_i$后，GQA将其对半分为K和V，将它们分别均分为$g$份，每一份复制$h/g$次，凑够$h$份K和V，然后将其投入到计算Attention和KV Cache，MLA对$\textbf{c}_i$不是简单的分割和复制，他对$\textbf{c}_i$又进行了一次投影，“增强了模型的能力”：<br>$$\textbf{u}_t = \textbf{o}_t\textbf{W}_o,\ \ \ \ \ \textbf{W}_o\in \mathbb{R}^{d\times hd_k}$$</p>
+<ul>
+<li>$\textbf{W}_o$是输出投影矩阵，这里的$hd_k\neq d$<br>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}] \in \mathbb{R}^{1\times d}$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}}{\sqrt{d_k}})\textbf{v}_i^{(s)}$$<br>$$\textbf{c}_i=\textbf{x}_i\textbf{W}_c\in\mathbb{R}^{1\times d_c}$$<br>$$\textbf{q}_i^{(s)}=\textbf{x}_i\textbf{W}_q^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_k}$$<br>$$\textbf{k}<em>i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{1\times d_k},\ \ \ \ \  \textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{d_c\times d_k}$$<br>$$\textbf{v}<em>i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{d_c\times d_v}$$</li>
+<li>$\textbf{W}<em>{Uk}^{(s)}$、$\textbf{W}</em>{Uv}^{(s)}$：分别为第$s$个<code>head</code>的key、value的再投影权重矩阵，为了“增强了模型的能力”<br>然而，原本已经低秩的$\textbf{c}<em>i$在$\textbf{W}</em>{Uk}^{(s)}$和$\textbf{W}_{Uv}^{(s)}$作用下被up-projection了，即$\textbf{k}_i^{(s)}$和$\textbf{v}_i^{(s)}$原本的<code>head</code>分组不存在了，一组<code>head</code>之间不再共享$K$、$V$，“出于节省计算和通信成本的考虑，我们一般会缓存的是投影后的$\textbf{k}_i$、$\textbf{v}_i$的而不是投影前的$\textbf{c}_i$或$\textbf{x}_i$”，所以，此做法的KV Cache与MHA无异，没有显存节省的作用。</li>
+</ul>
+<p>虽然在训练阶段MLA的优化空间不大，但是在推理阶段中：<br>$$\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}=(\textbf{x}_t\textbf{W}_q^{(s)})\cdot (\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)})^T=\textbf{x}_t(\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T})\textbf{c}_i^T$$<br>$\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T}$作为$Q$的投影矩阵，K Cache的内容可以从$\textbf{k}_i$变为$\textbf{c}_i$；根据$\textbf{v}_i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uv}^{(s)}$和$\textbf{u}_t^{(s)} = \textbf{o}_t^{(s)}\textbf{W}_o^{(s)}$，输出的计算过程包含$\textbf{c}<em>i\textbf{W}</em>{Uv}\textbf{W}<em>O$，那么$\textbf{W}</em>{Uv}\textbf{W}_O$作为$V$的投影矩阵，$\textbf{v}_i$可以用$\textbf{c}_i$代替，即V Cache的内容从$\textbf{v}_i$也变为$\textbf{c}_i$。<br>那么KV Cache的内容就是$\textbf{c}_i$，它与$(s)$无关 ，是所有<code>head</code>共享的，控制好$g/h$的值，在推理阶段达到GQA或MQA的效果。<br>实际上，因为up-projection提高了模型的效果，同时在推理阶段KV Cache效果与GQA相同($1&lt;g&lt;h$)。在效果和显存的平衡下，“如果我们只需要<mark style="background: #D2B3FFA6;">跟GQA相近的能力</mark>，那么是不是就可以再次减少KV Cache了？换言之，$d_c$没必要取$g(dk+dv)$，而是取更小的值，从而<mark style="background: #D2B3FFA6;">进一步压缩KV Cache</mark>，这就是MLA的核心思想”。</p>
+<h2 id="4-2-RoPE的兼容"><a href="#4-2-RoPE的兼容" class="headerlink" title="4.2 RoPE的兼容"></a>4.2 RoPE的兼容</h2><p>RoPE与绝对位置相关，通过绝对位置计算两个token之间的相对位置信息：<br>$$\textbf{R}_m\textbf{R}<em>n^T=\textbf{R}</em>{m-n}$$<br>MLA加上RoPE之后：<br>$$\textbf{q}_i^{(s)}=x_iW_q^{(s)}\textbf{R}_i, \ \ \ \ \ \textbf{k}_i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}\textbf{R}_i$$<br>$$\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}=(x_tW_q^{(s)}\textbf{R}<em>t)(\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}\textbf{R}<em>i)^T=x_tW_q^{(s)}\textbf{R}</em>{t-i}{W}</em>{Uk}^{(s)T}\textbf{c}_i^T$$<br>不能固定$\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T}$值作为$Q$的投影矩阵。<br><img src="/photo/Pasted%20image%2020250323150831.png" alt="《缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA》一文中探讨的其他方法"><br>后来解决办法为每个<code>head</code>的$\textbf{Q}$和$\textbf{K}$新增$d_r$个维度来添加RoPE的信息，其中$\textbf{K}$新增的信息由每个<code>head</code>共享<br>$$\textbf{u}_t = \textbf{o}_t\textbf{W}_o,\ \ \ \ \ \textbf{W}_o\in \mathbb{R}^{d\times hd_k}$$<br>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}] \in \mathbb{R}^{1\times d}$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}}{\sqrt{d_k+d_r}})\textbf{v}_i^{(s)}$$</p>
+<ul>
+<li>dot-product的scaling变成了$\sqrt{d_k+d_r}$<br>$$RoPE(\textbf{x}<em>i\textbf{W}</em>{qR}^{(s)})=\textbf{x}<em>i\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>i,\ \ \ \ \ \textbf{W}</em>{qR}^{(s)}\in \mathbb{R}^{d\times d_r}$$<br>$$RoPE(\textbf{x}<em>i\textbf{W}</em>{kR})=\textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}<em>i,\ \ \ \ \ \textbf{W}</em>{kR}\in \mathbb{R}^{d\times d_r}$$<br>$$\textbf{c}_i=\textbf{x}_i\textbf{W}_c\in\mathbb{R}^{1\times d_c}$$<br>$$\textbf{q}_i^{(s)}=[\textbf{x}_i\textbf{W}_q^{(s)}, \textbf{x}<em>i\textbf{W}</em>{qR}^{(s)}\textbf{R}_i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}_q^{(s)}\in \mathbb{R}^{d\times d_r}$$<br>$$\textbf{k}<em>i^{(s)}=[\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}, \textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{d\times d_r}$$<br>$$\textbf{v}<em>i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{d_c\times d_v}$$<br>👇可以看到保留了$Q$的固定投影$\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T}$和相对位置信息$\textbf{R}</em>{t-i}$<br>$$\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}=(\textbf{x}_t\textbf{W}_q^{(s)})(\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)})^T+(\textbf{x}<em>t\textbf{W}</em>{qR}^{(s)}\textbf{R}_t)(\textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}_i)^T$$<br>$$=\textbf{x}<em>t(\textbf{W}<em>q^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T})\textbf{c}<em>i^T+\textbf{x}<em>t\textbf{W}</em>{qR}^{(s)}(\textbf{R}</em>{t-i})\textbf{W}</em>{kR}^T\textbf{x}_i^T$$</li>
+</ul>
+<h2 id="4-3-MLA最终版本"><a href="#4-3-MLA最终版本" class="headerlink" title="4.3 MLA最终版本"></a>4.3 MLA最终版本</h2><p>“in order to reduce the activation memory during training”，最后MLA在训练阶段对$Q$的输入$\textbf{x}_i$也做了低秩投影，即$$\textbf{c}<em>i’=\textbf{x}<em>i\textbf{W}</em>{Dq}\in \mathbb{R}^{1\times d_c’},\ \ \ \ \ \textbf{W}</em>{Dq}\in \mathbb{R}^{d\times d_c’}$$$$\textbf{q}<em>i^{(s)}=[\textbf{c}<em>i’\textbf{W}</em>{Uq}^{(s)}, \textbf{c}<em>i’\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}</em>{Uq}^{(s)}\in \mathbb{R}^{d_c’\times d_k},\textbf{W}</em>{qR}^{(s)}\in \mathbb{R}^{d_c’\times d_k}$$最终版本的训练阶段：<br>$$\textbf{u}_t = \textbf{o}_t\textbf{W}_o,\ \ \ \ \ \textbf{W}_o\in \mathbb{R}^{d\times hd_k}$$<br>$$\textbf{o}_t=[\textbf{o}_t^{(1)}, \textbf{o}_t^{(2)}, …, \textbf{o}<em>t^{(h)}] \in \mathbb{R}^{1\times d}$$<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}^{(s)}, \textbf{v}</em>{i\leq t}^{(s)}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}}{\sqrt{d_k+d_r}})\textbf{v}_i^{(s)}$$<br>$$\textbf{c}_i=\textbf{x}_i\textbf{W}_c\in\mathbb{R}^{d_c},\ \ \ \ \ \textbf{W}_c\in\mathbb{R}^{d\times d_c}$$<br>$$\textbf{c}<em>i’=\textbf{x}<em>i\textbf{W}</em>{Dq}\in \mathbb{R}^{1\times d_c’},\ \ \ \ \ \textbf{W}</em>{Dq}\in \mathbb{R}^{d\times d_c’}$$<br>$$\textbf{q}<em>i^{(s)}=[\textbf{c}<em>i’\textbf{W}</em>{Uq}^{(s)}, \textbf{c}<em>i’\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}</em>{Uq}^{(s)}\in \mathbb{R}^{d_c’\times d_k},\textbf{W}</em>{qR}^{(s)}\in \mathbb{R}^{d_c’\times d_k}$$<br>$$\textbf{k}_i^{(s)}=[\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)}, \textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_k+d_r]},\ \ \ \ \  \textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{d_c\times d_k}$$<br>$$\textbf{v}<em>i^{(s)}=\textbf{c}<em>i\textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{1\times d_v},\ \ \ \ \  \textbf{W}</em>{Uv}^{(s)}\in \mathbb{R}^{d_c\times d_v}$$<br>$$\textbf{q}_t^{(s)}\textbf{k}_i^{(s)T}=(\textbf{c}’<em>t\textbf{W}</em>{Uq}^{(s)})(\textbf{c}<em>i\textbf{W}</em>{Uk}^{(s)})^T+(\textbf{c}<em>t\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>t)(\textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}<em>i)^T$$<br>$$=\textbf{c}’<em>t(\textbf{W}</em>{Uq}^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T})\textbf{c}<em>i^T+\textbf{c}’<em>t\textbf{W}</em>{qR}^{(s)}(\textbf{R}</em>{t-i})\textbf{W}</em>{kR}^T\textbf{x}_i^T$$</p>
+<p>最终版本的推理阶段：<br><img src="/photo/Pasted%20image%2020250323222539.png">$$\textbf{u}_t = [\textbf{o}_t^{(1)}\textbf{W}_o^{‘(1)},\textbf{o}_t^{(2)}\textbf{W}_o^{‘(2)},…,\textbf{o}_t^{(h)}\textbf{W}_o^{‘(h)}]$$<br>$$\textbf{W}’_o=[\textbf{W}_o^{‘(1)},\textbf{W}_o^{‘(2)},…,\textbf{W}_o^{‘(h)}],\ \ \ \ \ \textbf{W}’_o\in \mathbb{R}^{d\times hd_k}$$</p>
+<ul>
+<li>$\textbf{W}’_o$融合了$\textbf{W}_o$和$\textbf{W}<em>v^{(g)}$得到的，在推理阶段是固定值<br>$$\textbf{o}<em>t^{(s)} = Attention(\textbf{q}<em>t^{(s)}, \textbf{k}</em>{i\leq t}, \textbf{v}</em>{i\leq t}) = \sum^t</em>{i=1}softmax(\dfrac{\textbf{q}_t\textbf{k}_i^T}{\sqrt{d_k+d_r}})\textbf{v}_i,\ \ \ \ \ \textbf{v}_i=\textbf{c}_i\in \mathbb{R}^{1\times d_c}$$<br>$$\textbf{c}_i=\textbf{x}_i\textbf{W}<em>c\in\mathbb{R}^{d_c},\ \ \ \ \ \textbf{W}<em>c\in\mathbb{R}^{d\times d_c}$$<br>$$\textbf{c}<em>i’=\textbf{x}<em>i\textbf{W}</em>{Dq}\in \mathbb{R}^{1\times d_c’},\ \ \ \ \ \textbf{W}</em>{Dq}\in \mathbb{R}^{d\times d_c’}$$<br>$$\textbf{q}<em>i^{(s)}=[\textbf{c}<em>i’\textbf{W}</em>{Uq}^{(s)}\textbf{W}</em>{Uk}^{(s)T}, \textbf{c}<em>i’\textbf{W}</em>{qR}^{(s)}\textbf{R}<em>i]\in \mathbb{R}^{1\times [d_c+d_r]},\ \ \ \ \  \textbf{W}</em>{Uq}^{(s)}\in \mathbb{R}^{d_c’\times d_k},\textbf{W}</em>{qR}^{(s)}\in \mathbb{R}^{d_c’\times d_k},\textbf{W}</em>{Uk}^{(s)}\in \mathbb{R}^{d_c\times d_k}$$</li>
+<li>$\textbf{W}<em>{Uq}^{(s)}\cdot\textbf{W}</em>{Uk}^{(s)T}$作为$Q$的投影矩阵<br>$$\textbf{k}_i=[\textbf{c}_i, \textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}_i]\in \mathbb{R}^{1\times [d_c+d_r]}$$</li>
+<li>$\textbf{k}$在存储时不需要考虑不同<code>head</code></li>
+</ul>
+<p>对于单个token：</p>
+<ul>
+<li>MLA推理时需要的缓存：<ul>
+<li>$\textbf{v}_i=\textbf{c}_i\in \mathbb{R}^{1\times d_c}$</li>
+<li>$\textbf{k}_=[\textbf{c}_i, \textbf{x}<em>i\textbf{W}</em>{kR}\textbf{R}_i]\in \mathbb{R}^{1\times [d_c+d_r]}$，$d_c+d_r=512+64=576$</li>
+</ul>
 </li>
-<li>filter比较小的情况下也能让network看比较大范围的pattern<br>   <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104224407.png"><br>   右下角蓝色圆圈的是其中一个filter，右上角是image，image左上角红色框对应filter左上角红色框，image右下角红色框对应filter右下角红色框。feature map的3x3对应image的5x5<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104225301.png"></li>
+<li>MHA版本的缓存：$2\times d_k\times h=2\times 128\times128=32768$</li>
 </ul>
-<h1 id="5-Pooling-Max-Pooling"><a href="#5-Pooling-Max-Pooling" class="headerlink" title="5 Pooling - Max Pooling"></a>5 Pooling - Max Pooling</h1><p>在feature map中，n x n个数字一组<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104225853.png">👉<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104225920.png"><br>max pooling就是选一组里最大的那个数<br>做完convolution之后通常会搭配pooling，pooling不改变channels，但是改变长宽</p>
-<h1 id="6-The-whole-CNN"><a href="#6-The-whole-CNN" class="headerlink" title="6 The whole CNN"></a>6 The whole CNN</h1><p>Flatten：将pooling的output本来矩阵的样子拉直</p>
-<h1 id="7-Application-Playing-Go"><a href="#7-Application-Playing-Go" class="headerlink" title="7 Application: Playing Go"></a>7 Application: Playing Go</h1><ul>
-<li>Alpha Go uses 5x5 for first layer，可能是5x5的范围比较重要</li>
-<li>同样可能存在相同的patters在不同的regions里</li>
-<li>不用pooling</li>
+<p>👇图思想来源<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1BYXRYWEMj?spm_id_from=333.1245.0.0">DeepSeek-v2 MLA 原理讲解</a><img src="/photo/de420aa56bd3f8b22e26f54c9ee1f37.jpg" alt="MLA投影过程(粗略)"><br><img src="/photo/Pasted%20image%2020250323194944.png" alt="《缓存与效果的极限拉扯：从MHA、MQA、GQA到MLA》一文中对MLA计算量增加和效率的讨论"></p>
+<ul>
+<li>在第一个token生成阶段需要并行处理输入的所有token，虽然计算量增加，但是KV Cache相应减少，无功无过。</li>
+<li>在后续每个token生成阶段，每次只输入一个，增加的计算量不会被放大，每次需要传输的KV相比原来是减少的。</li>
 </ul>
-<h1 id="8-实操"><a href="#8-实操" class="headerlink" title="8 实操"></a>8 实操</h1><h2 id="8-1-Code"><a href="#8-1-Code" class="headerlink" title="8.1 Code"></a>8.1 Code</h2><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> torchvision<span class="token punctuation">.</span>transforms <span class="token keyword">as</span> transforms
-
-image_data <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>  <span class="token comment"># Your image data here</span>
-
-<span class="token comment"># Applying the transformations</span>
-transform <span class="token operator">=</span> transforms<span class="token punctuation">.</span>Compose<span class="token punctuation">(</span><span class="token punctuation">[</span>
-    transforms<span class="token punctuation">.</span>ToTensor<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
-    transforms<span class="token punctuation">.</span>Normalize<span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0.1307</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">0.3081</span><span class="token punctuation">,</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token punctuation">]</span><span class="token punctuation">)</span>
-
-transformed_data <span class="token operator">=</span> transform<span class="token punctuation">(</span>image_data<span class="token punctuation">)</span>
-<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="8-2-原理"><a href="#8-2-原理" class="headerlink" title="8.2 原理"></a>8.2 原理</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231113221316.png"></p>
-<h1 id="9-Advanced-CNN"><a href="#9-Advanced-CNN" class="headerlink" title="9 Advanced CNN"></a>9 Advanced CNN</h1><ul>
-<li>当训练次数过多时会发生过拟合，因此并不是训练次数越多模型准确度越高</li>
-<li>解决梯度消失(过拟合)，使用<strong>Residual net</strong></li>
+<h1 id="5-对比"><a href="#5-对比" class="headerlink" title="5 对比"></a>5 对比</h1><p><img src="/photo/Pasted%20image%2020250323164232.png"></p>
+<ul>
+<li>$d_c’=1536$</li>
+<li>$d_h=d_k=d_v=128,h=128,d=d_h\times h$</li>
+<li>$d_c=4d_h=4\times128=512$</li>
+<li>$d_r=\dfrac{d_h}{2}=128\div2=64$</li>
+<li>DeepSeek-V2的KV Cache($=576$)相当于GQA的$g=2.25$时的大小(GQA一个组的大小$=256$)</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231119135500.png"><br>$z=H(x)$<br>$\dfrac{\partial z}{x}=\dfrac{\partial F(x)}{\partial x} + \dfrac{\partial x}{\partial x}=\dfrac{\partial F(x)}{\partial x}+1$<br>梯度=$\dfrac{\partial L}{\partial z}\times\dfrac{\partial z}{\partial x}$<br>当$\dfrac{\partial F}{\partial x}$很小的时候，$\dfrac{\partial z}{\partial x}$不会在0的附近</p>
 
                 
             </div>
@@ -633,7 +621,7 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">WB</a>
+                    <a href="/about" rel="external nofollow noreferrer">Wabbybabbo</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -643,7 +631,7 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/11/04/cnn-li-hong-yi/">https://wabbybabb0.github.io/2023/11/04/cnn-li-hong-yi/</a>
+                    <a href="https://wabbybabb0.github.io/2025/03/26/mla/">https://wabbybabb0.github.io/2025/03/26/mla/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -656,7 +644,7 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
                     本博客所有文章除特別声明外，均采用
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     许可协议。转载请注明来源
-                    <a href="/about" target="_blank">WB</a>
+                    <a href="/about" target="_blank">Wabbybabbo</a>
                     !
                 </span>
             </div>
@@ -680,19 +668,7 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            
-                                <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                                    <span class="chip bg-color">人工智能</span>
-                                </a>
-                            
-                                <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                                    <span class="chip bg-color">卷积神经网络</span>
-                                </a>
-                            
-                                <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                                    <span class="chip bg-color">深度学习</span>
-                                </a>
-                            
+                            <span class="chip bg-color">无标签</span>
                         </div>
                     
                 </div>
@@ -874,53 +850,39 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/11/06/rnn-li-hong-yi/">
+                <a href="/2025/03/26/mla/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="RNN(李宏毅)">
+                        <img src="/medias/featureimages/1.png" class="responsive-img" alt="">
                         
-                        <span class="card-title">RNN(李宏毅)</span>
+                        <span class="card-title"></span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            RNN初学
+                            
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-06
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-26
+                            </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                    人工智能
-                                </a>
-                            
+                            <i class="fas fa-user fa-fw"></i>
+                            Wabbybabbo
                             
                         </span>
                     </div>
                 </div>
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                        <span class="chip bg-color">人工智能</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                        <span class="chip bg-color">循环神经网络</span>
-                    </a>
-                    
-                </div>
+
                 
             </div>
         </div>
@@ -931,31 +893,31 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/05/21/lda-mo-xing/">
+                <a href="/2024/10/08/llm2-tui-li-yin-qing/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.png" class="responsive-img" alt="隐含迪利克雷模型LDA">
+                        <img src="/medias/featureimages/11.png" class="responsive-img" alt="LLM2框架搭建过程">
                         
-                        <span class="card-title">隐含迪利克雷模型LDA</span>
+                        <span class="card-title">LLM2框架搭建过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            LDA学习笔记
+                            参照"不归牛顿管的熊猫"的课程视频搭建的LLM2框架，目前还在对算子进行调试优化阶段
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-05-21
+                                <i class="far fa-clock fa-fw icon-date"></i>2024-10-08
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                    人工智能
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
                                 </a>
                             
                             
@@ -965,20 +927,12 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                        <span class="chip bg-color">人工智能</span>
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
                     </a>
                     
-                    <a href="/tags/DMIR%E8%80%83%E6%A0%B8/">
-                        <span class="chip bg-color">DMIR考核</span>
-                    </a>
-                    
-                    <a href="/tags/NLP/">
-                        <span class="chip bg-color">NLP</span>
-                    </a>
-                    
-                    <a href="/tags/LDA/">
-                        <span class="chip bg-color">LDA</span>
+                    <a href="/tags/LLM/">
+                        <span class="chip bg-color">LLM</span>
                     </a>
                     
                 </div>
@@ -1168,13 +1122,6 @@ transformed_data <span class="token operator">=</span> transform<span class="tok
 
 
 
-
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-<script>
-    MathJax.Hub.Config({
-        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
-    });
-</script>
 
 
 
