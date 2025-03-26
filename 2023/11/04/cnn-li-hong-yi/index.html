@@ -525,7 +525,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    830
+                    828
                 </div>
                 
 
@@ -550,33 +550,28 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="1-Image-Classification"><a href="#1-Image-Classification" class="headerlink" title="1 Image Classification"></a>1 Image Classification</h1><p>一张100x100pixels的图片其实是一个3D-tensor：<br>①图片的高<code>100</code>②图片的宽<code>100</code>③3 channels<code>RGB</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104203002.png"><br>每一个数值代表某一个颜色某一个pixel的强度</p>
+                <h1 id="1-Image-Classification"><a href="#1-Image-Classification" class="headerlink" title="1 Image Classification"></a>1 Image Classification</h1><p>一张100x100pixels的图片其实是一个3D-tensor：<br>①图片的高<code>100</code>②图片的宽<code>100</code>③3 channels<code>RGB</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104203002.png" alt=""><br>每一个数值代表某一个颜色某一个pixel的强度</p>
 <h1 id="2-Image-Feature-Observation"><a href="#2-Image-Feature-Observation" class="headerlink" title="2 Image Feature Observation"></a>2 Image Feature Observation</h1><h2 id="2-1-Observation-1"><a href="#2-1-Observation-1" class="headerlink" title="2.1 Observation 1"></a>2.1 Observation 1</h2><ol>
-<li><p>Identifying some critical patterns<br> 比如说一只鸟，只用看鸟嘴、眼睛和脚也能大致辨认出来<br> A neuron does not have to see the whole image</p>
-</li>
-<li><p>Simplification<br> 设定一个区域为Receptive field，每一个neuron只关心自己的Receptive field。<br> Receptive field can be overlapped<br> neuron can have the same receptive field<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104204207.png"></p>
+<li>Identifying some critical patterns<br> 比如说一只鸟，只用看鸟嘴、眼睛和脚也能大致辨认出来<br> A neuron does not have to see the whole image</li>
+<li><p>Simplification<br> 设定一个区域为Receptive field，每一个neuron只关心自己的Receptive field。<br> Receptive field can be overlapped<br> neuron can have the same receptive field<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104204207.png" alt=""></p>
 </li>
 <li><p>Simplification 1-Typical Setting</p>
-</li>
-<li><p>会看all channels，不用提深度，高和宽合起来叫kernel size</p>
-</li>
-<li><p>Each receptive field has a set of neurons</p>
-</li>
-<li><p>平移receptive field，步长为stride，receprive field有重叠，防止交界处有pattern没被neuron侦测到</p>
-</li>
-<li><p>平移时超出范围了，用填补0代替超出的范围(方法不唯一)</p>
-</li>
+<ol>
+<li>会看all channels，不用提深度，高和宽合起来叫kernel size</li>
+<li>Each receptive field has a set of neurons</li>
+<li>平移receptive field，步长为stride，receprive field有重叠，防止交界处有pattern没被neuron侦测到</li>
+<li>平移时超出范围了，用填补0代替超出的范围(方法不唯一)<h2 id="2-2-Observation-2"><a href="#2-2-Observation-2" class="headerlink" title="2.2 Observation 2"></a>2.2 Observation 2</h2></li>
 </ol>
-<h2 id="2-2-Observation-2"><a href="#2-2-Observation-2" class="headerlink" title="2.2 Observation 2"></a>2.2 Observation 2</h2><ol>
-<li>The same patterns appear in different regions<br> 👇solution: parameter sharing<br> 线条代表weight，相同颜色代表weight一样，守备的receptive field不一样，参数一样，因为输入不一样，所以输出也不一样<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104215341.png"></li>
+</li>
+<li>The same patterns appear in different regions<br> 👇solution: parameter sharing<pre><code> 线条代表weight，相同颜色代表weight一样，守备的receptive field不一样，参数一样，因为输入不一样，所以输出也不一样
+</code></pre> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104215341.png" alt=""></li>
 <li>Simplification 2-Typical Setting<ol>
 <li>每一个receptive field都有一组neurons</li>
 <li>相同颜色的圆圈代表共享一样的参数的neurons</li>
-<li>每一个receptive field都只有一组参数，这些参数叫filter x<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104215840.png"></li>
+<li>每一个receptive field都只有一组参数，这些参数叫filter x<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104215840.png" alt=""><h2 id="2-3-Obeservation-3"><a href="#2-3-Obeservation-3" class="headerlink" title="2.3 Obeservation 3"></a>2.3 Obeservation 3</h2>Subsampling the pixels will not change the object<br>e.g.拿掉image奇数行和偶数列的pixels，图片变成原来的$\frac{1}{4}$大小</li>
 </ol>
 </li>
 </ol>
-<h2 id="2-3-Obeservation-3"><a href="#2-3-Obeservation-3" class="headerlink" title="2.3 Obeservation 3"></a>2.3 Obeservation 3</h2><p>Subsampling the pixels will not change the object<br>e.g.拿掉image奇数行和偶数列的pixels，图片变成原来的$\frac{1}{4}$大小</p>
 <h1 id="3-Benefit-of-Convolutional-Layer"><a href="#3-Benefit-of-Convolutional-Layer" class="headerlink" title="3 Benefit of Convolutional Layer"></a>3 Benefit of Convolutional Layer</h1><ul>
 <li><code>Fully Connected Layer</code>不需要看整个图片，只需要重要的pattern👉<code>receptive field</code>某一些neurons一定要一摸一样👉<code>parameter sharing</code></li>
 <li><code>receptive field</code>+<code>parameter sharing</code>=<code>convolutional layer</code>，虽然会有较大的model bias，但是convolutional layer是专门为影像设计的，所以用在image上偏差不会很大</li>
@@ -584,14 +579,13 @@
 </ul>
 <h1 id="4-Multiple-Convolutional-Layers"><a href="#4-Multiple-Convolutional-Layers" class="headerlink" title="4 Multiple Convolutional Layers"></a>4 Multiple Convolutional Layers</h1><ul>
 <li>n个filters可形成feature map with n channels</li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104223016.png"><ol>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104223016.png" alt=""><ol>
 <li>先是将<code>RGB</code>图片放入convolution里，假设有64个filter(每个filter都是3x3x3)，那么就会得到一个 feature map(可以看作是一个新的图片，只是他的channels有64个) </li>
 <li>再把feature map放入convolution里，filter的大小为：3x3x<strong>64</strong>(filter的高度就是它要处理的image的channel)</li>
 </ol>
 </li>
-<li>filter比较小的情况下也能让network看比较大范围的pattern<br>   <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104224407.png"><br>   右下角蓝色圆圈的是其中一个filter，右上角是image，image左上角红色框对应filter左上角红色框，image右下角红色框对应filter右下角红色框。feature map的3x3对应image的5x5<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104225301.png"></li>
+<li>filter比较小的情况下也能让network看比较大范围的pattern<br>   <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104224407.png" alt=""><br>   右下角蓝色圆圈的是其中一个filter，右上角是image，image左上角红色框对应filter左上角红色框，image右下角红色框对应filter右下角红色框。feature map的3x3对应image的5x5<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104225301.png" alt=""><h1 id="5-Pooling-Max-Pooling"><a href="#5-Pooling-Max-Pooling" class="headerlink" title="5 Pooling - Max Pooling"></a>5 Pooling - Max Pooling</h1>在feature map中，n x n个数字一组<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104225853.png" alt="">👉<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104225920.png" alt=""><br>max pooling就是选一组里最大的那个数<br>做完convolution之后通常会搭配pooling，pooling不改变channels，但是改变长宽</li>
 </ul>
-<h1 id="5-Pooling-Max-Pooling"><a href="#5-Pooling-Max-Pooling" class="headerlink" title="5 Pooling - Max Pooling"></a>5 Pooling - Max Pooling</h1><p>在feature map中，n x n个数字一组<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104225853.png">👉<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231104225920.png"><br>max pooling就是选一组里最大的那个数<br>做完convolution之后通常会搭配pooling，pooling不改变channels，但是改变长宽</p>
 <h1 id="6-The-whole-CNN"><a href="#6-The-whole-CNN" class="headerlink" title="6 The whole CNN"></a>6 The whole CNN</h1><p>Flatten：将pooling的output本来矩阵的样子拉直</p>
 <h1 id="7-Application-Playing-Go"><a href="#7-Application-Playing-Go" class="headerlink" title="7 Application: Playing Go"></a>7 Application: Playing Go</h1><ul>
 <li>Alpha Go uses 5x5 for first layer，可能是5x5的范围比较重要</li>
@@ -610,13 +604,12 @@ transform <span class="token operator">=</span> transforms<span class="token pun
 
 transformed_data <span class="token operator">=</span> transform<span class="token punctuation">(</span>image_data<span class="token punctuation">)</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="8-2-原理"><a href="#8-2-原理" class="headerlink" title="8.2 原理"></a>8.2 原理</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231113221316.png"></p>
+<h2 id="8-2-原理"><a href="#8-2-原理" class="headerlink" title="8.2 原理"></a>8.2 原理</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231113221316.png" alt=""></p>
 <h1 id="9-Advanced-CNN"><a href="#9-Advanced-CNN" class="headerlink" title="9 Advanced CNN"></a>9 Advanced CNN</h1><ul>
 <li>当训练次数过多时会发生过拟合，因此并不是训练次数越多模型准确度越高</li>
 <li>解决梯度消失(过拟合)，使用<strong>Residual net</strong></li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231119135500.png"><br>$z=H(x)$<br>$\dfrac{\partial z}{x}=\dfrac{\partial F(x)}{\partial x} + \dfrac{\partial x}{\partial x}=\dfrac{\partial F(x)}{\partial x}+1$<br>梯度=$\dfrac{\partial L}{\partial z}\times\dfrac{\partial z}{\partial x}$<br>当$\dfrac{\partial F}{\partial x}$很小的时候，$\dfrac{\partial z}{\partial x}$不会在0的附近</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231119135500.png" alt=""><br>$z=H(x)$<br>$\dfrac{\partial z}{x}=\dfrac{\partial F(x)}{\partial x} + \dfrac{\partial x}{\partial x}=\dfrac{\partial F(x)}{\partial x}+1$<br>梯度=$\dfrac{\partial L}{\partial z}\times\dfrac{\partial z}{\partial x}$<br>当$\dfrac{\partial F}{\partial x}$很小的时候，$\dfrac{\partial z}{\partial x}$不会在0的附近</p>
 
                 
             </div>

@@ -559,22 +559,22 @@
 <h1 id="1-整体把握"><a href="#1-整体把握" class="headerlink" title="1.整体把握"></a>1.整体把握</h1><p>LDA是一种<strong>主题模型</strong>，可以将文档集中每篇文档的主题以<strong>概率分布</strong>的形式给出，根据给定的一篇文章，反推其主题分布</p>
 <p>一篇文档可以包含多个主题，文档中每一个词都由其中的一个主题生成</p>
 <h2 id="1-1LDA的图模型结构"><a href="#1-1LDA的图模型结构" class="headerlink" title="1.1LDA的图模型结构"></a>1.1LDA的图模型结构</h2><p>  类似贝叶斯网络结构</p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702178138892.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702178138892.jpg" alt=""></p>
 <h3 id="1-1-1贝叶斯的定义"><a href="#1-1-1贝叶斯的定义" class="headerlink" title="1.1.1贝叶斯的定义"></a>1.1.1贝叶斯的定义</h3><p>  节点表示随机变量${X_1,X_2,…,X_n}$，认为有<strong>因果关系</strong>(或非条件独立)的变量或命题用箭头来连接。如果用一个单箭头来连接，表示其中一个节点是“因(parents)”，另一个是“果(children)”，两节点就会产生一个条件概率值</p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177828629.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177828629.jpg" alt=""></p>
 <p>  👆圈表示随机变量(random variables)，用箭头表示条件依赖(conditional dependencies)</p>
 <p>  令$G = (I,E)$表示一个有向无环图(DAG)，其中I代表图形中所有的节点的集合，而E代表有向连接线段的集合，且令$X = (X_i),i ∈ I$为其有向无环图中的某一节点i所代表的随机变量，若节点X的联合概率可以表示成$p(x)=\prod\limits_{i\in I}p(x_i|x_{pa(i)})$，则称$X$为相对于一有向无环图G 的贝叶斯网络，其中，$pa(i)$表示节点i之“因”，或称$pa(i)$是$i$的parents（父母）。</p>
 <p>  联合概率：事件A和事件B同时发生的概率，记为$P(AB)$或$P(A,B)$或$P(A∩B)$</p>
 <p>  对于任意的随机变量，其联合概率可由各自的局部条件概率分布相乘得出：</p>
 <p>  $p(x_1,….,x_K)=p(x_K|x_1,….,x_{K-1})…p(x_2|x_1)p(x_1)$</p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177836358.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177836358.jpg" alt=""></p>
 <p>  👆一个简单的贝叶斯网络(a导致b，a和b导致c)</p>
 <p>  $p(a,b,c)=p(c|a.b)p(b|a)p(a)$</p>
 <h2 id="1-2二项式分布"><a href="#1-2二项式分布" class="headerlink" title="1.2二项式分布"></a>1.2二项式分布</h2><p>随机变量只有两个(非正即负)，即重复n次的伯努利实验，记为$X\sim b(n,p)$</p>
 <p>二项分布的概率密度函数为：</p>
 <p>$P(K=k)=(n,k)p^k(1-p)^{n-k}$</p>
 <p> 对于k = 0, 1, 2, …, n，其中的</p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177851194(1).jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177851194(1" alt="">.jpg)</p>
 <p>是二项式系数（这就是二项分布的名称的由来），又记为$\dfrac{n!}{k!(n-k)!}$</p>
 <h2 id="1-3多项式分布"><a href="#1-3多项式分布" class="headerlink" title="1.3多项式分布"></a>1.3多项式分布</h2><p>由二项分布扩展到多维的情况</p>
 <p>随机变量取值不是0-1，而是有多种离散值的可能(1,2,3,…,k)</p>
@@ -604,9 +604,9 @@
 <li>可知$p=X_{(k)}$的密度概率函数为：$Beta(p|k+m_1,n-k+1+m_2)$</li>
 </ul>
 </li>
-<li>与贝叶斯结合过程<ul>
-<li><p>贝叶斯派思考问题的固定模式：</p>
-</li>
+<li><p>与贝叶斯结合过程</p>
+<ul>
+<li>贝叶斯派思考问题的固定模式：</li>
 <li><p><strong>先验分布</strong>$\pi(\theta)$<strong>+ 样本信息</strong>$X$$\rightarrow$<strong>后验分布</strong>$\pi(\theta|x)$</p>
 </li>
 <li><p>在得到新的样本信息之前，人们对$\theta$的认知是先验分布$\pi(\theta)$，在得到新的样本信息</p>
@@ -619,8 +619,7 @@
 <li>在得到$(m_1,m_2)$的数据后，$p$的后验分布为$f(p|m_1,m_2)=Beta(p|k+m_1,n-k+1+m_2)$</li>
 </ul>
 </li>
-<li><p>结合贝叶斯</p>
-<ul>
+<li>结合贝叶斯<ul>
 <li>$Beta(p|k,n-k+1)+Count(m_1,m_2)=Beta(p|k+m_1,n-k+1+m_2)$</li>
 <li>更一般的，对于非负实数$\alpha$和$\beta$：有如下关系$Beta(p|\alpha,\beta)+Count(m_1,m_2)=Beta(p|\alpha+m_1,\beta+m_2)$，其中$Count(m_1,m_2)$对应$B(m,p)$</li>
 <li>针对这种观测到的数据符合以下条件的，就是Beta-Binomial共轭，换言之，Beta分布是二项式分布的共轭先验概率分布<ul>
@@ -632,8 +631,7 @@
 <li>二项分布和Beta分布是共轭分布意味着，如果我们为二项分布的参数p选取的先验分布是Beta分布，那么以p为参数的二项分布用贝叶斯估计得到的后验分布仍然服从Beta分布</li>
 </ul>
 </li>
-<li><p>$\alpha$和$\beta$可以认为是形状参数</p>
-</li>
+<li>$\alpha$和$\beta$可以认为是形状参数</li>
 </ul>
 </li>
 </ul>
@@ -701,15 +699,15 @@
 <h2 id="4-1各个模型基础"><a href="#4-1各个模型基础" class="headerlink" title="4.1各个模型基础"></a>4.1各个模型基础</h2><h3 id="4-1-1Unigram-model"><a href="#4-1-1Unigram-model" class="headerlink" title="4.1.1Unigram model"></a>4.1.1Unigram model</h3><p>对于文档$\mathbf{w}=(w_1,w_2,…,w_N)$，用$p(w_n)$表示词$w_n$的先验概率，生成文档$\mathbf{w}$的概率为：$p(\mathbf{w})=\sum^N_{n=1}p(w_n)$</p>
 <p>图模型为</p>
 <ul>
-<li><p>图模型一</p>
-<ul>
+<li>图模型一<ul>
 <li>(图中被涂色的w(word)表示可观测变量，N表示一篇文档中总共N个单词，M表示M篇文档)</li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177856933.jpg"></li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177856933.jpg" alt=""></li>
 </ul>
 </li>
-<li><p>图模型二</p>
+</ul>
 <ul>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177862768.jpg"></li>
+<li>图模型二<ul>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177862768.jpg" alt=""></li>
 <li>nigram model假设文本中的词服从Multinomial分布，而我们已经知道Multinomial分布的先验分布为Dirichlet分布。上图中的$w_n$表示在文本中观察到的第n个词，$n\in[1,N]$表示该文本中一共有$N$个单词。加上方框表示重复，即一共有$N$个这样的随机变量$w_n$。其中，$p$和$\alpha$是隐含未知变量：</li>
 <li>$p$是词服从的Multinomial分布的参数</li>
 <li>$\alpha$是Dirichlet分布(即Multinomial分布的先验分布)的参数</li>
@@ -720,16 +718,16 @@
 <h3 id="4-1-2Mixture-of-unigrams-model"><a href="#4-1-2Mixture-of-unigrams-model" class="headerlink" title="4.1.2Mixture of unigrams model"></a>4.1.2Mixture of unigrams model</h3><p>该模型的生成过程是：给某个文档先选择一个主题$z$，再根据该主题生成文档，该文档中的所有词都来自一个主题。假设主题有$z_1,…z_k$，生成文档$\mathbf{w}$的概率为：</p>
 <p>$p(\mathbf{w})=p(z_1)\prod^N_{n=1}p(w_n|z_1)+…+p(z_k)\prod^N_{n=1}p(w_n|z_k)=\sum_zp(z)\prod^N_{n=1}p(w_n|z)$</p>
 <p>图模型为：(图中被涂色的w表示可观测变量，未被涂色的z表示未知的隐变量，N表示一篇文档中总共N个单词，M表示M篇文档)</p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177867686(1).jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177867686(1" alt="">.jpg)</p>
 <h2 id="4-2PLSA模型"><a href="#4-2PLSA模型" class="headerlink" title="4.2PLSA模型"></a>4.2PLSA模型</h2><p>建议直接<a target="_blank" rel="noopener" href="https://blog.csdn.net/v_JULY_v/article/details/41209515?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;utm_relevant_index=2">看这个</a></p>
-<h3 id="4-2-1pLSA模型下生成文档"><a href="#4-2-1pLSA模型下生成文档" class="headerlink" title="4.2.1pLSA模型下生成文档"></a>4.2.1pLSA模型下生成文档</h3><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177872673.jpg"></p>
-<h3 id="4-2-2根据文档反推其主题分布"><a href="#4-2-2根据文档反推其主题分布" class="headerlink" title="4.2.2根据文档反推其主题分布"></a>4.2.2根据文档反推其主题分布</h3><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177893244.jpg"></p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177906171.jpg"></p>
+<h3 id="4-2-1pLSA模型下生成文档"><a href="#4-2-1pLSA模型下生成文档" class="headerlink" title="4.2.1pLSA模型下生成文档"></a>4.2.1pLSA模型下生成文档</h3><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177872673.jpg" alt=""></p>
+<h3 id="4-2-2根据文档反推其主题分布"><a href="#4-2-2根据文档反推其主题分布" class="headerlink" title="4.2.2根据文档反推其主题分布"></a>4.2.2根据文档反推其主题分布</h3><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177893244.jpg" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177906171.jpg" alt=""></p>
 <h3 id="4-2-3EM算法"><a href="#4-2-3EM算法" class="headerlink" title="4.2.3EM算法"></a>4.2.3EM算法</h3><p>This content is only supported in a Feishu Docs</p>
 <h4 id="4-2-3-1EM算法的简单介绍"><a href="#4-2-3-1EM算法的简单介绍" class="headerlink" title="4.2.3.1EM算法的简单介绍"></a>4.2.3.1EM算法的简单介绍</h4><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/78311644">EM算法</a></p>
 <p>隐变量$Z=(z_1,z_2,z_3,z_4,z_5)$代表每一轮所使用的硬币</p>
 <p>所以第一步先估算$Z$，这步同时是E-step</p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177911648.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177911648.jpg" alt=""></p>
 <p>👆流程：</p>
 <ol>
 <li>随机初始化$\theta_A=0.6$和$\theta_B=0.5$(E-step)</li>
@@ -737,7 +735,7 @@
 <li>$P_A=\dfrac{0.6^5<em>0.4^5}{(0.6^5</em>0.4^5)+(0.5^5+0.5^5)}=0.45$</li>
 <li>$P_B=\dfrac{(0.5^5+0.5^5)}{(0.6^5*0.4^5)+(0.5^5+0.5^5)}=0.55$<ul>
 <li>​    对于第一轮抛掷，该枚硬币是硬币A的概率为0.45，是硬币B的概率为0.55，其他轮同理，这一步得到了Z的概率分布</li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177916936.jpg"></li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177916936.jpg" alt=""></li>
 </ul>
 </li>
 </ol>
@@ -746,7 +744,7 @@
 <li>H：0.45*5=2.25</li>
 <li>T：0.55*5=2.75</li>
 <li>其他轮同理</li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177922766.jpg"></li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177922766.jpg" alt=""></li>
 <li>用极大似然估计来估计新的$\theta_A$和$\theta_B$，这步就是M-Step<ul>
 <li>$\theta_A=\dfrac{21.3}{21.3+8.6}=0.71$</li>
 <li>$\theta_B=\dfrac{11.7}{11.7+8.4}=0.58$</li>
@@ -761,7 +759,7 @@
 <li>然后固定$Q(z)$，调整$\theta$使下界$J(z,Q)$达到最大值</li>
 <li>再固定$\theta$…</li>
 <li>直到收敛到似然函数$L(\theta)$的最大值时，得到该处的$\theta^{*}$</li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177927472.jpg"></li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177927472.jpg" alt=""></li>
 </ol>
 </li>
 <li>EM算法的整体框架</li>
@@ -804,7 +802,7 @@
 <p>$n(d_i)$表示文档$d_i$中文档词的总数</p>
 <p>显然有$n(d_i)=\sum_{w_j\in V}n(d_i,w_j)$，一篇文档中词的总数等于词表中每个词出现的次数之和</p>
 <p>整个语料库的词分布的对数似然函数：</p>
-<p>$\begin{align} l(\Phi,\Theta)&amp;=\sum_{i=1}^{M}\sum_{j=1}^Nn(d_i,w_j)logP(d_i,w_j)\ &amp;=\sum_{i=1}^Mn(d_i)\left(logP(d_i)+\sum_{j=1}^N\dfrac{n(d_i,w_j)}{n(d_i)}log\sum_{k=1}^KP(w_j|z_k)P(z_k|d_i)\right)\ &amp;=\sum_{i=1}^Mn(d_i)\left(logP(d_i)+\sum_{j=1}^N\dfrac{n(d_i,w_j)}{n(d_i)}log\sum_{k=1}^K\phi_{k,j}\theta_{i,k}\right) \end{align}$</p>
+<p>$\begin{align} l(\Phi,\Theta)&amp;=\sum_{i=1}^{M}\sum_{j=1}^Nn(d_i,w_j)logP(d_i,w_j)\\ &amp;=\sum_{i=1}^Mn(d_i)\left(logP(d_i)+\sum_{j=1}^N\dfrac{n(d_i,w_j)}{n(d_i)}log\sum_{k=1}^KP(w_j|z_k)P(z_k|d_i)\right)\\ &amp;=\sum_{i=1}^Mn(d_i)\left(logP(d_i)+\sum_{j=1}^N\dfrac{n(d_i,w_j)}{n(d_i)}log\sum_{k=1}^K\phi_{k,j}\theta_{i,k}\right) \end{align}$</p>
 <ul>
 <li>(1)对应的是$L(\theta)\geq\sum_{i=1}^n\sum_z^ZQ_i(z)log\dfrac{P(x_i,z;\theta)}{Q_i(z)}$，其中$Q_i(z)$表示的是样本$i$隐含变量$z$的某种分布；$log\dfrac{P(x_i,z;\theta)}{Q_i(z)}$表示的是对数似然函数</li>
 <li>(2)分别求文本的对数似然函数和词的对数似然函数，见pdf</li>
@@ -822,14 +820,14 @@
 <li>没有约束条件</li>
 </ol>
 <p>目标函数$f(x,y)$是一座山的高度，约束$g(x,y)$是镶嵌在山上的一条曲线，如下图</p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177933575.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177933575.jpg" alt=""></p>
 <p>红线是约束曲线</p>
 <p>目的：找红线上的最低点</p>
 <p>步骤：</p>
 <ul>
 <li>从第0条线开始往上数，数到第三条，与约束曲线有交点，比第三条低的地方都不在约束范围内，所以这是约束曲线的最低点</li>
 <li>约束曲线不会和等高线相交，一定是相切，如果是相交的话，约束曲线有一部分在最低点的曲线的下端(即目标曲线并不能包括约束曲线的最低点)，如下图中约束曲线有一部分在B区域，但是B区域比等高线低<ul>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177938067.jpg"></li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177938067.jpg" alt=""></li>
 </ul>
 </li>
 <li>那么两条线只能相切，意味他们的法线平行&lt;==&gt;法向量只差一个任意的常数乘子(取-$\lambda$)：<ul>
@@ -869,16 +867,16 @@
 <li>最终用EM算法求解出两个未知但固定的参数的值：<ul>
 <li>$\phi_{k,j}$(由$P(w_j|z_k)$转换而来)</li>
 <li>$\theta_{i,k}$(由$P(z_k|d_i)$转换而来)</li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177942549.jpg"></li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177942549.jpg" alt=""></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><strong>LDA****中</strong><ul>
+<li><strong>LDA**</strong>中**<ul>
 <li>主题分布和词分布是随机变量(即文档$d_i$产生主题$z_k$和主题$z_k$产生词项$w_j$的概率都是随机变量)</li>
 <li>Dirichlet先验为文档$d_i$生成主题分布$\Theta$，然后根据主题分布$\Theta$产生主题$z_k$</li>
 <li>从无穷多个主题分布中按照Dirichlet先验随机抽取出某个主题分布出来</li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177951260.jpg"></li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177951260.jpg" alt=""></li>
 </ul>
 </li>
 </ul>
@@ -892,15 +890,15 @@
 </ul>
 </li>
 </ul>
-<h3 id="4-3-2LDA生成文档–三维坐标系"><a href="#4-3-2LDA生成文档–三维坐标系" class="headerlink" title="4.3.2LDA生成文档–三维坐标系"></a>4.3.2LDA生成文档–三维坐标系</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/v_JULY_v/article/details/41209515?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;utm_relevant_index=2">看</a></p>
+<h3 id="4-3-2LDA生成文档—三维坐标系"><a href="#4-3-2LDA生成文档—三维坐标系" class="headerlink" title="4.3.2LDA生成文档—三维坐标系"></a>4.3.2LDA生成文档—三维坐标系</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/v_JULY_v/article/details/41209515?spm=1001.2101.3001.6650.1&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~default-1.no_search_link&amp;utm_relevant_index=2">看</a></p>
 <h3 id="4-3-3pLSA和LDA概率图对比"><a href="#4-3-3pLSA和LDA概率图对比" class="headerlink" title="4.3.3pLSA和LDA概率图对比"></a>4.3.3pLSA和LDA概率图对比</h3><p>z跟w都得是小写，阴影圆圈表示可观测的变量，非阴影圆圈表示隐变量或参数，箭头表示两变量间的条件依赖性，方框表示重复抽样，方框右下角的数字代表重复抽样的次数</p>
 <ul>
 <li>pLSA<ul>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177955942.jpg"></li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177955942.jpg" alt=""></li>
 </ul>
 </li>
 <li>LDA <ul>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177960834(1).jpg"></li>
+<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177960834(1" alt="">.jpg)</li>
 <li>假定语料库中共有M篇文章，每篇文章下的Topic的主题分布是一个从参数为$\alpha$的Dirichlet先验分布中采样得到的Multinomial分布，每个Topic下的词分布是一个从参数$\beta$为的Dirichlet先验分布中采样得到的Multinomial分布。</li>
 <li>对于某篇文章中的第n个词，首先从该文章中出现的每个主题的Multinomial分布中选择或采样一个主题，然后再在这个主题对应的词的Multinomial分布中选择或采样一个词。不断重复这个随机生成过程，直到M篇文章全部生成完成。</li>
 <li>M 篇文档会对应于 M 个独立的 Dirichlet-Multinomial 共轭结构，K 个 topic 会对应于 K 个独立的 Dirichlet-Multinomial 共轭结构<ul>
@@ -946,9 +944,9 @@
 <p>(主题2，[(关键词2.1，概率2.1),(关键词2.2，概率2.2)…])，</p>
 <p>()，</p>
 <p>….]</p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177965964(1).jpg"></p>
-<h3 id="5-4-2tp"><a href="#5-4-2tp" class="headerlink" title="5.4.2tp"></a>5.4.2tp</h3><p>tp[0]–&gt;主题</p>
-<p>tp[1]–&gt;[(关键词1，概率1),(关键词2，概率2)…]</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177965964(1" alt="">.jpg)</p>
+<h3 id="5-4-2tp"><a href="#5-4-2tp" class="headerlink" title="5.4.2tp"></a>5.4.2tp</h3><p>tp[0]—&gt;主题</p>
+<p>tp[1]—&gt;[(关键词1，概率1),(关键词2，概率2)…]</p>
 <h3 id="5-4-3打印每个主题下每个单词的概率"><a href="#5-4-3打印每个主题下每个单词的概率" class="headerlink" title="5.4.3打印每个主题下每个单词的概率"></a>5.4.3打印每个主题下每个单词的概率</h3><p>This content is only supported in a Feishu Docs</p>
 <p>👇用.split()函数</p>
 <ul>
@@ -956,7 +954,7 @@
 <li>然后对于以”+”号拆分出来的东西，再以”*”号进行拆分</li>
 <li>打印格式：”单词”(单词出现的概率)</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177971365.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177971365.jpg" alt=""></p>
 <h3 id="5-4-4计算一致性"><a href="#5-4-4计算一致性" class="headerlink" title="5.4.4计算一致性"></a>5.4.4计算一致性</h3><p><strong>CoherenceModel(model, texts, dictionary, coherence)</strong></p>
 <p>model：指定用于计算一致性的主题模型对象(ldamodel)</p>
 <p>text：指定一个文本列表</p>
@@ -971,7 +969,7 @@
 <h1 id="6-没懂的地方"><a href="#6-没懂的地方" class="headerlink" title="6.没懂的地方"></a>6.没懂的地方</h1><ol>
 <li>第四行到第五行</li>
 </ol>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177981781.jpg"></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LDA/1702177981781.jpg" alt=""></p>
 
                 
             </div>

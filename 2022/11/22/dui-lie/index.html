@@ -554,14 +554,14 @@
 </ul>
 <h2 id="2-分类"><a href="#2-分类" class="headerlink" title="2.分类"></a>2.分类</h2><p>链式队列，静态队列，循环队列</p>
 <ul>
-<li>链式队列–用链表实现</li>
-<li>静态队列–用数组实现，通常都必须是循环队列</li>
+<li>链式队列—用链表实现</li>
+<li>静态队列—用数组实现，通常都必须是循环队列</li>
 </ul>
-<h2 id="3-问题"><a href="#3-问题" class="headerlink" title="3.问题"></a>3.问题</h2><h3 id="①静态队列为什么必须是循环队列"><a href="#①静态队列为什么必须是循环队列" class="headerlink" title="①静态队列为什么必须是循环队列"></a>①静态队列为什么<strong>必须是循环队列</strong></h3><p>r→							r→		</p>
-<p>​		d								d</p>
-<p>​		c						f→	c</p>
-<p>​		b		==&gt;			  	b</p>
-<p>f→   a							 	a</p>
+<h2 id="3-问题"><a href="#3-问题" class="headerlink" title="3.问题"></a>3.问题</h2><h3 id="①静态队列为什么必须是循环队列"><a href="#①静态队列为什么必须是循环队列" class="headerlink" title="①静态队列为什么必须是循环队列"></a>①静态队列为什么<strong>必须是循环队列</strong></h3><p>r→                            r→        </p>
+<p>​        d                                d</p>
+<p>​        c                        f→    c</p>
+<p>​        b        ==&gt;                  b</p>
+<p>f→   a                                 a</p>
 <p>👆a和b出队之后，对于数组a来说，a[0]、a[1]这两个空间就被浪费了，因为f和r一直在往上移动，所以相当于a[0]、a[1]不能再使用了。用传统数组来实现队列，无论是入队还是出队，参数都只能增不能减</p>
 <h3 id="②循环队列需要几个参数及各个参数的含义"><a href="#②循环队列需要几个参数及各个参数的含义" class="headerlink" title="②循环队列需要几个参数及各个参数的含义"></a>②循环队列需要<strong>几个参数</strong>及各个<strong>参数的含义</strong></h3><ul>
 <li><p>需要<strong>2个</strong>参数来确定 <strong>front</strong> <strong>rear</strong></p>
@@ -571,12 +571,12 @@
 <li><p>场合：</p>
 <blockquote>
 <p> 1）队列初始化</p>
-<p>​		front和rear的值都是<strong>零</strong></p>
+<p>​        front和rear的值都是<strong>零</strong></p>
 <p>2）队列非空</p>
-<p>​		front代表的是队列的<strong>第一个元素</strong></p>
-<p>​		rear代表的是队列的<strong>最后一个有效元素的下一个</strong></p>
+<p>​        front代表的是队列的<strong>第一个元素</strong></p>
+<p>​        rear代表的是队列的<strong>最后一个有效元素的下一个</strong></p>
 <p>3）队列空</p>
-<p>​		front和rear的<strong>值相等</strong>，但不一定是零</p>
+<p>​        front和rear的<strong>值相等</strong>，但不一定是零</p>
 </blockquote>
 </li>
 </ul>
@@ -601,11 +601,11 @@
 <ul>
 <li><p>如何判断队列已满：r和f的值紧挨着，则队列已满</p>
 </li>
-<li><pre><code class="c">if((r+1)%数组的长度==f)
-    //已满
-else
-    //不满
-<pre class="line-numbers language-none"><code class="language-none">
+<li><p>```c<br>if((r+1)%数组的长度==f)</p>
+<pre><code>//已满
+</code></pre><p>else</p>
+<pre><code>//不满
+</code></pre><pre class="line-numbers language-none"><code class="language-none">
 
 # 二.代码
 
@@ -725,7 +725,6 @@ bool outQueue(PQUEUE pQ,int *pVal)
 		return true;
 	}
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</code></pre>
 </li>
 </ul>
 </li>

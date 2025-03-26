@@ -545,19 +545,19 @@
                 <p><strong>DS1302</strong></p>
 <h1 id="一-引脚分装"><a href="#一-引脚分装" class="headerlink" title="一.引脚分装"></a>一.引脚分装</h1><p>1.DIP直插</p>
 <p>2.SO贴片</p>
-<p><img src="/../../../../medias/blog_picture/51/59.png"></p>
-<p><img src="/../../../../medias/blog_picture/51/60.png"></p>
+<p><img src="../../../../medias/blog_picture/51/59.png" alt=""></p>
+<p><img src="../../../../medias/blog_picture/51/60.png" alt=""></p>
 <p>其中，<strong>CE为高电平的时候下面的命令(io和SCLK)才有用。</strong>时间存储在实时时钟里，在左边被访问和读写</p>
-<h1 id="二-内部寄存器"><a href="#二-内部寄存器" class="headerlink" title="二.内部寄存器"></a>二.内部寄存器</h1><p><img src="/../../../../medias/blog_picture/51/61.png"></p>
+<h1 id="二-内部寄存器"><a href="#二-内部寄存器" class="headerlink" title="二.内部寄存器"></a>二.内部寄存器</h1><p><img src="../../../../medias/blog_picture/51/61.png" alt=""></p>
 <p>WP是读写保护</p>
 <h1 id="三-考虑的问题"><a href="#三-考虑的问题" class="headerlink" title="三.考虑的问题"></a>三.考虑的问题</h1><p>在哪(xx寄存器) 写入 什么</p>
 <p>在哪(xx寄存器) 读出 什么(1302芯片返回的，单片机需要读到)</p>
-<p><img src="/../../../../medias/blog_picture/51/62.png"></p>
+<p><img src="../../../../medias/blog_picture/51/62.png" alt=""></p>
 <p>第六位：给1——RAM，给0——CK</p>
 <p>6~1完成“在哪”的任务</p>
 <p>第零位：完成“读/写”的任务，给1——读，给0——写</p>
 <p>在<strong>二</strong>的表中已经把“读/写”的命令列出来了</p>
-<h2 id="1-时序定义"><a href="#1-时序定义" class="headerlink" title="1.时序定义"></a>1.时序定义</h2><p><img src="/../../../../medias/blog_picture/51/63.png"></p>
+<h2 id="1-时序定义"><a href="#1-时序定义" class="headerlink" title="1.时序定义"></a>1.时序定义</h2><p><img src="../../../../medias/blog_picture/51/63.png" alt=""></p>
 <p>上升沿(io口的电平被)写入(/向时钟芯片写入数据)，下降沿(DS1302把他的数据)输出(时钟芯片向单片机写入数据)，<strong>所以，只有READ中的D0~D7是芯片写入的</strong></p>
 <p>写入时，先写入数据再进行上升沿。</p>
 <h2 id="2-每个按键的功能"><a href="#2-每个按键的功能" class="headerlink" title="2.每个按键的功能"></a>2.每个按键的功能</h2><ul>
@@ -578,7 +578,6 @@
 		DS1302_SCLK=1;
 		DS1302_SCLK=0;
 	}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>对于每一位，先写入操作指令再给上升沿</p>
 <p><strong>2.</strong></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token function">DS1302_ReadByte</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Command<span class="token punctuation">)</span>
@@ -602,7 +601,6 @@
 	DS1302_IO<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>	<span class="token comment">//读取后将IO设置为0，否则读出的数据会出错</span>
 	<span class="token keyword">return</span> Data<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>关于为什么要return DataX，👇我的理解</p>
 <ul>
 <li>首先在<strong>DS1302_WriteByte</strong>中写入数据，是多少秒(0~15)，就输入0x xx，然后16进制转2进制</li>
@@ -615,14 +613,12 @@
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">&gt;</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>a<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
 <span class="token operator">&lt;=</span><span class="token operator">=</span><span class="token operator">&gt;</span>
 a<span class="token operator">=</span><span class="token operator">%</span><span class="token number">6</span><span class="token punctuation">;</span><span class="token comment">//a=6%6=0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>4.</strong></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">1</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">3</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">5</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">7</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">8</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">10</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">12</span><span class="token punctuation">)</span>
 		<span class="token punctuation">{</span>
 			<span class="token keyword">if</span><span class="token punctuation">(</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">31</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
 			<span class="token keyword">if</span><span class="token punctuation">(</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">&gt;</span><span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">{</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token punctuation">}</span>	<span class="token comment">//12-31调回11-xx时会显示11-31，所以需要加上这句话</span>
 		<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>关于为什么要在K4-这里复制一部分K3+的代码</p>
 <ul>
 <li>从12-31调回11月份时，会显示为11-31，所以要加上那部分代码</li>
@@ -631,8 +627,7 @@ a<span class="token operator">=</span><span class="token operator">%</span><span
 <p>某个时间值被选中后跳动</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>TimeSetSelect<span class="token operator">==</span><span class="token number">0</span><span class="token operator">&amp;&amp;</span>TimeSetFlashFlag<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">LCD_ShowString</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"  "</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
 	<span class="token keyword">else</span><span class="token punctuation">{</span><span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>定时器每隔500ms对TimeSetFlashFlag置1或0，当TSFF为1且时间值选中的是0–时 时，在原本显示时的时间那一块地方显示空格；如果不符合if的条件，则显示时间，所以TSFF在0和1跳动时，决定了频闪的显示。</p>
+<p>定时器每隔500ms对TimeSetFlashFlag置1或0，当TSFF为1且时间值选中的是0—时 时，在原本显示时的时间那一块地方显示空格；如果不符合if的条件，则显示时间，所以TSFF在0和1跳动时，决定了频闪的显示。</p>
 
                 
             </div>

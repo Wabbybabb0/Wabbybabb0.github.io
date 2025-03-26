@@ -553,8 +553,7 @@
 <li><code>dim3</code>：是一个结构体，和<code>unit3</code>类似，适用<code>blockDim</code>和<code>gridDim</code></li>
 <li>二者关系，xxxIdx.a的取值范围是yyyDim.a-1，如：<code>blockIdx.x</code>的取值范围是<code>gridDim.x-1</code></li>
 </ul>
-<h1 id="第三章-简单CUDA程序的基本框架"><a href="#第三章-简单CUDA程序的基本框架" class="headerlink" title="第三章 简单CUDA程序的基本框架"></a>第三章 简单CUDA程序的基本框架</h1><h3 id="3-2-2-设备内存的释放与分配"><a href="#3-2-2-设备内存的释放与分配" class="headerlink" title="3.2.2 设备内存的释放与分配"></a>3.2.2 设备内存的释放与分配</h3><p><code>cudaMalloc()</code></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">cudaError_t</span> <span class="token function">cudaMalloc</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>address<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h1 id="第三章-简单CUDA程序的基本框架"><a href="#第三章-简单CUDA程序的基本框架" class="headerlink" title="第三章 简单CUDA程序的基本框架"></a>第三章 简单CUDA程序的基本框架</h1><h3 id="3-2-2-设备内存的释放与分配"><a href="#3-2-2-设备内存的释放与分配" class="headerlink" title="3.2.2 设备内存的释放与分配"></a>3.2.2 设备内存的释放与分配</h3><p><code>cudaMalloc()</code><br></p><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">cudaError_t</span> <span class="token function">cudaMalloc</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>address<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
 <ul>
 <li><code>address</code>：待分配设备内存的指针。因为内存(地址)本身就是一个指针，所以address是指针的指针</li>
 <li><code>size</code>：待分配内存的字节数</li>
@@ -578,6 +577,7 @@
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>主机中的add函数需要循环，设备中的不需要，只需要数组元素指标与线程指标一一对应即可，在3.3<code>add1.cu</code>中就用了<code>const int n = blockDim.x * blockIdx.x + blockIdx.x</code>来实现对应关系(而主机中的需要用<code>for(int n=0; n&lt;N; n++)</code>)</p>
 <h3 id="3-2-6-核函数中if语句的必要性"><a href="#3-2-6-核函数中if语句的必要性" class="headerlink" title="3.2.6 核函数中if语句的必要性"></a>3.2.6 核函数中if语句的必要性</h3><p><code>N</code>为数组元素，$grid_size=\dfrac{N}{block_size}$，如果有余数需要+1，此时线程数为<code>N+block_size</code>，因为<code>grid_size</code>每加一，就多一个<code>block</code>，每一个<code>block</code>有<code>block_size</code>个线程，所以此时线程数为<code>N+block_size</code></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -586,7 +586,8 @@
 <th>后来</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>N</td>
 <td>$10^8$</td>
 <td>$10^8+1$</td>
@@ -606,23 +607,19 @@
 <td>$10^8$</td>
 <td>$10^8+128$</td>
 </tr>
-<tr>
-<td>因此需要加上<code>if(n&gt;=N) return;</code>，如果不加上这句，会出现非法的设备内存操作</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
+<p>因此需要加上<code>if(n&gt;=N) return;</code>，如果不加上这句，会出现非法的设备内存操作</p>
 <h1 id="第四章-CUDA程序的错误检验"><a href="#第四章-CUDA程序的错误检验" class="headerlink" title="第四章 CUDA程序的错误检验"></a>第四章 CUDA程序的错误检验</h1><ul>
-<li>在定义宏时，如果一行写不下，则需要在末尾写”\"，表示续行</li>
-<li>用自定义的宏函数<code>CHECK</code>检查运行时API<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829162039.png"></li>
+<li>在定义宏时，如果一行写不下，则需要在末尾写”\\\”，表示续行</li>
+<li>用自定义的宏函数<code>CHECK</code>检查运行时API<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829162039.png" alt=""></li>
 <li>用以下两句检查核函数<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">CHECK</span><span class="token punctuation">(</span><span class="token function">cudaGetLastError</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// 捕捉第二个语句之前的最后一个错误</span>
 <span class="token function">CHECK</span><span class="token punctuation">(</span><span class="token function">cudaDeviceSynchronize</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 捕捉是否有无法同步主机与设备的错误。因为核函数的调用是异步的，即主机发出调用核函数的命令后会执行后面的语句，不会等待核函数</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 只要在核函数的调用之后 还有其他任何能<strong>返回错误值的API函数</strong>进行同步调用，都能触发主机与设备的同步并捕捉到核函数调用中可能发生的错误。</li>
 </ul>
-<p>一般情况下，如果需要获得准确的出错位置，需要显式同步。例如调用<code>cudaDeviceSynchronize()</code>函数，或者设置</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">$ export CUDA_LAUNCH_BLOCKING<span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>设置完毕后，所有核函数的调用都是同步的，但是最好只用于调试程序，因为这样会影响程序的性能。</p>
-<p>❓这个<code>cuda-memcheck</code>没给我check出来错误<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829164737.png"></p>
+<p>一般情况下，如果需要获得准确的出错位置，需要显式同步。例如调用<code>cudaDeviceSynchronize()</code>函数，或者设置<br></p><pre class="line-numbers language-c" data-language="c"><code class="language-c">$ export CUDA_LAUNCH_BLOCKING<span class="token operator">=</span><span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>设置完毕后，所有核函数的调用都是同步的，但是最好只用于调试程序，因为这样会影响程序的性能。<p></p>
+<p>❓这个<code>cuda-memcheck</code>没给我check出来错误<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829164737.png" alt=""></p>
 <h1 id="第五章-获得GPU加速的关键"><a href="#第五章-获得GPU加速的关键" class="headerlink" title="第五章 获得GPU加速的关键"></a>第五章 获得GPU加速的关键</h1><h3 id="5-1-1-为C-程序计时"><a href="#5-1-1-为C-程序计时" class="headerlink" title="5.1.1 为C++程序计时"></a>5.1.1 为C++程序计时</h3><p>选择浮点数精度</p>
 <ul>
 <li>单精度浮点数的运行时间👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829200351.png" alt="单精度浮点数"></li>
@@ -632,19 +629,19 @@
 <li>仅核函数</li>
 </ol>
 <ul>
-<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829201703.png"></li>
-<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829201718.png"></li>
+<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829201703.png" alt=""></li>
+<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829201718.png" alt=""></li>
 </ul>
-<ol start="2">
+<ol>
 <li>核函数与数据复制</li>
 </ol>
 <ul>
-<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829203507.png"></li>
-<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829203524.png"><br>对比是否加入了数据复制的用时，可以发现：</li>
+<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829203507.png" alt=""></li>
+<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829203524.png" alt=""><br>对比是否加入了数据复制的用时，可以发现：</li>
 <li>核函数的运行时间比数据复制时间要短的多，约占2.5%</li>
 <li>如果一个程序的任务仅仅将来自主机端的两个数组相加，再将结果传到主机端，使用GPU的话效率更加低下，(CUDA程序相较于C++程序性能降低</li>
 </ul>
-<p>关于<code>nvprof</code><br>是一个可用于对CUDA程序进行更多性能剖析的CUDA工具箱里的可执行文件，如果设备计算能力大于8.0不可用，输入<code>nsys nvprof</code>可用<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829205829.png"></p>
+<p>关于<code>nvprof</code><br>是一个可用于对CUDA程序进行更多性能剖析的CUDA工具箱里的可执行文件，如果设备计算能力大于8.0不可用，输入<code>nsys nvprof</code>可用<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240829205829.png" alt=""></p>
 <ul>
 <li>第一列是每类操作(第七列Name)占用时间百分比</li>
 <li>第二列时每类操作所用的时间</li>
@@ -654,8 +651,7 @@
 </ul>
 <h3 id="5-2-1-数据传输的比例"><a href="#5-2-1-数据传输的比例" class="headerlink" title="5.2.1 数据传输的比例"></a>5.2.1 数据传输的比例</h3><p>避免过多的数据经由(连接GPU和CPU)PCIe传递，必须尽量缩减数据传输所花时间的比例(数据在GPU和CPU上传输的时间比计算本身要多的话就得不偿失了)。理论上GPU的显存带宽为几百兆字节，常用的PCIe仅有16GB/s的带宽。</p>
 <p><code>nvcc -O3</code>中的<code>-O3</code>是告诉编译器尽可能多地进行优化</p>
-<h3 id="5-2-2-算数强度"><a href="#5-2-2-算数强度" class="headerlink" title="5.2.2 算数强度"></a>5.2.2 算数强度</h3><p>进行较复杂的浮点运算，可能会得到更高的加速比，于是将之前的数组相加函数进行更改为👇</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">arithmetic</span><span class="token punctuation">(</span>real <span class="token operator">*</span>x<span class="token punctuation">,</span> <span class="token keyword">const</span> real x0<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span>
+<h3 id="5-2-2-算数强度"><a href="#5-2-2-算数强度" class="headerlink" title="5.2.2 算数强度"></a>5.2.2 算数强度</h3><p>进行较复杂的浮点运算，可能会得到更高的加速比，于是将之前的数组相加函数进行更改为👇<br></p><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">arithmetic</span><span class="token punctuation">(</span>real <span class="token operator">*</span>x<span class="token punctuation">,</span> <span class="token keyword">const</span> real x0<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> n<span class="token operator">&lt;</span>N<span class="token punctuation">;</span> <span class="token operator">++</span>n<span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
@@ -666,24 +662,24 @@
         <span class="token punctuation">}</span>
         x<span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">=</span> x_tmp<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ol>
 <li>CPU</li>
 </ol>
 <ul>
-<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240830164803.png"></li>
-<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240830164907.png"></li>
+<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240830164803.png" alt=""></li>
+<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240830164907.png" alt=""></li>
 </ul>
-<ol start="2">
+<ol>
 <li>GPU<br>原本执行程序是<code>.\arithmetic2gpu</code>，因为有<code>const int N = atoi(argv[1]);</code>，所以变成<code>.\arithmetic2gpu N</code>，N可以是任何数字，在命令行中手动输入，将会被读取到程序中的N</li>
 </ol>
 <ul>
-<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240830210914.png"></li>
-<li>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240830211004.png"></li>
-</ul>
+<li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240830210914.png" alt=""></li>
+<li><p>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240830211004.png" alt=""></p>
 <h3 id="5-2-3-并行规模"><a href="#5-2-3-并行规模" class="headerlink" title="5.2.3 并行规模"></a>5.2.3 并行规模</h3><p>并行规模可用GPU中总的线程数目来衡量<br>小结：</p>
-<ul>
-<li>数据传输比例小——减少主机与设备之间的数据传输</li>
+</li>
+<li><p>数据传输比例小——减少主机与设备之间的数据传输</p>
+</li>
 <li>核函数的算术强度较高——提高核函数的算术强度</li>
 <li>核函数中定义的线程数目较多——增大核函数的并行规模</li>
 </ul>
@@ -736,8 +732,7 @@ __global__ <span class="token keyword">void</span> <span class="token function">
 	<span class="token class-name">size_t</span> offset <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span>  <span class="token comment">// 从symbol对应设备地址开始偏移的字节数</span>
 	cudaMemcpyKind kind <span class="token operator">=</span> cudaMemcpyDeviceToHost <span class="token comment">// 可选参数</span>
 <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li><p>特点</p>
-</li>
+<li>特点</li>
 </ol>
 <ul>
 <li>所有线程都能访问，全局内存对整个网格的所有线程可见</li>
@@ -768,7 +763,7 @@ __global__ <span class="token keyword">void</span> <span class="token function">
 <li>共享内存对整个<strong>线程块</strong>可见，每个线程块拥有一个共享内存变量的副本，共享内存变量的值在不同的线程块中可以不同。一个线程块中的所有线程都可以访问该线程块的共享变量副本，但是不能访问其他线程块的共享内存变量副本</li>
 <li>主要作用是减少对全局内存的访问</li>
 </ul>
-<h2 id="6-4-用CUDA运行时API函数查询设备"><a href="#6-4-用CUDA运行时API函数查询设备" class="headerlink" title="6.4 用CUDA运行时API函数查询设备"></a>6.4 用CUDA运行时API函数查询设备</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240831195051.png"></p>
+<h2 id="6-4-用CUDA运行时API函数查询设备"><a href="#6-4-用CUDA运行时API函数查询设备" class="headerlink" title="6.4 用CUDA运行时API函数查询设备"></a>6.4 用CUDA运行时API函数查询设备</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240831195051.png" alt=""></p>
 <h1 id="第七章-全局内存的合理使用"><a href="#第七章-全局内存的合理使用" class="headerlink" title="第七章 全局内存的合理使用"></a>第七章 全局内存的合理使用</h1><h2 id="7-1-全局内存的合并与非合并访问"><a href="#7-1-全局内存的合并与非合并访问" class="headerlink" title="7.1 全局内存的合并与非合并访问"></a>7.1 全局内存的合并与非合并访问</h2><p>$合并度=\dfrac{线程束请求的字节数}{由该请求导致的所有数据传输处理的字节数}$<br><strong>数据传输对数据地址的要求：在一次数据传输中，从全局内存转移到L2缓存的一片内存首地址一定是一个最小颗粒度(本例是32)的整数倍。</strong></p>
 <ol>
 <li>顺序的合并访问<pre class="line-numbers language-c" data-language="c"><code class="language-c">__global__ <span class="token keyword">void</span> <span class="token function">add</span><span class="token punctuation">(</span><span class="token keyword">float</span> <span class="token operator">*</span>x<span class="token punctuation">,</span> <span class="token keyword">float</span> <span class="token operator">*</span>y<span class="token punctuation">,</span> <span class="token keyword">float</span> <span class="token operator">*</span>z<span class="token punctuation">)</span>
@@ -780,10 +775,10 @@ __global__ <span class="token keyword">void</span> <span class="token function">
 <ul>
 <li>第一个线程块(blockIdx.x=0)中的线程束将访问数组<code>x</code>中第0~31个元素(每个元素类型为float，占四个字节)，则对应32×4=128字节的连续内存</li>
 <li>首地址一定是256字节的整数倍(使用CUDA运行时API如<code>cudaMalloc</code>分配的内存的首地址至少是256字节的整数倍)</li>
-<li>这样只需要访问4次数据传输即可完成(要求：一次数据传输只能从全局内存读取地址为0<del>31字节、32</del>63字节等片段的数据。如果线程束请求的全局内存数据的地址刚好为0<del>127字节或者128</del>256字节，就能与<strong>4次数据传输</strong>(0<del>31、32</del>63、64<del>95、96</del>127四次)所处理的数据完全吻合)</li>
+<li>这样只需要访问4次数据传输即可完成(要求：一次数据传输只能从全局内存读取地址为0~31字节、32~63字节等片段的数据。如果线程束请求的全局内存数据的地址刚好为0~127字节或者128~256字节，就能与<strong>4次数据传输</strong>(0~31、32~63、64~95、96~127四次)所处理的数据完全吻合)</li>
 <li>合并度为100%</li>
 </ul>
-<ol start="2">
+<ol>
 <li>乱序的合并访问<pre class="line-numbers language-c" data-language="c"><code class="language-c">__global__ <span class="token keyword">void</span> <span class="token function">add_permuted</span><span class="token punctuation">(</span><span class="token keyword">float</span> <span class="token operator">*</span>x<span class="token punctuation">,</span> <span class="token keyword">float</span> <span class="token operator">*</span>y<span class="token punctuation">,</span> <span class="token keyword">float</span> <span class="token operator">*</span>z<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">int</span> tid_permuted <span class="token operator">=</span> threadIdx<span class="token punctuation">.</span>x <span class="token operator">^</span> <span class="token number">0x1</span><span class="token punctuation">;</span>
@@ -796,7 +791,7 @@ __global__ <span class="token keyword">void</span> <span class="token function">
 <li>仅把线程块中奇偶次序调转。如第一个线程块中，原本n的顺序为0、1、2、3…。变为1、0、3、2…，即只不过线程号与数组元素指标不完全一致</li>
 <li>合并度为100%</li>
 </ul>
-<ol start="3">
+<ol>
 <li>不对齐的非合并访问<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> __global__ <span class="token function">add_offset</span><span class="token punctuation">(</span><span class="token keyword">float</span> <span class="token operator">*</span>x<span class="token punctuation">,</span> <span class="token keyword">float</span> <span class="token operator">*</span>y<span class="token punctuation">,</span> <span class="token keyword">float</span> <span class="token operator">*</span>z<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">int</span> n <span class="token operator">=</span> threadIdx<span class="token punctuation">.</span>x <span class="token operator">+</span> blockIdx<span class="token punctuation">.</span>x <span class="token operator">*</span> blcokDim<span class="token punctuation">.</span>x <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
@@ -806,11 +801,11 @@ add_permuted<span class="token operator">&lt;&lt;</span><span class="token opera
 </ol>
 <ul>
 <li>以第一个线程块为例，第一个线程块中的线程束将访问数组x中第1~32个元素。</li>
-<li>假如数组x的首地址为256，那么<code>x[0]</code>为256<del>259，<code>x[1]</code>为260</del>263，<code>x[32]</code>为382~387</li>
-<li>这将触发5次数据传输，对应的内存地址为256<del>287字节、288</del>319字节、320<del>351字节、352</del>383字节和384~415字节</li>
-<li>合并度为$\dfrac{4}{5}×100=80%$</li>
+<li>假如数组x的首地址为256，那么<code>x[0]</code>为256~259，<code>x[1]</code>为260~263，<code>x[32]</code>为382~387</li>
+<li>这将触发5次数据传输，对应的内存地址为256~287字节、288~319字节、320~351字节、352~383字节和384~415字节</li>
+<li>合并度为$\dfrac{4}{5}×100=80\%$</li>
 </ul>
-<ol start="4">
+<ol>
 <li>跨越式的非合并访问<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> __global__ <span class="token function">add_stride</span><span class="token punctuation">(</span><span class="token keyword">float</span><span class="token operator">*</span> x<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token operator">*</span> y<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token operator">*</span> z<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">int</span> n <span class="token operator">=</span> blockIdx<span class="token punctuation">.</span>x <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>x <span class="token operator">*</span> gridDim<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
@@ -821,9 +816,9 @@ add_stride<span class="token operator">&lt;&lt;</span><span class="token operato
 <ul>
 <li>第一个线程块中的线程束将访问数组x中指标为<code>0 + threadIdx.x * gridDim.x=1*128、2*128、3*128...</code>的元素</li>
 <li>每一对数据都不在一个连续的32字节的内存片段，因此该线程束的访问将触发32次数据传输</li>
-<li>合并度为$\dfrac{4}{32}×100%=12.5%$</li>
+<li>合并度为$\dfrac{4}{32}×100\%=12.5\%$</li>
 </ul>
-<ol start="5">
+<ol>
 <li>广播式的非合并访问<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> __global__ <span class="token function">add_broadcast</span><span class="token punctuation">(</span><span class="token keyword">float</span><span class="token operator">*</span> x<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token operator">*</span> y<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token operator">*</span> z<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">int</span> n <span class="token operator">=</span> blockIdx<span class="token punctuation">.</span>x <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>x <span class="token operator">*</span> gridDim<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
@@ -833,14 +828,12 @@ add_stride<span class="token operator">&lt;&lt;</span><span class="token operato
 </ol>
 <ul>
 <li>第一个线程块中的线程束将一致地访问数组x中的第0个元素。这实际上只需要一次数据传输(处理32字节的数据)，但整个线程束都在访问同一个内存地址<code>x[0]</code>，只使用了4字节的数据</li>
-<li>合并度为$\dfrac{4}{32}×100%=12.5%$</li>
-</ul>
-<h2 id="7-2-例子：矩阵转置"><a href="#7-2-例子：矩阵转置" class="headerlink" title="7.2 例子：矩阵转置"></a>7.2 例子：矩阵转置</h2><p><code>transpose1()</code>：对矩阵A中数据的访问(读取)是顺序的(/合并的)，对矩阵B中数据的访问(写入)不是顺序的(/非合并的)</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>nx <span class="token operator">&lt;</span> N <span class="token operator">&amp;&amp;</span> ny <span class="token operator">&lt;</span> N<span class="token punctuation">)</span>
+<li>合并度为$\dfrac{4}{32}×100\%=12.5\%$<h2 id="7-2-例子：矩阵转置"><a href="#7-2-例子：矩阵转置" class="headerlink" title="7.2 例子：矩阵转置"></a>7.2 例子：矩阵转置</h2><code>transpose1()</code>：对矩阵A中数据的访问(读取)是顺序的(/合并的)，对矩阵B中数据的访问(写入)不是顺序的(/非合并的)<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>nx <span class="token operator">&lt;</span> N <span class="token operator">&amp;&amp;</span> ny <span class="token operator">&lt;</span> N<span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
         B<span class="token punctuation">[</span>nx <span class="token operator">*</span> N <span class="token operator">+</span> ny<span class="token punctuation">]</span> <span class="token operator">=</span> A<span class="token punctuation">[</span>ny <span class="token operator">*</span> N <span class="token operator">+</span> nx<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240902095334.png" alt="|277"><br><code>transpose2()</code>：对矩阵A中数据的访问(读取)不是顺序的(/非合并的)，对矩阵B中数据的访问(写入)是顺序的(/合并的)</p>
+<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240902095334.png" alt="|277"><br><code>transpose2()</code>：对矩阵A中数据的访问(读取)不是顺序的(/非合并的)，对矩阵B中数据的访问(写入)是顺序的(/合并的)</li>
+</ul>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>nx <span class="token operator">&lt;</span> N <span class="token operator">&amp;&amp;</span> ny <span class="token operator">&lt;</span> N<span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
         B<span class="token punctuation">[</span>ny <span class="token operator">*</span> N <span class="token operator">+</span> nx<span class="token punctuation">]</span> <span class="token operator">=</span> A<span class="token punctuation">[</span>nx <span class="token operator">*</span> N <span class="token operator">+</span> ny<span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -848,12 +841,13 @@ add_stride<span class="token operator">&lt;&lt;</span><span class="token operato
 <p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240902095353.png" alt="|277"><br>可以发现<code>transpose2()</code>的用时比<code>transpose1()</code>的更久？<br>书上原话：</p>
 <ul>
 <li>在不能满足读取和写入都是合并的情况下，一般来说应当尽量做到合并地写入</li>
-<li>书上的结果是2比1用时更短，因为编译器能够判断一个全局内存变量<strong>在整个核函数的范围都只可读</strong>，则会自动用函数<code>__ldg()</code>读取全局内存，从而对数据的读取进行<strong>缓存</strong>，缓解非合并访问带来的影响。而对于全局内存的写入则没有类似的函数可用<br>👇用了别人的代码后<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240902100134.png"></li>
+<li>书上的结果是2比1用时更短，因为编译器能够判断一个全局内存变量<strong>在整个核函数的范围都只可读</strong>，则会自动用函数<code>__ldg()</code>读取全局内存，从而对数据的读取进行<strong>缓存</strong>，缓解非合并访问带来的影响。而对于全局内存的写入则没有类似的函数可用<br>👇用了别人的代码后<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240902100134.png" alt=""></li>
 </ul>
 <h1 id="第八章-共享内存的合理使用"><a href="#第八章-共享内存的合理使用" class="headerlink" title="第八章 共享内存的合理使用"></a>第八章 共享内存的合理使用</h1><h2 id="8-1-例子：数组归约计算"><a href="#8-1-例子：数组归约计算" class="headerlink" title="8.1 例子：数组归约计算"></a>8.1 例子：数组归约计算</h2><ul>
 <li>C++实现计算长度较大的累加计算时，会出现”大数吃小数“的现象</li>
 <li>CUDA实现比C++实现上述内容时要稳健得多<br>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240911215856.png" alt="|325"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240911220431.png" alt="325"><br>上面两个出现大数吃小数的情况</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -864,7 +858,8 @@ add_stride<span class="token operator">&lt;&lt;</span><span class="token operato
 <th>结果</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>float</td>
 <td>6~7ms</td>
 <td>7~8ms</td>
@@ -878,7 +873,9 @@ add_stride<span class="token operator">&lt;&lt;</span><span class="token operato
 <td>15~18ms</td>
 <td>122999999.998770.</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>单精度的结果没有那么离谱，但是离正确答案还有一段距离</p>
 <h3 id="8-1-1-仅使用全局内存"><a href="#8-1-1-仅使用全局内存" class="headerlink" title="8.1.1 仅使用全局内存"></a>8.1.1 仅使用全局内存</h3><ul>
 <li>访问频繁</li>
@@ -918,7 +915,8 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 	<span class="token punctuation">{</span>
 		d_y<span class="token punctuation">[</span>blockIdx<span class="token punctuation">.</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 </ul>
@@ -953,7 +951,7 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 		d_y<span class="token punctuation">[</span>tid<span class="token punctuation">]</span> <span class="token operator">=</span> s_y<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/345a4268a6a5f1d9ad0e183fb311f40.jpg"></li>
+<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/345a4268a6a5f1d9ad0e183fb311f40.jpg" alt=""></li>
 <li>一般来说，在核函数中对共享内存访问的次数越多，则由于使用共享内存带来的加速效果越明显</li>
 <li>因为有<code>n&lt;N</code>的判断，该函数能够处理<code>N</code>不是线程块大小的整数倍的情形</li>
 </ul>
@@ -968,8 +966,7 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 </li>
 </ul>
 <p>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240919200305.png" alt="|375"><br>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240919200331.png" alt="375"></p>
-<h2 id="8-2-使用共享内存进行矩阵转置"><a href="#8-2-使用共享内存进行矩阵转置" class="headerlink" title="8.2 使用共享内存进行矩阵转置"></a>8.2 使用共享内存进行矩阵转置</h2><p>利用共享内存可以改善全局内存的访问模式，使得对全局内存的读和写都是合并的</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">__gobal__ <span class="token keyword">void</span> <span class="token function">transpose1</span><span class="token punctuation">(</span><span class="token keyword">const</span> real <span class="token operator">*</span>A<span class="token punctuation">,</span> real <span class="token operator">*</span>B<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span>
+<h2 id="8-2-使用共享内存进行矩阵转置"><a href="#8-2-使用共享内存进行矩阵转置" class="headerlink" title="8.2 使用共享内存进行矩阵转置"></a>8.2 使用共享内存进行矩阵转置</h2><p>利用共享内存可以改善全局内存的访问模式，使得对全局内存的读和写都是合并的<br></p><pre class="line-numbers language-c" data-language="c"><code class="language-c">__gobal__ <span class="token keyword">void</span> <span class="token function">transpose1</span><span class="token punctuation">(</span><span class="token keyword">const</span> real <span class="token operator">*</span>A<span class="token punctuation">,</span> real <span class="token operator">*</span>B<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	__shared__ real S<span class="token punctuation">[</span>TILE_DIM<span class="token punctuation">]</span><span class="token punctuation">[</span>TILE_DIM<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 用一个线程块处理一片32x32的矩阵</span>
 	<span class="token keyword">int</span> bx <span class="token operator">=</span> blockIdx<span class="token punctuation">.</span>x <span class="token operator">*</span> TILE_DIM<span class="token punctuation">;</span>
@@ -989,10 +986,8 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 	<span class="token punctuation">{</span>
 		B<span class="token punctuation">[</span>nx2 <span class="token operator">*</span> N <span class="token operator">+</span> ny2<span class="token punctuation">]</span> <span class="token operator">=</span> S<span class="token punctuation">[</span>threadIdx<span class="token punctuation">.</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>threadIdx<span class="token punctuation">.</span>y<span class="token punctuation">]</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>上述代码的节选部分👇</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> nx2 <span class="token operator">=</span> bx <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>上述代码的节选部分👇<br></p><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> nx2 <span class="token operator">=</span> bx <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
 <span class="token keyword">int</span> ny2 <span class="token operator">=</span> by <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
 <span class="token comment">// 上面这两行改变了对全局内存的访问方式</span>
 <span class="token comment">// 这里的bx和by根据blockIdx.x和blockIdx.y的变化而变化。可以视为某个线程块在全局中的偏移量</span>
@@ -1000,9 +995,7 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 <span class="token punctuation">{</span>
 	B<span class="token punctuation">[</span>nx2 <span class="token operator">*</span> N <span class="token operator">+</span> ny2<span class="token punctuation">]</span> <span class="token operator">=</span> S<span class="token punctuation">[</span>threadIdx<span class="token punctuation">.</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>threadIdx<span class="token punctuation">.</span>y<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 相邻的threadIdx.x与全局内存中的数组B中的相邻的数据对应</span>
 	<span class="token comment">//B的相邻是ny2，ny2又和threadIdx.x一致相邻</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>第七章<code>transpose1()</code>相关部分👇</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">__global__ <span class="token keyword">void</span> <span class="token function">transpose1</span><span class="token punctuation">(</span><span class="token keyword">const</span> real<span class="token operator">*</span> A<span class="token punctuation">,</span> real<span class="token operator">*</span> B<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>第七章<code>transpose1()</code>相关部分👇<br><pre class="line-numbers language-c" data-language="c"><code class="language-c">__global__ <span class="token keyword">void</span> <span class="token function">transpose1</span><span class="token punctuation">(</span><span class="token keyword">const</span> real<span class="token operator">*</span> A<span class="token punctuation">,</span> real<span class="token operator">*</span> B<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">const</span> <span class="token keyword">int</span> nx <span class="token operator">=</span> blockIdx<span class="token punctuation">.</span>x <span class="token operator">*</span> blockDim<span class="token punctuation">.</span>x <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
     <span class="token keyword">const</span> <span class="token keyword">int</span> ny <span class="token operator">=</span> blockIdx<span class="token punctuation">.</span>y <span class="token operator">*</span> blockDim<span class="token punctuation">.</span>y <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
@@ -1010,16 +1003,13 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
     <span class="token punctuation">{</span>
         B<span class="token punctuation">[</span>nx <span class="token operator">*</span> N <span class="token operator">+</span> ny<span class="token punctuation">]</span> <span class="token operator">=</span> A<span class="token punctuation">[</span>ny <span class="token operator">*</span> N <span class="token operator">+</span> nx<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>跟上面代码一样的写法👇</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> nx2 <span class="token operator">=</span> bx <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>跟上面代码一样的写法👇<br><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> nx2 <span class="token operator">=</span> bx <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
 <span class="token keyword">int</span> ny2 <span class="token operator">=</span> by <span class="token operator">+</span> threadIdx<span class="token punctuation">.</span>y<span class="token punctuation">;</span>
 <span class="token comment">// 这样子定义nx2和ny2的话和上面全局内存的访问方式一样</span>
 <span class="token keyword">if</span><span class="token punctuation">(</span>nx2 <span class="token operator">&lt;</span> N <span class="token operator">&amp;&amp;</span> ny2 <span class="token operator">&lt;</span> N<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	B<span class="token punctuation">[</span>nx2 <span class="token operator">*</span> N <span class="token operator">+</span> ny2<span class="token punctuation">]</span> <span class="token operator">=</span> S<span class="token punctuation">[</span>threadIdx<span class="token punctuation">.</span>y<span class="token punctuation">]</span><span class="token punctuation">[</span>threadIdx<span class="token punctuation">.</span>x<span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <h2 id="8-3-避免共享内存的bank冲突"><a href="#8-3-避免共享内存的bank冲突" class="headerlink" title="8.3 避免共享内存的bank冲突"></a>8.3 避免共享内存的bank冲突</h2><p>为了获得高的内存带宽，共享内存在物理上被分为32个(刚好等于一个线程束中的线程数目32)同样宽度的、能被同时访问的内存bank</p>
 <ul>
 <li>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240913182434.png" alt="|350"></li>
@@ -1033,11 +1023,11 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
 </li>
 <li>于是将<code>__shared__ real S[TILE_DIM][TILE_DIM]</code>改为<code>__shared__ real S[TILE_DIM][TILE_DIM + 1]</code><ul>
 <li>同一个线程束的32个线程(连续的32个<code>threadIdx.x</code>)对应<code>S</code>中跨度为33的数据</li>
-<li>如果第一个线程访问第一个<code>bank</code>的第一层，第二个线程则会访问第二个<code>bank</code>的第二层，而不是第一个<code>bank</code>的第二层，以此类推，没有<code>bank</code>冲突<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_1.jpg"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_2.jpg"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_3.jpg"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_4.jpg"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_5.jpg"></li>
+<li>如果第一个线程访问第一个<code>bank</code>的第一层，第二个线程则会访问第二个<code>bank</code>的第二层，而不是第一个<code>bank</code>的第二层，以此类推，没有<code>bank</code>冲突<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_1.jpg" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_2.jpg" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_3.jpg" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_4.jpg" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/%E6%9C%AA%E5%91%BD%E5%90%8D%E6%96%87%E6%A1%A3_5.jpg" alt=""><h1 id="第九章-原子函数的合理使用"><a href="#第九章-原子函数的合理使用" class="headerlink" title="第九章 原子函数的合理使用"></a>第九章 原子函数的合理使用</h1></li>
 </ul>
 </li>
 </ul>
-<h1 id="第九章-原子函数的合理使用"><a href="#第九章-原子函数的合理使用" class="headerlink" title="第九章 原子函数的合理使用"></a>第九章 原子函数的合理使用</h1><h2 id="9-1-完全在GPU中进行归约"><a href="#9-1-完全在GPU中进行归约" class="headerlink" title="9.1 完全在GPU中进行归约"></a>9.1 完全在GPU中进行归约</h2><ul>
+<h2 id="9-1-完全在GPU中进行归约"><a href="#9-1-完全在GPU中进行归约" class="headerlink" title="9.1 完全在GPU中进行归约"></a>9.1 完全在GPU中进行归约</h2><ul>
 <li>本书使用在先前的核函数的末尾利用<strong>原子函数</strong>进行归约直接得到最终的结果的方法</li>
 <li>不能使用👇的原因：不管每个线程块第0号线程的执行次序如何，只有当一个线程的“读-写”操作不被其他线程干扰时，才能得到正确结果<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>tid <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -1105,7 +1095,6 @@ N<span class="token operator">/</span><span class="token number">4</span> <span 
         <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="9-3-2-利用原子操作的CUDA版本"><a href="#9-3-2-利用原子操作的CUDA版本" class="headerlink" title="9.3.2 利用原子操作的CUDA版本"></a>9.3.2 利用原子操作的CUDA版本</h3><p>如果仍然使用9.3.1中的<code>find_neighbor</code>函数，会导致“<strong>并发写入冲突</strong>”<br>一个线程与一个原子对应</p>
 <ul>
 <li>与n1对应的线程👇<pre class="line-numbers language-c" data-language="c"><code class="language-c">d_NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span> 
@@ -1113,24 +1102,18 @@ d_NL<span class="token punctuation">[</span>n2 <span class="token operator">*</s
 <li>与n2对应的线程👇<pre class="line-numbers language-c" data-language="c"><code class="language-c">d_NL<span class="token punctuation">[</span>n2 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n1<span class="token punctuation">;</span> <span class="token comment">// 第一条语句</span>
 d_NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 书上原话“在与<code>n1</code>对应的线程中，第二条语句代表我们试图对<code>d_NN[n2]</code>进行累加操作。但是，在与<code>n2</code>对应的线程中，第一条语句代表我们也试图对<code>d_NN[n2]</code>进行累加操作”<br>需要用原子函数：<pre class="line-numbers language-c" data-language="c"><code class="language-c">d_NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> d_NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span>
-d_NL<span class="token punctuation">[</span>n2 <span class="token operator">*</span> MN <span class="token operator">+</span> d_NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+d_NL<span class="token punctuation">[</span>n2 <span class="token operator">*</span> MN <span class="token operator">+</span> d_NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
 </ul>
-<p>合理利用返回值：<br>可以将👇代码</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span>
-NL<span class="token punctuation">[</span>n2 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>改写为👇</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span>
+<p>合理利用返回值：<br>可以将👇代码<br></p><pre class="line-numbers language-c" data-language="c"><code class="language-c">NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span>
+NL<span class="token punctuation">[</span>n2 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">]</span> <span class="token operator">=</span> n1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>改写为👇<br><pre class="line-numbers language-c" data-language="c"><code class="language-c">NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span>
 NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span>
 NL<span class="token punctuation">[</span>n2 <span class="token operator">*</span> MN <span class="token operator">+</span> NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> n1<span class="token punctuation">;</span>
-NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>但如果类似地改写原子函数的代码：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">d_NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> <span class="token function">atomicAdd</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>d_NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span>
-d_NL<span class="token punctuation">[</span>n2 <span class="token operator">*</span> MN <span class="token operator">+</span> <span class="token function">atomicAdd</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>d_NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> n1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>👆改写为👇</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">d_NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> d_NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span>
+NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token operator">++</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>但如果类似地改写原子函数的代码：<br><pre class="line-numbers language-c" data-language="c"><code class="language-c">d_NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> <span class="token function">atomicAdd</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>d_NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span>
+d_NL<span class="token punctuation">[</span>n2 <span class="token operator">*</span> MN <span class="token operator">+</span> <span class="token function">atomicAdd</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>d_NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> n1<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>👆改写为👇<br><pre class="line-numbers language-c" data-language="c"><code class="language-c">d_NL<span class="token punctuation">[</span>n1 <span class="token operator">*</span> MN <span class="token operator">+</span> d_NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> n2<span class="token punctuation">;</span>
 <span class="token function">atomicAdd</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>d_NN<span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 d_NL<span class="token punctuation">[</span>n2 <span class="token operator">*</span> MN <span class="token operator">+</span> d_NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> n1<span class="token punctuation">;</span>
-<span class="token function">atomicAdd</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>d_NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token function">atomicAdd</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>d_NN<span class="token punctuation">[</span>n2<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li>原子函数的操作本身是立即生效的，且在原子操作的执行过程中其他线程无法同时修改该变量</li>
 <li>不同的线程可能会同时访问<code>d_NN[n1]</code>和<code>d_NN[n2]</code>，如果两个线程几乎同时执行对 <code>d_NN[n1]</code> 的 <code>atomicAdd</code> 操作，那么尽管操作本身是原子的，它们的执行顺序却是不确定的，一个线程可能在另一个线程更新<code>d_NN[n1]</code>之前就读到了该值<br>正确写法👇<pre class="line-numbers language-none"><code class="language-none">int tmp1 = atomicAdd(&amp;d_NN[n1], 1);
@@ -1182,13 +1165,7 @@ d_NL[n2 * MN + tmp1] = n1;<span aria-hidden="true" class="line-numbers-rows"><sp
 <li>例：<code>__shfl_sync(FULL_MASK, tid, 2, 8)</code><ul>
 <li><code>8</code>表示<code>__shfl_sync()</code>操作只在8个线程的小组中进行，对于32线程的<code>wrap</code>，线程被分为4组有8个线程的子组(0-7, 8-15, 16-23, 24-31)</li>
 <li><code>2</code>表示源线程索引，每个线程都会读取第2号线程的<code>tid</code>值并存到<code>value</code>变量中</li>
-<li><code>tid</code>表示每个线程的局部变量</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">__global__ <span class="token keyword">void</span> <span class="token function">shuffleExample</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+<li><code>tid</code>表示每个线程的局部变量<pre class="line-numbers language-c" data-language="c"><code class="language-c">__global__ <span class="token keyword">void</span> <span class="token function">shuffleExample</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
     <span class="token keyword">int</span> tid <span class="token operator">=</span> threadIdx<span class="token punctuation">.</span>x <span class="token operator">%</span> <span class="token number">32</span><span class="token punctuation">;</span>  <span class="token comment">// 假设每个线程的tid是线程索引（0~31）</span>
     <span class="token keyword">int</span> value <span class="token operator">=</span> <span class="token function">__shfl_sync</span><span class="token punctuation">(</span><span class="token number">0xFFFFFFFF</span><span class="token punctuation">,</span> tid<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Thread %d got value %d\n"</span><span class="token punctuation">,</span> tid<span class="token punctuation">,</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -1209,8 +1186,11 @@ Thread <span class="token number">10</span> got value <span class="token number"
 Thread <span class="token number">11</span> got value <span class="token number">10</span>
 <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 Thread <span class="token number">30</span> got value <span class="token number">26</span>
-Thread <span class="token number">31</span> got value <span class="token number">26</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<ul>
+Thread <span class="token number">31</span> got value <span class="token number">26</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
 <li>将一个线程中的数据广播到所有(包括自己)线程</li>
 </ul>
 <p>⑤<code>__shfl_up_sync(mask, var, delta, width);</code></p>
@@ -1222,6 +1202,7 @@ Thread <span class="token number">31</span> got value <span class="token number"
 </li>
 <li><code>vat</code>：决定获取的数据来源</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1230,7 +1211,8 @@ Thread <span class="token number">31</span> got value <span class="token number"
 <th>执行后的tid</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>0</td>
 <td>0</td>
 <td>0</td>
@@ -1250,7 +1232,9 @@ Thread <span class="token number">31</span> got value <span class="token number"
 <td>3</td>
 <td>2</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <ul>
 <li>是一种将数据向上平移的操作</li>
 </ul>
@@ -1259,6 +1243,7 @@ Thread <span class="token number">31</span> got value <span class="token number"
 <li>是一种将数据向下平移的操作</li>
 </ul>
 <p>⑦<code>__shfl_xor_sync(mask, var, landMask, width);</code><br>线程<code>i</code>与线程<code>i ^ landMask</code>(这里表示异或)交换数据<br>例子：<code>landMask=1</code>、<code>width=8</code></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1267,7 +1252,8 @@ Thread <span class="token number">31</span> got value <span class="token number"
 <th>执行后的tid</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>0</td>
 <td>0</td>
 <td>1</td>
@@ -1347,13 +1333,11 @@ Thread <span class="token number">31</span> got value <span class="token number"
 <td>15</td>
 <td>14</td>
 </tr>
-<tr>
-<td>以<code>__shlf</code>开头的函数为洗牌函数，好处是<strong>使得线程束中的线程彼此之间可以直接交换数据，而不是通过共享内存或全局内存来进行的</strong>。洗牌指令比共享内存有更低的延迟，并且该指令在执行数据交换时不消耗额外的内存</td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240922162221.png"></p>
+</tbody>
+</table>
+</div>
+<p>以<code>__shlf</code>开头的函数为洗牌函数，好处是<strong>使得线程束中的线程彼此之间可以直接交换数据，而不是通过共享内存或全局内存来进行的</strong>。洗牌指令比共享内存有更低的延迟，并且该指令在执行数据交换时不消耗额外的内存</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240922162221.png" alt=""></p>
 <ul>
 <li><code>all_sync(FULL_MASK):0</code>，线程0的<code>tid</code>为0，不是全部参与的线程的<code>predicate</code>值都为1，所以为0</li>
 <li><code>all_sync(mask1):1</code>，线程0没有参与，全部参与的线程的<code>predicate</code>值都为1，所以为1</li>
@@ -1448,7 +1432,7 @@ thread_block_tile<span class="token operator">&lt;</span><span class="token numb
 <li>在第二个时刻中，<code>tid = 0 -&gt; 1 ... tid = 7 -&gt; 29</code></li>
 <li>在第三个时刻中，<code>tid = 0 -&gt; 2 ... tid = 7 -&gt; 30</code></li>
 <li>在第四个时刻中，<code>tid = 0 -&gt; 3 ... tid = 7 -&gt; 31</code></li>
-<li>$合并度=\dfrac{线程束请求的字节数}{由该请求导致的所有数据传输处理的字节数}=\dfrac{128}{128*4}=\dfrac{1}{4}$，4是代表进行了4次从0<del>128字节的访问(即`d_x[0]</del>d_x[31]`)</li>
+<li>$合并度=\dfrac{线程束请求的字节数}{由该请求导致的所有数据传输处理的字节数}=\dfrac{128}{128*4}=\dfrac{1}{4}$，4是代表进行了4次从0~128字节的访问(即<code>d_x[0]~d_x[31]</code>)</li>
 </ul>
 </li>
 <li>怎么样访问才是合并的？<ul>
@@ -1463,16 +1447,14 @@ reduce_cp<span class="token operator">&lt;&lt;</span><span class="token operator
 <li>用<code>d_y[bid] = y;</code>代替了<code>atomicAdd(d_y, y)</code></li>
 <li>使用两个核函数可以获得更加精确的结果，这是因为使用两个核函数时，将数组<code>d_y</code>归约到最终结果的计算使用了折半求和，比直接累加(使用原子函数或复制到主机再累加的情况)更稳健</li>
 </ul>
-<h3 id="10-5-2-避免反复分配与释放设备内存"><a href="#10-5-2-避免反复分配与释放设备内存" class="headerlink" title="10.5.2 避免反复分配与释放设备内存"></a>10.5.2 避免反复分配与释放设备内存</h3><p>在10.5.1的<code>reduce()</code>函数中，需要为数组<code>d_y</code>分配与释放设备内存。实际上，<strong>设备内存的分配与释放是比较耗时的</strong></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">real <span class="token function">reduce</span><span class="token punctuation">(</span><span class="token keyword">const</span> real<span class="token operator">*</span> d_x<span class="token punctuation">)</span>
+<h3 id="10-5-2-避免反复分配与释放设备内存"><a href="#10-5-2-避免反复分配与释放设备内存" class="headerlink" title="10.5.2 避免反复分配与释放设备内存"></a>10.5.2 避免反复分配与释放设备内存</h3><p>在10.5.1的<code>reduce()</code>函数中，需要为数组<code>d_y</code>分配与释放设备内存。实际上，<strong>设备内存的分配与释放是比较耗时的</strong><br></p><pre class="line-numbers language-c" data-language="c"><code class="language-c">real <span class="token function">reduce</span><span class="token punctuation">(</span><span class="token keyword">const</span> real<span class="token operator">*</span> d_x<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">const</span> <span class="token keyword">int</span> ymem <span class="token operator">=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>real<span class="token punctuation">)</span> <span class="token operator">*</span> GRID_SIZE<span class="token punctuation">;</span>
 	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 	<span class="token function">CHECK</span><span class="token punctuation">(</span><span class="token function">cudaMalloc</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>d_y<span class="token punctuation">,</span> ymem<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 分配内存</span>
 	<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
 	<span class="token function">CHECK</span><span class="token punctuation">(</span><span class="token function">cudaFree</span><span class="token punctuation">(</span>d_y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 释放内存	</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>解决方法：使用静态全局内存代替动态全局内存，因为静态内存在编译期间就会分配好</p>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>解决方法：使用静态全局内存代替动态全局内存，因为静态内存在编译期间就会分配好<p></p>
 <ul>
 <li>定义静态全局内存变量：<code>__device__ real static_y[GRID_SIZE];</code></li>
 <li>在不改变核函数代码的情况下，可以用<code>cudaGetSymbolAddress()</code>获得一个指向该静态全局内存的指针<pre class="line-numbers language-c" data-language="c"><code class="language-c">__device__ real static_y<span class="token punctuation">[</span>GRID_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
@@ -1500,7 +1482,8 @@ real <span class="token function">reduce</span><span class="token punctuation">(
 __device__ <span class="token keyword">float</span> static_y<span class="token punctuation">;</span>
 <span class="token comment">// 获取static_y的地址</span>
 <span class="token keyword">float</span> <span class="token operator">*</span>d_y<span class="token punctuation">;</span>
-<span class="token function">cudaGetSymbolAddress</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>d_y<span class="token punctuation">,</span> <span class="token string">"static_y"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<span class="token function">cudaGetSymbolAddress</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>d_y<span class="token punctuation">,</span> <span class="token string">"static_y"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 <p>单精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240926190202.png" alt="375"><br>双精度👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUDAC/Pasted%20image%2020240926190218.png" alt="375"><br>用时比使用动态全局内存更短！</p>
 <h1 id="第十一章-CUDA流"><a href="#第十一章-CUDA流" class="headerlink" title="第十一章 CUDA流"></a>第十一章 CUDA流</h1><p>核函数外部的并行主要指：</p>
@@ -1579,6 +1562,7 @@ sum<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;
 <li><code>cudaFreeHost(void *ptr);</code></li>
 </ul>
 <p>这里的时间是把前几次REPEAT次数的时间也加上了</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1592,7 +1576,8 @@ sum<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;
 <th>64</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>REPEAT次数=1</td>
 <td>0.727245</td>
 <td>0.813056</td>
@@ -1692,7 +1677,9 @@ sum<span class="token operator">&lt;&lt;</span><span class="token operator">&lt;
 <td>6.56247</td>
 <td>6.8724</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>看起来并行效果是还不错的。</p>
 <h1 id="第十四章-CUDA标准库的使用"><a href="#第十四章-CUDA标准库的使用" class="headerlink" title="第十四章 CUDA标准库的使用"></a>第十四章 CUDA标准库的使用</h1><h2 id="14-2-Thrust库"><a href="#14-2-Thrust库" class="headerlink" title="14.2 Thrust库"></a>14.2 Thrust库</h2><ul>
 <li>Thrust库是一个实现了<strong>众多基本并行算法</strong>的C++模板库</li>
@@ -1716,12 +1703,11 @@ thrust<span class="token operator">::</span><span class="token function">device_
 <code>thrust::inclusive_scan(InputIterator begin, InputIterator end, OutputIterator result);</code><br>  <code>InputIterator begin</code> 输入范围的起始迭代器。<br>  <code>InputIterator end</code>: 输入范围的结束迭代器。<br>  <code>OutputIterator result</code>: 用于存储结果的输出范围起始迭代器。<br>  这里的迭代器可以理解为指针的推广<br>例子中使用了<code>thrust::inclusive_scan(x.begin(), x.end(), y.begin());</code></li>
 <li>输出<br><code>y</code>是设备矢量，<code>y[i]</code>不是普通整型的变量，需要强制转化为整型后才能用<code>printf()</code>函数输出。用C++的输入/输出流可以直接输出<code>y[i]</code>而不需要先做强制类型转换</li>
 </ul>
-<ol start="2">
+<ol>
 <li>直接用设备中的数组(指针)实现</li>
 </ol>
 <ul>
-<li><p>定义</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">cudaMalloc</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>x<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token operator">*</span> N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<li>定义<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">cudaMalloc</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>x<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token operator">*</span> N<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token function">cudaMalloc</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>y<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token operator">*</span> N<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
 <li><p>扫描操作</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">thrust<span class="token operator">::</span><span class="token function">inclusive_scan</span><span class="token punctuation">(</span>thrust<span class="token operator">::</span>device<span class="token punctuation">,</span> x<span class="token punctuation">,</span> x <span class="token operator">+</span> N<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -1729,8 +1715,7 @@ thrust<span class="token operator">::</span><span class="token function">device_
 </li>
 <li><p>如果大量使用Thrust库提供的功能，使用设备矢量</p>
 </li>
-<li><p>如果偶尔使用Thrust库提供的功能，使用设备指针</p>
-</li>
+<li>如果偶尔使用Thrust库提供的功能，使用设备指针</li>
 </ul>
 <h2 id="14-3-cuBLAS库"><a href="#14-3-cuBLAS库" class="headerlink" title="14.3 cuBLAS库"></a>14.3 cuBLAS库</h2><p>行主序和列主序，前者要求矩阵的每一行元素在内存中是连续的，后者以此类推</p>
 <p>cuBLAS库包含3个API，其中一个为<code>cuBLAS API</code>，可以实现BLAS三个层级的函数</p>
@@ -1756,7 +1741,7 @@ thrust<span class="token operator">::</span><span class="token function">device_
 <code>n</code>：复制的元素个数<br><code>elemSize</code>：每个元素的字节数<br><code>incx</code>/<code>incy</code>：表示对数组x/y进行访问时每incx/incy个数据中取一个<br><code>x</code>：主机数组<br><code>y</code>：设备数组<br>例：<code>cublasSetVector(MK, sizeof(double), h_A, 1, g_A, 1);</code></li>
 <li>从设备数组复制到主机数组<br><code>cublasGetVector()</code>其中参数相同，顺序不同<br>例：<code>cublasGetVector(MK, sizeof(double), g_A, 1, h_A, 1);</code></li>
 </ul>
-<ol start="2">
+<ol>
 <li>矩阵乘法计算</li>
 </ol>
 <ul>
@@ -1768,13 +1753,7 @@ thrust<span class="token operator">::</span><span class="token function">device_
 <li>执行如下计算<code>C = alpha * transa(A) * transb(B) + beta * C</code><ul>
 <li><code>transa(A)</code>是对矩阵<code>A</code>做一个变换之后得到的矩阵，维度是<code>m × k</code></li>
 <li><code>transb(B)</code>是对矩阵<code>B</code>做一个变换之后得到的矩阵，维度是<code>k × n</code></li>
-<li><code>C</code>的维度是<code>m × n</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">cublasDgemm</span>
+<li><code>C</code>的维度是<code>m × n</code><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">cublasDgemm</span>
 <span class="token punctuation">(</span>
 	<span class="token class-name">cublasHandle_t</span> handle<span class="token punctuation">,</span>
 	<span class="token class-name">cublasOperation_t</span> transa<span class="token punctuation">,</span>
@@ -1791,8 +1770,11 @@ thrust<span class="token operator">::</span><span class="token function">device_
 	<span class="token keyword">double</span> <span class="token operator">*</span>C<span class="token punctuation">,</span>
 	<span class="token keyword">int</span> ldc
 <span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>cublasOperation_t transa</code>中<code>transa</code>为：</p>
-<ul>
+<code>cublasOperation_t transa</code>中<code>transa</code>为：</li>
+</ul>
+</li>
+</ul>
+</li>
 <li><code>cuBLAS_OP_N</code>，<code>transa(A)</code>等于<code>A</code></li>
 <li><code>cuBLAS_OP_T</code>，<code>transa(A)</code>等于<code>A</code>的转置</li>
 <li><code>cuBLAS_OP_C</code>，<code>transa(A)</code>等于<code>A</code>的共轭转置<br><code>lda</code>、<code>ldb</code>和<code>ldc</code>分别是<code>transa(A)</code>、<code>transa(B)</code>和<code>C</code>的主维度，他们都是列主序，所以他们的主维度是矩阵的行数</li>

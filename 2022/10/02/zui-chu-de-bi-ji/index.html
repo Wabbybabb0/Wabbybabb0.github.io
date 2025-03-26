@@ -575,8 +575,7 @@
 		<span class="token function">Delay500ms</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//不亮后等500ms</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/../../../../medias/blog_picture/51/25.png" alt="LED模块"></p>
+<p><img src="../../../../medias/blog_picture/51/25.png" alt="LED模块"></p>
 <p>解释：为什么1不亮0亮，是因为LED一端接了VCC高电平，则另一端应该给低电平即0，才有电流输出</p>
 <h1 id="2-3流水灯"><a href="#2-3流水灯" class="headerlink" title="2-3流水灯"></a>2-3流水灯</h1><h2 id="①"><a href="#①" class="headerlink" title="①"></a>①</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;INTRINS.H&gt;</span></span>
@@ -621,7 +620,6 @@
 		<span class="token function">Delay500ms</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="②"><a href="#②" class="headerlink" title="②"></a>②</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 
 <span class="token keyword">void</span> <span class="token function">Delay1ms</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span>		<span class="token comment">//@11.0592MHz</span>
@@ -665,8 +663,7 @@
 			<span class="token function">Delay1ms</span><span class="token punctuation">(</span><span class="token number">500</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 		<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="3-1独立按键控制LED灯亮灭"><a href="#3-1独立按键控制LED灯亮灭" class="headerlink" title="3-1独立按键控制LED灯亮灭"></a>3-1独立按键控制LED灯亮灭</h1><p><img src="/../../../../medias/blog_picture/51/26.png" alt="独立按键"></p>
+<h1 id="3-1独立按键控制LED灯亮灭"><a href="#3-1独立按键控制LED灯亮灭" class="headerlink" title="3-1独立按键控制LED灯亮灭"></a>3-1独立按键控制LED灯亮灭</h1><p><img src="../../../../medias/blog_picture/51/26.png" alt="独立按键"></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>	
@@ -682,7 +679,6 @@
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 
 <span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span>		<span class="token comment">//@11.0592MHz</span>
@@ -788,7 +784,6 @@
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>对于<strong>按键消抖，检测松手</strong>的理解：</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>P3_1 <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token comment">//如果按了P3_1</span>
 		<span class="token punctuation">{</span>
@@ -796,9 +791,6 @@
 			<span class="token keyword">while</span><span class="token punctuation">(</span>P3_1 <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//如果还按着P3_1，则进入while的空循环，没有任何执行任务</span>
 			<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//松开手后，跳出while循环，再次进入抖动阶段(消抖)</span>
 	<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h1 id="3-4独立按键控制LED位移"><a href="#3-4独立按键控制LED位移" class="headerlink" title="3-4独立按键控制LED位移"></a>3-4独立按键控制LED位移</h1><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 
 <span class="token keyword">unsigned</span> <span class="token keyword">char</span> LEDNum<span class="token punctuation">;</span>
@@ -855,31 +847,29 @@
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="4-1静态数码管位移"><a href="#4-1静态数码管位移" class="headerlink" title="4-1静态数码管位移"></a>4-1静态数码管位移</h1><p>共阴极，亮的为1(共阴极–高电平)</p>
+<h1 id="4-1静态数码管位移"><a href="#4-1静态数码管位移" class="headerlink" title="4-1静态数码管位移"></a>4-1静态数码管位移</h1><p>共阴极，亮的为1(共阴极—高电平)</p>
 <p>1011 1110为段码(显示6)</p>
-<p>共阳极，亮的为0(共阳极–低电平)</p>
+<p>共阳极，亮的为0(共阳极—低电平)</p>
 <p>段码为0100 0001 </p>
 <p>共阴极:</p>
 <p>当只需要亮第三个数字时，第124的共阴极处连接高电平(给1)，而第3的共阴极给0，则只有第三个灯会亮，至于怎么亮，看上面两个例子</p>
 <p>ps:四组A/B/C….都接在同一个1174211053那里(共用引脚，四个数字只能是一样的  )</p>
 <p>74HC245为双向数据缓冲器：VDD和GND为电源，OE为芯片使能端,A0与B0对应….</p>
-<p>DIR–&gt;direction，数据读取方向</p>
+<p>DIR—&gt;direction，数据读取方向</p>
 <p>当LE接VCC时，A0传数据给B0</p>
 <p>高电平驱动能力弱，低电平驱动能力强，所以这个缓冲器可以增强信号，使数码管更亮</p>
 <p><strong>//以上是之前没在typora写的笔记，不再做过多的补充和修改</strong></p>
 <h1 id="4-1静态数码管位移-1"><a href="#4-1静态数码管位移-1" class="headerlink" title="4-1静态数码管位移"></a>4-1静态数码管位移</h1><p><strong>目的：实现第三个数码管亮起</strong></p>
-<p><img src="/../../../../medias/blog_picture/51/27.png" alt="数码管"></p>
+<p><img src="../../../../medias/blog_picture/51/27.png" alt="数码管"></p>
 <p><strong>第三个灯</strong>对应的是<strong>LED6</strong></p>
-<p><img src="/../../../../medias/blog_picture/51/28.png" alt="138译码器"></p>
-<p><strong>P2_4 P2_3 P2_2—–&gt;Y5—–&gt;LED6</strong></p>
+<p><img src="../../../../medias/blog_picture/51/28.png" alt="138译码器"></p>
+<p><strong>P2_4 P2_3 P2_2——-&gt;Y5——-&gt;LED6</strong></p>
 <p>根据十进制转二进制，Y5的5转为二进制是101，则有</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">P2_4 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
 P2_3 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 P2_2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/../../../../medias/blog_picture/51/29.png" alt="数码管"></p>
-<p>此时要让LED6亮起6，则acdefg为1(共阴极)<strong>因为他们后面接到了GND(低电平)，要给他高电平对应)<strong>，对应到P0口则是(要</strong>从下往上</strong>读，即从<strong>P0_7</strong>读到<strong>P0_0</strong>)<strong>0111 1101</strong>二进制转十六进制，则为0x7D</p>
+<p><img src="../../../../medias/blog_picture/51/29.png" alt="数码管"></p>
+<p>此时要让LED6亮起6，则acdefg为1(共阴极)<strong>因为他们后面接到了GND(低电平)，要给他高电平对应)</strong>，对应到P0口则是(要<strong>从下往上</strong>读，即从<strong>P0_7</strong>读到<strong>P0_0</strong>)<strong>0111 1101</strong>二进制转十六进制，则为0x7D</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 
 <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
@@ -895,9 +885,8 @@ P2_2 <span class="token operator">=</span> <span class="token number">1</span><s
 		
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="使用数组实现"><a href="#使用数组实现" class="headerlink" title="使用数组实现"></a>使用数组实现</h2><p><code>对于Number</code></p>
-<p><img src="/../../../../medias/blog_picture/51/30.png" alt="显示的字母转为2进制推算"></p>
+<p><img src="../../../../medias/blog_picture/51/30.png" alt="显示的字母转为2进制推算"></p>
 <p><strong>静态显示(只能有一个数字)</strong></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 
@@ -931,12 +920,11 @@ P2_2 <span class="token operator">=</span> <span class="token number">1</span><s
 		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//位置(第几个数码管)，数字(如果是字母的话，那就是所要的字母对应数组的位置的位次)</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>三位对应138译码器的ABC口</p>
-<p><img src="/../../../../medias/blog_picture/51/31.png" alt="138译码器"></p>
+<p><img src="../../../../medias/blog_picture/51/31.png" alt="138译码器"></p>
 <p><strong>动态显示(多个数字，需要消影)</strong></p>
 <p>消影</p>
-<p>位选 段选 位选 段选**(进行下一次位选时，段选没有改变)**</p>
+<p>位选 段选 位选 段选<strong>(进行下一次位选时，段选没有改变)</strong></p>
 <p>改成：位选 段选 <strong>清零</strong> 位选 段选</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 
@@ -992,9 +980,6 @@ P2_2 <span class="token operator">=</span> <span class="token number">1</span><s
         <span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 
                 
             </div>

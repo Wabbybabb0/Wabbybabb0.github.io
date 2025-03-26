@@ -546,25 +546,21 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="5-1模块化编程"><a href="#5-1模块化编程" class="headerlink" title="5-1模块化编程"></a>5-1模块化编程</h1><p><img src="/../../../../medias/blog_picture/51/1.png" alt="模块化编程框图"></p>
-<p><img src="/../../../../medias/blog_picture/51/2.png" alt="模块化编程注意事项"></p>
+                <h1 id="5-1模块化编程"><a href="#5-1模块化编程" class="headerlink" title="5-1模块化编程"></a>5-1模块化编程</h1><p><img src="../../../../medias/blog_picture/51/1.png" alt="模块化编程框图"></p>
+<p><img src="../../../../medias/blog_picture/51/2.png" alt="模块化编程注意事项"></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
 
 <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//Delay函数的声明就在第一行那</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/../../../../medias/blog_picture/51/3.png" alt="C预编译"></p>
+<p><img src="../../../../medias/blog_picture/51/3.png" alt="C预编译"></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">_DELAY_H_</span><span class="token comment">//如果没有定义就执行编译(第一次没有定义才参与编译定义)防止多次编译</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">_DELAY_H_</span></span>
 
 <span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="实例操作"><a href="#实例操作" class="headerlink" title="实例操作"></a>实例操作</h2><h3 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token comment">//调用函数</span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
@@ -579,7 +575,6 @@
 		<span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="Delay-c"><a href="#Delay-c" class="headerlink" title="Delay.c"></a>Delay.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">unsigned</span> <span class="token keyword">char</span> i<span class="token punctuation">,</span> j<span class="token punctuation">;</span>
@@ -594,14 +589,12 @@
 	xms<span class="token operator">--</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="Delay-h"><a href="#Delay-h" class="headerlink" title="Delay.h"></a>Delay.h</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__DELAY_H__</span><span class="token comment">//如果没有定义过这个函数</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__DELAY_H__</span><span class="token comment">//则开始定义</span></span>
 
 <span class="token keyword">void</span> <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> xms<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//声明</span>
 
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="Nixie-c"><a href="#Nixie-c" class="headerlink" title="Nixie.c"></a>Nixie.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span><span class="token comment">//因为在声明时用到了P0 P2这种没有被说明的量，所以要引入这个头文件说明</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
 
@@ -625,16 +618,12 @@
 	<span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	P0 <span class="token operator">=</span> <span class="token number">0x00</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="Nixie-h"><a href="#Nixie-h" class="headerlink" title="Nixie.h"></a>Nixie.h</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__NIXIE_H__</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__NIXIE_H__</span></span>
 
 <span class="token keyword">void</span> <span class="token function">Nixie</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Location<span class="token punctuation">,</span>Number<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 
                 
             </div>

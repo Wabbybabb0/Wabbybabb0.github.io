@@ -575,7 +575,6 @@
 <span class="token punctuation">{</span>
 	<span class="token punctuation">(</span><span class="token operator">*</span>pArr<span class="token punctuation">)</span><span class="token punctuation">.</span>len<span class="token operator">=</span><span class="token number">99</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">initArr</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>arr<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">/*
 对于这一行，如果写的是👇
@@ -586,14 +585,12 @@ initArr(arr);
 那么在initArr函数里，*pArr就是arr
 这样做的优点：对比用arr传参(需要用到12个字节)，这样子传参省空间(arr的第一个地址只占4个字节)
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="2-对结构体的理解"><a href="#2-对结构体的理解" class="headerlink" title="2.对结构体的理解"></a>2.对结构体的理解</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">Arr</span><span class="token punctuation">{</span>
 	<span class="token keyword">int</span> <span class="token operator">*</span>pBase<span class="token punctuation">;</span>	<span class="token comment">//存储的是数组第一个元素的地址 </span>
 	<span class="token keyword">int</span> len<span class="token punctuation">;</span>	<span class="token comment">//数组所能容纳的最大元素的个数 </span>
 	<span class="token keyword">int</span> cnt<span class="token punctuation">;</span>	<span class="token comment">//当前数组有效元素的个数 </span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>👉因为数组名就是数组首地址元素，所以在定义*<em>int <em>pBase</em></em> 时，pBase是指针变量，也就是地址，同时它是一个数组名</p>
+<p>👉因为数组名就是数组首地址元素，所以在定义<strong>int *pBase</strong> 时，pBase是指针变量，也就是地址，同时它是一个数组名</p>
 <p>👉其实也可以理解为，这个结构体，主体部分是pBase，其他成员是这个数组的一些属性的说明</p>
 <p>👉为了把这些属性和数组主体联系起来，搞了一个结构体把它们放在一起</p>
 <h2 id="3-初始化"><a href="#3-初始化" class="headerlink" title="3.初始化"></a>3.初始化</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">initArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">,</span><span class="token keyword">int</span> length<span class="token punctuation">)</span><span class="token comment">//此时指向arr的第一个地址，现在pArr存放的是arr第一个字节的地址 </span>
@@ -611,7 +608,6 @@ initArr(arr);
 	<span class="token punctuation">}</span>
 	<span class="token keyword">return</span><span class="token punctuation">;</span><span class="token comment">//告诉程序这个函数结束了 </span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>👉pBase是一个数组，先给他分配空间</p>
 <ul>
 <li>对pBase内存是否分配成功要做一个判定</li>
@@ -634,9 +630,6 @@ initArr(arr);
 			
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="5-判断数组里是否有元素"><a href="#5-判断数组里是否有元素" class="headerlink" title="5.判断数组里是否有元素"></a>5.判断数组里是否有元素</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span>
@@ -644,7 +637,6 @@ initArr(arr);
 	<span class="token keyword">else</span>
 		<span class="token keyword">return</span> false<span class="token punctuation">;</span>	
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="6-判断数组是否是满的"><a href="#6-判断数组是否是满的" class="headerlink" title="6.判断数组是否是满的"></a>6.判断数组是否是满的</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">isFull</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">==</span>pArr<span class="token operator">-&gt;</span>len<span class="token punctuation">)</span>
@@ -652,9 +644,6 @@ initArr(arr);
 	<span class="token keyword">else</span>
 		<span class="token keyword">return</span> false<span class="token punctuation">;</span>	
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="7-追加元素"><a href="#7-追加元素" class="headerlink" title="7.追加元素"></a>7.追加元素</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">appendArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span><span class="token comment">//val是要加入的元素</span>
 <span class="token punctuation">{</span>
 	<span class="token comment">//满时返回false，不加</span>
@@ -664,7 +653,6 @@ initArr(arr);
 	pArr<span class="token operator">-&gt;</span>pBase<span class="token punctuation">[</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">]</span><span class="token operator">=</span>val<span class="token punctuation">;</span> 
 	<span class="token punctuation">(</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">)</span><span class="token operator">++</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>👉cnt的值=最后一个元素的下标+1</p>
 <p>👉最后记得要给有效值+1</p>
 <h2 id="8-插入元素"><a href="#8-插入元素" class="headerlink" title="8.插入元素"></a>8.插入元素</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">insertArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>
@@ -685,7 +673,6 @@ initArr(arr);
 	<span class="token punctuation">(</span>pArr<span class="token operator">-&gt;</span>cnt<span class="token punctuation">)</span><span class="token operator">++</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span> true<span class="token punctuation">;</span>
 <span class="token punctuation">}</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <ul>
 <li>满了、输入的位置不符合数组现有的→返回错误，在主程序里不执行</li>
 </ul>
@@ -693,7 +680,7 @@ initArr(arr);
 <ul>
 <li><strong>i=pArr-&gt;cnt-1</strong> i对应着下标</li>
 <li><strong>i=pos-1</strong> 插入时只变动要插入位置的该位上和该位后的元素</li>
-<li><strong>–i</strong> 进行插入的逻辑是，先对最后一位操作，最后一位先往后移动，然后前面的再往后移动，最后空出一个位置给要插入的元素插入</li>
+<li><strong>—i</strong> 进行插入的逻辑是，先对最后一位操作，最后一位先往后移动，然后前面的再往后移动，最后空出一个位置给要插入的元素插入</li>
 </ul>
 <p>👉然后</p>
 <ul>
@@ -701,8 +688,7 @@ initArr(arr);
 </li>
 <li><p>放置新元素</p>
 </li>
-<li><p>有效值+1</p>
-</li>
+<li>有效值+1</li>
 </ul>
 <h2 id="9-删除元素"><a href="#9-删除元素" class="headerlink" title="9.删除元素"></a>9.删除元素</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c">bool <span class="token function">deleteArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span> <span class="token operator">*</span>pArr<span class="token punctuation">,</span><span class="token keyword">int</span> pos<span class="token punctuation">,</span><span class="token keyword">int</span> <span class="token operator">*</span>pVal<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -720,7 +706,6 @@ initArr(arr);
 	pArr<span class="token operator">-&gt;</span>cnt<span class="token operator">--</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span> true<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <ul>
 <li>空的、输入不符合数组现有的→返回错误，再主程序中不执行</li>
 </ul>
@@ -741,7 +726,6 @@ initArr(arr);
 	<span class="token punctuation">}</span>
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="11-元素排序"><a href="#11-元素排序" class="headerlink" title="11.元素排序"></a>11.元素排序</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">sortArr</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">Arr</span><span class="token operator">*</span> pArr<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">int</span> i<span class="token punctuation">,</span>j<span class="token punctuation">,</span>t<span class="token punctuation">;</span>
@@ -756,7 +740,6 @@ initArr(arr);
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>

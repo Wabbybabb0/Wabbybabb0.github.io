@@ -546,26 +546,20 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="串口通信"><a href="#串口通信" class="headerlink" title="串口通信"></a>串口通信</h1><p><img src="/../../../../medias/blog_picture/51/32.png" alt="硬件电路"></p>
+                <h1 id="串口通信"><a href="#串口通信" class="headerlink" title="串口通信"></a>串口通信</h1><p><img src="../../../../medias/blog_picture/51/32.png" alt="硬件电路"></p>
 <h3 id="电平标准"><a href="#电平标准" class="headerlink" title="电平标准"></a>电平标准</h3><p>TTL：+5V表示1，0V表示0</p>
 <p><img src="E:\Users\Wabby\AppData\Roaming\Typora\typora-user-images\1665028662515.png" alt="1665028662515"></p>
 <p>异步：A发了1s的1和1s的0，那B就可以连续两次0.5s发1和两次0.5s的0</p>
-<p><img src="/../../../../medias/blog_picture/51/33.png"></p>
-<p><img src="/../../../../medias/blog_picture/51/34.png" alt="串口参数及时序图"></p>
+<p><img src="../../../../medias/blog_picture/51/33.png" alt=""></p>
+<p><img src="../../../../medias/blog_picture/51/34.png" alt="串口参数及时序图"></p>
 <h3 id="检验位-9位"><a href="#检验位-9位" class="headerlink" title="检验位(9位)"></a>检验位(9位)</h3><p>奇校验</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//收：0000 0011 1</span>
 <span class="token comment">//发：0000 0011 1</span>
 <span class="token comment">//但是如果是0000 1010 1就也会补1，排错率不高</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//收：1110 0000 0</span>
 <span class="token comment">//发：1100 0000 0</span>
 <span class="token comment">//这时就是错误的，说明数据出了问题</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-<p><img src="/../../../../medias/blog_picture/51/35.png" alt="串口模式图"></p>
+<p><img src="../../../../medias/blog_picture/51/35.png" alt="串口模式图"></p>
 <p>中间圈起来那块是控制波特率的</p>
 <p>发送寄存器： X=SBUF</p>
 <p>接收寄存器：SBUF=X</p>
@@ -605,34 +599,27 @@
 		
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h4 id="①串口部分SCON-serial-control-PCON-power-control"><a href="#①串口部分SCON-serial-control-PCON-power-control" class="headerlink" title="①串口部分SCON(serial control)&amp;PCON(power control)"></a>①串口部分SCON(serial control)&amp;PCON(power control)</h4><p><img src="/../../../../medias/blog_picture/51/36.png"></p>
+<h4 id="①串口部分SCON-serial-control-amp-PCON-power-control"><a href="#①串口部分SCON-serial-control-amp-PCON-power-control" class="headerlink" title="①串口部分SCON(serial control)&amp;PCON(power control)"></a>①串口部分SCON(serial control)&amp;PCON(power control)</h4><p><img src="../../../../medias/blog_picture/51/36.png" alt=""></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">SCON <span class="token operator">=</span> <span class="token number">0x40</span><span class="token punctuation">;</span>		<span class="token comment">//8位数据,可变波特率</span>
 PCON <span class="token operator">&amp;=</span> <span class="token number">0x7F</span><span class="token punctuation">;</span>	<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
-<h5 id="SM0-SM1"><a href="#SM0-SM1" class="headerlink" title="SM0&amp;SM1"></a>SM0&amp;SM1</h5><p><img src="/../../../../medias/blog_picture/51/37.png"></p>
-<p><img src="/../../../../medias/blog_picture/51/38.png"></p>
+<h5 id="SM0-amp-SM1"><a href="#SM0-amp-SM1" class="headerlink" title="SM0&amp;SM1"></a>SM0&amp;SM1</h5><p><img src="../../../../medias/blog_picture/51/37.png" alt=""></p>
+<p><img src="../../../../medias/blog_picture/51/38.png" alt=""></p>
 <p><strong>REN给0/1都可以</strong></p>
-<p><img src="/../../../../medias/blog_picture/51/39.png"></p>
-<p><img src="/../../../../medias/blog_picture/51/40.png"></p>
+<p><img src="../../../../medias/blog_picture/51/39.png" alt=""></p>
+<p><img src="../../../../medias/blog_picture/51/40.png" alt=""></p>
 <p><strong>SM2，TB8，RB8跟模式1无关，给0</strong></p>
-<p><img src="/../../../../medias/blog_picture/51/41.png"></p>
-<p>就是发送结束后，硬件给T1置1，表示发送完了，然后请求中断的时候TI=0，必须用软件复位是指要人为在软件中使TI=1																																												</p>
-<p><strong>TI=0</strong> —发送–完毕—-硬件–&gt; <strong>T1=1</strong> –请求中断–&gt; <strong>TI=1</strong> –主机响应中断—-软件复位&gt; <strong>TI=0</strong></p>
+<p><img src="../../../../medias/blog_picture/51/41.png" alt=""></p>
+<p>就是发送结束后，硬件给T1置1，表示发送完了，然后请求中断的时候TI=0，必须用软件复位是指要人为在软件中使TI=1                                                                                                                                                                                </p>
+<p><strong>TI=0</strong> —-发送—完毕——硬件—&gt; <strong>T1=1</strong> —请求中断—&gt; <strong>TI=1</strong> —主机响应中断——软件复位&gt; <strong>TI=0</strong></p>
 <p>TI最开始为0</p>
-<p><img src="/../../../../medias/blog_picture/51/42.png"></p>
+<p><img src="../../../../medias/blog_picture/51/42.png" alt=""></p>
 <p>对RI的理解和TI一样</p>
-<p><strong>所以SCON=0100 0000 –&gt; 0x40</strong></p>
+<p><strong>所以SCON=0100 0000 —&gt; 0x40</strong></p>
 <h4 id="②PCON，用波特率计算搞出来的"><a href="#②PCON，用波特率计算搞出来的" class="headerlink" title="②PCON，用波特率计算搞出来的"></a>②PCON，用波特率计算搞出来的</h4><h3 id="定时器部分"><a href="#定时器部分" class="headerlink" title="定时器部分"></a>定时器部分</h3><p>要改为定时器1</p>
-<p><img src="/../../../../medias/blog_picture/51/43.png"></p>
-<p><img src="/../../../../medias/blog_picture/51/44.png"></p>
+<p><img src="../../../../medias/blog_picture/51/43.png" alt=""></p>
+<p><img src="../../../../medias/blog_picture/51/44.png" alt=""></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">TMOD <span class="token operator">&amp;=</span> <span class="token number">0x0F</span><span class="token punctuation">;</span>    <span class="token operator">&amp;</span> <span class="token number">0000</span> <span class="token number">1111</span>		
 TMOD <span class="token operator">|=</span> <span class="token number">0x20</span><span class="token punctuation">;</span>    <span class="token operator">|</span> <span class="token number">0010</span> <span class="token number">0000</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="小小问题"><a href="#小小问题" class="headerlink" title="小小问题"></a>小小问题</h3><p>当我把下面这串</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -643,7 +630,6 @@ TMOD <span class="token operator">|=</span> <span class="token number">0x20</spa
 		
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>改成</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -653,7 +639,6 @@ TMOD <span class="token operator">|=</span> <span class="token number">0x20</spa
 		<span class="token function">UART_SendByte</span><span class="token punctuation">(</span><span class="token number">0x11</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>当为0x11时正常且不断输出11，当为0x66时异常且不断输出96，是因为波特率的误差，此时我们让它翻慢点就可以正常输出了(让他稳定点)</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -664,12 +649,7 @@ TMOD <span class="token operator">|=</span> <span class="token number">0x20</spa
         <span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//让他慢慢翻</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-
-
-<p><img src="/../../../../medias/blog_picture/51/45.png" alt="串口和中断系统"></p>
+<p><img src="../../../../medias/blog_picture/51/45.png" alt="串口和中断系统"></p>
 <p>我们要启用串口中断，而不是定时器中断，定时器中断是到点了就中断，串口中断是有数据过来中断，所以要配置定时器不中断即ET1等于0，然后开启串口中断</p>
 <h2 id="中断服务函数"><a href="#中断服务函数" class="headerlink" title="中断服务函数"></a>中断服务函数</h2><p>模板</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">UART_Rountine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">4</span><span class="token comment">//中断服务子函数</span>
@@ -680,7 +660,6 @@ TMOD <span class="token operator">|=</span> <span class="token number">0x20</spa
 		RI<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>例子</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">UART_Rountine</span><span class="token punctuation">(</span><span class="token punctuation">)</span> interrupt <span class="token number">4</span><span class="token comment">//中断服务子函数</span>
 <span class="token punctuation">{</span>
@@ -692,13 +671,9 @@ TMOD <span class="token operator">|=</span> <span class="token number">0x20</spa
 		RI<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="算波特率"><a href="#算波特率" class="headerlink" title="算波特率"></a>算波特率</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c">TL1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时初值</span>
 TH1 <span class="token operator">=</span> <span class="token number">0xFA</span><span class="token punctuation">;</span>		<span class="token comment">//设定定时器重装值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p>FA–16转10–&gt; 250</p>
+<p>FA—16转10—&gt; 250</p>
 <p>那么一个TL1/TH1对应8byte，也就是256，定时器每隔256-250=6µs溢出一次(每计6个数就溢出一次)，11.0529MHz晶振对应12T模式下的0.924µs计数一次</p>
 <p>溢出的频率=0.924/6=0.154MHz</p>
 <p>0.154MHz/16=0.009625MHz</p>

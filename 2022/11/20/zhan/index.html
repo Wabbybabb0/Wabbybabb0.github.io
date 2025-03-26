@@ -547,7 +547,6 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="一-栈和堆"><a href="#一-栈和堆" class="headerlink" title="一.栈和堆"></a>一.栈和堆</h1><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">double</span> <span class="token operator">*</span>q<span class="token operator">=</span><span class="token punctuation">(</span><span class="token keyword">double</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">200</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p><strong>*q</strong>就是<strong>栈</strong>里的，<strong>200</strong>是堆里的</p>
 <p>动态分配的都在堆里分配，由程序员手动分配</p>
 <p>静态分配的都在栈里分配，由系统自动分配</p>
@@ -589,7 +588,6 @@
 	PNODE pTop<span class="token punctuation">;</span>
 	PNODE pBottom<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>STACK<span class="token punctuation">,</span><span class="token operator">*</span>PSTACK<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>👉对于Stack的理解：</p>
 <p>Stack这个结构体里有两个成员——<strong>名字叫pTop和pBottom、类型为NODE指针</strong></p>
 <h2 id="2-初始化"><a href="#2-初始化" class="headerlink" title="2.初始化"></a>2.初始化</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">init</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>						<span class="token comment">//传参：栈的地址</span>
@@ -606,7 +604,6 @@
 		pS<span class="token operator">-&gt;</span>pTop<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>				<span class="token comment">//让pT和pB指向同一个节点且该节点的指针域存放的是NULL，该节点作为一个头结点。</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="3-压栈"><a href="#3-压栈" class="headerlink" title="3.压栈"></a>3.压栈</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">push</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">,</span><span class="token keyword">int</span> val<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	PNODE pNew<span class="token operator">=</span><span class="token punctuation">(</span>PNODE<span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>NODE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>			<span class="token comment">//为新节点申请空间</span>
@@ -623,11 +620,9 @@
 	<span class="token punctuation">}</span>
 	<span class="token keyword">return</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">pNew<span class="token operator">-&gt;</span>pNext<span class="token operator">=</span>pS<span class="token operator">-&gt;</span>pTop<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>👆理解：</p>
-<p>第一个元素，**pNew-&gt;pNext=pS-&gt;pTop;<strong>和</strong>pNew-&gt;pNext=pS-&gt;pBottom;**都可以 <code>理解为插入的新节点的指针域和pT、pB是一样的，即指向一样，都指向头结点</code></p>
+<p>第一个元素，<strong>pNew-&gt;pNext=pS-&gt;pTop;</strong>和<strong>pNew-&gt;pNext=pS-&gt;pBottom;</strong>都可以 <code>理解为插入的新节点的指针域和pT、pB是一样的，即指向一样，都指向头结点</code></p>
 <p><strong>但是从第二个节点开始</strong>，他的指针域存放的应该得是上一个节点的地址，对应图上的就是<code>右边蓝色的箭头应该==左边被蓝色x覆盖的红色箭头</code>，即<strong>pNew-&gt;pNext=pS-&gt;pTop;</strong></p>
 <h2 id="4-遍历"><a href="#4-遍历" class="headerlink" title="4.遍历"></a>4.遍历</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">traverse</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -639,7 +634,6 @@
 	<span class="token punctuation">}</span>
 	<span class="token keyword">return</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="5-出栈"><a href="#5-出栈" class="headerlink" title="5.出栈"></a>5.出栈</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">pop</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span>pS<span class="token operator">-&gt;</span>pTop<span class="token operator">==</span>pS<span class="token operator">-&gt;</span>pBottom<span class="token punctuation">)</span>
@@ -655,7 +649,6 @@
 		a<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这个应该也很好理解：删除a指向的节点，pTop负责往下走，防止因为删掉上面的节点而丢失下面的节点的地址</p>
 <h2 id="6-清空"><a href="#6-清空" class="headerlink" title="6.清空"></a>6.清空</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">clear</span><span class="token punctuation">(</span>PSTACK pS<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
@@ -676,7 +669,6 @@
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>大致思路和出栈相似，就是多了个循环，再调换一下语句顺序即可</p>
 <h2 id="7-完整代码"><a href="#7-完整代码" class="headerlink" title="7.完整代码"></a>7.完整代码</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;malloc.h&gt;</span></span>
@@ -808,7 +800,6 @@ bool <span class="token function">empty</span><span class="token punctuation">(<
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>

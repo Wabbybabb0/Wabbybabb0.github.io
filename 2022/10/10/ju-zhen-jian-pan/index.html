@@ -546,9 +546,9 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="6-1矩阵键盘"><a href="#6-1矩阵键盘" class="headerlink" title="6-1矩阵键盘"></a>6-1矩阵键盘</h1><p><img src="/../../../../medias/blog_picture/51/20.png" alt="矩阵按键"></p>
-<p><img src="/../../../../medias/blog_picture/51/21.png" alt="芯片引脚"></p>
-<p>前四根线(P17~P14)判断行，给0相当于接地**(由上面这幅图我们知道P1的一端已经接在了VCC，所以要让P1_x运行，要给它低电平，即0)**，此时io口为低电平</p>
+                <h1 id="6-1矩阵键盘"><a href="#6-1矩阵键盘" class="headerlink" title="6-1矩阵键盘"></a>6-1矩阵键盘</h1><p><img src="../../../../medias/blog_picture/51/20.png" alt="矩阵按键"></p>
+<p><img src="../../../../medias/blog_picture/51/21.png" alt="芯片引脚"></p>
+<p>前四根线(P17~P14)判断行，给0相当于接地<strong>(由上面这幅图我们知道P1的一端已经接在了VCC，所以要让P1_x运行，要给它低电平，即0)</strong>，此时io口为低电平</p>
 <p>后四根(P13~P10)判断该行对应的某一个按键</p>
 <h2 id="下面的代码主要是实现控制矩阵键盘，并把按下去的键位对应的数字在LCD1602上显示出来"><a href="#下面的代码主要是实现控制矩阵键盘，并把按下去的键位对应的数字在LCD1602上显示出来" class="headerlink" title="下面的代码主要是实现控制矩阵键盘，并把按下去的键位对应的数字在LCD1602上显示出来"></a>下面的代码主要是实现控制矩阵键盘，并把按下去的键位对应的数字在LCD1602上显示出来</h2><p>ps:常见的Delay就不放出来了，懂得都懂</p>
 <p>matrix矩阵</p>
@@ -558,7 +558,6 @@
 <span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token function">MatrixKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h3 id="MatrixKey-c"><a href="#MatrixKey-c" class="headerlink" title="MatrixKey.c"></a>MatrixKey.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
 
@@ -597,19 +596,15 @@
 	<span class="token keyword">return</span> KeyNumber<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>我们可以发现这个函数代码是由<strong>四组模板一样</strong>的小代码组成的，下面将拎一组出来解释</p>
-<p><img src="/../../../../medias/blog_picture/51/22.png" alt="矩阵按键"></p>
+<p><img src="../../../../medias/blog_picture/51/22.png" alt="矩阵按键"></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">P1<span class="token operator">=</span><span class="token number">0xFF</span><span class="token punctuation">;</span><span class="token comment">//让所有的P1口都为1，就是不对他们进行操作，让他们处于standby状态</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">P1_3<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//"唤醒"列，我们先控制P1_3,让他为0，处于运行状态--①</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//然后逐个判断用户按下了哪个键位+按键消抖，检测松手，赋相应的值给KeyNumber</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span>P1_7<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P1_7<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token comment">//--②</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span>P1_6<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P1_6<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">5</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token comment">//--③</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span>P1_5<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P1_5<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">9</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token comment">//--④</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span>P1_4<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token punctuation">(</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token keyword">while</span><span class="token punctuation">(</span>P1_4<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token function">Delay</span><span class="token punctuation">(</span><span class="token number">20</span><span class="token punctuation">)</span><span class="token punctuation">;</span>KeyNumber<span class="token operator">=</span><span class="token number">13</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span class="token comment">//--⑤</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"LCD1602.h"</span></span>
@@ -630,19 +625,16 @@
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>**对于if的解释       iiiiiiimportant!!!!!!    **</p>
+<p><strong>对于if的解释       iiiiiiimportant!!!!!!    </strong></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
 		KeyNum<span class="token operator">=</span><span class="token function">MatrixKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>			  <span class="token comment">//把返回的KeyNumber赋值给KeyNum</span>
      	<span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>KeyNum<span class="token punctuation">.</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>​	如果没有<strong>if</strong>，先进入<strong>while(1)<strong>循环中，那么当用户</strong>按下S1</strong>的时候，<strong>Matrix函数</strong>返回<strong>KeyNumber</strong>的值给主函数的<strong>KeyNum</strong>，此时<strong>KeyNum为1</strong>，LCD1602<strong>迅速地显示“1”</strong>(很快啊！肉眼根本看不见的那种)，随即<strong>跳出此次的while(1)循环并进入下一次while(1)循环</strong>，因为下一刻用户不可能速速按下某个键位，所以这时候<strong>Matrix函数</strong>中初始化的那句</p>
+<p>​    如果没有<strong>if</strong>，先进入<strong>while(1)</strong>循环中，那么当用户<strong>按下S1</strong>的时候，<strong>Matrix函数</strong>返回<strong>KeyNumber</strong>的值给主函数的<strong>KeyNum</strong>，此时<strong>KeyNum为1</strong>，LCD1602<strong>迅速地显示“1”</strong>(很快啊！肉眼根本看不见的那种)，随即<strong>跳出此次的while(1)循环并进入下一次while(1)循环</strong>，因为下一刻用户不可能速速按下某个键位，所以这时候<strong>Matrix函数</strong>中初始化的那句</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">char</span> KeyNumber<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>就会直接被返回到主函数的<strong>KeyNum</strong>中，即<strong>KeyNum为0</strong>，所以，我们看到的现象是，无论怎么按都只会显示0，其实有显示过1的，但是太快了，看不见。</p>
-<p>​	那么，我们加了**if(KeyNum)**后，当默认为0的时候，if判断为假，就不会出现0，因为为0的时候，根本不会进入到LCD_ShowNum中执行，所以一直显示的是按下去的键位的辣个数字。</p>
+<p>​    那么，我们加了<strong>if(KeyNum)</strong>后，当默认为0的时候，if判断为假，就不会出现0，因为为0的时候，根本不会进入到LCD_ShowNum中执行，所以一直显示的是按下去的键位的辣个数字。</p>
 <h2 id="强迫症-专业注释"><a href="#强迫症-专业注释" class="headerlink" title="强迫症+专业注释"></a>强迫症+专业注释</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/**
   * @brief  简介
   * @param  参数1
@@ -650,9 +642,6 @@
   * @param  参数n
   * @retval 返回值
   */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h1 id="6-2-矩阵键盘密码锁"><a href="#6-2-矩阵键盘密码锁" class="headerlink" title="6-2 矩阵键盘密码锁"></a>6-2 矩阵键盘密码锁</h1><p><strong>以下代码是在6-1的基础上修改的</strong>，所以不再放出Matrix函数，直接上main.c</p>
 <p>ps:注释不会改中文哈哈哈打出来全是”?”，因此以后的<strong>注释</strong>都是<strong>全(塑料/工地)英制</strong></p>
 <h2 id="main-c-1"><a href="#main-c-1" class="headerlink" title="main.c"></a>main.c</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
@@ -709,8 +698,7 @@
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>我们一节一节地看，以下从用户按下某个键位开始，即从**if(KeyNum)**开始往下看</p>
+<p>我们一节一节地看，以下从用户按下某个键位开始，即从<strong>if(KeyNum)</strong>开始往下看</p>
 <h3 id="输入Password"><a href="#输入Password" class="headerlink" title="输入Password"></a>输入Password</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>KeyNum<span class="token operator">&lt;=</span><span class="token number">10</span><span class="token punctuation">)</span>  <span class="token comment">//if S1~S10keys are pressed ,input password</span>
 <span class="token punctuation">{</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span>Count<span class="token operator">&lt;</span><span class="token number">4</span><span class="token punctuation">)</span> <span class="token comment">//if the time of inout &lt; 4 </span>
@@ -721,16 +709,13 @@
 	<span class="token punctuation">}</span>
 	<span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>Password<span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//updata the display</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这里的设定是，<strong>按下S1~S10时</strong>，对应1~0，这里用到的很妙的一招是</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">Password<span class="token operator">*=</span><span class="token number">10</span><span class="token punctuation">;</span>
 Password<span class="token operator">+=</span>KeyNum<span class="token operator">%</span><span class="token number">10</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>Password自×10，则相当于<strong>所有数字往左移动一位</strong>，<strong>待输入的数字由0占据</strong></p>
 <p>再输入的数字<strong>一定是从个位开始</strong>，然后在按下下一个按键时，往左移动，就，<strong>很妙啊！</strong></p>
 <p>然后再设定只能输入4次，噢对了，我们<strong>在一开始设置了全局变量</strong></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">int</span> Password<span class="token punctuation">,</span>Count<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>所以Password和Count<strong>初始值都是0</strong>，因此<strong>Count&lt;4</strong>即<strong>输入四次</strong></p>
 <h3 id="确认键"><a href="#确认键" class="headerlink" title="确认键"></a>确认键</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>KeyNum<span class="token operator">==</span><span class="token number">11</span><span class="token punctuation">)</span><span class="token comment">//if press S11---&gt;confirm</span>
 <span class="token punctuation">{</span>
@@ -749,13 +734,11 @@ Password<span class="token operator">+=</span>KeyNum<span class="token operator"
 		<span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>Password<span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//updata the display</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>首先，我们<strong>约定了2345是正确密码</strong>，当输入了2345时按下S11会<strong>出现”OK”</strong></p>
 <p>然后，就是输入完毕后<strong>一切归零</strong>，即让用户<strong>再次输入(无论输入正确与否)</strong></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">Password<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//the password zero clearing</span>
 Count<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">//metering zero clearing</span>
 <span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>Password<span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//updata the display</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>先让Password重置为0</p>
 <p>然后计数Count也为0</p>
 <p>一切都回到最开始的样子，即全局变量初始化的样子</p>
@@ -765,10 +748,9 @@ Count<span class="token operator">=</span><span class="token number">0</span><sp
 	Count<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>   <span class="token comment">//metering zero clearing</span>
 	<span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>Password<span class="token punctuation">,</span><span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//updata the display				</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>有了上面的解释，这个应该不难理解吧</p>
-<h1 id="关于LCD1602-c"><a href="#关于LCD1602-c" class="headerlink" title="关于LCD1602.c"></a>关于LCD1602.c</h1><p><img src="/../../../../medias/blog_picture/51/23.png" alt="LCD1602内部显示地址"></p>
-<p><img src="/../../../../medias/blog_picture/51/24.png" alt="举例说明"></p>
+<h1 id="关于LCD1602-c"><a href="#关于LCD1602-c" class="headerlink" title="关于LCD1602.c"></a>关于LCD1602.c</h1><p><img src="../../../../medias/blog_picture/51/23.png" alt="LCD1602内部显示地址"></p>
+<p><img src="../../../../medias/blog_picture/51/24.png" alt="举例说明"></p>
 
                 
             </div>

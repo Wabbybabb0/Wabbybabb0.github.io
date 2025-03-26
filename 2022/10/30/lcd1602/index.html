@@ -521,7 +521,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    657
+                    656
                 </div>
                 
 
@@ -547,12 +547,12 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="LCD1602-16-2"><a href="#LCD1602-16-2" class="headerlink" title="LCD1602(16*2)"></a>LCD1602(16*2)</h1><h2 id="一-原理部分"><a href="#一-原理部分" class="headerlink" title="一.原理部分"></a>一.原理部分</h2><h3 id="1-引脚"><a href="#1-引脚" class="headerlink" title="1.引脚"></a>1.引脚</h3><p>显示容量：16*2个字符</p>
-<p><img src="/../../../../medias/blog_picture/51/76.png"></p>
+<p><img src="../../../../medias/blog_picture/51/76.png" alt=""></p>
 <p>VO(对比度)：<strong>值太小</strong>显示会很浅，<strong>看不清</strong>，<strong>值太大</strong>每个像素都显示出来，<strong>无法辨别</strong>哪些是我们想要的，<strong>我们用R1来调节</strong></p>
-<p>D1~D7：<strong>并行传送模式</strong>，最好接在<strong>一组io口</strong>上，D0–P0_1，D7–P0_7(高位对高位，低位对低位)</p>
+<p>D1~D7：<strong>并行传送模式</strong>，最好接在<strong>一组io口</strong>上，D0—P0_1，D7—P0_7(高位对高位，低位对低位)</p>
 <p>RS(在哪写)&amp;RW(写什么)&amp;E：控制引脚，控制D1~D7</p>
 <p>E：上升沿的时候把数据传到D1~D7，下降沿的时候执行命令</p>
-<h3 id="2-内部结构"><a href="#2-内部结构" class="headerlink" title="2.内部结构"></a>2.内部结构</h3><p><img src="/../../../../medias/blog_picture/51/77.png"></p>
+<h3 id="2-内部结构"><a href="#2-内部结构" class="headerlink" title="2.内部结构"></a>2.内部结构</h3><p><img src="../../../../medias/blog_picture/51/77.png" alt=""></p>
 <p>C(character)G(generater)字符生成</p>
 <p>CGRAM是可写的，是自定义存储数据</p>
 <p>CGROM不可写，早已规定，相当于字典</p>
@@ -560,18 +560,18 @@
 <p>D(data)D(display)数据显示</p>
 <p>DDRAM，用户可写，对应到屏幕的话只会显示前16列(前16列映射到屏幕上)，从第17列开始可以写，因为屏幕不够大所以显示不了(问题不大)</p>
 <h3 id="3-段码表"><a href="#3-段码表" class="headerlink" title="3.段码表"></a>3.段码表</h3><p>我们先要有一个段码表，然后找索引对应屏幕里的</p>
-<p><img src="/../../../../medias/blog_picture/51/78.png"></p>
+<p><img src="../../../../medias/blog_picture/51/78.png" alt=""></p>
 <p>可写的只有八个，在0001 0000-0001 0111</p>
-<p>不可写e.g.比如A，对应0100 0001–转16进制–&gt;0x41</p>
-<h3 id="4-时序图"><a href="#4-时序图" class="headerlink" title="4.时序图"></a>4.时序图</h3><p><img src="/../../../../medias/blog_picture/51/79.png"></p>
-<p><img src="/../../../../medias/blog_picture/51/80.png"></p>
+<p>不可写e.g.比如A，对应0100 0001—转16进制—&gt;0x41</p>
+<h3 id="4-时序图"><a href="#4-时序图" class="headerlink" title="4.时序图"></a>4.时序图</h3><p><img src="../../../../medias/blog_picture/51/79.png" alt=""></p>
+<p><img src="../../../../medias/blog_picture/51/80.png" alt=""></p>
 <p>最高位为1位置不同可以区分不同的指令</p>
 <ul>
 <li>特别是在DB7置1绝对是要操作DDRAM</li>
 </ul>
-<h3 id="5-设置光标位置DDRAM-数据显示"><a href="#5-设置光标位置DDRAM-数据显示" class="headerlink" title="5.设置光标位置DDRAM(数据显示)"></a>5.设置光标位置DDRAM(数据显示)</h3><p><img src="/../../../../medias/blog_picture/51/81.png"></p>
-<p>第一行：<strong>1</strong>000 0000 –&gt;0x80</p>
-<p>第二行：<strong>1</strong>100 0000 –&gt;0xC0</p>
+<h3 id="5-设置光标位置DDRAM-数据显示"><a href="#5-设置光标位置DDRAM-数据显示" class="headerlink" title="5.设置光标位置DDRAM(数据显示)"></a>5.设置光标位置DDRAM(数据显示)</h3><p><img src="../../../../medias/blog_picture/51/81.png" alt=""></p>
+<p>第一行：<strong>1</strong>000 0000 —&gt;0x80</p>
+<p>第二行：<strong>1</strong>100 0000 —&gt;0xC0</p>
 <p>两串的第一个<strong>1</strong>都代表要进入DDRAM这个指令</p>
 <p>因为第一行的地址是00所以后接000 0000，第二行的地址是40所以后接100(二转十就是4) 0000</p>
 <h2 id="二-代码部分"><a href="#二-代码部分" class="headerlink" title="二.代码部分"></a>二.代码部分</h2><h3 id="1-子函数"><a href="#1-子函数" class="headerlink" title="1.子函数"></a>1.子函数</h3><h4 id="①LCD-WriteCommand"><a href="#①LCD-WriteCommand" class="headerlink" title="①LCD_WriteCommand"></a>①LCD_WriteCommand</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">LCD_WriteCommand</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Command<span class="token punctuation">)</span>
@@ -584,7 +584,6 @@
 	LCD_E<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
 	<span class="token function">LCD_Delay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//延缓快速上下拉</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="②LCD-DataCommand"><a href="#②LCD-DataCommand" class="headerlink" title="②LCD_DataCommand"></a>②LCD_DataCommand</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">LCD_WriteData</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Data<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	LCD_RS<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>		<span class="token comment">//0为数据</span>
@@ -595,7 +594,6 @@
 	LCD_E<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
 	<span class="token function">LCD_Delay</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">//延缓快速上下拉</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="③LCD-Init"><a href="#③LCD-Init" class="headerlink" title="③LCD_Init"></a>③LCD_Init</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">LCD_Init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	<span class="token function">LCD_WriteCommand</span><span class="token punctuation">(</span><span class="token number">0x38</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//八位数据接口，两行显示，5x7点阵屏</span>
@@ -603,13 +601,11 @@
 	<span class="token function">LCD_WriteCommand</span><span class="token punctuation">(</span><span class="token number">0x06</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//数据读写操作后，光标自动加一，画面不动</span>
 	<span class="token function">LCD_WriteCommand</span><span class="token punctuation">(</span><span class="token number">0x01</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//清屏</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="④-LCD-ShowChar"><a href="#④-LCD-ShowChar" class="headerlink" title="④.LCD_ShowChar"></a>④.LCD_ShowChar</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">LCD_WriteCommand</span><span class="token punctuation">(</span><span class="token number">0x80</span><span class="token operator">|</span>Column<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>👆理解：Column是列。列-1再并上0x80才转换为对应的地址</p>
 <ul>
-<li>e.g. 当选择**(1,2)<strong>时，由</strong>DDRAM**的表格我们得知该位置的地址是01H</li>
-<li>此时传参到Column的是2，2-1=1，1–10进制转2进制–&gt;0001</li>
+<li>e.g. 当选择<strong>(1,2)</strong>时，由<strong>DDRAM</strong>的表格我们得知该位置的地址是01H</li>
+<li>此时传参到Column的是2，2-1=1，1—10进制转2进制—&gt;0001</li>
 <li>1000 0000|0000 0001=1000 0001</li>
 <li>把<code>1</code> <code>000 0001</code>分成两个模块</li>
 <li><code>1</code>是指进入DDRAM模式</li>

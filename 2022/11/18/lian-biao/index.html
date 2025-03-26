@@ -552,20 +552,17 @@
 <span class="token punctuation">}</span>ST<span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">Student</span> student<span class="token punctuation">;</span><span class="token comment">//&lt;==&gt;ST student;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Student</span><span class="token punctuation">{</span>
     <span class="token keyword">int</span> sid<span class="token punctuation">;</span>
     <span class="token keyword">int</span> age<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token operator">*</span>PST<span class="token punctuation">;</span>
 <span class="token keyword">struct</span> <span class="token class-name">Student</span> <span class="token operator">*</span>p<span class="token punctuation">;</span><span class="token comment">//&lt;==&gt;PST *p;</span>
 <span class="token comment">//PST&lt;==&gt;struct Student *</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-C" data-language="C"><code class="language-C">typedef struct Student{
     int sid;
     int age;
 }*PST,ST;
 //效果是上面的整合<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h1 id="二-链表"><a href="#二-链表" class="headerlink" title="二.链表"></a>二.链表</h1><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h2><ul>
 <li>n个节点离散分配</li>
 <li>批次通过指针相连</li>
@@ -601,7 +598,6 @@
     <span class="token keyword">int</span> data<span class="token punctuation">;</span><span class="token comment">//数据域</span>
     <span class="token keyword">struct</span> <span class="token class-name">Node</span> <span class="token operator">*</span>pNext<span class="token punctuation">;</span><span class="token comment">//指针域</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="5-分类"><a href="#5-分类" class="headerlink" title="5.分类"></a>5.分类</h2><ul>
 <li>单链表</li>
 <li>双链表：每个节点有两个指针域</li>
@@ -616,9 +612,7 @@
 <span class="token punctuation">{</span>
    <span class="token comment">//xxxxxxx</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">pNew<span class="token operator">-&gt;</span>data<span class="token operator">=</span>val<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <ul>
 <li>pTail=pHead<ul>
 <li>可以理解为用尾指针是针线，把原有链表最后一个节点和新加入的节点连接起来</li>
@@ -641,7 +635,6 @@
 条件①：确保是在一个不是空的结构体后插入的
 条件②：p要指向即将要插入的位置的前一个结构体
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>我们要通过遍历的方式找到目标结构体，假设我们要插入到pos=3</p>
 <ul>
 <li><strong>i&lt;pos=1</strong>这里 i=0时 p=第一个有效结构体</li>
@@ -650,14 +643,12 @@
 <li>所以while结束后，p就是第二个有效结构体的指针变量</li>
 </ul>
 <h2 id="3-删除"><a href="#3-删除" class="headerlink" title="3.删除"></a>3.删除</h2><ul>
-<li><p>删除是通过修改前一个结构体指针的指向来删除的</p>
-</li>
+<li>删除是通过修改前一个结构体指针的指向来删除的</li>
 <li><p>所以删除的位置的前一个指针的指向不能是NULL</p>
 </li>
 <li><p>如果要删除的对象的下一个已经是NULL了，那么就不会继续遍历下去 </p>
 </li>
-<li><p><strong>vs插入</strong>，如果要插入的位置是最后一个，即p-&gt;</p>
-</li>
+<li><strong>vs插入</strong>，如果要插入的位置是最后一个，即p-&gt;</li>
 </ul>
 <h1 id="四-全部代码"><a href="#四-全部代码" class="headerlink" title="四.全部代码"></a>四.全部代码</h1><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;stdio.h&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;malloc.h&gt;</span></span>
@@ -858,7 +849,6 @@ bool <span class="token function">deleteList</span><span class="token punctuatio
 	q<span class="token operator">=</span><span class="token constant">NULL</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>

@@ -546,11 +546,11 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="蜂鸣器"><a href="#蜂鸣器" class="headerlink" title="蜂鸣器"></a>蜂鸣器</h1><p><img src="/../../../../medias/blog_picture/51/64.png"></p>
+                <h1 id="蜂鸣器"><a href="#蜂鸣器" class="headerlink" title="蜂鸣器"></a>蜂鸣器</h1><p><img src="../../../../medias/blog_picture/51/64.png" alt=""></p>
 <p>无源蜂鸣器不能一直通电流，它内部置了线圈，要给他交流震荡</p>
-<p><img src="/../../../../medias/blog_picture/51/65.png"></p>
+<p><img src="../../../../medias/blog_picture/51/65.png" alt=""></p>
 <p>VCC高电平，只有蜂鸣器接口处为0才能驱动；白色三角是非门，左边给1/0右边反0/1</p>
-<p><img src="/../../../../medias/blog_picture/51/66.png"></p>
+<p><img src="../../../../medias/blog_picture/51/66.png" alt=""></p>
 <h2 id="经典上代码"><a href="#经典上代码" class="headerlink" title="经典上代码"></a>经典上代码</h2><h4 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Key.h"</span></span>
@@ -571,7 +571,6 @@
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="Key-c"><a href="#Key-c" class="headerlink" title="Key.c"></a>Key.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
 
@@ -592,7 +591,6 @@
 	<span class="token keyword">return</span> KeyNumber<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="Nixie-c"><a href="#Nixie-c" class="headerlink" title="Nixie.c"></a>Nixie.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span>	<span class="token comment">//包含Delay头文件</span></span>
 
@@ -617,9 +615,6 @@
 
 <span class="token punctuation">}</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="Buzzer-c"><a href="#Buzzer-c" class="headerlink" title="Buzzer.c"></a>Buzzer.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;INTRINS.H&gt;</span></span>
@@ -658,7 +653,6 @@ sbit Buzzer<span class="token operator">=</span>P2<span class="token operator">^
 		<span class="token function">Buzzer_Delay500us</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//半个周期500us，一个周期1000us，频率1000Hz=1/1000*0.1^6</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>	<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="Buzzer-h"><a href="#Buzzer-h" class="headerlink" title="Buzzer.h"></a>Buzzer.h</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">__Buzzer_H__</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">__Buzzer_H__</span></span>
 
@@ -667,10 +661,7 @@ sbit Buzzer<span class="token operator">=</span>P2<span class="token operator">^
 <span class="token keyword">void</span> <span class="token function">Buzzer_Time</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> ms<span class="token punctuation">)</span><span class="token punctuation">;</span>
 		
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h2 id="音乐"><a href="#音乐" class="headerlink" title="音乐"></a>音乐</h2><p>音符–&gt;频率(Hz)–&gt;周期(us)–&gt;周期/2(us)–&gt;取整–&gt;<strong>重装数值(用到定时器)</strong></p>
+<h2 id="音乐"><a href="#音乐" class="headerlink" title="音乐"></a>音乐</h2><p>音符—&gt;频率(Hz)—&gt;周期(us)—&gt;周期/2(us)—&gt;取整—&gt;<strong>重装数值(用到定时器)</strong></p>
 <p><strong>周期</strong>=1/频率</p>
 <p><strong>周期/2</strong>：半个周期翻转一次</p>
 <p>周期/2-小数点=<strong>取整</strong></p>
@@ -702,7 +693,6 @@ sbit Buzzer<span class="token operator">=</span>P2<span class="token operator">^
 	<span class="token comment">//跟子函数里的设置不同在于，之后的溢出都是这里管理的，子函数那只管理一次</span>
 	Buzzer<span class="token operator">=</span><span class="token operator">!</span>Buzzer<span class="token punctuation">;</span> <span class="token comment">//直接翻转，一个周期是2*1ms(翻转两次才是一个周期)，频率=1/2*1*0.1^3=500Hz</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="Timer0-c"><a href="#Timer0-c" class="headerlink" title="Timer0.c"></a>Timer0.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 
 <span class="token comment">/**
@@ -738,7 +728,6 @@ void Timer0_Routine() interrupt 1
 	}
 }
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>

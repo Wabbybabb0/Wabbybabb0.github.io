@@ -546,9 +546,9 @@
 <h2 id="2-非易失性存储器-ROM"><a href="#2-非易失性存储器-ROM" class="headerlink" title="2.非易失性存储器/ROM"></a>2.非易失性存储器/ROM</h2><p>全称：non-volatile memory</p>
 <p>百度百科：是指当<strong>电流关掉后</strong>，<strong>所存储的数据不会消失</strong>的电脑存储器，缺点是存储比较慢</p>
 <p>①Mask ROM（掩膜ROM）：只读不写</p>
-<p><img src="/../../../../medias/blog_picture/51/67.png"></p>
+<p><img src="../../../../medias/blog_picture/51/67.png" alt=""></p>
 <p>②PROM(可编程ROM)：只能写一次</p>
-<p><img src="/../../../../medias/blog_picture/51/68.png"></p>
+<p><img src="../../../../medias/blog_picture/51/68.png" alt=""></p>
 <ul>
 <li>编程时左边给高电平、下边给0可以把蓝色的二极管<strong>击穿</strong>，实现可写，所以也叫<strong>烧录程序</strong>哈哈</li>
 </ul>
@@ -556,22 +556,22 @@
 <p>④E2PROM(电可擦除可编程ROM)：5V几毫秒就能擦除</p>
 <p>⑤Flash(内存)：</p>
 <p>⑥硬盘、软盘、光盘等：通过磁介质传递</p>
-<h1 id="二-AT24C02介绍"><a href="#二-AT24C02介绍" class="headerlink" title="二.AT24C02介绍"></a>二.AT24C02介绍</h1><p><img src="/../../../../medias/blog_picture/51/69.png"></p>
-<h1 id="三-I2C"><a href="#三-I2C" class="headerlink" title="三.I2C"></a>三.I2C</h1><p><img src="/../../../../medias/blog_picture/51/70.png"></p>
-<h2 id="1-起始-终止"><a href="#1-起始-终止" class="headerlink" title="1.起始&amp;终止"></a>1.起始&amp;终止</h2><p><img src="/../../../../medias/blog_picture/51/71.png"></p>
-<h2 id="2-发送-接受字节"><a href="#2-发送-接受字节" class="headerlink" title="2.发送/接受字节"></a>2.发送/接受字节</h2><p><img src="/../../../../medias/blog_picture/51/72.png"></p>
-<p><img src="/../../../../medias/blog_picture/51/73.png"></p>
+<h1 id="二-AT24C02介绍"><a href="#二-AT24C02介绍" class="headerlink" title="二.AT24C02介绍"></a>二.AT24C02介绍</h1><p><img src="../../../../medias/blog_picture/51/69.png" alt=""></p>
+<h1 id="三-I2C"><a href="#三-I2C" class="headerlink" title="三.I2C"></a>三.I2C</h1><p><img src="../../../../medias/blog_picture/51/70.png" alt=""></p>
+<h2 id="1-起始-amp-终止"><a href="#1-起始-amp-终止" class="headerlink" title="1.起始&amp;终止"></a>1.起始&amp;终止</h2><p><img src="../../../../medias/blog_picture/51/71.png" alt=""></p>
+<h2 id="2-发送-接受字节"><a href="#2-发送-接受字节" class="headerlink" title="2.发送/接受字节"></a>2.发送/接受字节</h2><p><img src="../../../../medias/blog_picture/51/72.png" alt=""></p>
+<p><img src="../../../../medias/blog_picture/51/73.png" alt=""></p>
 <p>👆注意主机和从机，在SDA中紫色是从机，黑色是主机</p>
 <p>应答可以作为第九位</p>
 <ul>
-<li>主机释放了SDA**(给SDA置1)**变成高电平，把控制权给从机</li>
+<li>主机释放了SDA<strong>(给SDA置1)</strong>变成高电平，把控制权给从机</li>
 <li>此时从机可以操控发1或发0</li>
 <li>当SCL拉低，从机自动将下一位数据放到总线上</li>
 </ul>
-<h2 id="3-发送-接收应答"><a href="#3-发送-接收应答" class="headerlink" title="3.发送/接收应答"></a>3.发送/接收应答</h2><p><img src="/../../../../medias/blog_picture/51/74.png"></p>
+<h2 id="3-发送-接收应答"><a href="#3-发送-接收应答" class="headerlink" title="3.发送/接收应答"></a>3.发送/接收应答</h2><p><img src="../../../../medias/blog_picture/51/74.png" alt=""></p>
 <p>应答可以作为数据的第九位</p>
 <p>用来判断从机是否应答或者主机是否发送应答</p>
-<p><img src="/../../../../medias/blog_picture/51/75.png"></p>
+<p><img src="../../../../medias/blog_picture/51/75.png" alt=""></p>
 <p>呜呜呜呜呜呜呜呜呜呜<strong>从1：15：21开始，代码不能正常运行</strong>呜呜呜呜呜呜呜呜呜呜放弃了放弃了</p>
 <h1 id="四-学到了啥"><a href="#四-学到了啥" class="headerlink" title="四.学到了啥"></a>四.学到了啥</h1><hr>
 <p>感觉比较有用的是在定时器里调用函数，同时对不同模块函数计时</p>
@@ -595,7 +595,6 @@
 		<span class="token function">Nixie_Loop</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>Key_Loop</strong>   <strong>Nixie_Loop</strong></p>
 <p>只需要改变T0Count&gt;=x就可以有针对的计时</p>
 <p>这个loop函数相当于绕了一个圈把子函数调用了一次，但是起码起到了计时的作用</p>

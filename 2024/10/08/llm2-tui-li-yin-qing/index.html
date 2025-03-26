@@ -521,7 +521,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    19.4k
+                    17.3k
                 </div>
                 
 
@@ -548,15 +548,14 @@
             <div id="articleContent">
                 <h1 id="Lesson1-整体架构"><a href="#Lesson1-整体架构" class="headerlink" title="Lesson1 整体架构"></a>Lesson1 整体架构</h1><p>Llama2：生成式模型以decoder-only为架构<br>由两个Decoder组成：<br>①Context Decoder，位于prompt阶段，用来生成一个token；全量推理：输入是一个句子，只需要生成第一个token；具有并行计算的特点</p>
 <p>②Mask self Decoder，位于generate阶段，用来生成第二个token；增量推理：输入是一个token，在gpt上的表现为每次吐出为一个token；每次输入的都是上一个输出的token<br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/c7b40d8526dd">Transformer系列：注意力机制的优化，MQA和GQA原理简述 - 简书</a></p>
-<h1 id="Lesson2-项目搭建-embedding-kernel"><a href="#Lesson2-项目搭建-embedding-kernel" class="headerlink" title="Lesson2 项目搭建&amp;embedding kernel"></a>Lesson2 项目搭建&amp;embedding kernel</h1><p>讲解了：<br><code>src/utils/tensor.h</code><br><code>src/kernels/input_embedding.cu</code><br><code>src/kernels/input_embedding.h</code><br><code>tests/unittests/test_input_embedding.cu</code></p>
+<h1 id="Lesson2-项目搭建-amp-embedding-kernel"><a href="#Lesson2-项目搭建-amp-embedding-kernel" class="headerlink" title="Lesson2 项目搭建&amp;embedding kernel"></a>Lesson2 项目搭建&amp;embedding kernel</h1><p>讲解了：<br><code>src/utils/tensor.h</code><br><code>src/kernels/input_embedding.cu</code><br><code>src/kernels/input_embedding.h</code><br><code>tests/unittests/test_input_embedding.cu</code></p>
 <pre class="line-numbers language-none"><code class="language-none">-src
 |-kernels
 |-|-input_embeding.cu
 |-utils
 |-|-tensor.h
 |-weights<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>LLMengine/src/utils/tensor.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">Struct Tensor{
+<p><code>LLMengine/src/utils/tensor.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">Struct Tensor{
 	Device location,
 	DataType dtype,
 	std::vector&lt;int&gt; shape;
@@ -583,7 +582,7 @@ Class TensorWrap: public Tensor {
 Struct TensorMap{
 	std::unordered_map(std::string, Tensor*&gt; tensor_map);
 	...
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li><code>std::unorder_map</code>：是一个关联容器，用于存储键值对，键是该Tensor的名字，值是指向Tensor类型变量的指针</li>
 <li>关于为什么要在<code>TensorWrap</code>中先继承父类<code>Tensor</code>再实现模板化<code>T* data</code>：<code>Tensor</code>要放到<code>TensorMap</code>中，而C++作为强类型语言，不支持字典存放不同类型的tensor(因为类型定义为<code>Tensor</code>的指针，如果在<code>Tensor</code>中加入了<code>T*</code>作为成员，可能会乱套了)</li>
@@ -620,12 +619,12 @@ template void launchInputEmbedding(TensorWrapper&lt;int&gt;* input_ids, &nbsp; &
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;EmbeddingWeight&lt;float&gt;* embed_table);
 template void launchInputEmbedding(TensorWrapper&lt;int&gt;* input_ids, &nbsp; &nbsp;
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;TensorWrapper&lt;half&gt;* output, &nbsp; &nbsp; &nbsp;
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;EmbeddingWeight&lt;half&gt;* embed_table);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;EmbeddingWeight&lt;half&gt;* embed_table);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 </ul>
-<p><code>src/kernels/input_embedding.cu</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">__global__ void embeddingFunctor(const int* input_ids,
+<p><code>src/kernels/input_embedding.cu</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">__global__ void embeddingFunctor(const int* input_ids,
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;T* output,
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;const T* embed_table,
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;const int max_context_token_num,
@@ -637,24 +636,23 @@ template void launchInputEmbedding(TensorWrapper&lt;int&gt;* input_ids, &nbsp; &
 &nbsp; &nbsp; &nbsp; &nbsp; output[index] = embed_table[id * hidden_size + index % hidden_size];
 &nbsp; &nbsp; &nbsp; &nbsp; index += blockDim.x * gridDim.x;
 &nbsp; &nbsp; }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/6382f7e2cd4bf0b302b43f58c93ea08.jpg">index的索引对应的是output的输出的每个位置？</p>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/6382f7e2cd4bf0b302b43f58c93ea08.jpg" alt="">index的索引对应的是output的输出的每个位置？<p></p>
 <p>这个kernel的用处：将原本输入格式的[batch size, sequence length]变成[batch size, sequence length, hidden size]</p>
 <p>有<code>.cpp</code>文件、<code>.cc</code>文件、<code>.cu</code>文件的目录下需要放<code>CMakeLists.txt</code>文件</p>
 <h1 id="Lesson3-Calculate-padding-offset-kernel"><a href="#Lesson3-Calculate-padding-offset-kernel" class="headerlink" title="Lesson3 Calculate padding offset kernel"></a>Lesson3 Calculate padding offset kernel</h1><p>讲解了：<br><code>src/kernels/cal_paddingoffset.cu</code><br><code>src/kernels/cal_paddingoffset.h</code><br><code>tests/unittests/test_cal_paddingoffset.cu</code></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/bytedance/effective_transformer">Padding Offset思想来源</a><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/Pasted%20image%2020241011153928.png" alt="|425"></p>
-<p><code>src/lkernels/cal_paddingoffset.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void launchCalPaddingoffset(TensorWrapper&lt;int&gt;* padding_offset,
+<p><code>src/lkernels/cal_paddingoffset.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void launchCalPaddingoffset(TensorWrapper&lt;int&gt;* padding_offset,
 							TensorWrapper&lt;int&gt;* cum_seqlens,
 							TensorWrapper&lt;int&gt;* input_lengths
-);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li>参数：<br>  <code>padding_offset</code>：<code>[batch size, max q_seq length]</code>记录每个token在其之前的padding个数<br>  <code>cum_seqlens</code>：<code>[batch size + 1]</code>第一个句子累积长度是它本身，第二个句子累积长度是第一句+第二句长度<br>  <code>input_lengths</code>：<code>[batch size]</code>每个句子的输入长度，本身的<br>  <code>launchCalPaddingoffset</code>函数的目的是输出padding个数和累积长度</li>
-<li>例子：<br>  11100<br>  11000<br>  11111<br>  batch size = 3<br>  seqlen = [3, 2, 5]<br>  max_q_len = 5<br>  padding_offset = [0, 0, 0, 0, 0<br>              2, 2, 2, 2, 2<br>              5, 5, 5, 5, 5]<br>  cum_seqlens = [0, 3, 5, 10]</li>
+<li>例子：<br>  11100<br>  11000<br>  11111<br>  batch size = 3<br>  seqlen = [3, 2, 5]<br>  max_q_len = 5<br>  padding_offset = [0, 0, 0, 0, 0<pre><code>              2, 2, 2, 2, 2
+              5, 5, 5, 5, 5]
+</code></pre>  cum_seqlens = [0, 3, 5, 10]</li>
 </ul>
 <p>相比于<code>Lesson2</code>中的模板化，这里不需要模板化的原因是，该函数的参数都是<code>int</code>类型，而<code>Lesson2</code>中的是<code>T</code>类型，需要对其做<code>FP16</code>和<code>FP32</code>的模板化</p>
-<p><code>src/kernels/cal_paddingoffset.cu</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">__global__ void CalPaddingoffset(int* &nbsp; &nbsp; &nbsp; &nbsp; padding_offset,
+<p><code>src/kernels/cal_paddingoffset.cu</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">__global__ void CalPaddingoffset(int* &nbsp; &nbsp; &nbsp; &nbsp; padding_offset,
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;int* &nbsp; &nbsp; &nbsp; &nbsp; cum_seqlens,
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;const int* &nbsp; input_lengths, //actual input lens
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;const int &nbsp; &nbsp;batch_size,
@@ -674,11 +672,8 @@ template void launchInputEmbedding(TensorWrapper&lt;int&gt;* input_ids, &nbsp; &
 &nbsp; &nbsp; &nbsp; &nbsp; total_seqlen += seqlen; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; // 获取每个句子累积的句子长度
 &nbsp; &nbsp; }
 &nbsp; &nbsp; cum_seqlens[batch_size] = total_seqlen;
-&nbsp; &nbsp; }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<p><code>kernel</code>写完之后还需要写<code>CMake</code>文件<br><code>test/unittest/CMakelist.txt</code>：将test编译为可执行文件</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">add_executable(cal_paddingoffset // ※
+&nbsp; &nbsp; }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p><code>kernel</code>写完之后还需要写<code>CMake</code>文件<br><code>test/unittest/CMakelist.txt</code>：将test编译为可执行文件<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">add_executable(cal_paddingoffset // ※
 	test_input_embedding.cu
 )
 target_link_libraries(
@@ -686,40 +681,29 @@ target_link_libraries(
 	-lcudart
 	-lcudadevrt
 	paddingoffset               // 这里可以自己起
-)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>src/kernels/CMakelist.txt</code>(注意和上面的名称的对应)</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">add_library(paddingoffset STATIC cal_paddingoffset.cu)
+)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><code>src/kernels/CMakelist.txt</code>(注意和上面的名称的对应)<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">add_library(paddingoffset STATIC cal_paddingoffset.cu)
 set_property(TARGET paddingoffset PROPERTY CUDA_SEPARABLE_COMPILATION   ON)
 set_property(TARGET paddingoffset PROPERTY POSITION_INDEPENDENT_CODE ON)
-set_property(TARGET paddingoffset PROPERTY CUDA_RESOLVE_DEVICE_SYMBOLE ON)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
+set_property(TARGET paddingoffset PROPERTY CUDA_RESOLVE_DEVICE_SYMBOLE ON)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <h1 id="Lesson4-RMS-norm"><a href="#Lesson4-RMS-norm" class="headerlink" title="Lesson4 RMS norm"></a>Lesson4 RMS norm</h1><p>讲解了：<br><code>src/kernels/rmsnorm_kernel.cu</code><br><code>src/kernels/rmsnorm_kernel.h</code><br><code>tests/unittests/test_rmsnorm.cu</code><br><code>src/utils/vectorize_utils.h</code><br><code>src/weights/llama/norm_weights.h</code></p>
-<p><code>src/utils/vectorize_utils.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;
+<p><code>src/utils/vectorize_utils.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;
 struct Vec{
 &nbsp; &nbsp; using Type = T;
 &nbsp; &nbsp; static constexpr int size = 0;
 };
-// 除此之外还定义了float4(size=4)，half2(size=2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>static</code>：表示该成员<code>size</code>属于类而不是某个实例(对象)<br><code>constexpr</code>：定义一个静态的类成员，并且该成员是一个编译时常量，在编译时就确定<br><code>float4</code>和<code>half2</code>分别是包含4个<code>float</code>分量的向量和包含2个<code>half</code>分量的向量<br>作用是存储通用的向量化数据结构</p>
-<p><code>src/weights/llama/norm_weights.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+// 除此之外还定义了float4(size=4)，half2(size=2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><code>static</code>：表示该成员<code>size</code>属于类而不是某个实例(对象)<br><code>constexpr</code>：定义一个静态的类成员，并且该成员是一个编译时常量，在编译时就确定<br><code>float4</code>和<code>half2</code>分别是包含4个<code>float</code>分量的向量和包含2个<code>half</code>分量的向量<br>作用是存储通用的向量化数据结构<p></p>
+<p><code>src/weights/llama/norm_weights.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 struct LayerNormWeight {  
     T* gamma; 
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="4-1src-kernel-rmsnorm-kernel-cu"><a href="#4-1src-kernel-rmsnorm-kernel-cu" class="headerlink" title="4.1src/kernel/rmsnorm_kernel.cu"></a>4.1<code>src/kernel/rmsnorm_kernel.cu</code></h2><p>(1)<code>warpReduceSum</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<h2 id="4-1src-kernel-rmsnorm-kernel-cu"><a href="#4-1src-kernel-rmsnorm-kernel-cu" class="headerlink" title="4.1src/kernel/rmsnorm_kernel.cu"></a>4.1<code>src/kernel/rmsnorm_kernel.cu</code></h2><p>(1)<code>warpReduceSum</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 __device__ T warpReduceSum(T val){  
     for(int i = 32 / 2; i &gt; 0; i &gt;&gt;= 1){  
         val += __shfl_xor_sync(0xffffffff, val, i);  
     }    
     return val; // 最后这个warp的结果保存在第一个第一个线程(threadIdx.x=0)
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>将一个warp中的数据加起来</p>
-<p>(2)<code>blockReduceSum</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>将一个warp中的数据加起来<p></p>
+<p>(2)<code>blockReduceSum</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 __device__ T blockReduceSum(T val){  
     int tid = threadIdx.x;  
     it wid = tid / 32;  
@@ -736,25 +720,19 @@ __device__ T blockReduceSum(T val){
     // 处理前warpnum个warpsum[wid]，并且确保使用线程id为0~warpnum-1来处理
     sum = warpReduceSum&lt;T&gt;(sum);  
     return sum;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>将一个block的数据加起来<br>参数：<br>    <code>tid</code>：全局的thread idx (0<del>?)<br>    <code>wid</code>：wrap idx，每32个threads为一个wrap (0</del>?)<br>    <code>laneid</code>：wrap中的thread的编号(0~31)<br>    <code>warpnum</code>：用到的warp的个数，最小为1，所以这里需要向上取整<br>    <code>warpsum</code>：大小为64的类型为T的数组，存放每个warp的总和</p>
-<p>(3)<code>RMSNorm</code><br>计算公式：$\dfrac{x_i×g_i}{\sqrt{\sum^iE(x_i^2)+eps}}$</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>将一个block的数据加起来<br>参数：<br>    <code>tid</code>：全局的thread idx (0~?)<br>    <code>wid</code>：wrap idx，每32个threads为一个wrap (0~?)<br>    <code>laneid</code>：wrap中的thread的编号(0~31)<br>    <code>warpnum</code>：用到的warp的个数，最小为1，所以这里需要向上取整<br>    <code>warpsum</code>：大小为64的类型为T的数组，存放每个warp的总和<p></p>
+<p>(3)<code>RMSNorm</code><br>计算公式：$\dfrac{x_i×g_i}{\sqrt{\sum^iE(x_i^2)+eps}}$<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
 __global__ void RMSNorm(T* decoder_in,
                         T* decoder_residual,  
                         T* scale, //[q_hidden_units], RMSNorm weights  
                         float eps, //RMSNorm eps  
                         int num_tokens,  
                         int hidden_units) {  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>参数：<br>    <code>decoder_in</code>：是输入同时也是输出位置，<code>[num tokens, q_hidden_units]</code><br>    <code>decoder_residual</code>：暂时不知道这个的用处<br>    <code>scale</code>：可学习的参数(权重)，<code>[q_hidden_units]</code><br>    <code>eps</code>：很小的正数<br>    <code>num_tokens</code>：token的个数<br>    <code>hidden_units</code>：隐藏层的单元的数量</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int vec_size = Vec&lt;T&gt;::size;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>参数：<br>    <code>decoder_in</code>：是输入同时也是输出位置，<code>[num tokens, q_hidden_units]</code><br>    <code>decoder_residual</code>：暂时不知道这个的用处<br>    <code>scale</code>：可学习的参数(权重)，<code>[q_hidden_units]</code><br>    <code>eps</code>：很小的正数<br>    <code>num_tokens</code>：token的个数<br>    <code>hidden_units</code>：隐藏层的单元的数量<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int vec_size = Vec&lt;T&gt;::size;
 using Vec_t = typename Vec&lt;T&gt;::Type;  
 Vec_t *dout = reinterpret_cast&lt;Vec_t*&gt;(decoder_in + blockIdx.x * hidden_units); // 每个线程需要读的数据的偏移; block的数量是token的数量  
 Vec_t *rsd = reinterpret_cast&lt;Vec_t*&gt;(decoder_residual * blockIdx.x * hidden_units);  
-float thread_sum = 0.0f;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>参数：<br>    <code>vec_size</code>：读取vector的大小，比如<code>float4</code>的向量个数为4，<code>half2</code>的向量个数为2<br>    <code>Vec_t</code>：读取类型并存到<code>Vec_t</code>中<br>        ！前一句没有用<code>typename</code>而后一句用了的原因是：<br>        ①前者属于非依赖型，<code>size</code>的值在编译时可以确定，与<code>T</code>d的具体类型无关；<br>        ②后者时依赖类型，<code>Type</code>是一个类型别名，取决于<code>T</code>，因此需要<code>typename</code>关键字来告诉编译器他是一个类型<br>    <code>dout</code>：根据线程指向每一个以输入向量为起始的<code>block</code>的开头，每一个<code>block</code>对应一个<code>token</code>，每个<code>block</code>之间相差大小为<code>hidden units</code>的间隔<br>    <code>rsd</code>：同<code>dout</code><br>    <code>thread_sum</code>：用于求和</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">for (int idx = threadIdx.x; idx &lt; hidden_units / vec_size; idx += blockDim.x) {  
+float thread_sum = 0.0f;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>参数：<br>    <code>vec_size</code>：读取vector的大小，比如<code>float4</code>的向量个数为4，<code>half2</code>的向量个数为2<br>    <code>Vec_t</code>：读取类型并存到<code>Vec_t</code>中<br>        ！前一句没有用<code>typename</code>而后一句用了的原因是：<br>        ①前者属于非依赖型，<code>size</code>的值在编译时可以确定，与<code>T</code>d的具体类型无关；<br>        ②后者时依赖类型，<code>Type</code>是一个类型别名，取决于<code>T</code>，因此需要<code>typename</code>关键字来告诉编译器他是一个类型<br>    <code>dout</code>：根据线程指向每一个以输入向量为起始的<code>block</code>的开头，每一个<code>block</code>对应一个<code>token</code>，每个<code>block</code>之间相差大小为<code>hidden units</code>的间隔<br>    <code>rsd</code>：同<code>dout</code><br>    <code>thread_sum</code>：用于求和<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">for (int idx = threadIdx.x; idx &lt; hidden_units / vec_size; idx += blockDim.x) {  
         Vec_t vec = dout[idx];
         rsd[idx] = vec;  
         thread_sum += vec.x * vec.x;  
@@ -762,25 +740,19 @@ float thread_sum = 0.0f;  <span aria-hidden="true" class="line-numbers-rows"><sp
         thread_sum += vec.z * vec.z;  
         thread_sum += vec.w * vec.w;  
     }    
-thread_sum = blockReduceSum&lt;float&gt;(thread_sum);  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>用于求$\sum^iE(x_i)$，每个block得到一个总和<br>参数：<br>    <code>vec</code>：将<code>dout[idx]</code>的数据存到vec中<br>    <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/492e42f3b277fbb6c44c818fa908be8.jpg" alt="|225"><br>    <code>thread_sum</code>：每个线程都有一个私有的副本<br>注意：<br>    <code>idx</code>的范围是从<code>threadIdx.x</code>开始的，范围是0~`blockDim.x-1<code>     因此每个for循环实际只处理了一个block的求和，</code>idx+=blockDimx.x`使得可以对下一个block进行求和<br>    所以说这里的求和是block层面的，也是每个token层面的</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">__shared__ float inv_mean;  
+thread_sum = blockReduceSum&lt;float&gt;(thread_sum);  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>用于求$\sum^iE(x_i)$，每个block得到一个总和<br>参数：<br>    <code>vec</code>：将<code>dout[idx]</code>的数据存到vec中<br>    <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/492e42f3b277fbb6c44c818fa908be8.jpg" alt="|225"><br>    <code>thread_sum</code>：每个线程都有一个私有的副本<br>注意：<br>    <code>idx</code>的范围是从<code>threadIdx.x</code>开始的，范围是0~<code>blockDim.x-1</code><br>    因此每个for循环实际只处理了一个block的求和，<code>idx+=blockDimx.x</code>使得可以对下一个block进行求和<br>    所以说这里的求和是block层面的，也是每个token层面的<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">__shared__ float inv_mean;  
 if (threadIdx.x == 0) {  
     inv_mean = rdqrtf(thread_sum / hidden_units + eps);  
 }    
-__syncthreads(); // share memory inv_mean写入完成后要加上这句话  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>用于计算平均值$inv_mean\dfrac{1}{\sqrt{\sum^iE(x_i^2)+eps}}$<br>    <code>inv_mean</code>：因为均值是<code>block</code>层面的，所以最好把它设为share memory<br>    share memory写入完成后要加上<code>__syncthreads();</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">Vec_t *s = reinterpret_cast&lt;Vec_t *&gt;(scale);  
+__syncthreads(); // share memory inv_mean写入完成后要加上这句话  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>用于计算平均值$inv_mean\dfrac{1}{\sqrt{\sum^iE(x_i^2)+eps}}$<br>    <code>inv_mean</code>：因为均值是<code>block</code>层面的，所以最好把它设为share memory<br>    share memory写入完成后要加上<code>__syncthreads();</code><br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">Vec_t *s = reinterpret_cast&lt;Vec_t *&gt;(scale);  
     for (int idx = threadIdx.x; idx &lt; hidden_units / vec_size; idx += blockDim.x) {  
         Vec_t vec = dout[idx];  
         dout[idx].x = vec.x * inv_mean * s[idx].x; // 因为输入输出都是decoder_in，所以需要实实在在地进dout[idx]这个指针指向的buffer，等号左边不能用vec  
         dout[idx].y = vec.y * inv_mean * s[idx].y; // 因为vec size是4，所以累加4次  
         dout[idx].z = vec.z * inv_mean * s[idx].z;  
         dout[idx].w = vec.w * inv_mean * s[idx].w;  
-    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>用于计算$inv_mean × x_i ×g_i$<br>注意：需要把结果写回<code>dout</code>中</p>
-<p>(4)<code>launchRMSNorm</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>用于计算$inv_mean × x_i ×g_i$<br>注意：需要把结果写回<code>dout</code>中<p></p>
+<p>(4)<code>launchRMSNorm</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 void launchRMSNorm( TensorWrapper&lt;T&gt;* decoder_out,
                     TensorWrapper&lt;T&gt;* decoder_residual,
                     LayerNormWeight&lt;T&gt;&amp; attn_norm_weight,
@@ -799,11 +771,9 @@ void launchRMSNorm( TensorWrapper&lt;T&gt;* decoder_out,
                             eps,  
                             num_tokens,  
                             hidden_units);
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <h1 id="Lesson5-Casual-Mask"><a href="#Lesson5-Casual-Mask" class="headerlink" title="Lesson5 Casual Mask"></a>Lesson5 Casual Mask</h1><p>讲解了：<br><code>src/kernels/build_casual_mask.cu</code><br><code>src/kernels/build_casual_mask.h</code><br><code>tests/unittests/test_casual_mask.cu</code></p>
-<p><code>src/kernel/build_casual_mask.cu</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+<p><code>src/kernel/build_casual_mask.cu</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 __global__ void BuildCausalMasksConsideringContextPastKV(T* mask,
                                                 const int* q_lens,
                                                 const int* k_lens,
@@ -820,22 +790,18 @@ __global__ void BuildCausalMasksConsideringContextPastKV(T* mask,
         mask[tid] =  static_cast&lt;T&gt;(is_one);  
         tid += blockDim.x; 
     }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>参数：<br>    <code>mask</code>：<code>[batch_size, max_q_len, max_k_len]</code>每个<code>mask</code>是一个矩阵，用于表示哪些token对于目前对话是可见的(置1)和不可见的(置0)<br>    <code>q_lens</code>：<code>[batch_size]</code>，作为input lens，我的理解是当前对话的输入<br>    <code>k_lens</code>：<code>[batch_size]</code>，作为context lens，我的理解是结合一定程度的上下文的输入<br>    <code>max_q_len</code>&amp;<code>max_k_len</code>：分别是<code>q_lens</code>和<code>k_lens</code>中最大的<br>理解：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int qlen = q_lens[blockIdx.x];
-int klen = k_lens[blockIdx.x];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>👆每个<code>block</code>对应一个对话，<code>batch_size</code> = 对话个数。这里是分别取每个对话的<code>qlen</code>和<code>klen</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">mask += blockIdx.x * max_k_len * max_q_len;
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>参数：<br>    <code>mask</code>：<code>[batch_size, max_q_len, max_k_len]</code>每个<code>mask</code>是一个矩阵，用于表示哪些token对于目前对话是可见的(置1)和不可见的(置0)<br>    <code>q_lens</code>：<code>[batch_size]</code>，作为input lens，我的理解是当前对话的输入<br>    <code>k_lens</code>：<code>[batch_size]</code>，作为context lens，我的理解是结合一定程度的上下文的输入<br>    <code>max_q_len</code>&amp;<code>max_k_len</code>：分别是<code>q_lens</code>和<code>k_lens</code>中最大的<br>理解：<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int qlen = q_lens[blockIdx.x];
+int klen = k_lens[blockIdx.x];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>👆每个<code>block</code>对应一个对话，<code>batch_size</code> = 对话个数。这里是分别取每个对话的<code>qlen</code>和<code>klen</code><br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">mask += blockIdx.x * max_k_len * max_q_len;
    while(tid &lt; max_k_len * max_q_len){  
        int q = tid / max_k_len; // 目前处于哪一行  
        int k = tid % max_k_len; // 目前处于哪一列  
        bool is_one = q &lt; qlen &amp;&amp; k &lt; klen &amp;&amp; k &lt;= q + (klen - qlen);  
        mask[tid] = static_cast&lt;T&gt;(is_one);  
        tid += blockDim.x; 
-   }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+   }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li>为了确保<code>mask</code>里的每个数都能被处理到（第三句很重要）<ul>
-<li><code>mask[tid] = static_cast&lt;T&gt;(is_one); </code>：<code>block</code>中的一个线程对应<code>mask</code>里的一个数，但是<code>blockDim.x=256</code>，所以需要加上第三句话</li>
+<li><code>mask[tid] = static_cast&lt;T&gt;(is_one);</code>：<code>block</code>中的一个线程对应<code>mask</code>里的一个数，但是<code>blockDim.x=256</code>，所以需要加上第三句话</li>
 <li>循环条件<code>tid &lt; max_k_len * max_q_len</code>：确保每个数都有对应线程处理</li>
 <li><code>mask += blockIdx.x * max_k_len * max_q_len;</code>：</li>
 <li><code>mask</code>的大小＞<code>block</code>的线程数的情况👇</li>
@@ -844,8 +810,7 @@ int klen = k_lens[blockIdx.x];<span aria-hidden="true" class="line-numbers-rows"
 </ul>
 <p>那么就是一个<code>block</code>处理一个<code>mask</code>，如果<code>block</code>大小小于<code>mask</code>的话，就继续用该<code>block</code>的线程处理<code>mask</code>剩余的数</p>
 <h1 id="Lesson6-Linear"><a href="#Lesson6-Linear" class="headerlink" title="Lesson6 Linear"></a>Lesson6 Linear</h1><p>讲解了：<br><code>src/kernels/cublas_utils.h</code>：定义cublas类<br><code>src/kernels/cublas_utils.cc</code>：实现cublas类<br><code>src/kernels/linear.cu</code><br><code>src/kernels/linear.h</code><br><code>tests/unittests/test_linear.cu</code></p>
-<h2 id="6-1-cublas类的声明与定义"><a href="#6-1-cublas类的声明与定义" class="headerlink" title="6.1 cublas类的声明与定义"></a>6.1 cublas类的声明与定义</h2><p><code>src/kernels/cublas_utils.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class cublasWrapper {  
+<h2 id="6-1-cublas类的声明与定义"><a href="#6-1-cublas类的声明与定义" class="headerlink" title="6.1 cublas类的声明与定义"></a>6.1 cublas类的声明与定义</h2><p><code>src/kernels/cublas_utils.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class cublasWrapper {  
 private:  
     cublasHandle_t cublas_handle;
     cudaDataType_t Atype;
@@ -888,14 +853,12 @@ public:
 							const int         batchCount,  
 							float             f_alpha,  
 							float             f_beta);  
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>👆声明<code>cublasWrapper</code>类，<code>batchedGemm</code>相对于<code>Gemm</code>多了步长<code>stride</code>和<code>batchCount</code></p>
-<p>定义部分：<br>①构造函数</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">cublasWrapper::cublasWrapper(cublasHandle_t cublas_handle,  
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>👆声明<code>cublasWrapper</code>类，<code>batchedGemm</code>相对于<code>Gemm</code>多了步长<code>stride</code>和<code>batchCount</code><p></p>
+<p>定义部分：<br>①构造函数<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">cublasWrapper::cublasWrapper(cublasHandle_t cublas_handle,  
                              cublasLtHandle_t cublaslt_handle):  
     cublas_handle(cublas_handle),  
     cublaslt_handle(cublaslt_handle){  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li><code>cublasHandle_t</code>是cublas库中的一个类型，与句柄有关</li>
 <li>传入<code>cublas_handle</code>返回到类中的<code>cublas_handle_</code></li>
@@ -905,8 +868,7 @@ public:
 </ul>
 </li>
 </ul>
-<p>②单精度与半精度的配置</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void cublasWrapper::setFP32GemmConfig()  
+<p>②单精度与半精度的配置<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void cublasWrapper::setFP32GemmConfig()  
 {  
     Atype       = CUDA_R_32F;  
     Btype       = CUDA_R_32F;  
@@ -920,19 +882,17 @@ void cublasWrapper::setFP16GemmConfig()
     Btype       = CUDA_R_16F;  
     Ctype       = CUDA_R_16F;  
     computeType = CUBLAS_COMPUTE_16F;  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li>对于<code>computeType</code>，当cuda version&lt;11.0时用CUDA_R_32F，cuda version&gt;11.0时使用CUBLAS_COMPUTE_32F，半精度的同理</li>
 </ul>
-<p>③为<code>alpha</code>和<code>beta</code>赋值</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const void* alpha = is_fp16_computeType ? reinterpret_cast&lt;void*&gt;(&amp;(h_alpha)) : reinterpret_cast&lt;void*&gt;(&amp;f_alpha);  
-const void* beta  = is_fp16_computeType ? reinterpret_cast&lt;void*&gt;(&amp;(h_beta)) : reinterpret_cast&lt;void*&gt;(&amp;f_beta);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>③为<code>alpha</code>和<code>beta</code>赋值<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const void* alpha = is_fp16_computeType ? reinterpret_cast&lt;void*&gt;(&amp;(h_alpha)) : reinterpret_cast&lt;void*&gt;(&amp;f_alpha);  
+const void* beta  = is_fp16_computeType ? reinterpret_cast&lt;void*&gt;(&amp;(h_beta)) : reinterpret_cast&lt;void*&gt;(&amp;f_beta);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li>如果<code>is_fp16_computeTyp</code>为1，则传入半精度的<code>alpha</code>给<code>alpha</code>，<code>beta</code>同理</li>
 </ul>
 <p>④关于batchedGemm与Gemm同理</p>
-<h2 id="6-2-Gemm"><a href="#6-2-Gemm" class="headerlink" title="6.2 Gemm"></a>6.2 Gemm</h2><p><code>src/kernels/linear.cu</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+<h2 id="6-2-Gemm"><a href="#6-2-Gemm" class="headerlink" title="6.2 Gemm"></a>6.2 Gemm</h2><p><code>src/kernels/linear.cu</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 void launchLinearGemm(TensorWrapper&lt;T&gt;* input,  
                       BaseWeight&lt;T&gt;&amp; weight,   
 					  TensorWrapper&lt;T&gt;* output,  
@@ -967,14 +927,13 @@ cublas_wrapper-&gt;Gemm(transA,
                      output-&gt;data,  
                      ldc,  
                      1.0f,  
-                     0.0f);}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>① 关于A、B、C<br>(1)一般的gemm<br>A：<code>input shape = [seqlen, hidden_units]</code><br>B：<code>weight shape = [hidden_units, hidden_units]</code><br><code>A * B = C with trans_b = false</code></p>
+                     0.0f);}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>① 关于A、B、C<br>(1)一般的gemm<br>A：<code>input shape = [seqlen, hidden_units]</code><br>B：<code>weight shape = [hidden_units, hidden_units]</code><br><code>A * B = C with trans_b = false</code><p></p>
 <p>对于qkvlinear，是指将三次矩阵乘法融合到一次<br><code>input=[seqlen, hidden_units]</code><br><code>weight shape = [hidden_units, 3×hidden_units]</code></p>
 <p>(2)出现在sampling的<code>LMHead</code><br>A：<code>input shape = [batch_size, hidden_units]</code><br>B：<code>weight_shape = [vocabulary_size, hidden_units]</code><br><code>A * B = C with transb = true</code></p>
 <p>②重点与难点：</p>
 <ul>
 <li><code>torch.nn.linear</code>的计算公式是$y=x×w^T$，修改之前是$y=x×w$，因此<code>trans_b=True</code></li>
-<li>cublas API接受的输入以及输出的内存排布全部都默认为<strong>列主序(column-major)</strong><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/Pasted%20image%2020241019161646.png"></li>
+<li>cublas API接受的输入以及输出的内存排布全部都默认为<strong>列主序(column-major)</strong><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/Pasted%20image%2020241019161646.png" alt=""></li>
 <li>因此，我们的思路是<ul>
 <li>从原本的$y=x×w$，因为<code>nn</code>的计算方式</li>
 <li>加上<code>trans_b=True</code>后可以实现$y=x×w^T$，因为列主序(从行主序到列主序需要将两边同时转置)<ul>
@@ -997,7 +956,6 @@ int Bk = input-&gt;shape[1];
 int Bn = input-&gt;shape[0];  
 int Cm = output-&gt;shape[1];  
 int Cn = output-&gt;shape[0];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="6-3-StrideBatchGemm"><a href="#6-3-StrideBatchGemm" class="headerlink" title="6.3 StrideBatchGemm"></a>6.3 StrideBatchGemm</h2><p>①关于input1和input2<br>$q×k$<br>input1：<code>q shape = [batch_size, head_nums, seqlen(=len_q), hidden_units]</code><br>input2：<code>k shape = [batch_size, head_nums, seqlen(=len_k), hidden_units]</code><br><code>A * B = C with trans_b = true</code><br>$qk×v$<br>input1：<code>qk shape = [batch_size, head_nums, seqlen(=len_q), seqlen(=len_k)]</code><br>input2：<code>v shape = [batch_size, head_nums, seqlen(=len_k), hidden_units]</code><br><code>A * B = C with transb = false</code><br>实际上在<code>src/kernels/linear.cu</code>中处理过程与Gemm差不多</p>
 <p>②StrideBatchGemm和BatchGemm相比<br>假如<code>A=[1,2,3,4]</code></p>
 <ul>
@@ -1007,13 +965,11 @@ int Cn = output-&gt;shape[0];<span aria-hidden="true" class="line-numbers-rows">
 </li>
 <li>两个都有<code>batchCount</code>变量<ul>
 <li>对于StrideBatch是每个批次中需要相乘的矩阵个数 = 1*2</li>
-<li>BatchGemm是A、B、C中指针个数，及矩阵个数</li>
+<li>BatchGemm是A、B、C中指针个数，及矩阵个数<h2 id="6-4-其他"><a href="#6-4-其他" class="headerlink" title="6.4 其他"></a>6.4 其他</h2><code>cublasHanle_t</code>用于定义一个句柄，用于管理和配置 <code>cuBLAS</code> 库中的所有函数调用，类似一个控制器(开/关)</li>
 </ul>
 </li>
 </ul>
-<h2 id="6-4-其他"><a href="#6-4-其他" class="headerlink" title="6.4 其他"></a>6.4 其他</h2><p><code>cublasHanle_t</code>用于定义一个句柄，用于管理和配置 <code>cuBLAS</code> 库中的所有函数调用，类似一个控制器(开/关)</p>
-<p>初始化列表例子 ：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class Person {
+<p>初始化列表例子 ：<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class Person {
 public:
 	////传统方式初始化
 	//Person(int a, int b, int c) {
@@ -1029,28 +985,25 @@ public:
 		cout &lt;&lt; "mB:" &lt;&lt; m_B &lt;&lt; endl;
 		cout &lt;&lt; "mC:" &lt;&lt; m_C &lt;&lt; endl;
 ...
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <p><code>RAII</code>机制可以自动析构掉一些类成员变量</p>
 <p>huggingface的7b chat中linear的weight全是转置后的，比如<code>gate</code>的权重应该是<code>[q_hidden_units, inter_size]</code>，但是在huggingface里是<code>[inter_size, q_hidden_units]</code>，所以<code>launchLinearGemm</code>的<code>trans_b</code>对于所有linear weights来说都是<code>true</code></p>
-<h1 id="Lesson7-Debug-一"><a href="#Lesson7-Debug-一" class="headerlink" title="Lesson7 Debug(一)"></a>Lesson7 Debug(一)</h1><p><code>src/kernels/rmsnorm_kernel.cu</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">dout[idx].x = __float2half(vec.x * inv_mean) * s[idx].x;
-dout[idx].y = __float2half(vec.y * inv_mean) * s[idx].y;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>出现如下报错： </p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">error: <span class="token function">more</span> than one operator <span class="token string">"*"</span> matches these operands:
+<h1 id="Lesson7-Debug-一"><a href="#Lesson7-Debug-一" class="headerlink" title="Lesson7 Debug(一)"></a>Lesson7 Debug(一)</h1><p><code>src/kernels/rmsnorm_kernel.cu</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">dout[idx].x = __float2half(vec.x * inv_mean) * s[idx].x;
+dout[idx].y = __float2half(vec.y * inv_mean) * s[idx].y;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>出现如下报错：<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">error: <span class="token function">more</span> than one operator <span class="token string">"*"</span> matches these operands:
 built-in operator <span class="token string">"arithmetic * arithmetic"</span>
-<span class="token keyword">function</span> <span class="token string">"operator*(const __half &amp;, const __half &amp;)"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p>在编译器执行乘法运算时，发现有多个符合条件的*操作符但是不确定应该使用哪一个</p>
+<span class="token keyword">function</span> <span class="token string">"operator*(const __half &amp;, const __half &amp;)"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br>在编译器执行乘法运算时，发现有多个符合条件的*操作符但是不确定应该使用哪一个<p></p>
 <ul>
 <li><code>built-in operator "arithmetic * arithmetic"</code>：这是CUDA支持的基本算术类型之间的乘法操作（如整数或浮点数）。</li>
 <li><code>function "operator*(const __half &amp;, const __half &amp;)"</code>：这是CUDA中针对<code>__half</code>类型（即半精度浮点数）提供的乘法操作符。<br>解决方法：<br>将代码改为<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">dout[idx].x = s[idx].x * __float2half(__half2float(vec.x) * inv_mean);
-dout[idx].y = s[idx].y * __float2half(__half2float(vec.y) * inv_mean);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+dout[idx].y = s[idx].y * __float2half(__half2float(vec.y) * inv_mean);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
 </ul>
 <p>编译顺序从<code>kernels</code>到<code>tests</code>原因：</p>
 <ul>
 <li>编译<code>tests</code>时需要调用到<code>src/kernels</code>的cuda函数或者launch函数，所以需要先编译<code>kernels</code>文件下的</li>
 <li>在根目录下的<code>CMakeList.txt</code>中有先后顺序<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">add_subdirectory(src)
-add_subdirectory(tests)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+add_subdirectory(tests)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
 </ul>
 <h1 id="Lesson8-RoPE"><a href="#Lesson8-RoPE" class="headerlink" title="Lesson8 RoPE"></a>Lesson8 RoPE</h1><p><a target="_blank" rel="noopener" href="https://www.53ai.com/news/qianyanjishu/1291.html">一文看懂 LLaMA 中的旋转式位置编码（Rotary Position Embedding）</a><br>讲解了：<br><code>src/kernels/qkv_bias_and_RoPE.cu</code><br><code>src/kernels/qkv_bias_and_RoPE.h</code><br><code>src/models/llama/llama_params.h</code><br><code>tests/unittests/test_bias_and_rope.cu</code><br><code>src/utils/vectorize_utils.h</code></p>
 <p>本节融合算子的作用</p>
@@ -1071,21 +1024,17 @@ add_subdirectory(tests)<span aria-hidden="true" class="line-numbers-rows"><span>
 <p>输入：<br>    <code>QKV</code> shape=<code>[num tokens, qkv head num, head size]</code><br>    <code>qkv bias</code> shape = <code>[qkv head num, head size]</code><br>输出：<br>    <code>q</code>：<code>[bs, q head num, max q len, head size]</code><br>    <code>k</code>：<code>[bs, kv head num ,max q len, head size]</code><br>    <code>v</code>：<code>[bs, kv head num, max q len, head size]</code><br>    这里的<code>max q len</code>就是<code>seqlen</code><br>下一节会讲到<code>repeat kv</code></p>
 <h2 id="8-1-src-kernels-qkv-bias-and-RoPE-cu"><a href="#8-1-src-kernels-qkv-bias-and-RoPE-cu" class="headerlink" title="8.1 src/kernels/qkv_bias_and_RoPE.cu"></a>8.1 <code>src/kernels/qkv_bias_and_RoPE.cu</code></h2><p>llama使用的是QGA(Grouped-Query Attention)，采用的是一组Q(N个)共享同一个KV</p>
 <p><code>QKV</code>第一个维度是<code>token_num</code>，因此网格的第一个维度x也是<code>token_num</code>，网格的第二个维度y是<code>head_num</code>(<code>q head num</code>)</p>
-<p><code>qkv</code>类型是<code>BaseWeight&lt;T&gt;</code>，在<code>src/weights/base_weights.h</code>中</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;
+<p><code>qkv</code>类型是<code>BaseWeight&lt;T&gt;</code>，在<code>src/weights/base_weights.h</code>中<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;
 struct BaseWeight{
 	std::vector&lt;int&gt; shape;
 	T* data;
 	WeightType type;
 	T* bias; // qkv需要这一项
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>①<code>GetRoPRfreq()</code>是用来求$θ$和$m$的</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">inline __device__ float2 GetRoPEfreq(int zid, int rot_embed_dim, float base, float t_step) {  
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>①<code>GetRoPRfreq()</code>是用来求$θ$和$m$的<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">inline __device__ float2 GetRoPEfreq(int zid, int rot_embed_dim, float base, float t_step) {  
     float inv_freq = t_step / powf(base, zid / (float)rot_embed_dim); // 求mθ  
     return{cos(inv_freq), sin(inv_freq)};  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>公式：$Θ={θ_i=10000^{-2(i-1)/d},i\in[1,2,…,d/2]}$<br>入参：</p>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>公式：$Θ=\{θ_i=10000^{-2(i-1)/d},i\in[1,2,…,d/2]\}$<br>入参：<p></p>
 <ul>
 <li><code>zid</code>：<code>2(i-1)</code></li>
 <li><code>rot_embed_dim</code>：<code>d</code>，词嵌入向量的维度</li>
@@ -1103,24 +1052,21 @@ struct BaseWeight{
 </li>
 <li>返回的是$cos(mθ_i)$和$sin(mθ_i)$</li>
 </ul>
-<p>②<code>GetRoPEres()</code>是用来得到RoPE后的结果的</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">inline __device__ float2 GetRoPEres(float data, float data_rotate, const float2 coef){  
+<p>②<code>GetRoPEres()</code>是用来得到RoPE后的结果的<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">inline __device__ float2 GetRoPEres(float data, float data_rotate, const float2 coef){  
     float2 rot_v;
     rot_v.x = coef.x * data - coef.y * data_rotate;
     rot_v.y = coef.x * data_rotate + coef.y * data;
     retern rot_v;  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>入参：</p>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>入参：<p></p>
 <ul>
 <li><code>data</code>：<code>head_size</code>中的前半的数据</li>
 <li><code>data_rotate</code>：<code>head_size</code>中后半的数据</li>
 <li><code>coef</code>：通过<code>GetRoPRfreq()</code>得到的$cos(mθ_i)$和$sin(mθ_i)$<br>变量：</li>
 <li>(举例)<code>rot_v.x</code>=$cos(mθ_0)\ <em>\ x_0\ -\ sin(mθ_0)\ </em>\ x_{64}$</li>
 <li>(举例)<code>rot_v.y</code>=$cos(mθ_0)\ <em>\ x_{64}\ +\ sin(mθ_0)\ </em>\ x_0$</li>
-<li>上面两个为一组<code>rot_v</code>，一组指的是他们共享$cos(mθ_0)$和$sin(mθ_0)$<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/d224a5131c3f2a304c66f0ccf912e90.jpg"></li>
+<li>上面两个为一组<code>rot_v</code>，一组指的是他们共享$cos(mθ_0)$和$sin(mθ_0)$<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/d224a5131c3f2a304c66f0ccf912e90.jpg" alt=""></li>
 </ul>
-<p>③<code>add_fusedQKV_bias_transpose_kernel()</code><br>实际上并没有加上bias偏置项</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
+<p>③<code>add_fusedQKV_bias_transpose_kernel()</code><br>实际上并没有加上bias偏置项<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
 __global__ void add_fusedQKV_bias_transpose_kernel(
 	T *q_buf,  
 	T *k_buf,  
@@ -1136,27 +1082,19 @@ __global__ void add_fusedQKV_bias_transpose_kernel(
 	const int head_size,  
 	const int rotary_embedding_dim,  
 	float rotary_embedding_base // default 10000 in llama  
-	)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>1)配置block、thread和padding</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int token_id = blockIdx.x;
+	)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>1)配置block、thread和padding<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int token_id = blockIdx.x;
 int head_id = blockIdx.y; 
 int tid = threadIdx.x;
-int token_padding_offset = padding_offset[token_id];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>token_id</code>和<code>head_id</code>用于获得数据偏移量<br><code>token_padding_offset</code>是该<code>token</code>之前的padding个数</p>
-<p>2)为写到显存里面做准备</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int dst_token_id = token_id + token_padding_offset;
+int token_padding_offset = padding_offset[token_id];<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br><code>token_id</code>和<code>head_id</code>用于获得数据偏移量<br><code>token_padding_offset</code>是该<code>token</code>之前的padding个数<p></p>
+<p>2)为写到显存里面做准备<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int dst_token_id = token_id + token_padding_offset;
 int batch_id = dst_token_id / seq_len;
-int local_token_id = dst_token_id % seq_len;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><code>dst_token_id</code>：可以理解为当前<code>token_id</code>在全部<code>token</code>中的位置<br>    <code>token_id</code>是当前token在不考虑padding时的token位置<br>    <code>token_padding_offset</code>是当前token之前的padding个数<br><code>batch_id</code>：当前token所在位置的对应的句子id<br><code>local_token_id</code>：当前token在当前句子的位置(0~seq_len-1)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/8b1b3ff66b49b6249741cc3c0f00791.jpg" alt="|275"><br>为了写到显存里才做的padding</p>
-<p>3)基于(作为输入)QKV buffer的三个维度(<code>num tokens, qkv head num, head size</code>)获取q、k、v</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int qkv_head_num = head_num + 2 * kv_head_num; 
+int local_token_id = dst_token_id % seq_len;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br><code>dst_token_id</code>：可以理解为当前<code>token_id</code>在全部<code>token</code>中的位置<br>    <code>token_id</code>是当前token在不考虑padding时的token位置<br>    <code>token_padding_offset</code>是当前token之前的padding个数<br><code>batch_id</code>：当前token所在位置的对应的句子id<br><code>local_token_id</code>：当前token在当前句子的位置(0~seq_len-1)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/8b1b3ff66b49b6249741cc3c0f00791.jpg" alt="|275"><br>为了写到显存里才做的padding<p></p>
+<p>3)基于(作为输入)QKV buffer的三个维度(<code>num tokens, qkv head num, head size</code>)获取q、k、v<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int qkv_head_num = head_num + 2 * kv_head_num; 
 int q_id = token_id * qkv_head_num * head_size + head_id * head_size + tid;  
 int k_id = token_id * qkv_head_num * head_size + head_id * head_size + tid + head_num * head_size;
-int v_id = token_id * qkv_head_num * head_size + head_id * head_size + tid + head_num * head_size + kv_head_num * head_size;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>qkv_head_num</code>：其中<code>head_num</code>是<code>q_head_num</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/8d4904053dda536ed4635322867c4fa.jpg" alt="|425"></p>
-<p>4)计算RoPE</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int cur_seq_history_len = history_length[batch_id];
+int v_id = token_id * qkv_head_num * head_size + head_id * head_size + tid + head_num * head_size + kv_head_num * head_size;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br><code>qkv_head_num</code>：其中<code>head_num</code>是<code>q_head_num</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/8d4904053dda536ed4635322867c4fa.jpg" alt="|425"><p></p>
+<p>4)计算RoPE<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const int cur_seq_history_len = history_length[batch_id];
 const int context_length = cur_seq_history_len + input_length[batch_id]  
 const int timestep = cur_seq_history_len + local_token_id; 
 if(tid &gt;= rotary_embedding_dim / 2){ 
@@ -1164,12 +1102,10 @@ if(tid &gt;= rotary_embedding_dim / 2){
 }  
 float2 cos_sin = GetRoPEfreq(tid * 2, rotary_embedding_dim, rotary_embedding_base, timestep);  
 float2 q_rotate = GetRoPEres(QKV[q_id], QKV[q_id + head_size / 2], cos_sin);  
-float2 k_rotate = GetRoPEres(QKV[k_id], QKV[k_id + head_size / 2], cos_sin);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里的长度都以token为单位<br><code>cur_seq_history_len</code>：当前序列的历史的序列长度总和<br><code>context_length</code>：当前序列长度+历史的序列长度<br><code>timestep</code>：历史序列长度+当前seq中的token，得到当前token在整个序列中的位置</p>
+float2 k_rotate = GetRoPEres(QKV[k_id], QKV[k_id + head_size / 2], cos_sin);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>这里的长度都以token为单位<br><code>cur_seq_history_len</code>：当前序列的历史的序列长度总和<br><code>context_length</code>：当前序列长度+历史的序列长度<br><code>timestep</code>：历史序列长度+当前seq中的token，得到当前token在整个序列中的位置<p></p>
 <p>llama的旋转编码是将head size切分成两半，左一半与右一半对应做RoPE，所以当<code>tid &gt;= rotary_embedding_dim/2</code>时就可以停止做RoPE计算，<code>rotary_embedding_dim</code>是词嵌入向量的维度，这里指的应该是token的维度</p>
 <p>在<code>q_rotate</code>和<code>k_rotate</code>的计算过程中也能证实<code>data</code>和<code>data_rotate</code>对应的是线程，所以在上面的if语句中只需要一半的线程即可</p>
-<p>5)写回gmem</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int dst_q_id = batch_id * seq_len * head_num * head_size +  
+<p>5)写回gmem<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int dst_q_id = batch_id * seq_len * head_num * head_size +  
                head_id * seq_len * head_size +  
                local_token_id * head_size + tid;  
 int dst_kv_id = batch_id * seq_len * kv_head_num * head_size +  
@@ -1181,10 +1117,8 @@ if(head_id &lt; kv_head_num){
     // 对于MQA和GQA  
     k_buf[dst_kv_id] = k_rotate.x;  
     k_buf[dst_kv_id + head_size / 2] = k_rotate.y;  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>下面给出了<code>dst_q_id</code>的例子<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/f602724b51ab74e9a401426a567845f.jpg" alt="|675"></p>
-<p>④<code>rope_kernel_for_self_decoder()</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>下面给出了<code>dst_q_id</code>的例子<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/f602724b51ab74e9a401426a567845f.jpg" alt="|675"><p></p>
+<p>④<code>rope_kernel_for_self_decoder()</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 __global__ void rope_kernel_for_self_decoder(T* q,  
                     T* k,  
                     const int batch_size,  
@@ -1193,8 +1127,7 @@ __global__ void rope_kernel_for_self_decoder(T* q,
                     const int head_size,  
                     const int step,  
                     int   rotary_embedding_dim,  
-                    float rotary_embedding_base)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里主要针对self decoder</p>
+                    float rotary_embedding_base)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>这里主要针对self decoder<p></p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int tid = threadIdx.x;  
 int q_head_id = blockIdx.x;  
 int q_batch_id = blockIdx.y;  
@@ -1217,7 +1150,7 @@ q[q_offset] = q_rotate.x;
 q[q_offset + head_size / 2] = q_rotate.y;  
 k[k_offset] = k_rotate.x;  
 k[k_offset + head_size / 2] = k_rotate.y;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>最后<code>k[k_offset]</code>不需要判断<code>head_idx&lt;kv_head_num</code>是因为<code>int kv_head_id = q_head_id / (head_num / kv_head_num); </code>这里的对应关系不会令k head越出边界<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/7b5bd7706fad306560cabfdbc75cb21.jpg" alt="|475"></p>
+<p>最后<code>k[k_offset]</code>不需要判断<code>head_idx&lt;kv_head_num</code>是因为<code>int kv_head_id = q_head_id / (head_num / kv_head_num);</code>这里的对应关系不会令k head越出边界<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/7b5bd7706fad306560cabfdbc75cb21.jpg" alt="|475"></p>
 <h2 id="8-2-其他"><a href="#8-2-其他" class="headerlink" title="8.2 其他"></a>8.2 其他</h2><p><code>using Vec_t = Vec&lt;t&gt;::type;</code>和<code>using Vec_t = typename Vec&lt;t&gt;::type;</code>的区别</p>
 <ul>
 <li>使用<code>typename</code>关键字用来明确告诉编译器<code>Vec&lt;t&gt;::type</code>是一个类型而不是一个(静态)成员</li>
@@ -1230,7 +1163,8 @@ struct Vec{
 // 不需要typename做提示
 struct Vec{
 	using Type = int;
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 <p><code>const_cast</code>主要用于移除(或添加)对象的<code>const</code>限定符，可以修改那些被声明为<code>const</code>的变量</p>
 <h1 id="Lesson9-concat-past-kv-cache"><a href="#Lesson9-concat-past-kv-cache" class="headerlink" title="Lesson9 concat past kv cache"></a>Lesson9 concat past kv cache</h1><p>讲解了：<br><code>src/kernels/concat_past_kv.cu</code><br><code>src/kernels/concat_past_kv.h</code><br><code>tests/unittests/test_concat_kv.cu</code></p>
@@ -1242,8 +1176,7 @@ struct Vec{
 <li><code>history_len</code>：这个batch中的上文长度，即token的长度</li>
 <li><code>cur_query_len</code>：需要进行查询的长度(新生成的token的长度)<br><code>history_len + cur_query_len &lt;= max_seq_len</code></li>
 </ul>
-<p>难点就是写入的位置的偏移<code>dst_offset</code>，实际上这一节也是要解决的问题就是kv cache的写入位置，结合代码看下图就好了<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/11adf571dc54da75266cc135ab66c1f.jpg"><br>👆当layer=1的情况<br>👇这里只放key的，value的和他差不多</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
+<p>难点就是写入的位置的偏移<code>dst_offset</code>，实际上这一节也是要解决的问题就是kv cache的写入位置，结合代码看下图就好了<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/11adf571dc54da75266cc135ab66c1f.jpg" alt=""><br>👆当layer=1的情况<br>👇这里只放key的，value的和他差不多<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
 __global__ void append_key_cache(T *k_dst, // [num layers, bs, kv head num, max_q_len, head size]  
                                  const size_t layer_offset,  
                                  const T *k_src, // [bs, kv_head num, max_q_len, head size]  
@@ -1274,15 +1207,13 @@ __global__ void append_key_cache(T *k_dst, // [num layers, bs, kv head num, max_
 				       + (cumsum_seq_len + token_id) * head_size + tid;  
         k_cache_dst[dst_offset] = k_src[src_offset]; // k_src是当前layer的，dst_offset需要加上  
     }  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h1 id="Lesson10-RepeatKV-for-MQA-GQA-kernel"><a href="#Lesson10-RepeatKV-for-MQA-GQA-kernel" class="headerlink" title="Lesson10 RepeatKV for MQA&amp;GQA kernel"></a>Lesson10 RepeatKV for MQA&amp;GQA kernel</h1><p>讲解了：<br><code>src/kernels/repeat_kv.cu</code><br><code>src/kernels/repeat_kv.h</code><br><code>test/unittests/test_repeat_kv.cu</code></p>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<h1 id="Lesson10-RepeatKV-for-MQA-amp-GQA-kernel"><a href="#Lesson10-RepeatKV-for-MQA-amp-GQA-kernel" class="headerlink" title="Lesson10 RepeatKV for MQA&amp;GQA kernel"></a>Lesson10 RepeatKV for MQA&amp;GQA kernel</h1><p>讲解了：<br><code>src/kernels/repeat_kv.cu</code><br><code>src/kernels/repeat_kv.h</code><br><code>test/unittests/test_repeat_kv.cu</code></p>
 <p>写这个kernel的动机：将MHA转换为MQA，目的是平衡推理速度和MHA所能达到的精度；因为k和v的数量与头数量成正比，所以要减小头的数量和size以减小带宽压力，同时因为后面要做QKgemm，因此要矩阵对齐</p>
 <p>尺寸变化：<br><code>[batch size, kv head num, max seq len, head size]=&gt;</code><br><code>[batch size, q head num, max k len, head size]</code></p>
 <p><code>q_head_per_kv = head_num / kv_head_num</code>，即每一组k head或v head对应多少组q head共用</p>
-<p><code>dim3 grid((max_k_len * head_size + blockSize - 1) / blockSize, batch_size, head_num);</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/6a7c0ad2ea6497df0a680878fb4c32d.jpg"></p>
-<p><code>src/kernels/repeat_kv.cu</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
+<p><code>dim3 grid((max_k_len * head_size + blockSize - 1) / blockSize, batch_size, head_num);</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/6a7c0ad2ea6497df0a680878fb4c32d.jpg" alt=""></p>
+<p><code>src/kernels/repeat_kv.cu</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
 __global__ void repeat_value_cache(T *v_dst,  
                                    const T *v_src,  
                                    const size_t layer_offset,  
@@ -1314,12 +1245,10 @@ __global__ void repeat_value_cache(T *v_dst,
                            v_seq_len_id * head_size +  
                            v_head_size_id;  
         val_dst[dst_id] = val_src[src_id];  
-    }}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/ef1ab04ddb1556e1cd39bef5cf2ac47.jpg"><br>实际上就是按照<code>q head</code>的大小重新排布了<code>k head</code>或<code>v head</code>，使他们一一对应。(图中绿色部分为对应关系，每<code>q_head_num/kv_head_num</code>组<code>q hea</code>d共用一组<code>k head</code>或<code>v head</code>)</p>
+    }}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/ef1ab04ddb1556e1cd39bef5cf2ac47.jpg" alt=""><br>实际上就是按照<code>q head</code>的大小重新排布了<code>k head</code>或<code>v head</code>，使他们一一对应。(图中绿色部分为对应关系，每<code>q_head_num/kv_head_num</code>组<code>q hea</code>d共用一组<code>k head</code>或<code>v head</code>)<p></p>
 <p>总觉得这里的<code>max_k_len</code>有点误导人…应该不是<code>kv head num * max seq len = q head num * max k len</code>，只是单纯的扩展了</p>
-<h1 id="Lesson11-Fused-mask-softmax"><a href="#Lesson11-Fused-mask-softmax" class="headerlink" title="Lesson11  Fused mask&amp;softmax"></a>Lesson11  Fused mask&amp;softmax</h1><p>讲解了：<br><code>src/kernels/attn_softmax_kernel.cu</code><br><code>src/kernels/attn_softmax_kernel.h</code></p>
-<p><code>SumOp</code>和<code>MaxOp</code>的定义</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
+<h1 id="Lesson11-Fused-mask-amp-softmax"><a href="#Lesson11-Fused-mask-amp-softmax" class="headerlink" title="Lesson11  Fused mask&amp;softmax"></a>Lesson11  Fused mask&amp;softmax</h1><p>讲解了：<br><code>src/kernels/attn_softmax_kernel.cu</code><br><code>src/kernels/attn_softmax_kernel.h</code></p>
+<p><code>SumOp</code>和<code>MaxOp</code>的定义<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
 struct SumOp  
 {  
     __device__ __forceinline__ T operator()(const T &amp;a, const T &amp;b) const { return a + b; }  
@@ -1329,8 +1258,7 @@ template &lt;typename T&gt;
 struct MaxOp  
 {  
     __device__ __forceinline__ T operator()(const T &amp;a, const T &amp;b) const { return max(a, b); }  
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>👆这样写的目的是模板化</p>
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>👆这样写的目的是模板化<p></p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;template &lt;typename&gt; class ReductionOp, typename T&gt;  
 __inline__ __device__ T warpReduce(T val)  
 {  
@@ -1342,8 +1270,7 @@ __inline__ __device__ T warpReduce(T val)
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>👆使用模板模板参数<code>ReductionOp</code>，在调用<code>warpReduce</code>时传入不同的操作类型<code>SumOp</code>和<code>MaxOp</code></p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">LLM-CHECK_WITH_INFO(k_length % 2 == 0, "K_len should be divided by 2 under half type!");<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>fp32类型下以float4力度读写（还未实现），fp16类型下以half2读写，这里是只对fp16做向量化使其<code>vec_size=2</code>，而fp32向量化后<code>vec_size=1</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#define LAUNCH_SOFTMAX(dtype, vec_size)                                \ 
+<p>fp32类型下以float4力度读写（还未实现），fp16类型下以half2读写，这里是只对fp16做向量化使其<code>vec_size=2</code>，而fp32向量化后<code>vec_size=1</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">#define LAUNCH_SOFTMAX(dtype, vec_size)                                \ 
     if (block.x &gt; 2048 &amp;&amp; block.x &lt;= 4096)                             \ 
     {                                                                  \ 
         constexpr int NUMS_PER_THREAD_PER_ROW = 4;                     \ 
@@ -1353,7 +1280,7 @@ __inline__ __device__ T warpReduce(T val)
         ScaleMaskAndSoftmax_##dtype&lt;dtype, NUMS_PER_THREAD_PER_ROW&gt;    \&lt;&lt;&lt;grid, block&gt;&gt;&gt;((dtype *)attn_score-&gt;data, \                                             (dtype *)qk-&gt;data,         \  
 	              (dtype *)mask-&gt;data,       \                                             batch_size,                \                                             head_nums,                 \                                             q_length,                  \                                             k_length,                  \               
 	              scale);                    \  
-    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li><code>NUMS_PER_THREAD_PER_ROW</code>作为编译器常量</li>
 <li>如果当前输入的shape比较大，每个线程只访问4个vec，即<code>.x</code>、<code>.y</code>、<code>.z</code>、<code>.w</code>这种，所以<code>block.x</code>被分为<code>4*vec_size</code>份<ul>
@@ -1392,8 +1319,7 @@ __global__ void ScaleMaskAndSoftmax_float(T *attn_score,
 </li>
 <li>开始处理所有行</li>
 </ul>
-<p>以下全都在上一层的<code>for</code>的内部，为便于看代码因此忽略部分缩进</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">for (int col_start = 0; col_start &lt; NUMS_PER_THREAD_PER_ROW; col_start++){ 
+<p>以下全都在上一层的<code>for</code>的内部，为便于看代码因此忽略部分缩进<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">for (int col_start = 0; col_start &lt; NUMS_PER_THREAD_PER_ROW; col_start++){ 
 	// 每个线程只需要处理NUMS_PER_THREAD_PER_ROW个数据  
 	qk_offset = batch_id * head_nums * q_len * k_len + 
 			    head_id * q_len * k_len + row_start * k_len + 
@@ -1412,12 +1338,12 @@ T max_val = blockReduce&lt;MaxOp, T&gt;(thread_max); // 一行的最大值
 if(threadIdx.x == 0){  
     s_max = max_val;  
 }        
-__syncthreads();  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+__syncthreads();  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li>列被分为<code>NUMS_PER_THREAD_PER_ROW</code>个数据由同一个线程处理</li>
 <li>每遍历一次<code>col_start</code>就会有相应的线程并行，之后再用<code>blockReduce</code>进行最后的规约</li>
 <li><code>mask_data</code>和<code>qk_data</code>不同的地方是没有<code>head_nums</code>，其他都一致<ul>
-<li>如果<code>mask_data=1</code>，说明不需要被mask，反之需要被mask(加上$-10^4$，这使得在softmax时得到的值非常的小)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/8616eaf5c62443e35305f7cfd27a345.jpg"><br>考虑到数值范围的溢出问题，一般会在指数部分减去<code>D=max(zi)</code><br>softmax的公式为：$D=max(z_i),softmax(z_i)=\dfrac{e^{z_i-D}}{\sum^C_{c=1}e^{z_c-D}}$<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">T thread_sum = 0.0f;  
+<li>如果<code>mask_data=1</code>，说明不需要被mask，反之需要被mask(加上$-10^4$，这使得在softmax时得到的值非常的小)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/8616eaf5c62443e35305f7cfd27a345.jpg" alt=""><br>考虑到数值范围的溢出问题，一般会在指数部分减去<code>D=max(zi)</code><br>softmax的公式为：$D=max(z_i),softmax(z_i)=\dfrac{e^{z_i-D}}{\sum^C_{c=1}e^{z_c-D}}$<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">T thread_sum = 0.0f;  
 for(int col_start = 0; col_start &lt; NUMS_PER_THREAD_PER_ROW; col_start++){  
     data[col_start] = expf(data[col_start] - s_max);  
     thread_sum += data[col_start];  
@@ -1432,18 +1358,16 @@ for(int col_start = 0; col_start &lt; NUMS_PER_THREAD_PER_ROWl;col_start++) {
 				k_len + row_start * k_len + col_start * blockDim.x + 
 				threadIdx.x;  
 attn_score[qk_offset] = (data[col_start] * inv_sum);  
-}  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+}  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 </ul>
-<p>对于fp16，不同的地方在于向量化处理</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//scalar_cast_vec: 将常量转换为2个或4个向量  
+<p>对于fp16，不同的地方在于向量化处理<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">//scalar_cast_vec: 将常量转换为2个或4个向量  
 Vec_t ONE = scalar_cast_vec&lt;Vec_t&gt;(__float2half(1.0f));  
 Vec_t NEG_INF = scalar_cast_vec&lt;Vec_t&gt;(__float2half(-10000.0f));  
-Vec_t scale_vec = scalar_cast_vec&lt;Vec_t&gt;(__float2half(scale));<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>根据<code>src/utils/vectorze_utils.h</code>：half-&gt;half2 ，float-&gt;float4</p>
-<p>在<code>src/utils/vectorize_utils.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T_OUT, typename T_IN&gt;  
+Vec_t scale_vec = scalar_cast_vec&lt;Vec_t&gt;(__float2half(scale));<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>根据<code>src/utils/vectorze_utils.h</code>：half-&gt;half2 ，float-&gt;float4<p></p>
+<p>在<code>src/utils/vectorize_utils.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T_OUT, typename T_IN&gt;  
 inline __decvice__ T_OUT scalar_cast_vec(T_IN val){  
     return val;  
 }  
@@ -1466,11 +1390,9 @@ inline __device__ float4 scaler_cast_vec&lt;float4, float&gt;(float val){
 template&lt;&gt;  
 inline __device__ float2 scaler_cast_vec&lt;half2, float&gt;(float val){  
     return __float2half2_rn(val);  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>还有一部分直接用库中half2函数进行计算处理</p>
-<h1 id="Lesson12-Fused-transpose-remove-padding"><a href="#Lesson12-Fused-transpose-remove-padding" class="headerlink" title="Lesson12 Fused transpose&amp;remove padding"></a>Lesson12 Fused transpose&amp;remove padding</h1><p>讲解了：<br><code>src/kernels/fused_transpose_and_remv_pad.cu</code><br><code>src/kernels/fused_transpose_and_remv_pad.h</code></p>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/1ebaf4bf0c8c8e05cdc563c83f71a77.jpg"></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>还有一部分直接用库中half2函数进行计算处理<p></p>
+<h1 id="Lesson12-Fused-transpose-amp-remove-padding"><a href="#Lesson12-Fused-transpose-amp-remove-padding" class="headerlink" title="Lesson12 Fused transpose&amp;remove padding"></a>Lesson12 Fused transpose&amp;remove padding</h1><p>讲解了：<br><code>src/kernels/fused_transpose_and_remv_pad.cu</code><br><code>src/kernels/fused_transpose_and_remv_pad.h</code></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/1ebaf4bf0c8c8e05cdc563c83f71a77.jpg" alt=""><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;typename T&gt;  
 __global__ void fused_transpose_reshape_remv_pad(T *src,  
                                                  T *dst,  
                                                  const int num_tokens,  
@@ -1492,8 +1414,7 @@ __global__ void fused_transpose_reshape_remv_pad(T *src,
         int head_size_id = i % head_size;  
         dst[dst_offset + i] = src[src_offset + i * seq_len * head_size + head_size_id];  
     }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>代码比较容易理解，不懂的看注释即可</p>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>代码比较容易理解，不懂的看注释即可<p></p>
 <h1 id="Lesson13-Fused-addResidualNorm"><a href="#Lesson13-Fused-addResidualNorm" class="headerlink" title="Lesson13 Fused addResidualNorm"></a>Lesson13 Fused addResidualNorm</h1><p>讲解了：<br><code>src/fused_addresidual_norm.cu</code><br><code>src/fused_addresidual_norm.h</code></p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 __global__ void FusedAddBiasResidualRMSNorm( // residual.shape = [num tokens, hidden_units]  
@@ -1570,20 +1491,15 @@ __global__ void FusedAddBiasResidualRMSNorm( // residual.shape = [num tokens, hi
         de_out[idx].w = de_out[idx].w * inv_mean * s[idx].w;  
     }
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-<h1 id="Lesson-14-Gate-Linear-Up-Linear"><a href="#Lesson-14-Gate-Linear-Up-Linear" class="headerlink" title="Lesson 14 Gate Linear&amp;Up Linear"></a>Lesson 14 Gate Linear&amp;Up Linear</h1><p>讲解了：<br><code>src/kernels/linear</code></p>
+<h1 id="Lesson-14-Gate-Linear-amp-Up-Linear"><a href="#Lesson-14-Gate-Linear-amp-Up-Linear" class="headerlink" title="Lesson 14 Gate Linear&amp;Up Linear"></a>Lesson 14 Gate Linear&amp;Up Linear</h1><p>讲解了：<br><code>src/kernels/linear</code></p>
 <p>输入：<br>    为context decoder时，<code>[batch_size, q hidden units]</code>；<br>    为self decoder时，<code>[token nums, q hidden units]</code><br>Gate&amp;Up权重：<code>[q hidden units, 2 * inter size]</code><br>输出：<code>[batch_size(或token nums), 2 * inter size] = [bs/tn, 2, inter size]</code>，实际上输出是三维</p>
 <h1 id="Lesson-15-SwiGLU"><a href="#Lesson-15-SwiGLU" class="headerlink" title="Lesson 15 SwiGLU"></a>Lesson 15 SwiGLU</h1><p>讲解了：<br><code>src/kernels/act_kernel.h</code><br><code>src/kernels/act_kernel.cu</code></p>
-<p><code>SiLU(Sigmoid Linear Unit)</code>，相对于ReLU，SiLU在函数接近0时具有更平滑的曲线<br>$y=x*sigmoid(\beta x)=\dfrac{1}{1+e^{-\beta x}}$，当$\beta=1$时就是SiLU<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/Pasted%20image%2020241105112111.png"></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;
+<p><code>SiLU(Sigmoid Linear Unit)</code>，相对于ReLU，SiLU在函数接近0时具有更平滑的曲线<br>$y=x*sigmoid(\beta x)=\dfrac{1}{1+e^{-\beta x}}$，当$\beta=1$时就是SiLU<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/Pasted%20image%2020241105112111.png" alt=""><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;
 __device__ __forceinline__ T silu(const T&amp; in){
 	return in / (1.0f * expf(-in));
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <p><code>grid:[batch_size=input-&gt;shape[0]]</code><br><code>block:[256]</code></p>
-<p><code>Gate Linear</code>和<code>Up Linear</code>的输出(对于context decoder而言)<code>[bs, 2, inter size]</code>可以视为两个大小为<code>[bs, inter size]</code>的部分，第一部分做<code>SiLU</code>，得到的结果与第二部分做<code>mul</code>最终得到最后的结果</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+<p><code>Gate Linear</code>和<code>Up Linear</code>的输出(对于context decoder而言)<code>[bs, 2, inter size]</code>可以视为两个大小为<code>[bs, inter size]</code>的部分，第一部分做<code>SiLU</code>，得到的结果与第二部分做<code>mul</code>最终得到最后的结果<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 __global__ void silu_and_mul_kernel(
 					T* out, // shape: [bs, intermedia size]  
 					const T* input,  // shape: [bs, 2, intermedia size]  
@@ -1594,8 +1510,7 @@ __global__ void silu_and_mul_kernel(
         const T y = input[batch_idx * 2 * intermedia_size + intermedia_size + idx]; // 第二个  
         out[batch_idx * intermedia_size + idx] = silu&lt;T&gt;(x) * y;  
     }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <h1 id="Lesson16-Fused-SelfDecoderAttention-kernel"><a href="#Lesson16-Fused-SelfDecoderAttention-kernel" class="headerlink" title="Lesson16 Fused SelfDecoderAttention kernel"></a>Lesson16 Fused SelfDecoderAttention kernel</h1><p>讲解了：<br><code>src/fused_decoder_self_attention.cu</code></p>
 <p>融合部分：<code>concat kv</code>+<code>repeat kv</code>+<code>qk gemv</code>+<code>softmax</code>+<code>qk*v gemv</code></p>
 <ul>
@@ -1630,8 +1545,7 @@ __global__ void silu_and_mul_kernel(
 <li>grid：<code>[head_num, batch_size]</code></li>
 <li>block：<code>[head_size]</code></li>
 </ul>
-<p>入参：</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+<p>入参：<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 void launchDecoderMaskedMHA(TensorWrapper&lt;T&gt;* qkv_buf,
                             BaseWeight&lt;T&gt;&amp; qkv, 
                             TensorWrapper&lt;int&gt;* layer_id,  
@@ -1640,7 +1554,7 @@ void launchDecoderMaskedMHA(TensorWrapper&lt;T&gt;* qkv_buf,
                             TensorWrapper&lt;bool&gt;* finished, 
                             TensorWrapper&lt;int&gt;* step, 
                             TensorWrapper&lt;T&gt;* mha_output,  
-                            LLaMAAttentionStaticParams&amp; static_params){ <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+                            LLaMAAttentionStaticParams&amp; static_params){ <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li><code>qkv_buf=qkv_linear=[bs, q_hidden_units] * [qhiddenunits, hiddenunits] = [bs, qkv_head_num, head_size]</code><ul>
 <li><code>qhiddenunits</code>：将输入的嵌入向量(embedding vector)的向量长度，</li>
@@ -1693,8 +1607,7 @@ int head_num = qkv_head_num - 2 * kv_head_num;
 <li><code>cur_step</code>：当前时间步，当前生成到第几个token</li>
 <li><code>rotary_embedding_dim、rotary_embedding_base</code>：RoPE用</li>
 </ul>
-<p><code>masked_MHA_kernel()</code><br>入参：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">template<span class="token operator">&lt;</span>typename T<span class="token operator">&gt;</span>  
+<p><code>masked_MHA_kernel()</code><br>入参：<br></p><pre class="line-numbers language-c" data-language="c"><code class="language-c">template<span class="token operator">&lt;</span>typename T<span class="token operator">&gt;</span>  
 __global__ <span class="token keyword">void</span> <span class="token function">masked_MHA_kernel</span><span class="token punctuation">(</span><span class="token keyword">const</span> T<span class="token operator">*</span> q<span class="token punctuation">,</span>  
                     <span class="token keyword">const</span> T<span class="token operator">*</span> k<span class="token punctuation">,</span>  
                     <span class="token keyword">const</span> T<span class="token operator">*</span> v<span class="token punctuation">,</span>  
@@ -1709,8 +1622,7 @@ __global__ <span class="token keyword">void</span> <span class="token function">
                     <span class="token keyword">const</span> <span class="token keyword">int</span> head_size<span class="token punctuation">,</span>  
                     <span class="token keyword">const</span> <span class="token keyword">int</span> step<span class="token punctuation">,</span>  
                     <span class="token keyword">int</span>   rotary_embedding_dim<span class="token punctuation">,</span>  
-                    <span class="token keyword">float</span> rotary_embedding_base<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">// rsqrt(dh)  </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+                    <span class="token keyword">float</span> rotary_embedding_base<span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token comment">// rsqrt(dh)  </span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li><code>k_offset</code>和<code>cache_offset</code>区别：<ul>
 <li><code>k_offset</code>是qkv linear提供给k的，(因为是self_attention所以)一个batch只有一个token</li>
@@ -1724,8 +1636,7 @@ __global__ <span class="token keyword">void</span> <span class="token function">
 </li>
 <li>输出：`mha_output.shape=[batch_size, q_head_num, 1, head_size]</li>
 </ul>
-<p>①ConcatPastKVCache<br><code>input=[bs, kv head num, seqlen, head size]</code><br><code>output=[bs, kv head num, max_seq_len, head size]</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int tid = threadIdx.x;  
+<p>①ConcatPastKVCache<br><code>input=[bs, kv head num, seqlen, head size]</code><br><code>output=[bs, kv head num, max_seq_len, head size]</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">int tid = threadIdx.x;  
    int q_head_id = blockIdx.x;  
    int q_batch_id = blockIdx.y;  
    int kv_head_id = q_head_id / (head_num / kv_head_num);  
@@ -1749,10 +1660,8 @@ __global__ <span class="token keyword">void</span> <span class="token function">
    int vec_size = Vec&lt;T&gt;::size;  
    int q_offset_vec = q_batch_id * batch_size + q_head_id * head_stride + tid * vec_size;  
    int k_offset_vec = kv_batch_id * kv_batch_stride + kv_head_id * head_stride + tid * vec_size;  
-   using Vec_t = typename Vec&lt;T&gt;::Type; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>②声明动态共享内存变量</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const T* q_mem = q;  
+   using Vec_t = typename Vec&lt;T&gt;::Type; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>②声明动态共享内存变量<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">const T* q_mem = q;  
 const T* k_mem = k;  
 const T* v_mem = v;  
 if(tid * vec_size &lt; head_size){  
@@ -1774,9 +1683,7 @@ if(tid * vec_size &lt; head_size){
 float zero = 0.0f;  
 Vec_t zero_f4 = scalar_cast_vec&lt;Vec_t, T&gt;(zero); // 将float转为float4  
 float4 scale_f4 = scalar_cast_vec&lt;float4, float&gt;(scale);  
-  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
+  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">// q*k gemv  
 for(int iter = 0; iter &lt; step; iter++){ //一个block循环计算step行  
     Vec_t kvec_qk = tid * vec_size &lt; head_size ? *reinterpret_cast&lt;Vec_t*&gt;(&amp;k_cache[iter * step_stride + cache_offset]) : zero_f4; // 这里乘iter相当于乘max seq len。我的理解是cache_offset是对于token而言的，iter*cache_offset的偏移使定位到当前step(当前token)  
@@ -1831,9 +1738,6 @@ if(tid * vec_size &lt; head_size){
     }  
     *reinterpret_cast&lt;Vec_t*&gt;(&amp;mha_output[q_offset]) = O; // [batch size, q head num, 1, head size]  
 }}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h1 id="Lesson17-topK"><a href="#Lesson17-topK" class="headerlink" title="Lesson17 topK"></a>Lesson17 topK</h1><p>讲解了：<br><code>src/kernels/topK.cu</code><br><code>src/kernels/topK.h</code></p>
 <p>输入：<code>[bs, beam_width, vocab size]</code><br>输出：<code>[bs, beam_width, K]</code></p>
 <p>topK中的K是从一组候选中选取得分最高的前K个值<br>beam_width是指保留的候选路径数<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/Pasted%20image%2020241117225342.png" alt="|450"></p>
@@ -1853,8 +1757,7 @@ if(tid * vec_size &lt; head_size){
 </ul>
 </li>
 </ul>
-<p>①topK的做法</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T, int K&gt;  
+<p>①topK的做法<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T, int K&gt;  
 struct topK{  
     // 下面这两行的访问权限是public，因为默认就是public所以不用显式地写出来  
     T val[K];  
@@ -1884,20 +1787,16 @@ struct topK{
             }        
         }    
     }
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>②将两个topK做一次reduce输出为一个topK</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T, int K&gt;  
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>②将两个topK做一次reduce输出为一个topK<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T, int K&gt;  
 __device__ topK&lt;T, K&gt; reduce_functor(const topK&lt;T, K&gt;&amp; a, const topK&lt;T, K&gt;&amp; b) {  
     topK&lt;T, K&gt; res = a;  
     for(int i = 0; i &lt; K; i++){  
         res.insertHeap(b.val[i], b.id[i]);  
     }    
     return res;  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p>③第一次topK</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T, int K, int blockSize, int BlockPerBeam&gt;  
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>③第一次topK<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T, int K, int blockSize, int BlockPerBeam&gt;  
 __global__ void topK_kernel_round1(const T* probs, 
 								   const int vocab_size,   
 								   int* topK_ids, 
@@ -1928,8 +1827,7 @@ __global__ void topK_kernel_round1(const T* probs,
             topK_ids[dst_offset] = block_topk.id;  
         }    
     }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>入参：</p>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>入参：<p></p>
 <ul>
 <li><code>probs</code>：输入的概率值<code>[bs, beamwidth, vocab size]</code></li>
 <li><code>topK_ids</code>和<code>topK_vals</code>：作为输出</li>
@@ -1960,8 +1858,7 @@ public:
 <li><code>tmp_storage</code>：供线程块中的线程通信和归约使用</li>
 <li><code>block_topk</code>：合并每个线程块中的线程的topK，得到每个线程块的topK</li>
 </ul>
-<p>最后每个block只使用第一个线程做转移，将block_topk个数据转移到topK_vals和topK_ids中。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/7745326675b006f165b0b23a6397ba1.jpg"><br>④第二次topK</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T, int beam_width, int K, int blockSize, int BlockPerBeam&gt;  
+<p>最后每个block只使用第一个线程做转移，将block_topk个数据转移到topK_vals和topK_ids中。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/7745326675b006f165b0b23a6397ba1.jpg" alt=""><br>④第二次topK<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T, int beam_width, int K, int blockSize, int BlockPerBeam&gt;  
 __global__ void topK_kernel_round2(const int* topK_ids, 
 								   const T* topK_vals,  
 								   int* final_topK_ids, 
@@ -1992,14 +1889,11 @@ __global__ void topK_kernel_round2(const int* topK_ids,
             final_topK_ids[dst_offset] = block_topk.id[k_offset];  
         }    
     }
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/b25acc5c3bf310a0925e8b3119ca82d.jpg"></p>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/b25acc5c3bf310a0925e8b3119ca82d.jpg" alt=""><p></p>
 <h1 id="Lesson18-FusedSoftmax-and-Sampling"><a href="#Lesson18-FusedSoftmax-and-Sampling" class="headerlink" title="Lesson18 FusedSoftmax and Sampling"></a>Lesson18 FusedSoftmax and Sampling</h1><p>讲解了：<br><code>src/kernels/sampling.cu</code><br><code>src/kernels/sampling.h</code><br><code>src/utils/params.h</code><br><code>tests/unittests/test_sampling.cu</code></p>
 <p>在GPU上生成随机数，<strong>主机仅传给设备一个信号，是的多个随机数在device端被生成</strong>：<code>curand_kernel</code></p>
-<p><code>params.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using IntDict = std::unordered_map&lt;std::string, int&gt;;
-using floatDict = std::unordered_map&lt;std::string, float&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>键为字符串，值为int或float</p>
+<p><code>params.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using IntDict = std::unordered_map&lt;std::string, int&gt;;
+using floatDict = std::unordered_map&lt;std::string, float&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>键为字符串，值为int或float<p></p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">__device__ void curand_init(unsigned long long seed, unsigned long long subsequence, unsigned long long offset, curandState_t* state)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p><code>seed</code>：时间种子。<br><code>subsequence</code>：序列号，区分不同线程块的随机数生成器，确保每个块有自己的随机数生成器。<br><code>offset</code>：在指定序列中的偏移量，用于跳过序列的前几个值以获得不同的随机数，这里表示从序列的起点开始生成随机数。<br><code>state</code>：指向<code>curandState_t</code>的指针，保存生成器的内部状态。</p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">__device__ float curand_uniform(curandState_t* state)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
@@ -2009,8 +1903,7 @@ using floatDict = std::unordered_map&lt;std::string, float&gt;;<span aria-hidden
 <li>grid：<code>[batch_size]</code></li>
 <li>block：<code>[K]</code></li>
 </ul>
-<h1 id="Lesson19-allocator"><a href="#Lesson19-allocator" class="headerlink" title="Lesson19 allocator"></a>Lesson19 allocator</h1><p>讲解了：<br><code>src/memory/allocator/base_allocator.h</code><br><code>src/memory/allocator/cuda_allocator.h</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/2f3403abcd9639c30a2c174db5c3798.jpg"><br><code>base_allocator.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class BaseAllocator // 公共的父类  
+<h1 id="Lesson19-allocator"><a href="#Lesson19-allocator" class="headerlink" title="Lesson19 allocator"></a>Lesson19 allocator</h1><p>讲解了：<br><code>src/memory/allocator/base_allocator.h</code><br><code>src/memory/allocator/cuda_allocator.h</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/2f3403abcd9639c30a2c174db5c3798.jpg" alt=""><br><code>base_allocator.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class BaseAllocator // 公共的父类  
 {  
 public:  
     virtual ~BaseAllocator(){};
@@ -2026,14 +1919,13 @@ public:
         UnifyFree((void*)ptr, is_host);  
     }    
     virtual void UnifyFree(void* ptr, bool is_host = false) = 0;  
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li>父类的析构函数要声明为虚函数：确保当使用基类指针指向派生类对象时，销毁对象时会<strong>正确调用派生类的析构函数</strong>。</li>
 <li><code>(void*)ptr</code>：CPU的分配函数malloc返回的是一个void类型的，所以把传进去的指针强转为void</li>
-<li>定义<code>UnifyMalloc</code>和<code>UnifyFree</code>为虚函数，在子类里一定要实现这个函数</li>
+<li>定义<code>UnifyMalloc</code>和<code>UnifyFree</code>为虚函数，在子类里一定要实现这个函数 </li>
 </ul>
-<p><code>cuda_allocator.h</code><br>①定义两种块</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">struct CudaBigBlock {  
+<p><code>cuda_allocator.h</code><br>①定义两种块<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">struct CudaBigBlock {  
     void *data;  
     size_t size;  
     bool is_allocated;  
@@ -2049,21 +1941,18 @@ struct CudaSmallBlock {
     CudaSmallBlock() = default; // 构造函数  
     CudaSmallBlock(void* data_, size_t size_, bool is_allocated_): // 构造函数  
             data(data_), size(size_), is_allocated(is_allocated_){}  
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>大小块的定义相同</p>
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>大小块的定义相同<p></p>
 <ul>
 <li>大内存块：不易造成内存碎片</li>
 <li>小内存块：碎片化较严重，构建小块的内存池主要为了收集碎片大小归还OS(有时不是内存不够，而是碎片太多可能会报out of memory的错</li>
 </ul>
-<p>②定义分配器</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class CudaAllocator: public BaseAllocator {  
+<p>②定义分配器<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">class CudaAllocator: public BaseAllocator {  
 private:  
     //{device id: block}    // 每个设备都有内存池  
     std::map&lt;int, std::vector&lt;CudaSmallBlock&gt; &gt; cudaSmallBlockMap;  
     std::map&lt;int, std::vector&lt;CudaBigBlock&gt; &gt; cudaBigBlockMap;  
     std::map&lt;int, size_t&gt; FreeSize;  
-    int dev_id;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>定义了</p>
+    int dev_id;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>定义了<p></p>
 <ul>
 <li>设备ID与以<code>CudaSmallBlock</code>为对象的数组的映射(每个设备都有一个大、小内存池)</li>
 <li>设备ID与以<code>CudaBigBlock</code>为对象的数组的映射</li>
@@ -2076,15 +1965,12 @@ private:
      ~CudaAllocator() {  
     }    <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>为<code>CudaAllocator</code>实现<code>UnifyMalloc</code></p>
-<p>0）对齐32bytes以实现<code>float4</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void* UnifyMalloc(void* ptr, size_t size, bool is_host) { 
-	size = ((size + 31) / 32 ) * 32;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>1）如果是主机上申请buffer，用<code>malloc</code>申请</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if(is_host){  
+<p>0）对齐32bytes以实现<code>float4</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void* UnifyMalloc(void* ptr, size_t size, bool is_host) { 
+	size = ((size + 31) / 32 ) * 32;  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>1）如果是主机上申请buffer，用<code>malloc</code>申请<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if(is_host){  
     ptr = malloc(size); 
     memset(ptr, 0, size);
     return ptr;  
-}  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+}  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li><code>memset</code>：初始化从<code>ptr</code>指向开始的size个值，初始化的数值为0<br>2）在bigblocks中找空闲的块，即被free出来但是还未归还到OS的<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if(size &gt; 1024 * 1024){
     auto BigBlocks = cudaBigBlockMap[dev_id];  
@@ -2189,16 +2075,16 @@ for(int i = 0; i &lt; SmallBlocks.size(); i++){
         }        
 	    cudaFree(ptr);  
     }
-};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 <p><code>a.size</code>和<code>a.size()</code></p>
 <ul>
 <li>当<code>a</code>是标准容器(<code>std::vecotr</code>，<code>std::map</code>等等)时，<code>size</code>是一个成员函数，用于获取容器的大小，写法为<code>a.size()</code>，调用成员函数</li>
 <li>当<code>a</code>是用户自定义的类，<code>public: size_t size;</code>时，<code>size</code>是一个成员变量，写法为<code>a.size</code>；<code>public: size(){};</code>时，<code>size</code>是成员函数，写法为<code>a.size()</code></li>
 </ul>
-<h1 id="Lesson-20-Context-attention"><a href="#Lesson-20-Context-attention" class="headerlink" title="Lesson 20 Context attention"></a>Lesson 20 Context attention</h1><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/5731d9562b034964b53c0e7d24bd858.jpg"></p>
-<h2 id="20-1src-layers-attention-context-attention-cpp"><a href="#20-1src-layers-attention-context-attention-cpp" class="headerlink" title="20.1src/layers/attention/context_attention.cpp"></a>20.1<code>src/layers/attention/context_attention.cpp</code></h2><h3 id="20-1-1-构造函数"><a href="#20-1-1-构造函数" class="headerlink" title="20.1.1 构造函数"></a>20.1.1 构造函数</h3><p><code>LLaMAContextAttentionLayer&lt;T&gt;::LLaMAContextAttentionLayer</code>：构造函数</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">head_num(head_num),  
+<h1 id="Lesson-20-Context-attention"><a href="#Lesson-20-Context-attention" class="headerlink" title="Lesson 20 Context attention"></a>Lesson 20 Context attention</h1><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/5731d9562b034964b53c0e7d24bd858.jpg" alt=""></p>
+<h2 id="20-1src-layers-attention-context-attention-cpp"><a href="#20-1src-layers-attention-context-attention-cpp" class="headerlink" title="20.1src/layers/attention/context_attention.cpp"></a>20.1<code>src/layers/attention/context_attention.cpp</code></h2><h3 id="20-1-1-构造函数"><a href="#20-1-1-构造函数" class="headerlink" title="20.1.1 构造函数"></a>20.1.1 构造函数</h3><p><code>LLaMAContextAttentionLayer&lt;T&gt;::LLaMAContextAttentionLayer</code>：构造函数<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">head_num(head_num),  
 kv_head_num(kv_head_num),  
 head_size(head_size),  
 stream(stream),  
@@ -2207,8 +2093,7 @@ allocator(allocator),
 hidden_units(head_num * head_size),  
 attn_static_params(attn_params),   
 q_head_per_kv(head_num / kv_head_num),  
-scale(float(1 / sqrt(head_size)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
+scale(float(1 / sqrt(head_size)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <h3 id="20-1-2-分配内存"><a href="#20-1-2-分配内存" class="headerlink" title="20.1.2 分配内存"></a>20.1.2 分配内存</h3><p><code>LLaMAContextAttentionLayer&lt;T&gt;::allocForForward(LLaMAAttentionDynParams&amp; params)</code>：分配forward所需要的buffer</p>
 <ul>
 <li><p><code>LLaMAAttentionDynParams</code>定义来源：<code>src/models/llama_llama_params.h</code></p>
@@ -2229,8 +2114,7 @@ scale(float(1 / sqrt(head_size)<span aria-hidden="true" class="line-numbers-rows
 </li>
 </ul>
 </li>
-<li><p>再分配内存</p>
-<ul>
+<li>再分配内存<ul>
 <li><code>allocator-&gt;Malloc</code></li>
 <li>对<code>k_cache_buf</code>和<code>v_cache_buf</code>分配内存时，在<code>k_cache_buf</code>分配两倍的内存，再令<code>v_cache_buf</code>的数据指针指向<code>k_cache_buf</code>偏移<code>batch_size * head_num * max_k_len * head_size</code>的地方。这样可以减少一次内存分配<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">k_cache_buf-&gt;data = allocator-&gt;Malloc(k_cache_buf-&gt;data, 2 * sizeof(T) * batch_size * head_num * max_k_len * head_size);
 
@@ -2238,31 +2122,19 @@ v_cache_buf-&gt;data = (T*)k_cache_buf-&gt;data + batch_size * head_num * max_k_
 ①<code>fusedQkvGemm</code><br><code>input</code></li>
 </ul>
 </li>
-<li><p><code>input tensor</code><br><code>output</code></p>
-</li>
-<li><p><code>qkv_buf_wo_pad</code>: <code>[num_tokens, qkv_head_num, head_size]</code><br>作用：做linear将输入的tensor乘上qkv权重，得到qkv<br>②<code>AddbiasAndPaddingAndRope</code><br><code>output</code></p>
-</li>
-<li><p><code>q_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code></p>
-</li>
-<li><p><code>k_buf_w_pad</code>: <code>[bs, kv_head_num, max_q_len, head_size]</code></p>
-</li>
-<li><p><code>v_buf_w_pad</code>: <code>[bs, kv_head_num, max_q_len, head_size]</code><br>作用：添加偏置，进行padding使同一批次的句子长度相同，进行位置旋转编码<br>③<code>ConcatPastKVcache</code><br><code>output</code></p>
-</li>
-<li><p><code>k_cache_buf</code>: <code>[bs, head_num, max_q_len, head_size]</code></p>
-</li>
-<li><p><code>v_cache_buf</code>: <code>[bs, head_num, max_q_len, head_size]</code><br>作用：将新得到的KV存储到cache中<br>④<code>qk gemm</code><br><code>output</code></p>
-</li>
-<li><p><code>qk_buf</code>: <code>[bs, head_num, max_q_len, max_k_len]</code><br>作用：进行qk相乘，得到$QK^T$<br>⑤<code>FusedMaskAndScaleSoftmax</code><br><code>output</code></p>
-</li>
-<li><p><code>qk buf</code><br>作用：加上mask并进行scale和softmax，得到$Softmax(\dfrac{QK^T}{\sqrt{d_k}})$<br>⑥<code>qk*v gemm</code><br><code>output</code></p>
-</li>
-<li><p><code>qkv_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code><br>作用：得到$Softmax(\dfrac{QK^T}{\sqrt{d_k}})V$<br>⑦<code>RemovingPadding</code><br><code>output</code></p>
-</li>
-<li><p><code>qkv_buf_wo_pad_1</code>: <code>[num_tokens, head_num, head_size]</code><br>作用：将padding去掉</p>
-</li>
+<li><code>input tensor</code><br><code>output</code></li>
+<li><code>qkv_buf_wo_pad</code>: <code>[num_tokens, qkv_head_num, head_size]</code><br>作用：做linear将输入的tensor乘上qkv权重，得到qkv<br>②<code>AddbiasAndPaddingAndRope</code><br><code>output</code></li>
+<li><code>q_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code></li>
+<li><code>k_buf_w_pad</code>: <code>[bs, kv_head_num, max_q_len, head_size]</code></li>
+<li><code>v_buf_w_pad</code>: <code>[bs, kv_head_num, max_q_len, head_size]</code><br>作用：添加偏置，进行padding使同一批次的句子长度相同，进行位置旋转编码<br>③<code>ConcatPastKVcache</code><br><code>output</code></li>
+<li><code>k_cache_buf</code>: <code>[bs, head_num, max_q_len, head_size]</code></li>
+<li><code>v_cache_buf</code>: <code>[bs, head_num, max_q_len, head_size]</code><br>作用：将新得到的KV存储到cache中<br>④<code>qk gemm</code><br><code>output</code></li>
+<li><code>qk_buf</code>: <code>[bs, head_num, max_q_len, max_k_len]</code><br>作用：进行qk相乘，得到$QK^T$<br>⑤<code>FusedMaskAndScaleSoftmax</code><br><code>output</code></li>
+<li><code>qk buf</code><br>作用：加上mask并进行scale和softmax，得到$Softmax(\dfrac{QK^T}{\sqrt{d_k}})$<br>⑥<code>qk*v gemm</code><br><code>output</code></li>
+<li><code>qkv_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code><br>作用：得到$Softmax(\dfrac{QK^T}{\sqrt{d_k}})V$<br>⑦<code>RemovingPadding</code><br><code>output</code></li>
+<li><code>qkv_buf_wo_pad_1</code>: <code>[num_tokens, head_num, head_size]</code><br>作用：将padding去掉</li>
 </ul>
-<h3 id="20-1-3-释放内存"><a href="#20-1-3-释放内存" class="headerlink" title="20.1.3 释放内存"></a>20.1.3 释放内存</h3><p><code>src/utils/macro.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">inline void syncAndCheck(const char* const file, int const line){  
+<h3 id="20-1-3-释放内存"><a href="#20-1-3-释放内存" class="headerlink" title="20.1.3 释放内存"></a>20.1.3 释放内存</h3><p><code>src/utils/macro.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">inline void syncAndCheck(const char* const file, int const line){  
     cudaDeviceSynchronize();  
     cudaError_t result = cudaGetLastError();  
     if (result) {  
@@ -2270,7 +2142,7 @@ v_cache_buf-&gt;data = (T*)k_cache_buf-&gt;data + batch_size * head_num * max_k_
     }
 }  
   
-#define DeviceSyncAndCheckCudaError() syncAndCheck(__FILE__, __LINE__)  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+#define DeviceSyncAndCheckCudaError() syncAndCheck(__FILE__, __LINE__)  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li><code>syncAndCheck</code><ul>
 <li><code>cudaDeviceSynchronize()</code>：确保当前所有 CUDA 操作完成</li>
@@ -2282,14 +2154,13 @@ v_cache_buf-&gt;data = (T*)k_cache_buf-&gt;data + batch_size * head_num * max_k_
 </li>
 </ul>
 </li>
-<li><code>#define DeviceSyncAndCheckCudaError() syncAndCheck(__FILE__, __LINE__) </code><ul>
+<li><code>#define DeviceSyncAndCheckCudaError() syncAndCheck(__FILE__, __LINE__)</code><ul>
 <li>调用<code>syncAndCheck</code>函数，并自动捕获当前的文件名和行号，在调用时不需要显式传递 <code>__FILE__</code> 和 <code>__LINE__</code></li>
 </ul>
 </li>
 </ul>
 <p>释放<code>qkv_buf_wo_pad</code>、<code>q_buf_w_pad</code>、<code>k_cache_buf</code>、<code>qk_buf</code>、<code>qkv_buf_w_pad</code>、<code>qkv_buf_wo_pad_1</code>，在每个<code>Free</code>的后面加上<code>DeviceSyncAndCheckCudaError()</code>，检查是否发生错误</p>
-<h3 id="20-1-4-前向传播"><a href="#20-1-4-前向传播" class="headerlink" title="20.1.4 前向传播"></a>20.1.4 前向传播</h3><p><code>src/utils/tensor.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">struct TensorMap{  
+<h3 id="20-1-4-前向传播"><a href="#20-1-4-前向传播" class="headerlink" title="20.1.4 前向传播"></a>20.1.4 前向传播</h3><p><code>src/utils/tensor.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">struct TensorMap{  
     std::unordered_map&lt;std::string, Tensor*&gt; tensor_map_;  
   
     TensorMap() = default;  
@@ -2316,7 +2187,7 @@ v_cache_buf-&gt;data = (T*)k_cache_buf-&gt;data + batch_size * head_num * max_k_
         }    
     };
     // ...
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li><code>TensorMap(std::initializer_list&lt;std::pair&lt;std::string, Tensor*&gt;&gt; tensor_map)</code><ul>
 <li>接受一个 <code>std::initializer_list</code> 类型的参数，其元素是键值对 <code>std::pair&lt;std::string, Tensor*&gt;</code>，适用于初始化容器</li>
@@ -2331,18 +2202,18 @@ TensorMap tmap = {{"key1", tensor1},
 <li>例子👇<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">std::unordered_map&lt;std::string, 
 Tensor*&gt; umap = {{"key1", tensor1}, 
 				{"key2", tensor2}}; 
-TensorMap tmap(umap);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+TensorMap tmap(umap);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
 </ul>
 </li>
 </ul>
-<p>①入参</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
+<p>①入参<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
 void LLaMAContextAttentionLayer&lt;T&gt;::forward
 (TensorMap&amp; inputs, 
 TensorMap&amp; outputs, 
 LLaMAattentionWeights&lt;T&gt;&amp; weights,
 LLaMAAttentionDynParams&amp; params, 
-LLaMAAttentionStaticParams&amp; static_params)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+LLaMAAttentionStaticParams&amp; static_params)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
 <ul>
 <li><code>inputs</code>：元素大概是<code>{"attention_input",tensor1},{"padding_offset",tensor2}</code><ul>
 <li>因为很多函数需要TensorWrapper，而传进去的是Tensor，对于需要Tensor强转为TensorWrapper的情况，用到👇(<code>src/utils/tensor.h</code>)<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template&lt;typename T&gt;  
@@ -2357,11 +2228,8 @@ TensorWrapper&lt;T&gt;* as(){
 <li><code>static_params</code>：<code>src/models/llama/llama_params.h</code>，是关于旋转编码的属性<code>int rotary_embedding_dim; float rotary_embedding_base;  int max_position_embeddings; bool use_dynamic_ntk;</code></li>
 </ul>
 <p>②准备内存<br>使用20.1.2中的分配内存</p>
-<p>③qkv linear<br><code>src/kernels/linear.h</code></p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(attention_input-&gt;as&lt;T&gt;(), weights.qkv, qkv_buf_wo_pad, cublas_wrapper)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>对应<code>input</code>、<code>weight</code>、<code>output</code>、<code>cublas_wrapper</code>、<code>trans_a</code>、<code>trans_b</code><br>完成<code>fusedQkvGemm</code></p>
-<p>④qkv bias and rope and padding</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchAddFusedQKVBiasTransposeAndRoPE(qkv_buf_w_pad, 
+<p>③qkv linear<br><code>src/kernels/linear.h</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(attention_input-&gt;as&lt;T&gt;(), weights.qkv, qkv_buf_wo_pad, cublas_wrapper)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>对应<code>input</code>、<code>weight</code>、<code>output</code>、<code>cublas_wrapper</code>、<code>trans_a</code>、<code>trans_b</code><br>完成<code>fusedQkvGemm</code><p></p>
+<p>④qkv bias and rope and padding<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchAddFusedQKVBiasTransposeAndRoPE(qkv_buf_w_pad, 
 									  k_buf_w_pad, 
 									  v_buf_w_pad, 
 									  qkv_buf_wo_pad,
@@ -2369,39 +2237,24 @@ TensorWrapper&lt;T&gt;* as(){
 									  padding_offset-&gt;as&lt;int&gt;(), 
 									  history_length-&gt;as&lt;int&gt;(), 
 									  input_length-&gt;as&lt;int&gt;(),
-									  static_params);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>最后在<code>k_buf_w_pad</code>和<code>v_buf_w_pad</code>得到rope和padding的版本</p>
-<p>⑤concat past kv cache</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchConcatKVCache(k_buf_w_pad, v_buf_w_pad, 
+									  static_params);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>最后在<code>k_buf_w_pad</code>和<code>v_buf_w_pad</code>得到rope和padding的版本<p></p>
+<p>⑤concat past kv cache<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchConcatKVCache(k_buf_w_pad, v_buf_w_pad, 
 					layer_id-&gt;as&lt;int&gt;(), 
 					input_length-&gt;as&lt;int&gt;(), 
 					history_length-&gt;as&lt;T&gt;(),  
                     all_k_cache-&gt;as&lt;T&gt;(), 
-                    all_v_cache-&gt;as&lt;T&gt;());<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>最后在<code>all_k_cache</code>和<code>all_v_cache</code>得到kvcache<br>因为<code>layer_id</code>是在CPU上分配的<code>int layer = layer_id-&gt;getVal();</code>因此需要转为TensorWrapper</p>
-<p>⑥repeat kv</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchRepeatKVCache(all_k_cache-&gt;as&lt;T&gt;(), 
+                    all_v_cache-&gt;as&lt;T&gt;());<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>最后在<code>all_k_cache</code>和<code>all_v_cache</code>得到kvcache<br>因为<code>layer_id</code>是在CPU上分配的<code>int layer = layer_id-&gt;getVal();</code>因此需要转为TensorWrapper<p></p>
+<p>⑥repeat kv<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchRepeatKVCache(all_k_cache-&gt;as&lt;T&gt;(), 
 					all_v_cache-&gt;as&lt;T&gt;(), 
 					context_length-&gt;as&lt;int&gt;(),  
                     layer_id-&gt;as&lt;int&gt;(),
                     k_cache_buf, 
-                    v_cache_buf);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>input</code>:<br>    <code>all_k_cache</code>&amp;<code>all_v_cache</code>: <code>[num_layers, batch_size, kv_head_num, max_seq_len, head_size]</code><br><code>output</code>:<br>    <code>k_cache_buf</code>&amp;<code>v_cache_buf</code>: <code>[bs, head_num, max_k_len, head_size]</code><br>作用是将kvcache的<code>kv_head_num</code>补成<code>head_num</code></p>
-<p>⑦qk</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearStridedBatchGemm(q_buf_w_pad, k_cache_buf, qk_buf, cublas_wrapper, false, true);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><code>input</code>:<br>    <code>q_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code><br>    <code>k_cache_buf</code>: <code>[bs, head_num, max_k_len, head_size]</code>(trans_b = true)<br><code>output</code>:<br>    <code>qk_buf</code>: <code>[bs, head_num, max_q_len, max_k_len]</code></p>
-<p>⑧scale + mask + softmax</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchScaleMaskAndSoftmax(qk_buf, attention_mask-&gt;as&lt;T&gt;(), qk_buf, scale);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>给<code>qk_buf</code>加scale、mask、softmax</p>
-<p>⑨qk*v</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearStridedBatchGemm(qk_buf, v_cache_buf, qkv_buf_w_pad, cublas_wrapper, false, false);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><code>input</code>:<br>    <code>qk_buf</code>: <code>[bs, head_num, max_q_len, max_k_len]</code><br>    <code>v_cache_buf</code>: <code>[bs, head_num, max_k_len, head_size]</code><br><code>output</code>:<br>    <code>qkv_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code></p>
-<p>⑩transpose + removepadding</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchTransposeOutRemovePadding(qkv_buf_w_pad, padding_offset-&gt;as&lt;T&gt;(), qkv_buf_wo_pad_1);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><code>input</code>:<br>    <code>qkv_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code><br>    先transpose变成<code>[bs, max_q_len, head_num, head_size]</code><br><code>output</code>:<br>    <code>qkv_buf_wo_pad_1</code>: <code>[numtokens, hiddenunits]</code></p>
-<p>①output linear</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(qkv_buf_wo_pad_1, weights.output, attention_output, cublas_wrapper, false, true);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>乘上输出的权重</p>
+                    v_cache_buf);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><code>input</code>:<br>    <code>all_k_cache</code>&amp;<code>all_v_cache</code>: <code>[num_layers, batch_size, kv_head_num, max_seq_len, head_size]</code><br><code>output</code>:<br>    <code>k_cache_buf</code>&amp;<code>v_cache_buf</code>: <code>[bs, head_num, max_k_len, head_size]</code><br>作用是将kvcache的<code>kv_head_num</code>补成<code>head_num</code><p></p>
+<p>⑦qk<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearStridedBatchGemm(q_buf_w_pad, k_cache_buf, qk_buf, cublas_wrapper, false, true);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br><code>input</code>:<br>    <code>q_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code><br>    <code>k_cache_buf</code>: <code>[bs, head_num, max_k_len, head_size]</code>(trans_b = true)<br><code>output</code>:<br>    <code>qk_buf</code>: <code>[bs, head_num, max_q_len, max_k_len]</code><p></p>
+<p>⑧scale + mask + softmax<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchScaleMaskAndSoftmax(qk_buf, attention_mask-&gt;as&lt;T&gt;(), qk_buf, scale);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>给<code>qk_buf</code>加scale、mask、softmax<p></p>
+<p>⑨qk*v<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearStridedBatchGemm(qk_buf, v_cache_buf, qkv_buf_w_pad, cublas_wrapper, false, false);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br><code>input</code>:<br>    <code>qk_buf</code>: <code>[bs, head_num, max_q_len, max_k_len]</code><br>    <code>v_cache_buf</code>: <code>[bs, head_num, max_k_len, head_size]</code><br><code>output</code>:<br>    <code>qkv_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code><p></p>
+<p>⑩transpose + removepadding<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchTransposeOutRemovePadding(qkv_buf_w_pad, padding_offset-&gt;as&lt;T&gt;(), qkv_buf_wo_pad_1);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br><code>input</code>:<br>    <code>qkv_buf_w_pad</code>: <code>[bs, head_num, max_q_len, head_size]</code><br>    先transpose变成<code>[bs, max_q_len, head_num, head_size]</code><br><code>output</code>:<br>    <code>qkv_buf_wo_pad_1</code>: <code>[numtokens, hiddenunits]</code><p></p>
+<p>①output linear<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(qkv_buf_wo_pad_1, weights.output, attention_output, cublas_wrapper, false, true);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>乘上输出的权重<p></p>
 <p>②freebuf<br>释放所有的缓存</p>
 <h2 id="20-2examples-cpp-attention-context-attn-example-cpp"><a href="#20-2examples-cpp-attention-context-attn-example-cpp" class="headerlink" title="20.2examples/cpp/attention/context_attn_example.cpp"></a>20.2examples/cpp/attention/context_attn_example.cpp</h2><p>变量：</p>
 <ul>
@@ -2452,20 +2305,14 @@ TensorWrapper&lt;T&gt;* as(){
 <li>自回归生成模式，因此不需要mask和padding(和remove padding)</li>
 </ul>
 <p>layer搭建顺序和context attention类似</p>
-<h2 id="21-1src-layers-attention-masked-self-attentioon-cpp"><a href="#21-1src-layers-attention-masked-self-attentioon-cpp" class="headerlink" title="21.1src/layers/attention/masked_self_attentioon.cpp"></a>21.1src/layers/attention/masked_self_attentioon.cpp</h2><p>①分配内存</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">allocForForward(params);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>②qkv linear</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(attention_input-&gt;as&lt;T&gt;(), weights.qkv, qkv_buf, cublas_wrapper);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>同时，这里不需要在后面加上<code>DeviceSyncAndCheckCudaError();</code>因为<code>cublasWrapper</code>自带了<code>CHECK_CUBLAS</code>(因此涉及到cublas的都不需要再进行检查)<br>③fused decoder self attention</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchDecoderMaskedMHA(qkv_buf, weights.qkv, 
+<h2 id="21-1src-layers-attention-masked-self-attentioon-cpp"><a href="#21-1src-layers-attention-masked-self-attentioon-cpp" class="headerlink" title="21.1src/layers/attention/masked_self_attentioon.cpp"></a>21.1src/layers/attention/masked_self_attentioon.cpp</h2><p>①分配内存<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">allocForForward(params);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>②qkv linear<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(attention_input-&gt;as&lt;T&gt;(), weights.qkv, qkv_buf, cublas_wrapper);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>同时，这里不需要在后面加上<code>DeviceSyncAndCheckCudaError();</code>因为<code>cublasWrapper</code>自带了<code>CHECK_CUBLAS</code>(因此涉及到cublas的都不需要再进行检查)<br>③fused decoder self attention<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchDecoderMaskedMHA(qkv_buf, weights.qkv, 
 					   layer_id-&gt;as&lt;int&gt;(),  
                        k_cache-&gt;as&lt;T&gt;(), 
                        v_cache-&gt;as&lt;T&gt;(), 
                        finished-&gt;as&lt;bool&gt;(),  
                        step-&gt;as&lt;int&gt;(), 
                        mha_output-&gt;as&lt;T&gt;(), 
-                       static_params);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>最后一个入参是<code>LLaMAAttentionStaticParams&amp; static_param</code>，是一个含有位置编码属性的结构体</p>
+                       static_params);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>最后一个入参是<code>LLaMAAttentionStaticParams&amp; static_param</code>，是一个含有位置编码属性的结构体<p></p>
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">struct LLaMAAttentionStaticParams {  
     int   rotary_embedding_dim;  
     float rotary_embedding_base;  
@@ -2508,9 +2355,7 @@ void LLaMASelfAttentionLayer&lt;T&gt;::forward(TensorMap&amp; inputs, TensorMap&
 </ul>
 </li>
 </ul>
-<p>④output</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(mha_output, weights.output, attention_output-&gt;as&lt;T&gt;, cublas_wrapper);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
+<p>④output<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(mha_output, weights.output, attention_output-&gt;as&lt;T&gt;, cublas_wrapper);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
 <h2 id="21-2src-examples-cpp-attention-self-attention-example-cpp"><a href="#21-2src-examples-cpp-attention-self-attention-example-cpp" class="headerlink" title="21.2src/examples/cpp/attention/self_attention_example.cpp"></a>21.2src/examples/cpp/attention/self_attention_example.cpp</h2><p>变量：</p>
 <ul>
 <li>基本参数：<ul>
@@ -2554,15 +2399,12 @@ void allocForForward(int batch_size);<span aria-hidden="true" class="line-number
 <li>context attention中在remove padding后数据的第一维是<code>num_tokens</code>(传入的是<code>params.num_tokens</code>)</li>
 <li>self attention中数据的第一维一直是<code>batch_size</code>(<code>[batch_size, 1, ...]</code>)</li>
 </ul>
-<h2 id="22-2-src-layers-ffn-ffn-cpp"><a href="#22-2-src-layers-ffn-ffn-cpp" class="headerlink" title="22.2 src/layers/ffn/ffn.cpp"></a>22.2 <code>src/layers/ffn/ffn.cpp</code></h2><p><code>forward()</code><br>①确定使用哪种forward的内存分配</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if (params.num_tokens &gt; 0) {  
+<h2 id="22-2-src-layers-ffn-ffn-cpp"><a href="#22-2-src-layers-ffn-ffn-cpp" class="headerlink" title="22.2 src/layers/ffn/ffn.cpp"></a>22.2 <code>src/layers/ffn/ffn.cpp</code></h2><p><code>forward()</code><br>①确定使用哪种forward的内存分配<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">if (params.num_tokens &gt; 0) {  
     allocForForward(params);  
 	} else {                  
     allocForForward(params.batch_size);  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>如果存在num_tokens则为context attention，对应<code>params</code>；<br>如果不存在则为self attention，对应<code>batch_size</code></p>
-<p>②fusedGateUp projs</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(ffn_input-&gt;as&lt;T&gt;(), weights.gateAndup, SwiGLU_input, cublas_wrapper, false, true);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>如果存在num_tokens则为context attention，对应<code>params</code>；<br>如果不存在则为self attention，对应<code>batch_size</code><p></p>
+<p>②fusedGateUp projs<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(ffn_input-&gt;as&lt;T&gt;(), weights.gateAndup, SwiGLU_input, cublas_wrapper, false, true);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
 <ul>
 <li>输入<code>ffn_input</code>：<code>[bs(/num_tokens), q_hidden_units]</code></li>
 <li>权重<code>weights.gateAndup</code>：<code>[q_hidden_units, 2 * inter_size]</code></li>
@@ -2570,8 +2412,7 @@ void allocForForward(int batch_size);<span aria-hidden="true" class="line-number
 <li>经过Gate Linear和Up Linear的输入都是<code>[bs(/num_tokens), q_hidden_units]</code>，因此将他们像fusedQKVGemm一样进行fusedGateUpGemm，输出使用同一块buf</li>
 <li>为啥这里trans_b=true？</li>
 </ul>
-<p>③swiGLU</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchAct(SwiGLU_input, down_proj_input);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>③swiGLU<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchAct(SwiGLU_input, down_proj_input);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
 <ul>
 <li>输入<code>SwiGLU_input</code>：<code>[bs(/num_tokens), 2 * inter_size]</code><ul>
 <li>两个大小为<code>[bs(/num_tokens), inter_size]</code>的Gate数组和Up数组的相同偏移量的数据一起计算，因此最后的输出的第二维大小为原来的一半</li>
@@ -2579,8 +2420,7 @@ void allocForForward(int batch_size);<span aria-hidden="true" class="line-number
 </li>
 <li>输出<code>down_proj_input</code>：<code>[bs(/num_tokens), inter_size]</code></li>
 </ul>
-<p>④down proj</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(down_proj_input, weights.down, ffn_output-&gt;as&lt;T&gt;(), cublas_wrapper, false, true);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>④down proj<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">launchLinearGemm(down_proj_input, weights.down, ffn_output-&gt;as&lt;T&gt;(), cublas_wrapper, false, true);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
 <ul>
 <li>输入<code>down_proj_input</code>：<code>[bs(/num_tokens), inter_size]</code></li>
 <li>权重<code>weights.gateAndup</code>：<code>[q_hidden_units, inter_size]</code> trans_b=true</li>
@@ -2620,7 +2460,7 @@ void allocForForward(int batch_size);<span aria-hidden="true" class="line-number
                              act  
                              linear)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <code>examples/cpp/ffn/CMakeList.txt</code></li>
-<li>将<code>ffn_example.cpp</code>编译到可执行目标文件中并命名为<code>ffnExample</code> <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">add_executable(ffnExample ffn_example.cpp)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>将<code>ffn_example.cpp</code>编译到可执行目标文件中并命名为<code>ffnExample</code><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">add_executable(ffnExample ffn_example.cpp)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
 <li>链接<code>ffnExample</code>所用到的函数(<code>ffn.cpp</code>)对应的静态库(<code>Llamaffn</code>)</li>
 </ul>
 <h1 id="Lesson23-llama-layer-weight"><a href="#Lesson23-llama-layer-weight" class="headerlink" title="Lesson23 llama layer weight"></a>Lesson23 llama layer weight</h1><p>讲解了：<br><code>src/weights/llama/layer_weights.h</code><br><code>src/weights/llama/layer_weights.cc</code><br><code>src/weights/llama/CMakelists.txt</code><br><code>src/utils/weights_utils.h</code><br><code>src/utils/weights_utils.cu</code><br><code>src/utils/CMakelists.txt</code></p>
@@ -2657,7 +2497,7 @@ void allocForForward(int batch_size);<span aria-hidden="true" class="line-number
 </ul>
 <p><code>src/utils/weights_utils.cu</code><br>在源文件中的模板不是一个函数，只有在实例化后才是一个函数并且可以进行链接<br>实现了<code>GPUMalloc</code>和<code>GPUFree</code>，目的：在分配内存和释放内存时进行检查</p>
 <p><code>src/weights/llama/layer_weights.h</code><br>定义了四个函数</p>
-<p><code>src/weights/llama/layer_weights.cc</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/57edc5cf50e98d36315d8564f2c5111.png"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/39931b88ed57cae22fab8e5d4700e67.jpg"><br>①<code>attn_norm_weight.gamma</code>：context decoder和self decoder共用</p>
+<p><code>src/weights/llama/layer_weights.cc</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/57edc5cf50e98d36315d8564f2c5111.png" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/39931b88ed57cae22fab8e5d4700e67.jpg" alt=""><br>①<code>attn_norm_weight.gamma</code>：context decoder和self decoder共用</p>
 <ul>
 <li>类型为：<code>LayerNormWeight&lt;T&gt;</code></li>
 <li>成员有：<code>T* gamma</code><br>④<code>ffn_norm_weight.gamma</code>：context decoder和self decoder共用<br>同上</li>
@@ -2689,8 +2529,7 @@ void allocForForward(int batch_size);<span aria-hidden="true" class="line-number
 <pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">Vec_t* dout = reinterpret_cast&lt;Vec_t*&gt;(decoder_out + batch_id * hidden_units);
 Vec_t* rsd = reinterpret_cast&lt;Vec_t*&gt;(residual + batch_id * hidden_units);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>将<code>decoder_out</code>和<code>residual</code>转化为向量化类型，并且每个<code>dout</code>/<code>rsd</code>表示每一个token或batch每一行的数据都能被转换为Vec_t类型的指针</p>
-<p>一般实现(fp32)和特化实现(专给fp16使用)的区别</p>
-<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">for(int i = tid; i &lt; hidden_units/vec_size; i+=blockDim.x){
+<p>一般实现(fp32)和特化实现(专给fp16使用)的区别<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">for(int i = tid; i &lt; hidden_units/vec_size; i+=blockDim.x){
     dout[i].x += rsd[i].x; // dout既是输入也是输出  
     dout[i].y += rsd[i].y;  
     dout[i].z += rsd[i].z;  
@@ -2699,8 +2538,7 @@ Vec_t* rsd = reinterpret_cast&lt;Vec_t*&gt;(residual + batch_id * hidden_units);
 
 for(int i = tid; i &lt; hidden_units/vec_size; i+=blockDim.x){
     dout[i] = __hadd2(dout[i], rsd[i]); // 两个half2做加法  
-}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p><code>for</code>循环保证一个block的线程能够遍历完<code>hidden_units</code>的元素</p>
+}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><code>for</code>循环保证一个block的线程能够遍历完<code>hidden_units</code>的元素<p></p>
 <p><code>tests/uinttests/test_residual.cu</code><br>在<code>CPUresidual</code>中，可以通过AVX-512 kernel + openMP进行性能改善</p>
 <ul>
 <li><code>AVX-512</code>(Advanced Vector Extensions 512)<ul>
@@ -2729,7 +2567,7 @@ for(int i = tid; i &lt; hidden_units/vec_size; i+=blockDim.x){
 <ul>
 <li>入参：<ul>
 <li><code>TensorMap&amp; input_tensors</code></li>
-<li>`const std::vector&lt;LlamaLayerWeight<t>*&gt;&amp; layerWeights</t></li>
+<li>`const std::vector<llamalayerweight<t>*&gt;&amp; layerWeights</llamalayerweight<t></li>
 <li><code>TensorMap&amp; output_tensors</code></li>
 <li><code>LLaMAAttentionDynParams&amp; dyn_params</code><br>①内存分配：导入动态变量并分配四个中间buffer的内存<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">allocForForward(dyn_params);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 ②获得偏移<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">Tensor* seq_lens = input_tensors["input_length"];  
@@ -2803,7 +2641,7 @@ launchBuildCausalMasks(attention_mask, seq_lens-&gt;as&lt;int&gt;(), context_len
 <h1 id="Lesson28-llama类"><a href="#Lesson28-llama类" class="headerlink" title="Lesson28 llama类"></a>Lesson28 llama类</h1><p>更高层次的抽象</p>
 <p><code>std::function&lt;返回值类型(参数列表)&gt;</code>定义了一个可调用对象的签名</p>
 <ul>
-<li>可调用对象的签名包括返回值类型和参数列表<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/Pasted%20image%2020250115113416.png"></li>
+<li>可调用对象的签名包括返回值类型和参数列表<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/Pasted%20image%2020250115113416.png" alt=""></li>
 </ul>
 <p><code>src/models/llama/llama.cpp</code><br><code>src/models/llama/llama.h</code></p>
 <p><code>std::string Llama&lt;T&gt;::Response(const std::vector&lt;std::string&gt; &amp;input, CallBack PrintRes)</code></p>
@@ -2860,10 +2698,7 @@ launchBuildCausalMasks(attention_mask, seq_lens-&gt;as&lt;int&gt;(), context_len
 </li>
 </ul>
 </li>
-<li>topkSample<ul>
-<li></li>
-</ul>
-</li>
+<li>topkSample<br>  * </li>
 </ul>
 </li>
 </ul>
@@ -2889,7 +2724,7 @@ launchBuildCausalMasks(attention_mask, seq_lens-&gt;as&lt;int&gt;(), context_len
 <ul>
 <li>fp32两个结果的误差大于$10^{-6}$就说明有误差</li>
 </ul>
-<ol start="2">
+<ol>
 <li><code>DeviceSynAndCheckCudaError</code></li>
 </ol>
 <ul>
@@ -2913,7 +2748,7 @@ endif()
 <li>如果<code>PERF</code>是ON，那么在编译选项中添加<code>-DPRINT_DATA</code>，即在编译时添加一个宏<code>PRINT_DATA</code></li>
 <li><code>cmake .. -DPERF=ON</code>时打开不进行Check(即不打开“检查运行时错误“)</li>
 </ul>
-<ol start="3">
+<ol>
 <li>PRINT_DATA</li>
 </ol>
 <ul>
@@ -2932,7 +2767,7 @@ swap=0     //设置交换分区
 localhostForwarding=true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
 <li>重启WSL：<code>win+R</code>，输入<code>services.msc</code>，找到<code>LxssManager</code>，重新启动</li>
 </ul>
-<ol start="2">
+<ol>
 <li>这个vmmem好像是个硬骨头啊！<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/166102340">wsl导致vmmem占用高解决办法 - 知乎</a><br>(👆文中借鉴<a target="_blank" rel="noopener" href="https://github.com/microsoft/WSL/issues/4166">WSL 2 consumes massive amounts of RAM and doesn’t return it - github.com</a>)<br>按照这个方法做到最后一步发现👇<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/Pasted%20image%2020241011223651.png" alt="|500"><br>然后就找到了这个方法👇<br><a target="_blank" rel="noopener" href="https://bbs.csdn.net/topics/396240104">drop_cashes无法操作 no such file or directory-CSDN社区</a></li>
 </ol>
 <ul>
@@ -2940,7 +2775,7 @@ localhostForwarding=true<span aria-hidden="true" class="line-numbers-rows"><span
 <li>输入<code>echo 3 &gt; /proc/sys/vm/drop_caches</code></li>
 <li>然后再回去<code>sudo stat -c '%y' /root/drop_caches_last_run</code>就能看到清除缓存的记录了</li>
 </ul>
-<ol start="3">
+<ol>
 <li>vscode疯狂爆红，转clion去了</li>
 </ol>
 <h2 id="软件抽象资源和硬件资源的对应关系"><a href="#软件抽象资源和硬件资源的对应关系" class="headerlink" title="软件抽象资源和硬件资源的对应关系"></a>软件抽象资源和硬件资源的对应关系</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41554005/article/details/119765334">【GPU结构与CUDA系列4】GPU存储资源：寄存器，本地内存，共享内存，缓存，显存等存储器细节_gpu内寄存器 - CSDN</a></p>
@@ -2953,21 +2788,17 @@ localhostForwarding=true<span aria-hidden="true" class="line-numbers-rows"><span
 <li>非按行排列：<strong>cublas API</strong>接受的输入以及输出的内存排布全部都默认为<strong>列主序</strong></li>
 </ul>
 </li>
-<li><p>“当线程访问矩阵数据时，如果<strong>数据排列的顺序与线程访问顺序匹配</strong>，内存带宽的利用率会更高”。这里应该和warp有关</p>
-<ul>
+<li>“当线程访问矩阵数据时，如果<strong>数据排列的顺序与线程访问顺序匹配</strong>，内存带宽的利用率会更高”。这里应该和warp有关<ul>
 <li>Fused SelfDecoder Attention kernel中，<code>block</code>的大小是<code>head_size</code>，<code>grid</code>的大小是<code>head_num*batch_size</code><br>👇根据线程访问顺序匹配(从blockIdx到threadIdx，threadIdx的跨度是顺序的)<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">cache_offset = blockIdx.y * kv_head_num * max_seq_len * head_size +
 			blockIdx.x/(head_num/kv_head_num)*max_seq_len*head_size+
 			threadIdx.x * vec_size;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/c22b854c31b08ae192c8e310cb4a8fa%201.jpg"><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/8ea8ba5aa4aa7e6763e069de3b29f14.jpg"></li>
+<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/c22b854c31b08ae192c8e310cb4a8fa%201.jpg" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/8ea8ba5aa4aa7e6763e069de3b29f14.jpg" alt=""></li>
 </ul>
 </li>
-<li><p>一次数据传输的数据量默认情况下是32个字节</p>
-</li>
-<li><p>$合并度=\dfrac{线程束请求的字节数}{由该请求导致的所有数据传输处理的字节数}$</p>
-</li>
-<li><p>数据传输对数据地址的要求：在一次数据传输中，从全局内存转移到L2缓存的一片内存首地址一定是一个最小颗粒度(该例子是32)的整数倍。</p>
-<ul>
-<li>一次传输只取0<del>31、32</del>63、64~95……<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/808198b24f332fb853b67f74add48cd.jpg"><br>👇左行右列导致跨越式的非合并访问<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/7b1158679c6058fdd34cdd461ad7d17.jpg"></li>
+<li>一次数据传输的数据量默认情况下是32个字节</li>
+<li>$合并度=\dfrac{线程束请求的字节数}{由该请求导致的所有数据传输处理的字节数}$</li>
+<li>数据传输对数据地址的要求：在一次数据传输中，从全局内存转移到L2缓存的一片内存首地址一定是一个最小颗粒度(该例子是32)的整数倍。<ul>
+<li>一次传输只取0~31、32~63、64~95……<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/808198b24f332fb853b67f74add48cd.jpg" alt=""><br>👇左行右列导致跨越式的非合并访问<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/LLM2%E6%8E%A8%E7%90%86%E5%BC%95%E6%93%8E/7b1158679c6058fdd34cdd461ad7d17.jpg" alt=""></li>
 </ul>
 </li>
 </ul>
@@ -3228,19 +3059,19 @@ localhostForwarding=true<span aria-hidden="true" class="line-numbers-rows"><span
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2025/03/19/mla-fu-ben/">
+                <a href="/2025/03/19/mla/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/23.jpg" class="responsive-img" alt="测试用">
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Multi-head Latent Attention模型理解">
                         
-                        <span class="card-title">测试用</span>
+                        <span class="card-title">Multi-head Latent Attention模型理解</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            
+                            作为FlashMLA的核心之一，MLA设计了在保持性能的同时着重减少KV Cache的attention机制，十分值得细究！
                         
                     </div>
                     <div class="publish-info">
@@ -3249,11 +3080,27 @@ localhostForwarding=true<span aria-hidden="true" class="line-numbers-rows"><span
                         </span>
                         <span class="publish-author">
                             
-                            <i class="fas fa-user fa-fw"></i>
-                            WB
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
+                                </a>
+                            
                             
                         </span>
                     </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/DeepSeek/">
+                        <span class="chip bg-color">DeepSeek</span>
+                    </a>
+                    
+                    <a href="/tags/GPU/">
+                        <span class="chip bg-color">GPU</span>
+                    </a>
+                    
                 </div>
                 
             </div>

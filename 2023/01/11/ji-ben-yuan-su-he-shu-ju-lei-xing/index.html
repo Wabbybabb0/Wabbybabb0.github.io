@@ -589,27 +589,24 @@
 <h2 id="三-变量"><a href="#三-变量" class="headerlink" title="三.变量"></a>三.变量</h2><p>👇从表面看，变量是用来<strong>存储数据</strong>的</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x;
 x = 100;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>实际上，<strong>变量表示了存储位置，并且每个变量都有一个类型，以决定什么样的值能够存入变量</strong></p>
 <p>👆了解为，x是一个<code>标签</code>，对应着内存中的一个地址，100这个值就存在该地址</p>
 <p><strong>变量 = <code>以变量名所对应的内存地址为起点</code>、<code>以其数据类型所要求的存储空间为长度</code>的一块内存区域</strong></p>
-<p><img src="/../../../../medias/blog_picture/C#/2.png" alt="堆，栈，地址的理解"></p>
+<p><img src="../../../../medias/blog_picture/C#/2.png" alt="堆，栈，地址的理解"></p>
 <p>引用变量存的是实例的地址</p>
 <h4 id="装箱和拆箱"><a href="#装箱和拆箱" class="headerlink" title="装箱和拆箱"></a>装箱和拆箱</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">//装箱
 int x = 100;
 object obj;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>当发现obj引用的实例在堆上而不在栈上时，把该实例对应的值的内存大小在栈上找一块空间，再把这个地址存储回obj的内存空间</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">//拆箱
 int y = (int)obj;
 Console.WriteLine(y);
 
 //100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<p><img src="/../../../../medias/blog_picture/C#/3.png" alt="装箱和拆箱"></p>
+<p><img src="../../../../medias/blog_picture/C#/3.png" alt="装箱和拆箱"></p>
 <h2 id="四-方法"><a href="#四-方法" class="headerlink" title="四.方法"></a>四.方法</h2><p>方法是类或结构体的成员</p>
 <p>方法相当于自定义函数</p>
-<p><img src="/../../../../medias/blog_picture/C#/4.png"></p>
+<p><img src="../../../../medias/blog_picture/C#/4.png" alt=""></p>
 <p>👆复用，如果要更改3.14159为3.14或者Math.PI可以直接在GetCircleArea处改</p>
 <p>实例方法👇</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Calculator c = new Calculator();
@@ -618,7 +615,6 @@ class Calculator
 {
     public double Add(double a,double b);
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>静态方法</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Calculator c = new Calculator();
 //c.Add(2.0,3.0);此时这句话无用
@@ -626,7 +622,6 @@ class Calculator
 {
     public static double Add(double a,double b);
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h2 id="五-构造器"><a href="#五-构造器" class="headerlink" title="五.构造器"></a>五.构造器</h2><p><strong>不带以0为默认参数的构造器</strong></p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace ConstructExample
 {
@@ -655,7 +650,6 @@ class Calculator
 
 //1
 //No Name<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>强制程序员给构造器设置参数</strong>，在这种情况下如果不想设置参数但是要调用该方法，就需要自定义一个默认参数，如上图所示</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace ConstructExample
 {
@@ -681,7 +675,6 @@ class Calculator
         public string Name;
     }
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>构造器快捷键：ctor+tab*2</strong>ctor=Code snippet(小片段)</p>
 <h4 id="重载"><a href="#重载" class="headerlink" title="重载"></a>重载</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">class Calculator
 {
@@ -701,7 +694,6 @@ class Calculator
         return a + b + c;
     } 
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>👆①与②不能共存，重载与方法的类型无关</p>
 <p>①和③、②和③可共存</p>
 <h2 id="调用方法实际上是压栈的过程"><a href="#调用方法实际上是压栈的过程" class="headerlink" title="调用方法实际上是压栈的过程"></a>调用方法实际上是压栈的过程</h2>

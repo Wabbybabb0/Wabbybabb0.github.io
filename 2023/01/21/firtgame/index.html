@@ -539,18 +539,17 @@
 </ul>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">horizontalmove = Input.GetAxis("Horizontal");//检测水平方向键
 verticalmove = Input.GetAxis("Vertical");	 //检测垂直方向键<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-<p><img src="/../../../../medias/blog_picture/Unity/1.png"></p>
+<p><img src="../../../../medias/blog_picture/Unity/1.png" alt=""></p>
 <p>👆Edit-&gt;Project Settings-&gt;Input Manager-&gt;Axes-&gt;Horizontal</p>
 <p>从上图可知<code>Negative Button</code> <code>-1</code>对应<code>left</code>和<code>a</code>；<code>Positive Button</code>对应<code>1</code>和<code>right</code></p>
 <p>所以在程序中分别设置两个变量接收<code>-1</code>或者<code>1</code>来判断是按了<code>a</code> <code>left</code>还是<code>d</code> <code>right</code></p>
 <h4 id="Input-GetAxisRaw"><a href="#Input-GetAxisRaw" class="headerlink" title="Input.GetAxisRaw"></a>Input.GetAxisRaw</h4><p><strong>~ vs Input.GetAxis</strong>👇</p>
 <p>前者获得的数据只有<code>-1</code> <code>0</code> <code>1</code></p>
 <p>后者获得的数据是<code>-1~0</code> <code>0~1</code></p>
-<h4 id="Time-deltaTime"><a href="#Time-deltaTime" class="headerlink" title="Time.deltaTime"></a>Time.deltaTime</h4><p><img src="/../../../../medias/blog_picture/Unity/2.png"></p>
-<p><img src="/../../../../medias/blog_picture/Unity/3.png"></p>
+<h4 id="Time-deltaTime"><a href="#Time-deltaTime" class="headerlink" title="Time.deltaTime"></a>Time.deltaTime</h4><p><img src="../../../../medias/blog_picture/Unity/2.png" alt=""></p>
+<p><img src="../../../../medias/blog_picture/Unity/3.png" alt=""></p>
 <h4 id="Mathf-Abs"><a href="#Mathf-Abs" class="headerlink" title="Mathf.Abs()"></a>Mathf.Abs()</h4><p>取绝对值</p>
-<h4 id="transform-Transform"><a href="#transform-Transform" class="headerlink" title="transform&amp;Transform"></a>transform&amp;Transform</h4><ul>
+<h4 id="transform-amp-Transform"><a href="#transform-amp-Transform" class="headerlink" title="transform&amp;Transform"></a>transform&amp;Transform</h4><ul>
 <li>Transform做函数</li>
 <li>transform才是当前真正需要操作的</li>
 </ul>
@@ -567,19 +566,18 @@ verticalmove = Input.GetAxis("Vertical");	 //检测垂直方向键<span aria-hid
         transform.position = new Vector3(player.position.x, 0, -10f);  
     }
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>👇最后把要给镜头的对象移动到Player处即可</p>
-<p><img src="/../../../../medias/blog_picture/Unity/4.png"></p>
+<p><img src="../../../../medias/blog_picture/Unity/4.png" alt=""></p>
 <h5 id="2-cinimachine"><a href="#2-cinimachine" class="headerlink" title="2.cinimachine"></a>2.cinimachine</h5><p>GameObject-&gt;Cinimachine-&gt;2D Cinima-&gt;得到下图所示的选项</p>
-<p><img src="/../../../../medias/blog_picture/Unity/5.png"></p>
-<p><img src="/../../../../medias/blog_picture/Unity/6.png"></p>
+<p><img src="../../../../medias/blog_picture/Unity/5.png" alt=""></p>
+<p><img src="../../../../medias/blog_picture/Unity/6.png" alt=""></p>
 <ul>
 <li><p>Follow处拉拽上需要跟踪镜头的对象</p>
 </li>
 <li><p>然后在Lens处调整镜头距离等参数</p>
 </li>
 </ul>
-<p><img src="/../../../../medias/blog_picture/Unity/7.png"></p>
+<p><img src="../../../../medias/blog_picture/Unity/7.png" alt=""></p>
 <ul>
 <li><p>Dead Zone</p>
 <ul>
@@ -589,11 +587,10 @@ verticalmove = Input.GetAxis("Vertical");	 //检测垂直方向键<span aria-hid
 <li><p>不离开背景图</p>
 <ul>
 <li>CM vcam1-&gt;Body-&gt;Add Extension-&gt;Cinimachine Confiner-&gt;</li>
-<li><img src="/../../../../medias/blog_picture/Unity/8.png"></li>
+<li><img src="../../../../medias/blog_picture/Unity/8.png" alt=""></li>
 </ul>
 </li>
-<li><p>回到Background图层拉拽范围</p>
-</li>
+<li>回到Background图层拉拽范围</li>
 </ul>
 <h4 id="虚函数与类的使用"><a href="#虚函数与类的使用" class="headerlink" title="虚函数与类的使用"></a>虚函数与类的使用</h4><p><strong>父级</strong></p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public class Enemy : MonoBehaviour
@@ -616,7 +613,6 @@ verticalmove = Input.GetAxis("Vertical");	 //检测垂直方向键<span aria-hid
         Anim.SetTrigger("death");
     }
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>子级</strong></p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">public class Enemy_Frog : Enemy//隶属于Enemy的子级，确定父子关系
 {
@@ -626,12 +622,8 @@ verticalmove = Input.GetAxis("Vertical");	 //检测垂直方向键<span aria-hid
      	base.Start();//调用父级的Start
 	}
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>Player</strong></p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Enemy enemy = collision.gameObject.GetComponent&lt;Enemy&gt;();//可以调用名为"Enemy"的类的父子级<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h5 id="1-1protected"><a href="#1-1protected" class="headerlink" title="1.1protected"></a>1.1protected</h5><ul>
 <li><p>自身类和派生类可以访问相当于自身的private型成员 <code>创建的函数或者变量在子父级中都可以使用</code></p>
 </li>
@@ -649,7 +641,6 @@ if(Input.GetKeyDown(KeyCode.E))
 {
     SceneManager.LoadScene(SceneManager.GetActiveScene().bulidIndex + 1);
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>

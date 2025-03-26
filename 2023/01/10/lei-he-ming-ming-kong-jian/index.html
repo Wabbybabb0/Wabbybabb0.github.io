@@ -521,7 +521,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    486
+                    487
                 </div>
                 
 
@@ -556,24 +556,23 @@
 </li>
 <li><p><code>实例化</code>，使用<code>new</code>操作符创建类的实例</p>
 <ul>
-<li><pre><code class="c#">new + 类名();//实例化格式
-<pre class="line-numbers language-none"><code class="language-none">
+<li>```c#<br>new + 类名();//实例化格式<pre class="line-numbers language-none"><code class="language-none">
 * ```c#
   (new Form()).ShowDialog();//实例化例子<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</code></pre>
 </li>
 </ul>
 </li>
 <li><p>引用变量与实例的关系</p>
 <ul>
-<li><pre><code class="c#">
+<li><pre><code class="lang-c#">Form myForm;                //引用变量    小朋友
+myForm = new Form();        //实例化     =小朋友牵着气球
+myForm.Text = "My Form!";    //标题文本
+myForm.ShowDialog();        //显示表单
 </code></pre>
 </li>
+<li><p>引用变量与实例的关系可以视作小朋友和气球的关系</p>
+</li>
 </ul>
-<p>  Form myForm;				//引用变量	小朋友<br>  myForm = new Form();		//实例化	 =小朋友牵着气球<br>  myForm.Text = “My Form!”;	//标题文本<br>  myForm.ShowDialog();		//显示表单</p>
-<pre><code>
-* 引用变量与实例的关系可以视作小朋友和气球的关系
-</code></pre>
 </li>
 </ul>
 <h4 id="2-类的三大成员"><a href="#2-类的三大成员" class="headerlink" title="2.类的三大成员"></a>2.类的三大成员</h4><ul>
@@ -592,12 +591,12 @@
 <li><strong>静态Static</strong>成员表示它是<code>类的成员</code></li>
 <li><strong>实例</strong>成员表示它是<code>对象的成员</code></li>
 <li><strong>绑定Bing</strong>指的是编译器如何把一个成员与类或对象关联起来<ul>
-<li>**.**成员访问操作符</li>
+<li><strong>.</strong>成员访问操作符</li>
 </ul>
 </li>
 </ul>
 <h2 id="二-名称空间"><a href="#二-名称空间" class="headerlink" title="二.名称空间"></a>二.名称空间</h2><p>把类用良好的结构组合在一起，以树形结构组织类</p>
-<p><strong>包：某市	→	类库：图书馆	→	名称空间：书架	→	类：书	→	方法：目录</strong></p>
+<p><strong>包：某市    →    类库：图书馆    →    名称空间：书架    →    类：书    →    方法：目录</strong></p>
 <h2 id="三-类库"><a href="#三-类库" class="headerlink" title="三.类库"></a>三.类库</h2><p>类库的引用</p>
 <ul>
 <li><p>DLL引用(无源代码，黑盒类库)</p>
@@ -617,7 +616,7 @@
 </ul>
 </li>
 </ul>
-<p><img src="/../../../../medias/blog_picture/C#/1.png"></p>
+<p><img src="../../../../medias/blog_picture/C#/1.png" alt=""></p>
 
                 
             </div>

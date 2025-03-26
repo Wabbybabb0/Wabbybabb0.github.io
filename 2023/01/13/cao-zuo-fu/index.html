@@ -581,12 +581,8 @@
 }
 
 //两种方法的结果一样<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>只有圆括号来提高优先级</p>
 <h4 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int[] myIntArray = new int[]{};//[]填数组大小，{}(初始化器)填具体数值<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
 <h4 id="typeof"><a href="#typeof" class="headerlink" title="typeof"></a>typeof</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Type t = typeof(int);
 Console.WriteLine(t.Namespace);
 Console.WriteLine(t.FullName);
@@ -596,18 +592,13 @@ System
 System.Int32
 Int32
 */<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="default"><a href="#default" class="headerlink" title="default"></a>default</h4><p>获取一个类型的默认值</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = default(int);
 Console.WriteLine(x);
 //0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = default(Form);
 Console.WriteLine(myForm==null);
 //true<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">class Program
 {
 	static void Main(string[] args)
@@ -651,18 +642,12 @@ enum Level
 	High = 3
 }
 //0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="var"><a href="#var" class="headerlink" title="var"></a>var</h4><p>声明隐式类型变量</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = 100;//显式
 
 var y = 100;//隐式	根据赋的值“100”来给y判断类型
 Console.WriteLine(y.GetType().Name);
 //Int32<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="new"><a href="#new" class="headerlink" title="new"></a>new</h4><ul>
 <li>调用实例构造器</li>
 </ul>
@@ -671,27 +656,22 @@ Console.WriteLine(y.GetType().Name);
 <p>如果在new操作符<code>左边有赋值符号</code>的话，那么new操作符会把自己拿到的这个<code>实例的内存地址</code>通过<code>赋值操作符</code>交给负责访问这个实例的<code>变量</code></p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = new Form();
 //myForm为该实例的变量<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <ul>
 <li>调用实例的初始化器</li>
 </ul>
 <p>花括号<code>{}</code>内可以为这个实例的属性设置它的值，可以通过<code>,</code>来同时设置多个属</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = new Form(){Text."Hello"};<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>👆👇</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = new Form();
 myForm.Text = "Hello"; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <ul>
 <li>一次性访问，没必要创建变量访问实例</li>
 </ul>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">new Form(){Text = "Hello"}.ShowDialog();<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>👆👇</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Form myForm = new Form();
 myForm.Text = "Hello";
 myForm.ShowDialog();<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <ul>
 <li>匿名类型创建对象</li>
 </ul>
@@ -706,11 +686,10 @@ Console.WriteLine(person.GetType().Name);
 //&lt;&gt;f__AnonymousType是约定的一个前缀
 //0指的是在程序中创建的第一个
 //`2指的是这个类型是一个泛型类，构成这个类型时需要两个类型来构成它，一个是string，一个是int<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <ul>
 <li>子类隐藏父类(关键字)(了解即可)</li>
 </ul>
-<h4 id="checked-unchecked"><a href="#checked-unchecked" class="headerlink" title="checked&amp;unchecked"></a>checked&amp;unchecked</h4><p>检查是否异常</p>
+<h4 id="checked-amp-unchecked"><a href="#checked-amp-unchecked" class="headerlink" title="checked&amp;unchecked"></a>checked&amp;unchecked</h4><p>检查是否异常</p>
 <h4 id="取非操作符"><a href="#取非操作符" class="headerlink" title="!取非操作符"></a>!取非操作符</h4><p>实际应用，检查</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace CreatOperator
 {
@@ -739,9 +718,6 @@ Console.WriteLine(person.GetType().Name);
         }
     }
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="T-x强制转换类型操作符"><a href="#T-x强制转换类型操作符" class="headerlink" title="(T)x强制转换类型操作符"></a>(T)x强制转换类型操作符</h4><h2 id="二-数据类型转换"><a href="#二-数据类型转换" class="headerlink" title="二.数据类型转换"></a>二.数据类型转换</h2><h4 id="convert"><a href="#convert" class="headerlink" title="convert"></a>convert</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">string str1 = Console.ReadLine();
 string str2 = Console.ReadLine();
 int x = Convert.ToInt32(str1);
@@ -753,16 +729,14 @@ Console.WriteLine(x + y);
 //34
 //1234
 //46s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <h4 id="隐式类型转换"><a href="#隐式类型转换" class="headerlink" title="隐式类型转换"></a>隐式类型转换</h4><ul>
 <li>不丢失精度的转换</li>
 </ul>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = int.MaxValue;
 long y = x;
 Console.WriteLine(y);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>C#语言数据文档6.1.2有隐式数值转换</p>
-<p><img src="/../../../../medias/blog_picture/C#/5.png"></p>
+<p><img src="../../../../medias/blog_picture/C#/5.png" alt=""></p>
 <ul>
 <li>子类向父类的转换</li>
 </ul>
@@ -805,9 +779,6 @@ Console.WriteLine(y);<span aria-hidden="true" class="line-numbers-rows"><span></
 
 }
 //Eating<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <ul>
 <li>装箱</li>
 </ul>
@@ -818,7 +789,6 @@ Console.WriteLine(y);<span aria-hidden="true" class="line-numbers-rows"><span></
 uint x = 65536;
 ushort y = (ushort)x;//强制把较大的值装到小的空间里
 Console.WriteLine(y);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
 <ul>
 <li>拆箱</li>
 <li>convert<ul>
@@ -859,7 +829,6 @@ Console.WriteLine(y);<span aria-hidden="true" class="line-numbers-rows"><span></
     }
 }
 //10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>对比隐式类型转换</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">namespace CreatOperator
 {
@@ -890,34 +859,22 @@ Console.WriteLine(y);<span aria-hidden="true" class="line-numbers-rows"><span></
     }
 }
 //10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="is"><a href="#is" class="headerlink" title="is"></a>is</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Stone stone = new Stone();
 var result = stone is Stone;//检验的是变量所引用的实例
 Console.WriteLine(result.GetType().FullName);
 Console.WriteLine(result);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="Nullable可空类型"><a href="#Nullable可空类型" class="headerlink" title="Nullable<>可空类型"></a>Nullable&lt;&gt;可空类型</h4><p>例子：一个同学没交作业，但是不是那种做的极差的0分，想给他空着</p>
+<h4 id="Nullable-lt-gt-可空类型"><a href="#Nullable-lt-gt-可空类型" class="headerlink" title="Nullable<>可空类型"></a>Nullable&lt;&gt;可空类型</h4><p>例子：一个同学没交作业，但是不是那种做的极差的0分，想给他空着</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">Nullable&lt;int&gt; x = null;//没交作业
 x = 100;//交了作业<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>👆👇</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int?x = null;
 x = 100;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>但是如果这个同学一直没交作业，期末需要录入成绩时给0分</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int?x = null;
 int y = x??0;//赋0分<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
 <h4 id="ifelse的简写"><a href="#ifelse的简写" class="headerlink" title="?:(ifelse的简写)"></a>?:(ifelse的简写)</h4><pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = 80;
 string str = string.Empty;
 str = (x &gt;= 60)?"Pass":"Failed";<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
 <p>👆👇</p>
 <pre class="line-numbers language-c#" data-language="c#"><code class="language-c#">int x = 80;
 string str;
@@ -929,7 +886,6 @@ else
 {
     str = "Failed";
 }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 
                 
             </div>

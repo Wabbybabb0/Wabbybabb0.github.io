@@ -546,66 +546,52 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><p><img src="/../../../../medias/blog_picture/51/46.png" alt="定时器框图"></p>
-<p><img src="/../../../../medias/blog_picture/51/47.png"></p>
+                <h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><p><img src="../../../../medias/blog_picture/51/46.png" alt="定时器框图"></p>
+<p><img src="../../../../medias/blog_picture/51/47.png" alt=""></p>
 <p>按视频中的去理解，up主的板子晶振为12MHz，如果分频接了÷12的线路，那么传给计数器的就会是1µs计数一次(计算:<strong>1/(12MHz/12)=1/1*10^9s=1µs</strong>)</p>
 <p>CT选择开关：那里给<strong>1</strong>是<strong>counter计数器</strong>  给<strong>0</strong>是<strong>timer定时器</strong></p>
-<p>GATE那里：三角是异门(1–&gt;0  0—&gt;1)，第二个是或门(只有00情况给0，其余给1)，第三个是与门<strong>跟C的异或与的与意思差不多</strong></p>
-<p><img src="/../../../../medias/blog_picture/51/48.png"></p>
-<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><h3 id="1-TMOD-TIME-MODE"><a href="#1-TMOD-TIME-MODE" class="headerlink" title="1.TMOD(TIME_MODE)"></a>1.TMOD(TIME_MODE)</h3><p><img src="/../../../../medias/blog_picture/51/49.png"></p>
+<p>GATE那里：三角是异门(1—&gt;0  0—-&gt;1)，第二个是或门(只有00情况给0，其余给1)，第三个是与门<strong>跟C的异或与的与意思差不多</strong></p>
+<p><img src="../../../../medias/blog_picture/51/48.png" alt=""></p>
+<h2 id="实操"><a href="#实操" class="headerlink" title="实操"></a>实操</h2><h3 id="1-TMOD-TIME-MODE"><a href="#1-TMOD-TIME-MODE" class="headerlink" title="1.TMOD(TIME_MODE)"></a>1.TMOD(TIME_MODE)</h3><p><img src="../../../../medias/blog_picture/51/49.png" alt=""></p>
 <p>由于TMOD不可寻址，所以要<strong>整体</strong>表示</p>
-<p>(对于**(不)可寻址<strong>的理解，</strong>可寻址<strong>像之前的点LED灯，直接P2=0x01&lt;==&gt;P2_1=1然后P2_2~8=0，</strong>不可寻址**就是只能一坨地表示，就像P2=0x00这样)</p>
+<p>(对于<strong>(不)可寻址</strong>的理解，<strong>可寻址</strong>像之前的点LED灯，直接P2=0x01&lt;==&gt;P2_1=1然后P2_2~8=0，<strong>不可寻址</strong>就是只能一坨地表示，就像P2=0x00这样)</p>
 <p><strong>目的</strong>：我们要实现<strong>定时器0</strong>运行且进入<strong>模式1</strong></p>
-<h4 id="①M0-M1"><a href="#①M0-M1" class="headerlink" title="①M0&amp;M1"></a>①M0&amp;M1</h4><p><img src="/../../../../medias/blog_picture/51/50.png"></p>
-<p>所以<strong>M0–&gt;1</strong>，<strong>M1–&gt;0</strong></p>
-<h4 id="②C-T"><a href="#②C-T" class="headerlink" title="②C/T"></a>②C/T</h4><p><img src="/../../../../medias/blog_picture/51/51.png"></p>
-<p>因为是定时器 <strong>C/T–&gt;0</strong></p>
-<h4 id="③GATE"><a href="#③GATE" class="headerlink" title="③GATE"></a>③GATE</h4><p><img src="/../../../../medias/blog_picture/51/52.png"></p>
-<p>要让TR0参与控制，所以<strong>GATE–&gt;0</strong></p>
+<h4 id="①M0-amp-M1"><a href="#①M0-amp-M1" class="headerlink" title="①M0&amp;M1"></a>①M0&amp;M1</h4><p><img src="../../../../medias/blog_picture/51/50.png" alt=""></p>
+<p>所以<strong>M0—&gt;1</strong>，<strong>M1—&gt;0</strong></p>
+<h4 id="②C-T"><a href="#②C-T" class="headerlink" title="②C/T"></a>②C/T</h4><p><img src="../../../../medias/blog_picture/51/51.png" alt=""></p>
+<p>因为是定时器 <strong>C/T—&gt;0</strong></p>
+<h4 id="③GATE"><a href="#③GATE" class="headerlink" title="③GATE"></a>③GATE</h4><p><img src="../../../../medias/blog_picture/51/52.png" alt=""></p>
+<p>要让TR0参与控制，所以<strong>GATE—&gt;0</strong></p>
 <p><strong>附GATE的运行模式</strong></p>
-<p><img src="/../../../../medias/blog_picture/51/53.png"></p>
+<p><img src="../../../../medias/blog_picture/51/53.png" alt=""></p>
 <h4 id="因此"><a href="#因此" class="headerlink" title="因此"></a>因此</h4><pre class="line-numbers language-C" data-language="C"><code class="language-C">TMOD=0X01;//0000 0001<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <h4 id="TMOD的优化"><a href="#TMOD的优化" class="headerlink" title="TMOD的优化"></a>TMOD的优化</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c">TMOD <span class="token operator">&amp;=</span> <span class="token number">0xF0</span><span class="token punctuation">;</span>		<span class="token comment">//设置定时器模式       0xF0--&gt;1111 0000</span>
 TMOD <span class="token operator">|=</span> <span class="token number">0x01</span><span class="token punctuation">;</span>      <span class="token comment">//                    0x01--&gt;0000 0001</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>由于TMOD是<strong>同时控制定时器0和定时器1</strong>，我们希望在控制定时器0的时候，<strong>不影响到可能正在工作的定时器1</strong>，于是用到了以下操作</p>
 <p>e.g.</p>
-<p>原TMOD=1010 0011—我们希望把它转换为—&gt;1010 0001</p>
-<p><strong>1st——-1010 0011 &amp; 1111 0000 =1010 0000</strong></p>
-<p><strong>理解</strong>：<strong>n &amp; 1 <strong>时，n为几就返回几(此时不影响定时器1)；</strong>n &amp; 0 <strong>时，全为0(有点</strong>初始化</strong>定时器0的感觉)</p>
-<p><strong>2nd——1010 0000 | 0000 0001 =1010 0001</strong></p>
-<p><strong>理解</strong>：<strong>n | 0 <strong>时，n为几就返回几(还是不影响定时器1)；</strong>0 | n</strong> 时，n为几也返回几(n是人工决定的，这时可以自行操控定时器0了)</p>
-<h3 id="2-TCON"><a href="#2-TCON" class="headerlink" title="2.TCON"></a>2.TCON</h3><p><img src="/../../../../medias/blog_picture/51/54.png"></p>
-<h4 id="①TR0"><a href="#①TR0" class="headerlink" title="①TR0"></a>①TR0</h4><p><img src="/../../../../medias/blog_picture/51/55.png"></p>
+<p>原TMOD=1010 0011—-我们希望把它转换为—-&gt;1010 0001</p>
+<p><strong>1st———-1010 0011 &amp; 1111 0000 =1010 0000</strong></p>
+<p><strong>理解</strong>：<strong>n &amp; 1 </strong>时，n为几就返回几(此时不影响定时器1)；<strong>n &amp; 0 </strong>时，全为0(有点<strong>初始化</strong>定时器0的感觉)</p>
+<p><strong>2nd———1010 0000 | 0000 0001 =1010 0001</strong></p>
+<p><strong>理解</strong>：<strong>n | 0 </strong>时，n为几就返回几(还是不影响定时器1)；<strong>0 | n</strong> 时，n为几也返回几(n是人工决定的，这时可以自行操控定时器0了)</p>
+<h3 id="2-TCON"><a href="#2-TCON" class="headerlink" title="2.TCON"></a>2.TCON</h3><p><img src="../../../../medias/blog_picture/51/54.png" alt=""></p>
+<h4 id="①TR0"><a href="#①TR0" class="headerlink" title="①TR0"></a>①TR0</h4><p><img src="../../../../medias/blog_picture/51/55.png" alt=""></p>
 <p><strong>省流</strong>：GATE=0 &amp;&amp; TR0=1时允许T0计数，开始工作</p>
 <pre class="line-numbers language-none"><code class="language-none">TR0=1;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h4 id="②TF0"><a href="#②TF0" class="headerlink" title="②TF0"></a>②TF0</h4><p><img src="/../../../../medias/blog_picture/51/56.png"></p>
+<h4 id="②TF0"><a href="#②TF0" class="headerlink" title="②TF0"></a>②TF0</h4><p><img src="../../../../medias/blog_picture/51/56.png" alt=""></p>
 <p><strong>省流</strong>：TF0=1时就产生中断，所以要=0，防止刚配置好就产生中断</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">TF0<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-
-
-<h4 id="③TH0-TL0"><a href="#③TH0-TL0" class="headerlink" title="③TH0&amp;TL0"></a>③TH0&amp;TL0</h4><p><img src="/../../../../medias/blog_picture/51/57.png"></p>
+<h4 id="③TH0-amp-TL0"><a href="#③TH0-amp-TL0" class="headerlink" title="③TH0&amp;TL0"></a>③TH0&amp;TL0</h4><p><img src="../../../../medias/blog_picture/51/57.png" alt=""></p>
 <p>来自弹幕大佬：两个寄存器TH0、TL0为<strong>二进制八位</strong>(2^8)，<strong>单独</strong>可计256次，<strong>低八位计满256次后高八位进1</strong>，所以<strong>除以256</strong>可得<strong>高八位</strong>得次数，<strong>取余</strong>就是<strong>低八位</strong>的次数，合并在一起就是所赋的初始值</p>
-<p>来自UP主：<strong>123</strong>要放到两个<strong>容量</strong>为100的盒子里，<strong>高位次</strong>的盒子存储—<strong>123/100=1</strong>，<strong>低位次</strong>的盒子存储—<strong>123%100=23</strong>，<strong>合并</strong>之后就是123(初始值)</p>
+<p>来自UP主：<strong>123</strong>要放到两个<strong>容量</strong>为100的盒子里，<strong>高位次</strong>的盒子存储—-<strong>123/100=1</strong>，<strong>低位次</strong>的盒子存储—-<strong>123%100=23</strong>，<strong>合并</strong>之后就是123(初始值)</p>
 <p><strong>对应项目，就是两个容量为256的小盒子要存储64535这个庞然大物</strong></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">TH0<span class="token operator">=</span><span class="token number">64535</span><span class="token operator">/</span><span class="token number">256</span><span class="token punctuation">;</span><span class="token comment">//high，拿出高八位</span>
 TL0<span class="token operator">=</span><span class="token number">64535</span><span class="token operator">%</span><span class="token number">256</span><span class="token punctuation">;</span><span class="token comment">//low，拿出低八位</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
-
-
-<h4 id="④ET0-EA-PT0"><a href="#④ET0-EA-PT0" class="headerlink" title="④ET0&amp;EA&amp;PT0"></a>④ET0&amp;EA&amp;PT0</h4><p><img src="/../../../../medias/blog_picture/51/58.png"></p>
+<h4 id="④ET0-amp-EA-amp-PT0"><a href="#④ET0-amp-EA-amp-PT0" class="headerlink" title="④ET0&amp;EA&amp;PT0"></a>④ET0&amp;EA&amp;PT0</h4><p><img src="../../../../medias/blog_picture/51/58.png" alt=""></p>
 <p>把通道打通</p>
 <pre class="line-numbers language-C" data-language="C"><code class="language-C">ET0=1;
 EA=1;
 PT0=0;//虽然默认PT0为0，但还是说明一下比较好<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h2 id="3-Time0-c"><a href="#3-Time0-c" class="headerlink" title="3.Time0.c"></a>3.Time0.c</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 
 <span class="token comment">/**
@@ -649,20 +635,16 @@ void Timer0_Routine() interrupt 1
 	}
 }
 */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>对定时器中断函数模板的理解：</p>
 <p>首先，中断程序本身可视为一个while循环，会一直执行这个函数</p>
-<p>其次，对于秒数，这个计时器(TH0 TL0)<strong>最高可达到65535µs</strong>，我们设置定时初值时，用的是64535，它<strong>距离65535还有1000才即将溢出归零</strong>，所以我们让计时器计时1000µs(=1ms)，**每过1ms，T0Count++**，当它加了1000次，此时已经过去1000ms(=1s)</p>
+<p>其次，对于秒数，这个计时器(TH0 TL0)<strong>最高可达到65535µs</strong>，我们设置定时初值时，用的是64535，它<strong>距离65535还有1000才即将溢出归零</strong>，所以我们让计时器计时1000µs(=1ms)，<strong>每过1ms，T0Count++</strong>，当它加了1000次，此时已经过去1000ms(=1s)</p>
 <p>最后，进入if执行具体实现，然后把T0Count归零，进入下一次中断程序(循环)</p>
-<h3 id="4-新学两个函数"><a href="#4-新学两个函数" class="headerlink" title="4.新学两个函数"></a>4.新学两个函数</h3><p><strong>要用到#include&lt;INTRINS.H&gt;头文件</strong></p>
-<h4 id="crol函数-cror函数-头尾都要"><a href="#crol函数-cror函数-头尾都要" class="headerlink" title="crol函数&amp;cror函数(..头尾都要_.."></a>crol函数&amp;cror函数(..头尾都要_..</h4><p>循环移位</p>
+<h3 id="4-新学两个函数"><a href="#4-新学两个函数" class="headerlink" title="4.新学两个函数"></a>4.新学两个函数</h3><p><strong>要用到#include<intrins.h>头文件</intrins.h></strong></p>
+<h4 id="crol函数-amp-cror函数-头尾都要"><a href="#crol函数-amp-cror函数-头尾都要" class="headerlink" title="crol函数&amp;cror函数(..头尾都要_.."></a>crol函数&amp;cror函数(..头尾都要_..</h4><p>循环移位</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">char</span> a<span class="token operator">=</span><span class="token number">0x80</span><span class="token punctuation">;</span>
 a<span class="token operator">=</span><span class="token function">_crol_</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token comment">//a为0x01，循环回去开头了</span>
 <span class="token comment">//如果是&lt;&lt;的话，移到边界就溢出越界</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-
-
 <h3 id="5-最终呈现"><a href="#5-最终呈现" class="headerlink" title="5.最终呈现"></a>5.最终呈现</h3><h4 id="main-c"><a href="#main-c" class="headerlink" title="main.c"></a>main.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Timer0.h"</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Key.h"</span></span>
@@ -707,7 +689,6 @@ a<span class="token operator">=</span><span class="token function">_crol_</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>针对<strong>流水</strong>效果，我们添加了这些</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>T0Count<span class="token operator">&gt;=</span><span class="token number">500</span><span class="token punctuation">)</span>
 	<span class="token punctuation">{</span>
@@ -717,14 +698,11 @@ a<span class="token operator">=</span><span class="token function">_crol_</span>
 		<span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
 			P2<span class="token operator">=</span><span class="token function">_cror_</span><span class="token punctuation">(</span>P2<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//往右流</span>
 	<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>配合主函数食用</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">char</span> KeyNum<span class="token punctuation">,</span>LEDMode<span class="token punctuation">;</span> <span class="token comment">//一开始初始化了KeyNum和LEDMode，这两个玩意初始值都为0</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
 <p>那么，当开关被按下的时候，<strong>LEDMode==0</strong>，开始往左流，对应下面这句</p>
 <pre class="line-numbers language-none"><code class="language-none">if(LEDMode==0)           
 	P2=_crol_(P2,1);//往左流<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>然后接收KeyNum，当我不按P3_1时，LEDMode就一直为0，一直往左流</p>
 <p>我按下P3_1时，配合Key.c食用，此时<strong>返回KeyNumber=1</strong></p>
 <h4 id="Key-c"><a href="#Key-c" class="headerlink" title="Key.c"></a>Key.c</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
@@ -747,18 +725,15 @@ a<span class="token operator">=</span><span class="token function">_crol_</span>
 	
 	<span class="token keyword">return</span> KeyNumber<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p><strong>KeyNum==1</strong>后，执行</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>KeyNum<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
 	LEDMode<span class="token operator">++</span><span class="token punctuation">;</span>
 	<span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">&gt;=</span><span class="token number">2</span><span class="token punctuation">)</span>LEDMode<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这时候LEDMode++，<strong>LEDMode==1</strong></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>LEDMode<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span>
 	P2<span class="token operator">=</span><span class="token function">_cror_</span><span class="token punctuation">(</span>P2<span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//往右流</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
 <p>再次按下P3_1时，LEDMode++，<strong>LEDMode==2</strong>，然后执行if让LEDMode归零</p>
 <h1 id="定时器时钟"><a href="#定时器时钟" class="headerlink" title="定时器时钟"></a>定时器时钟</h1><h3 id="main-c-1"><a href="#main-c-1" class="headerlink" title="main.c"></a>main.c</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;REGX52.H&gt;</span></span>
 <span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"Delay.h"</span></span>
@@ -807,7 +782,6 @@ a<span class="token operator">=</span><span class="token function">_crol_</span>
 		<span class="token punctuation">}</span>
 	<span class="token punctuation">}</span>
 <span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
 <p>这个，不难理解，dddd</p>
 
                 
