@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="RNN(李宏毅), Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="【实践】FlashAttention学习过程, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>RNN(李宏毅) | Wabbybabbo的摸鱼圣地</title>
+    <title>【实践】FlashAttention学习过程 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -357,12 +357,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">RNN(李宏毅)</h1>
+                    <h1 class="description center-align post-title">【实践】FlashAttention学习过程</h1>
                 </div>
             </div>
         </div>
@@ -478,12 +478,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                                <span class="chip bg-color">人工智能</span>
+                            <a href="/tags/LLM/">
+                                <span class="chip bg-color">LLM</span>
                             </a>
                         
-                            <a href="/tags/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                                <span class="chip bg-color">循环神经网络</span>
+                            <a href="/tags/CUDA/">
+                                <span class="chip bg-color">CUDA</span>
                             </a>
                         
                     </div>
@@ -494,8 +494,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                人工智能
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                高性能计算
                             </a>
                         
                     </div>
@@ -507,21 +507,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-11-06
+                    2025-04-29
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-03-14
+                    2025-05-16
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    1.5k
                 </div>
                 
 
@@ -546,75 +546,96 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h1 id="1-Example-Application"><a href="#1-Example-Application" class="headerlink" title="1 Example Application"></a>1 Example Application</h1><h2 id="1-1-Slot-Filling"><a href="#1-1-Slot-Filling" class="headerlink" title="1.1 Slot Filling"></a>1.1 Slot Filling</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106133700.png" alt=""><br>👆句子中只有<strong>Taipei</strong>和<strong>November</strong> $2^{nd}$ 属于两个slot中，其余词汇不属于任何slot</p>
-<h2 id="1-2通过feedforward-network实现slot-filling"><a href="#1-2通过feedforward-network实现slot-filling" class="headerlink" title="1.2通过feedforward network实现slot filling"></a>1.2通过feedforward network实现slot filling</h2><p>Input : a word<br>(Each word is represented as a vector):</p>
-<ol>
-<li>1-of-N encoding</li>
-<li>beyond 1-of-N encoding<ol>
-<li>dimension for “other”：在1-of-N encoding多加一个dimension，这个dimension代表other(没见过的词汇)<br> <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107222413.png" alt=""><br>2.word hashing<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106134607.png" alt=""></li>
-</ol>
-</li>
-</ol>
-<p>Output：probability distribution that the input word belonging to the slots</p>
-<h2 id="1-3Problem"><a href="#1-3Problem" class="headerlink" title="1.3Problem"></a>1.3Problem</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106135520.png" alt=""><br>input Taipei这个词汇，要么都是destination几率最高，要么都是place of departure几率最高👉我们希望nerual network是有记忆力的👉如果他能记住arrive和leave那他的output就可以不同</p>
-<h2 id="1-4-Solution"><a href="#1-4-Solution" class="headerlink" title="1.4 Solution"></a>1.4 Solution</h2><p>使用Recurrent Neural Network时，要先给memory的起始值<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106140426.png" alt=""><br>👆初始值为0，输入为1，绿色neuron接收1、1和0、0<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106140717.png" alt=""><br>👆$y_1=4$、$y_2=4$<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106140826.png" alt=""><br>👆绿色neuron里memory的值变成2<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106140937.png" alt=""><br>👆第二次输入[1,1]<br>如果input的顺序不一样，output的内容也会不一样</p>
-<p>总况：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106141627.png" alt=""><br>在memory中store不同的values使得Taipei的slot不同，一个是destination一个是place of departure</p>
-<h1 id="2-Deep-hidden-layer-RNN"><a href="#2-Deep-hidden-layer-RNN" class="headerlink" title="2 Deep hidden layer RNN"></a>2 Deep hidden layer RNN</h1><p>👇每一个绿色框是一个hidden layer，蓝色箭头是hidden layer的值memory<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106144457.png" alt=""></p>
-<h2 id="2-1-Elman-Network"><a href="#2-1-Elman-Network" class="headerlink" title="2.1 Elman Network"></a>2.1 Elman Network</h2><p>👇hidden layer的值先存起来，下一个时间点再读出来<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106144650.png" alt=""></p>
-<h2 id="2-2-Jordan-Network"><a href="#2-2-Jordan-Network" class="headerlink" title="2.2 Jordan Network"></a>2.2 Jordan Network</h2><p>👇把output的值先存在memory里面，下一个时间点再读出来<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106144747.png" alt=""></p>
-<h2 id="2-3-Bidirectional-RNN"><a href="#2-3-Bidirectional-RNN" class="headerlink" title="2.3 Bidirectional RNN"></a>2.3 Bidirectional RNN</h2><p>👇同时train正向和逆向的RNN，把正向和逆向的output都丢到output layer产生$y^t$<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106150157.png" alt=""><br>相当于看了整个sequence</p>
-<h1 id="3-Long-Short-term-Memory"><a href="#3-Long-Short-term-Memory" class="headerlink" title="3 Long Short-term Memory"></a>3 Long Short-term Memory</h1><p>4 input:①想要存到memory中的值 ②操控Input Gate的信号 ③操控Output Gate的信号 ④操控Forget Gate的信号<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106151107.png" alt=""></p>
-<p>$f(z_i)$决定$g(z)$能否输入<br>Forget Gate被关闭，即$f(z_f)$数值为0时代表遗忘，反之为记忆<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106210058.png" alt=""></p>
-<h2 id="3-1-LSTM-Example"><a href="#3-1-LSTM-Example" class="headerlink" title="3.1 LSTM - Example"></a>3.1 LSTM - Example</h2><p>t时刻对memory的影响会在t+1时刻体现<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106211702.png" alt=""></p>
-<p>weight 和 bias用training data通过gradient descent得到的<br>LSTM vs original network: 4 times of parameter</p>
+                <p>我的学习参考：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1FM9XYoEQ5/?spm_id_from=333.999.0.0&amp;vd_source=1e1c4d48c6129699686897a835e568ea">FlashAttention手动实践过程 - up: 比飞鸟贵重的多_HKL -bilibili</a><br>⭐正如up主所言，对于一个新的知识和思想，应该抓住核心逻辑然后使其他因素尽可能简化，于是在github上找其他flash-attention的版本（没有那么庞大复杂的代码体系），于是找到了<a target="_blank" rel="noopener" href="https://github.com/tspeterkim/flash-attention-minimal">flash-attention-minimal</a>仓库。<br>❓存在一个问题：在<code>main.cpp</code>中，<code>forward</code>被包装为python模块中的函数，在<code>bench.py</code>通过<code>load</code>载入，因为是通过python调用的，所以使用cuda传统debug的方法比较麻烦。<br>🚩解决方法：找一个能无缝衔接所有cuda算子的库<code>libtorch</code>实现不依赖python，直接在c++中调试cuda算子，思路是从<code>flash.cu</code>中<code>forward</code>使用<code>torch</code>得到的。<code>libtorch</code>是Pytorch的c++接口，使得在python写的模型torch可以在C++中运行。</p>
 <ul>
-<li>*$x^t$乘上一个transform得到vector$z$，vector$z$的每一个dimension操控每一个LSTM的input，$z$的dimension数目=LSTM memory cell的数目，$z^i$、$z^o$、$z^f$同理</li>
-<li>*$z^i$、$z^o$、$z^f$、$z$丢到cell里的值只是他们其中的一个dimension</li>
-<li>$c^{t-1}$、$h^{t-1}$、$x^t$一起乘transform然后作为输入<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231106223442.png" alt=""></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/cpp_index.html#authoring-models-in-c">Pytorch C++</a></li>
+<li><a target="_blank" rel="noopener" href="https://pytorch.org/cppdocs/installing.html">libtorch-demo测试</a><br>那么，我们就不需要用<code>main.cpp</code>里将<code>forward</code>封装为python模块中的函数，可以直接调用<code>forward</code>，直接用C++实现调试。<br>所以现在第一件事是配置环境！</li>
 </ul>
-<h2 id="3-2-Learning-Target"><a href="#3-2-Learning-Target" class="headerlink" title="3.2 Learning Target"></a>3.2 Learning Target</h2><p>有一个training sentence，要给sentence里的每一个word一个label<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107165449.png" alt=""><br>👇输入arrive得到一个vetor，vetor中dimension<code>other</code>的值为1，其余为0。在丢$x^2$之前要先丢$x^1$<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107165849.png" alt=""><br>reference vector(红色那条)的长度就是slot的数目</p>
-<p>👇RNN可以用gradient descent train出来<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107170120.png" alt=""></p>
-<h2 id="3-3-Problem"><a href="#3-3-Problem" class="headerlink" title="3.3 Problem"></a>3.3 Problem</h2><p>👇RNN-based network is not always easy to learn<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107171122.png" alt=""><br>👇从最右边的橙色点update到中间的再update到左边的橙色点，Total Loss突然暴增<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107171305.png" alt=""><br>👇Error Surface 最左边橙色的点的位置的gradient很大，一开始的gradient很小，learning rate有可能设置得很高，导致$gradient$ x $learning$ $rate$会很大，就像开飞机一样<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107194049.png" alt=""><br>👆解决办法：设置threshold value，当gradient大于某值时将gradient设置为某值</p>
-<p>RNN的问题在于time sequence的weigh在不同的时间点会被反复使用<br>👇$w$等于$1$、$1.01$、$0.99$、$0.01$时，$y$的取值变化都会很大<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107200606.png" alt=""></p>
-<h2 id="3-4-Solution"><a href="#3-4-Solution" class="headerlink" title="3.4 Solution"></a>3.4 Solution</h2><p><strong>LSTM</strong></p>
-<ol>
-<li>Can deal with gradient vanishing(not gradient explode) 不会出现error surface很平坦的地方，可以解决梯度消失的问题👉所以learning rate可以设置得小一点</li>
-<li>RNN vs LSTM<ol>
-<li>RNN中每个时间$t$ memory的值会被覆盖掉</li>
-<li>LSTM中<ol>
-<li>每个时间$t$ menory and input are <strong>added</strong>👉解决梯度消失</li>
-<li>The influence never disappears unless forget gate is closed，只有foget gate关上才有可能导致LSTM不断更新input和memory的值</li>
-<li>No gradient vanishing(If forget gate is opened)</li>
-</ol>
+<h1 id="1-Libtorch环境搭建"><a href="#1-Libtorch环境搭建" class="headerlink" title="1 Libtorch环境搭建"></a>1 Libtorch环境搭建</h1><h2 id="1-1-环境测试"><a href="#1-1-环境测试" class="headerlink" title="1.1 环境测试"></a>1.1 环境测试</h2><p>🎈到<a target="_blank" rel="noopener" href="https://pytorch.org/">Pytorch官网</a>找到合适的配置，通过<code>nvcc -V</code>查看合适的libtorch对应的cuda版本<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250429224559.png" alt=""><br>🎈下载完之后放到项目目录(比如<code>/FlashAttention</code>)下解压<code>unzip libtorch-xxxxx</code><br>🎈根据官方提供的 <a target="_blank" rel="noopener" href="https://pytorch.org/cppdocs/installing.html">libtorch-demo测试</a>，进行环境测试</p>
+<ul>
+<li>在当前目录下创建一个<code>example-app.cpp</code>，内容如下<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;torch/torch.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+	torch<span class="token double-colon punctuation">::</span>Tensor tensor <span class="token operator">=</span> torch<span class="token double-colon punctuation">::</span><span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> tensor <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+	# 下面是新增的两行
+	torch<span class="token double-colon punctuation">::</span>Tensor tensor_cuda <span class="token operator">=</span> torch<span class="token double-colon punctuation">::</span><span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">to</span><span class="token punctuation">(</span><span class="token string">"cuda"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> tensor_cuda <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+新增的两行用于测试c++是否能无缝衔接cuda（学到了up主的“尝试”思路，大胆的猜一些代码语法</li>
+<li>在当前目录下创建一个cmake文件，内容如下<pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.18</span> FATAL_ERROR<span class="token punctuation">)</span>
+<span class="token keyword">project</span><span class="token punctuation">(</span>example-app<span class="token punctuation">)</span>
+
+<span class="token keyword">find_package</span><span class="token punctuation">(</span>Torch REQUIRED<span class="token punctuation">)</span>
+<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_FLAGS</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_CXX_FLAGS</span><span class="token punctuation">}</span></span> <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_CXX_FLAGS</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+
+<span class="token keyword">add_executable</span><span class="token punctuation">(</span>example-app example-app.cpp<span class="token punctuation">)</span>
+<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>example-app <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_LIBRARIES</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+<span class="token keyword">set_property</span><span class="token punctuation">(</span>TARGET example-app PROPERTY <span class="token property">CXX_STANDARD</span> <span class="token number">17</span><span class="token punctuation">)</span>
+<span class="token comment"># 后面的内容是windows上使用的，可以删掉或注释掉</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>增加包的路径为<code>xxx/libtorch/share/cmake/Torch</code>，cmake会在上面提供的路径找torchconfig<pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.16.3</span> FATAL_ERROR<span class="token punctuation">)</span>
+<span class="token keyword">project</span><span class="token punctuation">(</span>example-app<span class="token punctuation">)</span>
+
+<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_PREFIX_PATH</span> <span class="token string">"/home/wabby/Project/FlashAttention/libtorch/share/cmake/Torch;<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_PREFIX_PATH</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+<span class="token keyword">find_package</span><span class="token punctuation">(</span>Torch REQUIRED<span class="token punctuation">)</span>
+<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_FLAGS</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_CXX_FLAGS</span><span class="token punctuation">}</span></span> <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_CXX_FLAGS</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+  
+
+<span class="token keyword">add_executable</span><span class="token punctuation">(</span>example-app example-app.cpp<span class="token punctuation">)</span>
+<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>example-app <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_LIBRARIES</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+<span class="token keyword">set_property</span><span class="token punctuation">(</span>TARGET example-app PROPERTY <span class="token property">CXX_STANDARD</span> <span class="token number">17</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-</ol>
+</ul>
+<p>🎈编译build，得到可执行文件，然后运行，成功，说明Libtorch环境配置成功<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250429230130.png" alt=""></p>
+<h2 id="1-2-代码移植"><a href="#1-2-代码移植" class="headerlink" title="1.2 代码移植"></a>1.2 代码移植</h2><p>🚩将<code>bench.py</code>移植为c++</p>
+<ul>
+<li>变量一致</li>
+<li>进行forward</li>
+<li>语法：仿照demo<br>🎈在cmake文件添加下面的内容，编译build，打断点(断点不打在<code>forward_kernel</code>内部)运行，先确保两个可执行文件可以正常debugs<pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">add_executable</span><span class="token punctuation">(</span>flash-attention-main flash-attention-main.cpp flash.cu<span class="token punctuation">)</span>
+<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>flash-attention-main <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_LIBRARIES</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
+<span class="token keyword">set_property</span><span class="token punctuation">(</span>TARGET flash-attention-main PROPERTY <span class="token property">CXX_STANDARD</span> <span class="token number">17</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
-</ol>
-<h1 id="4-More-Applications"><a href="#4-More-Applications" class="headerlink" title="4 More Applications"></a>4 More Applications</h1><h2 id="4-1-Sequence-to-sequence"><a href="#4-1-Sequence-to-sequence" class="headerlink" title="4.1 Sequence-to-sequence"></a>4.1 Sequence-to-sequence</h2><ol>
-<li>Input is a vector sequence, but output is only one vector(Many to  One)<ol>
-<li>Sentiment Analysis</li>
-<li>Key Term Extraction</li>
-</ol>
+</ul>
+<h3 id="1-2-1-实现vscode调试cuda"><a href="#1-2-1-实现vscode调试cuda" class="headerlink" title="1.2.1 实现vscode调试cuda"></a>1.2.1 实现vscode调试cuda</h3><p><del>弄了两天，仍未实现vscode调试cuda，但将过程中遇到的问题和部分解决方法放在这里，以便需要时取用。</del>按照下面的方法弄完之后，再抱着尝试的心态重新打开就能调试了~（很神奇，应该是重启之后就好了嘿嘿~<br><strong>笔者环境信息如下：</strong><br>driver version on Windows: 566.07<br>cuda version on Windows10: 12.7<br>nvcc version on Windows10: V12.5.40<br>WSL2 Ubuntu version: 20.04.6 LTS<br>nvcc version on WSL2: V12.6.20<br>cuda-gdb version on WSL2: 13.2</p>
+<p>🎈调试<code>forward_kernel</code></p>
+<ul>
+<li>在cmake文件添加下面的内容<pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment"># 调试用</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">CMAKE_BUILD_TYPE</span> <span class="token operator">STREQUAL</span> <span class="token string">"Debug"</span><span class="token punctuation">)</span>
+    <span class="token keyword">target_compile_options</span><span class="token punctuation">(</span>flash-attention-main <span class="token namespace">PRIVATE</span> <span class="token punctuation">$&lt;</span><span class="token punctuation">$&lt;</span><span class="token inserted class-name">COMPILE_LANGUAGE::CUDA</span><span class="token punctuation">&gt;</span>:-G<span class="token punctuation">&gt;</span><span class="token punctuation">)</span>
+<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
+<li>配置<code>launch.json</code><br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/431782036"> vscode中怎么调试cuda文件? - 知乎</a>（笔者未成功）<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250430104044.png" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250430104123.png" alt=""><br>要在Launch的program添加可执行文件的路径<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"CUDA C++: Launch"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"cuda-gdb"</span><span class="token punctuation">,</span>
+            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span>
+            <span class="token property">"program"</span><span class="token operator">:</span> <span class="token string">"/home/wabby/Project/FlashAttention/build/flash-attention-main"</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"CUDA C++: Attach"</span><span class="token punctuation">,</span>
+            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"cuda-gdb"</span><span class="token punctuation">,</span>
+            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
-<li>Both input and output are both sequences, but the output is shorter(Many to Many)<ol>
-<li>Speech Recognition</li>
-<li>Connectionist Temporal Classification(CTC)<ol>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107205719.png" alt=""></li>
-<li>把右边三种结果都视为正确丢到training data中 <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107205955.png" alt=""></li>
-<li>机器不需要认识某个词汇<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107210143.png" alt=""></li>
-</ol>
+</ul>
+<p>❓F5运行时遇到如下问题<code>Error: get_elf_image(0): Failed to read the ELF image handle 93825002597824 relocated 1, error=CUDBG_ERROR_INVALID_ARGS, error message=</code><br>🚩解决方法：<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/cuda-gdb-report-error-under-wsl2/303155">Cuda-gdb report Error under WSL2</a>、<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/cuda-gdb-report-error-using-vscode-for-debugging-under-wsl2/260017">Cuda-gdb report error using vscode for debugging under wsl2</a></p>
+<ul>
+<li>先确保windows装了cudatoolkit，最好是12.2及以上的(官方推荐)</li>
+<li>打开注册表<code>\HKEY_LOCAL_MACHINE\SOFTWARE\NVIDIA Corporation\GPUDebugger</code>是否有一个叫<code>EnableInterface</code>DWORD类型的常量，且值为1，如下图所示，如果没有，可能是cudatoolkit没装好<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250501163821.png" alt=""></li>
+<li>升级wsl，在cmd里输入<code>wsl --update</code>，然后<code>wsl --version</code>可以看到升级后的版本，如下图所示<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250501095154.png" alt=""></li>
+<li>然后回到vscode，F5调试不再报错<code>Error: get_elf_image(0): Failed to read the ELF image handle 93825002597824 relocated 1, error=CUDBG_ERROR_INVALID_ARGS, error message=</code>，但是仍无法进入cuda断点，同时有一个新的warning<br>❓【已解决】`warning: Cuda API error detected: cudaLaunchKernel returned(0x1)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/b956e6d05ebc55649fddc048072d36b%201.png" alt=""><br>🚩【或许有用的方法】</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/58823826/cuda-gdb-giving-error-warning-cuda-api-error-detected-cudalaunchkernel-return">cuda-gdb giving error “warning: Cuda API error detected: cudaLaunchKernel returned (0x7)”</a>、<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/ask/sof/1419088">cuda-gdb给出错误“警告:检测到Cuda API错误:返回cudaLaunchKernel (0x7)”-腾讯云开发者社区-腾讯云</a>，这两篇意思一样，前者是stack overflow原帖，后者是中文</li>
+<li>在wsl输入<code>cuda-gdb</code>进入(需要回车一下)，再输入<code>info cuda devices</code>。<ul>
+<li>笔者和stack overflow的一个评论的情况相同，显示<code>No Cuda devices</code>，但是<code>nvcc -V</code>、编译、运行都是正常的</li>
+</ul>
 </li>
-<li>Sequence to sequence learning(Many to Many(No Limitation))<ol>
-<li>RNN的input和output都是sequence，input和output的长度不确定。除此之外，在最后一个时间点，memory里存了所有input sequence的information，然后就让machine开始吐character，再将之前的output的character作为input，再读取上一个memory的值，继续output</li>
-<li>Problem:Don’t know when to stop<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107222413.png" alt=""></li>
-<li>Solution:Add a symbol “\=\=\=”断<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231107222616.png" alt=""></li>
-</ol>
-</li>
-</ol>
-</li>
-<li>Sequence-to-sequence Auto-encoder<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231108102135.png" alt=""><br>👆RNN Encoder和RNN Decoder是一起train的，目的是让train出来的$y_1$、$y_2$、$y_3$、$y_4$与$x_1$、$x_2$、$x_3$、$x_4$相近</li>
-</ol>
-<h2 id="4-2-Attention-based-Model"><a href="#4-2-Attention-based-Model" class="headerlink" title="4.2 Attention-based Model"></a>4.2 Attention-based Model</h2><p>👇中央处理器DNN/RNN操控Reading Head Controller、读写头决定Reading Head放的位置<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231108102942.png" alt=""><br>👇版本Ⅱ Neural Turing Machine(2014)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/DL%26ML_picture/Pasted%20image%2020231108103018.png" alt=""></p>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.org.cn/questions/15444525">cuda - cuda-gdb 看不到可用设备_Stack Overflow中文网</a>，有让运行<code>lsof /dev/nvidia*</code>查看设备的，但是我的输出是空</li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/11619565/cuda-gdb-no-cuda-devices">ubuntu 12.04 - CUDA-GDB: No CUDA devices - Stack Overflow</a>，有个说法是”You can’t debug on a display device. Using cuda-gdb requires a dedicated device. … I mean that the GPU you debug on can’t be the one running your display. So unless you have at least two GPUs, or you are not running X windows, you can’t use cuda-gdb.I get “No Cuda devices” although nvcc —version shows correct output and I can compile and run, just not debug”，大意是使用cuda-gdb需要一个单独的专用的GPU，要么有两个GPU，要么不运行X(Linux下的图形界面服务器)，可以用<code>ps aux | grep '[X]'</code>来查一下，但是笔者的并没有运行X。<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/cuda-gdb-no-cuda-devices-but-cuda-programs-run/24813/2">cuda-gdb “No CUDA devices” but CUDA programs run - CUDA / CUDA Programming and Performance - NVIDIA Developer Forums</a>也是同样的意思</li>
+<li>可能需要在wsl2重新配置cuda了，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/rthete/p/17551419.html">WSL2安装CUDA踩坑Debug全记录 - rthete - 博客园</a>，如果以后想折腾可以再重装一下<br>🚩【真有用的方法】重启！</li>
+</ul>
 
                 
             </div>
@@ -641,7 +662,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/11/06/rnn-li-hong-yi/">https://wabbybabb0.github.io/2023/11/06/rnn-li-hong-yi/</a>
+                    <a href="https://wabbybabb0.github.io/2025/04/29/flashattention-mini/">https://wabbybabb0.github.io/2025/04/29/flashattention-mini/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -679,12 +700,12 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                                    <span class="chip bg-color">人工智能</span>
+                                <a href="/tags/LLM/">
+                                    <span class="chip bg-color">LLM</span>
                                 </a>
                             
-                                <a href="/tags/%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                                    <span class="chip bg-color">循环神经网络</span>
+                                <a href="/tags/CUDA/">
+                                    <span class="chip bg-color">CUDA</span>
                                 </a>
                             
                         </div>
@@ -868,50 +889,52 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2023/11/28/alexnet-mo-xing-fu-xian/">
+                <a href="/2025/04/29/flashattention-mini/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.png" class="responsive-img" alt="AlexNet模型复现">
+                        <img src="/medias/featureimages/11.png" class="responsive-img" alt="【实践】FlashAttention学习过程">
                         
-                        <span class="card-title">AlexNet模型复现</span>
+                        <span class="card-title">【实践】FlashAttention学习过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            阅读了《Imagenet classification with deep convolutional neural networks》后复现AlexNet模型
+                            FlashAttentionv1实操过程，未验证
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2023-11-28
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-04-29
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                    人工智能
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                        <span class="chip bg-color">人工智能</span>
+                    <a href="/tags/LLM/">
+                        <span class="chip bg-color">LLM</span>
                     </a>
                     
-                    <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                        <span class="chip bg-color">卷积神经网络</span>
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
                     </a>
                     
                 </div>
@@ -925,31 +948,31 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/11/04/cnn-li-hong-yi/">
+                <a href="/2025/03/26/flashattention/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.png" class="responsive-img" alt="CNN(李宏毅)">
+                        <img src="/medias/featureimages/4.png" class="responsive-img" alt="【理论】FlashAttention学习过程">
                         
-                        <span class="card-title">CNN(李宏毅)</span>
+                        <span class="card-title">【理论】FlashAttention学习过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            卷积神经网络初学
+                            更少的内存！更快的速度！这就是FA！
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-04
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-26
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                    人工智能
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
                                 </a>
                             
                             
@@ -959,16 +982,8 @@
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-                        <span class="chip bg-color">深度学习</span>
-                    </a>
-                    
-                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                        <span class="chip bg-color">人工智能</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                        <span class="chip bg-color">卷积神经网络</span>
+                    <a href="/tags/LLM/">
+                        <span class="chip bg-color">LLM</span>
                     </a>
                     
                 </div>
