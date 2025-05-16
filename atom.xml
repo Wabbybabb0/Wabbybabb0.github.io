@@ -6,7 +6,7 @@
   <link href="https://wabbybabb0.github.io/atom.xml" rel="self"/>
   
   <link href="https://wabbybabb0.github.io/"/>
-  <updated>2025-03-26T13:25:44.971Z</updated>
+  <updated>2025-05-16T05:34:20.484Z</updated>
   <id>https://wabbybabb0.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【理论】FlashAttention学习过程</title>
+    <link href="https://wabbybabb0.github.io/2025/03/26/flashattention/"/>
+    <id>https://wabbybabb0.github.io/2025/03/26/flashattention/</id>
+    <published>2025-03-26T09:09:00.000Z</published>
+    <updated>2025-05-16T05:34:20.484Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;1-FlashAttention&quot;&gt;&lt;a href=&quot;#1-FlashAttention&quot; class=&quot;headerlink&quot; title=&quot;1 FlashAttention&quot;&gt;&lt;/a&gt;1</summary>
+        
+      
+    
+    
+    
+    <category term="高性能计算" scheme="https://wabbybabb0.github.io/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
+    
+    
+    <category term="LLM" scheme="https://wabbybabb0.github.io/tags/LLM/"/>
+    
+  </entry>
   
   <entry>
     <title>Multi-head Latent Attention模型理解</title>
@@ -64,9 +89,9 @@
     <category term="高性能计算" scheme="https://wabbybabb0.github.io/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
     
     
-    <category term="CUDA" scheme="https://wabbybabb0.github.io/tags/CUDA/"/>
-    
     <category term="LLM" scheme="https://wabbybabb0.github.io/tags/LLM/"/>
+    
+    <category term="CUDA" scheme="https://wabbybabb0.github.io/tags/CUDA/"/>
     
   </entry>
   
@@ -525,33 +550,6 @@
     <category term="C语言" scheme="https://wabbybabb0.github.io/tags/C%E8%AF%AD%E8%A8%80/"/>
     
     <category term="栈" scheme="https://wabbybabb0.github.io/tags/%E6%A0%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>链表</title>
-    <link href="https://wabbybabb0.github.io/2022/11/18/lian-biao/"/>
-    <id>https://wabbybabb0.github.io/2022/11/18/lian-biao/</id>
-    <published>2022-11-18T07:00:00.000Z</published>
-    <updated>2023-12-10T07:52:09.634Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;一-typedef&quot;&gt;&lt;a href=&quot;#一-typedef&quot; class=&quot;headerlink&quot; title=&quot;一.typedef&quot;&gt;&lt;/a&gt;一.typedef&lt;/h1&gt;&lt;pre class=&quot;line-numbers language-c&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="C语言" scheme="https://wabbybabb0.github.io/categories/C%E8%AF%AD%E8%A8%80/"/>
-    
-    
-    <category term="C语言" scheme="https://wabbybabb0.github.io/tags/C%E8%AF%AD%E8%A8%80/"/>
-    
-    <category term="链表" scheme="https://wabbybabb0.github.io/tags/%E9%93%BE%E8%A1%A8/"/>
     
   </entry>
   
