@@ -514,14 +514,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-05-16
+                    2025-05-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.5k
+                    1.8k
                 </div>
                 
 
@@ -638,6 +638,22 @@
 <li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/11619565/cuda-gdb-no-cuda-devices">ubuntu 12.04 - CUDA-GDB: No CUDA devices - Stack Overflow</a>，有个说法是”You can’t debug on a display device. Using cuda-gdb requires a dedicated device. … I mean that the GPU you debug on can’t be the one running your display. So unless you have at least two GPUs, or you are not running X windows, you can’t use cuda-gdb.I get “No Cuda devices” although nvcc —version shows correct output and I can compile and run, just not debug”，大意是使用cuda-gdb需要一个单独的专用的GPU，要么有两个GPU，要么不运行X(Linux下的图形界面服务器)，可以用<code>ps aux | grep '[X]'</code>来查一下，但是笔者的并没有运行X。<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/cuda-gdb-no-cuda-devices-but-cuda-programs-run/24813/2">cuda-gdb “No CUDA devices” but CUDA programs run - CUDA / CUDA Programming and Performance - NVIDIA Developer Forums</a>也是同样的意思</li>
 <li>可能需要在wsl2重新配置cuda了，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/rthete/p/17551419.html">WSL2安装CUDA踩坑Debug全记录 - rthete - 博客园</a>，如果以后想折腾可以再重装一下<br>🚩【真有用的方法】重启！</li>
 </ul>
+<h1 id="2-验证"><a href="#2-验证" class="headerlink" title="2 验证"></a>2 验证</h1><p>验证方法：使用libtorch做逻辑和精度验证，使用curand设置统一的随机数，<a target="_blank" rel="noopener" href="https://github.com/NVIDIA/CUDALibrarySamples/tree/master/cuRAND/Host/mt19937">cuRAND mt19937 example - github</a></p>
+<p>进行example的测试<br>CMake配置：<br></p><pre class="line-numbers language-CMake" data-language="CMake"><code class="language-CMake">add_executable(mt19937-app curand_mt19937_lognormal_example.cpp)
+set_property(TARGET mt19937-app PROPERTY CXX_STANDARD 17)
+find_package(CUDA REQUIRED)
+target_link_libraries(mt19937-app
+    PRIVATE
+        ${TORCH_LIBRARIES}
+        CUDA::curand
+)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<p>\=\=\=\=\=\=\=\=\=\=5/21\=\=\=\=\=\=\=\=\=\=<br><strong>检验</strong>：对基准和my_falsh的输出进行平铺处理<code>.view(-1)</code>，发现前0~63个输出对的上，64及之后的对不上。<br>猜测：</p>
+<ul>
+<li>qkgemm？✔</li>
+<li>softmax？✔</li>
+<li>qkvgemm？❌<br>问题出在更新<code>m</code>和<code>l</code>时索引出错，其实这也很符合直觉，同一个Q下第一个分片数据没问题，第二个分片就出事了，第一个分片和第二个分片有联系的变量只有<code>m</code>和<code>l</code>了，那就printf查看计算<code>O</code>的公式、<code>row_m_prev</code>和<code>row_m</code>的值，发现同一个Q下的切片中，<code>row_m</code>有更大的值，但是<code>row_m_prev</code>对不上前一次的更新值，所以就去看关于<code>m</code>的变量，发现是存储新的<code>m</code>值时索引出错<br>准确性检验完成！</li>
+</ul>
+<p><strong>性能测试</strong>：然后在FA1和基准测试的代码里加上curand随机数生成，两边的q、k、v各使用同一个种子<br>torch：0.638ms<br>my FA1：36ms<br>也许是家用级显卡(3050)限制了FA1的发挥吧哈哈o(<em>￣▽￣</em>)ブ</p>
 
                 
             </div>
@@ -908,7 +924,7 @@
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            FlashAttentionv1实操过程，未验证
+                            FlashAttentionv1实操过程，已验证！
                         
                     </div>
                     <div class="publish-info">
