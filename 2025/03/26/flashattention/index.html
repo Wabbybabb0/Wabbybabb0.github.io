@@ -1,0 +1,1710 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="【理论】FlashAttention学习过程, Wabbybabbo的摸鱼圣地">
+    <meta name="description" content="上班？下班！">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>【理论】FlashAttention学习过程 | Wabbybabbo的摸鱼圣地</title>
+    <link rel="icon" type="image/png" href="/grape200x200.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/grape200x200.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Wabbybabbo的摸鱼圣地</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-sharp fa-solid fa-fish" style="zoom: 0.6;"></i>
+      
+      <span>主页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-soild fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>档案</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>分享</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/musics">
+          
+          <i class="fas fa-music" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>音乐</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/movies">
+          
+          <i class="fas fa-film" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>电影</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/books">
+          
+          <i class="fas fa-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>书籍</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/grape200x200.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Wabbybabbo的摸鱼圣地</div>
+        <div class="logo-desc">
+            
+            上班？下班！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-sharp fa-solid fa-fish"></i>
+			
+			主页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-soild fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			档案
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			分享
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/musics " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-music" style="position: absolute;left:50px" ></i>
+			      
+		          <span>音乐</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/movies " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
+			      
+		          <span>电影</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/books " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>书籍</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Wabbybabb0/Wabbybabb0.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Wabbybabb0/Wabbybabb0.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/4.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">【理论】FlashAttention学习过程</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/LLM/">
+                                <span class="chip bg-color">LLM</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                高性能计算
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2025-03-26
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2025-05-16
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    7.5k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="1-FlashAttention"><a href="#1-FlashAttention" class="headerlink" title="1 FlashAttention"></a>1 FlashAttention</h1><p>Transformers的核心Self-attention的时间和内存的复杂度随着序列$N$增长呈$N^2$增长，很多Attention模型的目的是降低计算和内存大小，即关注FLOPS的减少并忽视了内存访问的开销。<br>FlashAttention使用<strong>tilling</strong>来减少在GPU显存HBM和GPU片上SRAM之间的内存读写；在backward pass时，通过存储forward pass时softmax归一化常数在片上SRAM <strong>recompute</strong> attention，FLOPS增加了，但确实实现了用<strong>更少的内存</strong>和<strong>运行速度变快</strong>。相比起传统attention减少了<strong>约9倍</strong>的<strong>HBM读写</strong>。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250326211313.png" alt=""></p>
+<h1 id="1-1-内存体系"><a href="#1-1-内存体系" class="headerlink" title="1.1 内存体系"></a>1.1 内存体系</h1><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250326173705.png" alt="A100 GPU-40GB|325"></p>
+<ul>
+<li>SRAM：片上内存(缓存)，分布在108个SM上，每个SM上的SRAM大小为192K，大小为20MB，读写速度19TB/s，应尽量在SRAM上存储计算中的数据。共享内存(Shared Memory)由SRAM实现。</li>
+<li>HBM：片下内存(显存)，主要用于全局内存(Global Memory)，大小为40GB，读写速度1.5TB/s。</li>
+</ul>
+<h1 id="1-2-硬件性能"><a href="#1-2-硬件性能" class="headerlink" title="1.2 硬件性能"></a>1.2 硬件性能</h1><p>GPU通过kernel(核函数)控制线程工作，每个核函数从HBM加载输入的数据，传到registers和SRAM，在片上计算完毕后将输出写回HBM。<br>但是随着计算相对于内存速度变得越来越快，内存速度HBM accesses成了瓶颈。在FlashAttention中，中间变量需要写回HBM保存，以便在backward pass中使用。<br>性能限制：</p>
+<ul>
+<li>Compute-bound：核函数运行时间主要由算数运算次数主导，如矩阵乘法，卷积</li>
+<li>Memory-bound：核函数运行时间主要由内存访问次数主导，如逐元素的activation、dropout和归约的sum、softmax等等。</li>
+</ul>
+<h1 id="1-3-标准Attention机制"><a href="#1-3-标准Attention机制" class="headerlink" title="1.3 标准Attention机制"></a>1.3 标准Attention机制</h1><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250327092119.png" alt=""><br>$N$：序列长度<br>$d$：每个head的大小<br>$M$：SRAM的大小，有$d\leq M\leq Nd$</p>
+<ul>
+<li>读取$\textbf{Q}$、$\textbf{K}$、$\textbf{V}$→$O(3Nd)$</li>
+<li>读取$\textbf{S}$、$\textbf{P}$时→$O(2N^2)$</li>
+<li>HBM accesses→$O(Nd+N^2)$</li>
+</ul>
+<h2 id="1-4-FlashAttention"><a href="#1-4-FlashAttention" class="headerlink" title="1.4 FlashAttention"></a>1.4 FlashAttention</h2><h3 id="1-4-1-Tiling"><a href="#1-4-1-Tiling" class="headerlink" title="1.4.1 Tiling"></a>1.4.1 Tiling</h3><script type="math/tex; mode=display">softxmax(\{x_1,x_2,...,x_N\})=\dfrac{e^{x_i}}{\sum^N_{j=1}e^{x_j}}</script><ul>
+<li>因为softmax需要同一行的所有值才能计算，所以$QK^T$、softmax()、乘$V$分别是三个独立的算子，必须等前一环节完成后才能进行下一环。那么这就涉及三次访存和写回。</li>
+<li>对于常规attention，忽略softmax和$\sqrt{d_k}$，$QK^T$得到的matrix要写回，然后又要读取出来与$V$计算，同时$N$是个比较大的值，给速度和显存带来不小的压力。<ul>
+<li>分块思想：可以把$qk^T$ tiling一小块的值直接和$V$进行计算，不需要访存和写回，然后进行对应位置值相加，实现小而快的效果。但是后续还是要考虑到softmax(比较重要)和d</li>
+</ul>
+</li>
+</ul>
+<p>naiveSoftmax→safeSoftmax→onlineSoftmax</p>
+<ul>
+<li>nS：如果$QK^T$的值过大，MUFU.EX2值可能会溢出。一次遍历求和，一次遍历求Attention值。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250501220555.png" alt="|167"></li>
+<li>sS：解决溢出问题，但是复杂度变高，一次遍历找最大值，一次遍历求和，一次遍历缩放+求最大值，即三次访存三次写回。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250501220615.png" alt="|165"></li>
+<li>oS：将sS求和和求最大值遍历放在一起，变成两次遍历。重点是理解第五行，一直在针对变化的max值缩放。最后需要对每个值单独做softmax，未实现显存上优化。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250501220629.png" alt="|375"><br>第六行改为$O_{j-1}\dfrac{d_{j-1}}{d_j}e^{m_{j-1}-m_j}+\dfrac{e^{x_j-m_j}}{d_j}V_j$，实现迭代地求O</li>
+</ul>
+<p><strong>Safe Softmax的提出：</strong><br>如果FP16的最大表示为$2^{16}$，当$x_i=12$时，$e^{12}=162754&gt; 2^{16}=65536$，导致数值溢出。Safe Softmax令分子分母同时缩放，$e$的幂小于0，解决数值溢出问题。<br>1）找出$x_1~x_N$中最大值，记为$m$，即$m=max(x_i)$<br>2）$softmax(\{x_1,x_2,…, x_M\})=\{\dfrac{\dfrac{e^{x_i}}{e^m}}{\sum^N_{j=1}\dfrac{e^{x_j}}{e^m}}\}^N_{i=1}=\{\dfrac{e^{x_i-m}}{\sum^N_{j=1}e^{x_j-m}}\}^N_{i=1}$<br>也称为softmax的max-shifting step<br><strong>Softmax的Tiling：</strong></p>
+<script type="math/tex; mode=display">\textbf{x}=[x_1,x_2,...,x_{2N}]=[\textbf{x}^{(1)},\textbf{x}^{(2)}]\in\mathbb{R}^{2N}</script><script type="math/tex; mode=display">\textbf{x}^{(1)}=[{x_1,...,x_{N}}],\ \ \ \ \ \textbf{x}^{(2)}=[x_{N+1},...,x_{2N}]</script><script type="math/tex; mode=display">m(\textbf{x}^{(1)})=max(\textbf{x}^{(1)}),\ \ \ \ \ m(\textbf{x}^{(2)})=max(\textbf{x}^{(2)})</script><script type="math/tex; mode=display">f(\textbf{x}^{(1)})=[e^{x_1-m(\textbf{x}^{(1)})},...,e^{x_N-m(\textbf{x}^{(1)})}],\ \ \ \ \ f(\textbf{x}^{(2)})=[e^{x_{N+1}-m(\textbf{x}^{(2)})},...,e^{x_{2N}-m(\textbf{x}^{(2)})}]</script><script type="math/tex; mode=display">\ell(\textbf{x}^{(1)})=\sum^N_{i=1}f(\textbf{x}^{(1)})_i,\ \ \ \ \ \ell(\textbf{x}^{(2)})=\sum^{2N}_{i=N+1}f(\textbf{x}^{(2)})_i</script><ul>
+<li>合并后：<script type="math/tex; mode=display">m(\textbf{x})=max(m(\textbf{x}^{(1)}),m(\textbf{x}^{(2)}))</script><script type="math/tex; mode=display">f(\textbf{x})=[e^{m(\textbf{x})-m(\textbf{x}^{(1)})}f(\textbf{x}^{(1)}),e^{m(\textbf{x})-m(\textbf{x}^{(2)})}f(\textbf{x}^{(2)})]</script><script type="math/tex; mode=display">\ell(\textbf{x})=[e^{m(\textbf{x})-m(\textbf{x}^{(1)})}\ell(\textbf{x}^{(1)}),e^{m(\textbf{x})-m(\textbf{x}^{(2)})}\ell(\textbf{x}^{(2)})]</script></li>
+<li>相当于把(分子)$f(\textbf{x}^{(1)})$、$f(\textbf{x}^{(2)})$和(分母)$\ell(\textbf{x}^{(1)})$、$\ell(\textbf{x}^{(2)})$分别都按同一个标准缩放，缩放前后$softmax$结果不变<script type="math/tex; mode=display">softmax(\textbf{x})=\dfrac{f(\textbf{x})}{\ell(\textbf{x})}</script>再回到下面这张图：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250327093712.png" alt=""></li>
+<li>变量：<ul>
+<li>$B_c=\lceil\dfrac{M}{4d}\rceil$，SRAM不切分$d$，$4$是指$\textbf{Q}$、$\textbf{K}$、$\textbf{V}$、$\textbf{O}$四份</li>
+<li>$B_r=min(\lceil\dfrac{M}{4d}\rceil,d)$，SRAM切分$N$，用$B_r$替代$N$，同时限制$\textbf{Q}$和$\textbf{O}$范围在$\mathbb{R}^{d\times d}$之内</li>
+<li>$\textbf{Q}$：被分成$T_r=\lceil\dfrac{N}{B_r}\rceil$个blocks$\textbf{Q}_1,…,\textbf{Q}_{T_r}$，每个block大小为$\mathbb{R}^{B_r\times d}$，$\textbf{O}$同理</li>
+<li>$\textbf{K}$：被分成$T_c=\lceil\dfrac{N}{B_c}\rceil$个blocks$\textbf{K}_1,…,\textbf{K}_{T_c}$，每个block大小为$\mathbb{R}^{B_c\times d}$，$\textbf{V}$同理</li>
+<li>$\ell$：被分成$T_r=\lceil\dfrac{N}{B_r}\rceil$个blocks$\ell_1,…\ell_{T_r}$，每个block大小为$\mathbb{R}^{B_r}$，$m$同理</li>
+<li>$\textbf{O}$和$\ell$的元素初始化为0，$m$初始化为$-\infty$</li>
+</ul>
+</li>
+<li>循环：<ul>
+<li>外层顺序计算特征<ul>
+<li>从HBM加载$\textbf{K}_j$和$\textbf{V}_j$到SRAM</li>
+</ul>
+</li>
+<li>内层顺序计算序列<ul>
+<li>从HBM加载$\textbf{Q}_i$、$\textbf{O}_i$、$\ell_{i}$、$m_i$到SRAM</li>
+<li>在片上计算<ul>
+<li>$\textbf{S}_{ij}=\textbf{Q}_i\textbf{K}_j^T\in\mathbb{R}^{B_r\times B_c}$</li>
+<li>$\tilde{m}_{ij}=rowmax(\textbf{S}_{ij})\in \mathbb{R}^{B_r}$，取每行的最大值</li>
+<li>$\tilde{\textbf{P}}_{ij}=exp(\textbf{S}_{ij}-\tilde{m}_{ij})\in \mathbb{R}^{B_r\times B_c}$，分子处理</li>
+<li>$\tilde{\ell}_{ij}=rowsum(\tilde{\textbf{P}}_{ij})\in\mathbb{R}^{B_r}$，分子求和得到分母<ul>
+<li>这一步</li>
+</ul>
+</li>
+<li>$\tilde{m}_i^{new}=max(m_i,\tilde{m}_{ij})\in \mathbb{R}^{B_r}$，$m_i$是上一轮外层特征对应的rowmax，与当前的对比取新的最大值</li>
+<li>$\ell^{new}=e^{m_i-\tilde{m}_i^{new}}\ell_i+e^{m_i-\tilde{m}_i^{new}}\tilde{\ell}_{ij}$，$\ell_i$是上一轮外层特征对应的rowsum，更新$\ell$与当前$\tilde{m}_i^{new}$对齐</li>
+</ul>
+</li>
+<li>写回HBM的值<ul>
+<li>$diag(\ell^{new}_i)^{-1}[diag(\ell^i)e^{m_i-\tilde{m}_i^{new}}\textbf{O}_i+e^{\tilde{m}_{ij}-m_i^{new}}\tilde{\textbf{P}}_{ij}\textbf{V}_j]$覆盖$\textbf{O}_i$<ul>
+<li>新$\textbf{O}_i$的rowsum：$diag(\ell^{new}_i)^{-1}$</li>
+<li>新$\textbf{O}_i$的分子：之前的$\textbf{O}_i=\dfrac{分子}{diag(\ell^i)}$，所以先得到分子，再对分子按新的标准缩放；当前$\textbf{K}_j$和$\textbf{V}_j$</li>
+</ul>
+</li>
+<li>$\ell^{new}_i$覆盖$\ell_i$</li>
+<li>$m_i^{new}$覆盖$m_i$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>最后返回$\textbf{O}$<br>进行Forward Pass需考虑到</li>
+</ul>
+</li>
+<li>softmax scaling系数$\tau$，常用的$\tau=\dfrac{1}{\sqrt{d}}$，$\textbf{S}=\tau\textbf{Q}\textbf{K}^T$</li>
+<li>Mask：$\textbf{S}^{masked}=MASK(\textbf{S})\in\mathbb{R}^{N\times N},\textbf{P}=softmax(\textbf{S}^{masked})$</li>
+<li>Drop out：$\textbf{P}^{dropped}=dropout(\textbf{P},\rho_{drop}), \textbf{O}=\textbf{P}^{dropped}\textbf{V}\in\mathbb{R}^{N\times d}$<h3 id="1-4-2-Recomputation"><a href="#1-4-2-Recomputation" class="headerlink" title="1.4.2 Recomputation"></a>1.4.2 Recomputation</h3>backward pass需要$\textbf{S},\textbf{P}\in\mathbb{R}^{N\times N}$来计算梯度，FlashAttention的目标是不存储$O(N^2)$的中间变量，采用存储$\textbf{O}$和$(m,\ell)$来重新计算$\textbf{S}$和$\textbf{P}$，虽然计算量变多，但是因为HBM访问确实下降了，所以recomputation是加快了backward pass速度的。</li>
+</ul>
+<h3 id="1-4-3-Block-Sparse-FlashAttention"><a href="#1-4-3-Block-Sparse-FlashAttention" class="headerlink" title="1.4.3 Block-Sparse FlashAttention"></a>1.4.3 Block-Sparse FlashAttention</h3><p>图源<a target="_blank" rel="noopener" href="http://fancyerii.github.io/2023/10/23/flashattention/">李理的博客</a><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250328213926.png" alt=""></p>
+<script type="math/tex; mode=display">M\in\{0,1\}^{N/B_r \times N/B_c}</script><script type="math/tex; mode=display">\tilde{M}_{r,c}=M_{ij},\ \ \ \ \  r=\lfloor r/B_r\rfloor, c=\lfloor c/B_c\rfloor</script><script type="math/tex; mode=display">\textbf{P}=softmax(\textbf{S}\cdot\mathbb{1}_{\tilde{M}})</script><p>如果$\tilde{M}_{rc}=1$，则$(\textbf{S}\cdot\mathbb{1}_{\tilde{M}})_{rc}=S_{rc}$<br>如果$\tilde{M}_{rc}=0$，则$(\textbf{S}\cdot\mathbb{1}_{\tilde{M}})_{rc}=-\infty$</p>
+<h2 id="1-5-FLOPS和IO复杂度比较"><a href="#1-5-FLOPS和IO复杂度比较" class="headerlink" title="1.5 FLOPS和IO复杂度比较"></a>1.5 FLOPS和IO复杂度比较</h2><h3 id="1-5-1-FLOPS复杂度"><a href="#1-5-1-FLOPS复杂度" class="headerlink" title="1.5.1 FLOPS复杂度"></a>1.5.1 FLOPS复杂度</h3><ol>
+<li>Standard Attention<br>$\textbf{S}=\textbf{Q}\textbf{K}^T\in\mathbb{R}^{N\times N}$，需要$O(N^2d)$FLOPS<br>$\textbf{O}=\textbf{P}\textbf{V}\in\mathbb{R}^{N\times d}$，需要$O(N^2d)$FLOPS<br>总共FLOPS为<script type="math/tex; mode=display">O(N^2d)</script></li>
+<li>FlashAttention<br><strong>Theorem1</strong><br>整个过程，最后得到$\textbf{O}$所需的<strong>FLOPS</strong>为$O(N^2d)$，证明如下：</li>
+</ol>
+<ul>
+<li>在内层计算中，$\textbf{S}_{ij}=\textbf{Q}_i\textbf{K}_j^T\in\mathbb{R}^{B_r\times B_c}$、$\textbf{O}_i=\tilde{\textbf{P}}_{ij}\textbf{V}_j\in\mathbb{R}^{B_r\times d}$<ul>
+<li>$\textbf{Q}_i\in\mathbb{R}^{B_r\times d}$、$\textbf{K}_j\in\mathbb{R}^{B_c\times d}$，需要$O(B_rB_cd)$FLOPS</li>
+<li>$\tilde{\textbf{P}}_{ij}\in\mathbb{R}^{B_r\times B_c}$、$\textbf{V}_j\in\mathbb{R}^{B_c\times d}$，需要$O(B_rB_cd)$FLOPS</li>
+<li>内层循环了$T_cT_r=\lceil\dfrac{N}{B_c}\rceil\lceil\dfrac{N}{B_r}\rceil$次，因此总共FLOPS为<script type="math/tex; mode=display">O(\dfrac{N^2}{B_cB_r}B_rB_cd)=O(N^2d)</script></li>
+</ul>
+</li>
+</ul>
+<h3 id="1-5-2-IO复杂度"><a href="#1-5-2-IO复杂度" class="headerlink" title="1.5.2 IO复杂度"></a>1.5.2 IO复杂度</h3><p><strong>Theorem2</strong></p>
+<ol>
+<li>Standard Attention</li>
+</ol>
+<ul>
+<li>第一步<ul>
+<li>从HBM读取$\textbf{Q}$和$\textbf{K}$，大小都为$N\times d$</li>
+<li>计算$\textbf{S}=\textbf{Q}\textbf{K}^T\in\mathbb{R}^{N\times N}$写到HBM</li>
+<li>显存访问$\Theta(Nd+N^2)$</li>
+</ul>
+</li>
+<li>第二步<ul>
+<li>计算$\textbf{P}=softmax(\textbf{S})$，需要从HBM读取$\textbf{S}$并将$\textbf{P}$写入到HBM</li>
+<li>显存访问$\Theta(N^2)$<br>最终IO复杂度为<script type="math/tex; mode=display">\Theta(Nd+N^2)</script></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>FlashAttention</li>
+</ol>
+<ul>
+<li>外循环：$\textbf{K}_j\in\mathbb{R}^{B_c\times d}$、$\textbf{V}_j\in\mathbb{R}^{B_c\times d}$，每个block只加载一次且大小为$B_c\times d$，所有block一共加载$T_c$次，需要$\Theta(B_cdT_c)$<ul>
+<li>$O(B_cT_c)=N$</li>
+<li>所以$\Theta(B_cdT_c)$相当于$O=(Nd)$</li>
+</ul>
+</li>
+<li>内循环：$\textbf{Q}_i\in\mathbb{R}^{B_r\times d}$、$\textbf{O}_i\in\mathbb{R}^{B_r\times d}$，每个block加载$T_c$次，大小为$B_r\times d$，所有block一共加载$T_rT_c$次，需要$\Theta(T_rT_cB_rd)$<ul>
+<li>$O(B_rT_r)=N$</li>
+<li>所以$\Theta(T_rT_cB_rd)$相当于$O(NT_cd)$<br>目前IO复杂度为$O(NdT_c)$<br>$B_c=\lceil\dfrac{M}{4d}\rceil$，$T_c=\lceil\dfrac{N}{B_c}\rceil=\lceil\dfrac{4Nd}{M}\rceil$<br>最终IO复杂度为<script type="math/tex; mode=display">O(\dfrac{N^2d^2}{M})</script>这也是FlashAttention的目标，将HBM访问减小到sub-quadratic级别，即IO复杂度的增长速度小于$N^2$，大于$N$。<br>$d$一般为64或128，$M$大约在100KB，$M\gt\gt d^2$，$\dfrac{N^2d^2}{M}&lt;N^2$<br>因此：<script type="math/tex; mode=display">\Theta(Nd+N^2)>O(\dfrac{N^2d^2}{M})</script>这里是Forward Pass的IO复杂度，Backward Pass的IO复杂度与前者相同。</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>Block-sparse FlashAttention<br>和FlashAttention的IO复杂度的计算过程比较像，不同的地方是，Block-sparse FlashAttention只需要加载非零的blocks，假设非零blocks的比例为$s$，那么HBM accesses就会被缩小到$s$倍；“However, for small values of $s$, we would still need to write the result O ∈ R 𝑁 ×𝑑 .，需要将结果$\textbf{O}\in\mathbb{R}^{N\times d}$写到HBM里”，需要的空间复杂度为：<script type="math/tex; mode=display">\Theta(Nd+\dfrac{N^2d^2}{M}s)</script><h2 id="1-6-额外内存"><a href="#1-6-额外内存" class="headerlink" title="1.6 额外内存"></a>1.6 额外内存</h2><h3 id="1-6-1-Forward-Pass"><a href="#1-6-1-Forward-Pass" class="headerlink" title="1.6.1 Forward Pass"></a>1.6.1 Forward Pass</h3>为了简单起见，省略了softmax时的max-shifting步骤<br>在计算得到$\textbf{O}\in\mathbb{R}^{N\times d}$时<script type="math/tex">\textbf{Q},\textbf{K},\textbf{V}\in\mathbb{R}^{N\times d}$$$$\textbf{S}=\textbf{Q}\textbf{K}^T\in\mathbb{R}^{N\times N},\textbf{P}=softmax(\textbf{S})\in\mathbb{R}^{N\times N},\textbf{O}=\textbf{P}\textbf{V}\in\mathbb{R}^{N\times d}</script><br>$S_{ij}=q_ik_j^T$，$q_i$和$k_j$分别是$\textbf{Q}$和$\textbf{K}$的第$i$行和第$j$行，定义他们的softmax normalization常数为：<script type="math/tex; mode=display">L_i=\sum_j^Ne^{q_ik_j^T}</script></li>
+</ol>
+<ul>
+<li>对于其中一个$L_i$来说，只涉及$N$个数求和，计算$L_i$所需要的额外内存的空间复杂度为：$O(N)$，通俗理解就是$1$个token对$N$个token<br>$v_j$是$\textbf{V}$的第$j$行，对于注意力矩阵第$i$行的输出，有<script type="math/tex; mode=display">o_i=P_{i:}\textbf{V}=\sum_jP_{ij}v_j=\sum_j\dfrac{e^{q_ik_j^T}}{L_i}v_j</script></li>
+<li>$o_i$是第$i$个token的注意力输出，$P_{i:}\in\mathbb{R}^{1\times N}$是第$i$个token对所有其他token的softmax后的值，计算$o_i$所需要的额外内存的空间复杂度为：$O(d)$，通俗理解就是$1$个token的全部特征维度$d$<br>所以forward pass需要的额外内存的空间复杂度为：<script type="math/tex; mode=display">O(N)</script>除了输入输出之外，还需要$O(N)$大小的空间存储$(\ell,m)$。<h3 id="1-6-2-Backward-Pass"><a href="#1-6-2-Backward-Pass" class="headerlink" title="1.6.2 Backward Pass"></a>1.6.2 Backward Pass</h3>B.2从公式(3)后面的公式就开始看不懂了TvT…等之后再来看看吧</li>
+</ul>
+<h2 id="1-7-其他观点"><a href="#1-7-其他观点" class="headerlink" title="1.7 其他观点"></a>1.7 其他观点</h2><p><strong>Proposition3</strong><br>不存在一种算法能在满足$d\leq M\leq Nd$的情况下，以$O(N^2d^2M^{-1})$次HBM accesses来计算精确注意力，证明过程如下：<br>如果存在$O(\dfrac{N^2d^2}{M})$，当$M=\Theta(Nd)$时，HBM accesses为$O(\dfrac{N^2d^2}{Nd})=O(Nd)$，而加载$\textbf{Q},\textbf{K},\textbf{V},\textbf{O}$时，他们的大小都是$Nd$，所以如果要精确注意力的HBM accesses，那么至少需要$\Omega(Nd)$HBM accesses，与假设相反。</p>
+<h2 id="1-8-实验结果"><a href="#1-8-实验结果" class="headerlink" title="1.8 实验结果"></a>1.8 实验结果</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250401155155.png" alt=""></p>
+<h1 id="2-FlashAttention2"><a href="#2-FlashAttention2" class="headerlink" title="2 FlashAttention2"></a>2 FlashAttention2</h1><p>引用<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/17533058076">这里</a>：FlashAttention2核心思路是尽可能减少跨不同存储层级（Memory hierarchy）的数据读写。着重于减少GMEM(对$\textbf{O}$的处理)和SMEM(见2.3)之间相互传输的数据量。<br>FlashAttention比标准attention的执行速度快了2-4倍，但是forward pass只用了设备的30%-50%的理论峰值FLOPs/s(见Figure 6)，backward pass只用了设备的25%-35%理论峰值FLOPs/s(见Figure 7)。<br>相比于FlashAttention，FlashAttention2有更好的并行和任务分配机制，速度提升了两倍，在forward pass和backward pass分别达到了73%和63%的理论峰值。<br>相比于FasterTransformer，FlashAttention2的attention内核快了7倍。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250401165725.png" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250401170653.png" alt=""><br>相应改进如下：</p>
+<ul>
+<li>调整算法，在不改变输出的前提下，减少non-matmul(非矩阵乘法) FLOPs。<ul>
+<li>虽然non-matmul只占总FLOPs的一小部分，但是他们相比于matmul需要更长的时间(因为matmul有GPU专门的计算units)</li>
+</ul>
+</li>
+<li>在sequence lenght维度并行forward pass和backward pass，提高GPU资源的使用</li>
+<li>对一个线程块的不同warps进行分工，减少通信和共享内存的读写。<h2 id="2-1-算法改进"><a href="#2-1-算法改进" class="headerlink" title="2.1 算法改进"></a>2.1 算法改进</h2>FlashAttention中，每次输出总是需要用$diag(\ell^{(current)})^{(-1)}$来rescale，<script type="math/tex; mode=display">\textbf{O}^{(2)}=diag(\ell^{(1)}/\ell^{(2)})\textbf{O}^{(1)}+diag(\ell^{(2)})^{-1}e^{\textbf{S}^{(2)}-m^{(2)}}\textbf{V}^{(2)}</script>FlashAttention2中，分别更新当前的$\ell^{(new)}$(即softmax的分母部分)和softmax的分子部分乘以$\textbf{V}^{(current)}$的值：<script type="math/tex; mode=display">\tilde{\textbf{O}}^{(2)}=diag(\ell^{(1)})^{(-1)}\textbf{O}^{(1)}+e^{\textbf{S}^{(2)}-m^{(2)}}\textbf{V}^{(2)}</script>同时，对于backward pass，用存储$L$代替存储$m$和$\ell$<script type="math/tex; mode=display">L_i=m_i^{(T_c)}+\ell^{(T_c)}</script><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250401214948.png" alt="FlashAttention计算流程(只有两个blocks)"><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250401215056.png" alt="FlashAttention计算流程(只有两个blocks)"><br>（FlashAttention2的$\tilde{\textbf{P}}^{(2)}=diag(\ell^{(2)})^{-1}e^{\textbf{S}^{(2)}-m^{(2)}}$有点奇怪，应该是$\tilde{\textbf{P}}^{(2)}=e^{\textbf{S}^{(2)}-m^{(2)}}$吧，最后再除以最新的$\ell$）<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250401215800.png" alt=""></li>
+<li>变量少了$m$和$\ell$并新增了一个$L$<ul>
+<li>$L$：被分成$T_r=\lceil\dfrac{N}{B_r}\rceil$个blocks$\ell_1,…\ell_{T_r}$，每个block大小为$\mathbb{R}^{B_r}$</li>
+<li>$L^{(j)}=m^{(j)}+log(\ell^{(j)})$，用于backward pass使用</li>
+</ul>
+</li>
+<li>循环：<ul>
+<li>外层顺序计算序列<ul>
+<li>从HBM加载$\textbf{Q}_i$到SRAM</li>
+<li>在SRAM上初始化$\textbf{Q}_i$、$\ell_i$、$m_i$</li>
+<li>内层顺序计算特征<ul>
+<li>从HBM加载$\textbf{K}_j$、$\textbf{V}_j$到SRAM上</li>
+<li>在片上计算<ul>
+<li>$\textbf{S}_{ij}=\textbf{Q}_i\textbf{K}_j^T\in\mathbb{R}^{B_r\times B_c}$</li>
+<li>${m}_i^{(j)}=max(m_i^{(j-1)},rowmax(\textbf{S}_i^{(j)})\in \mathbb{R}^{B_r}$，取当前序列上一个特征的最大值和当前特征之间的最大值作为最大值</li>
+<li>$\tilde{\textbf{P}}_i^{(j)}=exp(\textbf{S}_i^{(j)}-\tilde{m}_i^{(j)})\in \mathbb{R}^{B_r\times B_c}$，分子处理<ul>
+<li>$\ell_i^{(j)}=e^{m_i^{(j-1)}-m_i^{(j)}}\ell_i^{(j-1)}+rowsum(\tilde{\textbf{P}}_i^{(j)})\in\mathbb{R}^{B_r}$，修改上一个特征的分子求和值并加上当前特征的求和值作为分母</li>
+</ul>
+</li>
+<li>$\textbf{O}_i^{(j)}=diag(e^{m_i^{(j-1)}-m_i^{(j)}})\textbf{O}_i^{(j-1)}+\tilde{\textbf{P}}_i^{(j)}\textbf{V}_j$，这个只是当前序列对当前及之前的、经过softmax但是未经过归一化的”attention”值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>（内层循环完之后，也就是当前序列的attention已经有个大概的值了，但是不是最后的值，因为还没有归一化）</li>
+<li>在片上计算$\textbf{O}_i=diag(\ell^{(T_c)})^{(-1)}\textbf{O}_i^{T_c}$、$L_i=m_i^{(T_c)}+\ell^{(T_c)}$</li>
+<li>将$\textbf{O}_i$和$L_i$写回HBM</li>
+</ul>
+</li>
+<li>最后返回$\textbf{O}$和$L$<h3 id="2-1-1-Causal-masking"><a href="#2-1-1-Causal-masking" class="headerlink" title="2.1.1 Causal masking"></a>2.1.1 Causal masking</h3><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/499eeaa62e60dc4d9f3967c9a054fa1.jpg" alt="应用在attention matrix **S**上的casual mask|350"><br>因为分块思想，<mark style="background: #BBFABBA6;">对于块内所有的列索引都大于行索引的，可以直接跳过这些块的attention计算</mark>，<mark style="background: #ADCCFFA6;">那么每行(指块的索引)只需要有一个块是需要做casual mask的(假设每个块都是正方形)</mark>。<br>为什么可以肯定块内的列索引都大于行索引呢，因为<script type="math/tex; mode=display">B_c=\lceil\dfrac{M}{4d}\rceil,\ \ \ \ \ B_r=min(\lceil\dfrac{M}{4d}\rceil,d)</script>从上面的公式可以保证每一个block的序列个数小于等于特征个数，也就是行索引小于等于列索引，所以可以直接用块的索引来代替原本的索引。<h3 id="2-1-2-计算量和内存"><a href="#2-1-2-计算量和内存" class="headerlink" title="2.1.2 计算量和内存"></a>2.1.2 计算量和内存</h3></li>
+</ul>
+</li>
+<li>和FlashAttention一样，需要$O(N^2d)$FLOPS</li>
+<li>除了输入输出之外，需要额外内存的空间复杂度为$O(N)$来存储$L$</li>
+</ul>
+<h2 id="2-2-并行"><a href="#2-2-并行" class="headerlink" title="2.2 并行"></a>2.2 并行</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/41e11e1bdd91ae13c3bfc3fde26fcfa.jpg" alt="SM和Block的关系|350"><br>用一个线程块来处理一个attention head，因此一共有<code>batch size × number of heads</code>个线程块，每个线程块被安排在SM上运行。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250401225054.png" alt="Forward pass和Backward pass中线程块的并行"><br>Forward Pass：并行序列长度(即外层循环)、batch维度、head维度</p>
+<ul>
+<li>对于attention matrix，每一行block使用同一个线程块来计算，因为每个序列之间本就互相独立<br>Backward Pass：只需要在不同的列blocks更新$\textbf{dQ}_i←\textbf{dQ}_i+\textbf{dS}_i^{(j)}\textbf{K}_j$</li>
+<li>对于attention matrix，每一列block使用同一个线程块来计算，然后再读不同线程块的结果相加来更新$\textbf{dQ}$(行方向)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250402161104.png" alt=""><h3 id="2-2-1-Decoding"><a href="#2-2-1-Decoding" class="headerlink" title="2.2.1 Decoding"></a>2.2.1 Decoding</h3></li>
+<li>在训练或者预填充时Attention的瓶颈为中间矩阵($\textbf{Q}\textbf{K}^T$和$softmax(\textbf{Q}\textbf{K}^T)$)的读写。</li>
+<li>在Decoding阶段，因为是对新的token进行attention，只有它需要与之前的tokens的KV需要互动，所以query length很短，通常为1。于是Attention的瓶颈变为了加载KV cache的速度。<ul>
+<li>在不同线程块之间切分KV cache的加载来增加HBM宽带的占用率，但是线程块之间的通信不算很快。</li>
+<li>最后采取将中间结果写入HBM，然后调用一个单独的kernel来归约并产生最终输出。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-3-warps的分工"><a href="#2-3-warps的分工" class="headerlink" title="2.3 warps的分工"></a>2.3 warps的分工</h2><p>给线程块分配4或8个warps</p>
+<p>Forward pass<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250402162614.png" alt="|346"><br>FlashAttention将$\textbf{K}$和$\textbf{V}$切分到4个warps中，同时所有warps可以访问$\textbf{Q}$。<br>每个warp进行计算得到一部分$\textbf{Q}\textbf{K}^T$，再乘对应部分的$\textbf{V}$，然后再相加。<br>    这种”split-K”方案方法需要将两次得到的部分结果都写到shared memory里让不同的warps共享才能进行相加，这增加的读写量降低了forward pass的速度。（在2.2“SM和线程块的关系”一图中，每个线程块的shared memory是线程块内部共享的）<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250402163711.png" alt="|325"></p>
+<ul>
+<li>FlashAttention2将将$\textbf{Q}$切分到4个warps中，同时所有warps可以访问$\textbf{K}$和$\textbf{V}$，同样的，每个warp进行计算得到一部分$\textbf{Q}\textbf{K}^T$，再乘对应部分的$\textbf{V}$，然后再相加。这里的中间结果是在当前warp下的，不需要进行warps之间的数据传递，因此不需要共享内存读写并能提升速度。</li>
+</ul>
+<p>Backward pass<br>过程中，因为$\textbf{Q}$、$\textbf{K}$、$\textbf{V}$、$\textbf{O}$、$\textbf{dQ}$、$\textbf{dK}$、$\textbf{dV}$之间是存在依赖关系的，需要一些同步，不像$\textbf{Q}_i$之间互相独立，但不使用”split-K”还是可以减少一些共享内存的读写并提升速度。</p>
+<p>Tuning block sizes<br>线程块增大可以减少shared memory的读写，但是增加了所需的resigter和总的shared memory。最后FlashAttention2选择线程块大小为$\{64, 128\}\times\{64, 128\}$，(4种选择的)最终取决于head的大小$d$和设备的shared meomory大小。</p>
+<h1 id="3-FlashAttention3"><a href="#3-FlashAttention3" class="headerlink" title="3 FlashAttention3"></a>3 FlashAttention3</h1><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/17533058076">Flash Attention 3 深度解析</a>：与其说FA3是FA2算法改进的延续，不如说<strong>FA3的工程创新是如何充分发挥Hopper架构强大算力的说明书</strong>。理解了FA3的原理，就相当于理解了Hopper硬件架构的特性和针对新架构做性能优化的一系列方案。<br>在了解FlashAttention3之前，最好先看以下内容：<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/12481535419">Nvidia Hopper WGMMA计算分析</a><br><a target="_blank" rel="noopener" href="https://deep-learning.feishu.cn/wiki/PnYmw4KcdiPBphkJBFdcqdDxnke">Hopper-100架构</a></p>
+<p>回顾一下，FlashAttention用tiling和recompute方法，在一个单独的GPUkernels上通过融合attention的操作，减少会使GMEM变慢的中间过程的IO读写；FlashAttention2更改FlashAttention对特征并行计算的算法，改为对序列并行计算，改善GPU的占用和分配问题。<br>但是，FlashAttenion2在H100的GPU利用率低，只有35%，相比于优化后的GEMM80~90%的使用率，显得非常逊色。原因是它遵循简单的同步机制，没有利用H100的异步和低精度特性。所以FlashAttention3的提出就是为了<strong>利用H100架构的DAS化特性</strong>。</p>
+<ul>
+<li>H100有异步机制单元<strong>Tensor Cores WGMMA</strong>，<strong>TMA</strong>，可以让数据搬运和计算重叠。<ul>
+<li>TMA：Tensor Memory Accelerator，内存搬运加速</li>
+<li>WGMMA：warpgroup MMA，线程束级别MMA</li>
+</ul>
+</li>
+<li>低精度</li>
+</ul>
+<p>FlashAttention3的升级在于根据Hopper架构来改进其算法。</p>
+<ul>
+<li>FP16：在forward pass中，FlashAttention3比FlashAttention2提升了1.5-2倍速度(达到740TFLOPSs/s)，backward pass提升了1.5-1.75倍</li>
+<li>FP8：</li>
+</ul>
+<p><strong>FlashAtttention3新特征</strong>：<br>H100新特性：</p>
+<ul>
+<li>WGMMA：意味着有更高的吞吐，通过一个warpgroup执行(即4个连续的warps)<ul>
+<li>用WGMMA代替MMA</li>
+<li><code>mma.sync</code>是A卡指令，只能达到吞吐量峰值的2/3</li>
+</ul>
+</li>
+<li>TMA：意味着更快的GMEM到SMEM数据传输，可以异步执行<ul>
+<li>相比CPA，减少了使用寄存器进行地址计算</li>
+<li>FA2用CPA从GMEM加载tile<br>这两个新特性自然地集成到producer warp和consumer warp的pipeline设计中</li>
+</ul>
+</li>
+<li><mark style="background: #FFF3A3A6;">Producer-Consumer异步机制</mark>：对warpgroup设置不同任务，分为producer warpgroup和consumer warpgroup，异步执行数据移搬运和Tensor Cores计算，隐藏内存和指令延迟。</li>
+<li>在异步blocks级别GEMM(即WGMMA)下<mark style="background: #FFF3A3A6;">隐藏softmax</mark>：softmax中floating乘加和指数计算都是<strong>低吞吐的non-GEMM操作</strong>，而<strong>GEMM操作的吞吐量较高</strong>，通过异步指令WGMMA实现计算重叠，具体分为<strong>inter warpgroup</strong>和<strong>intra warpgroup</strong>，在FlashAttention2的基础上做到<strong>规避</strong>softmax和GEMM的<strong>依赖关系</strong>，隐藏softmax造成的一部分延迟。</li>
+</ul>
+<h2 id="3-1-GPU架构特征和执行模型"><a href="#3-1-GPU架构特征和执行模型" class="headerlink" title="3.1 GPU架构特征和执行模型"></a>3.1 GPU架构特征和执行模型</h2><h3 id="3-1-1-内存体系和线程体系"><a href="#3-1-1-内存体系和线程体系" class="headerlink" title="3.1.1 内存体系和线程体系"></a>3.1.1 内存体系和线程体系</h3><p>H100的<br>内存体系：</p>
+<ul>
+<li>GMEM是可以访问全部SMs的片下DRAM，其物理实现依靠HBM</li>
+<li>在GMEM的数据缓存在片上的L2 cache中</li>
+<li>每个SM包含一个小型片上存储缓存SMEM</li>
+<li>每个SM都有寄存器堆<br>线程体系：</li>
+<li>GPU编程模型是在线程上按逻辑组织运行的，从小到大的线程组织包括：线程threads、线程束warps(32个线程)、warpsgroups(4个连续的warps)、线程块threadblocks(i.e. cooperative thread arrays or CTAs)、threadblock clusters(Hopper架构的)、网格grids<br>这两种体系的关系：</li>
+<li>同一threadblocks中的threads被共同调度在同一SM上，线程只能访问所属线程块的SMEM，每个threads最多有256个RMEM</li>
+<li>同一threadblock clusters中的threadblocks被共同调度在同一GPC上，线程可访问clusters内的SMEM<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250417171025.png" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250405221652.png" alt=""><h3 id="3-1-2-异步和warp-specialization"><a href="#3-1-2-异步和warp-specialization" class="headerlink" title="3.1.2 异步和warp-specialization"></a>3.1.2 异步和warp-specialization</h3></li>
+<li>warp-specialized的异步机制：在同一个threadblock的warps会被分为producer或者consumer，只解决数据移动或者计算。</li>
+<li>数据搬运：TMA硬件单元支持<strong>GMEM和SMEM</strong>之间<strong>异步内存拷贝</strong>，将数据从GMEM搬运到SMEM，搬运完成后TMA通知consumer，同时等待SMEM buffer释放。</li>
+<li>计算：通过WGMMA指令，实现Tensor Core异步，直接从<strong>SMEM</strong>中<strong>获取输入</strong>，计算GEMM和softmax，释放buffer并通知producer。</li>
+<li>Hopper支持通过<code>setmaxnreg</code>动态重新分配warpgroups的register，因此做MMA的warps(即consumer，相比于producer工作量大)可以获得更大的RMEM，数据搬运的RMEM就会少一些<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250418100136.png" alt=""><h3 id="3-1-3-低精度格式"><a href="#3-1-3-低精度格式" class="headerlink" title="3.1.3 低精度格式"></a>3.1.3 低精度格式</h3>这部分<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/17533058076">Flash Attention 3 深度解析</a>讲解得很好<br>两个问题：</li>
+<li>FP8 WGMMA要求必须要在最内层维度上连续(k-major)，即A行连续，B列连续，两种思路：<ul>
+<li>QKV都是行连续，P也是行连续，需要V做转置</li>
+<li>QKV通常是BHSD，而P是BHSS，需要在seq len维度上连续，而V的最后一个维度是head dim，于是需要对V的S和D维度做transpose</li>
+<li>解决：使用LDSM/STSM</li>
+</ul>
+</li>
+<li>FP32 WGMMA accumulater(即C)寄存器的排列布局与FP8 WGMMA A的不同<ul>
+<li>只在线程内部做寄存器的交换<br>❓对于”线程 0 在寄存器里拥有 d0 [坐标为(0, 0)]，d1(0, 1)，d2(8, 0)，d3(8, 1)，d4(0, 8)，d5(0, 9)，d6(8, 8)，d7(8, 9) 一共 8 个数据。为了达成变换后图 10 的情况，线程 0 的这 8 个数据需要分别从 T0d0, T0d1, T1d0, T1d1, T0d2, T0d3, T1d2, T1d3 获取。“其实为什么这8个数据需要这样获取？dx中的x的数字代表了什么？只是NV的自成一体的定义吗？。。。<h1 id="3-2-算法"><a href="#3-2-算法" class="headerlink" title="3.2 算法"></a>3.2 算法</h1><h3 id="3-2-1-producer-consumer异步机制"><a href="#3-2-1-producer-consumer异步机制" class="headerlink" title="3.2.1 producer-consumer异步机制"></a>3.2.1 producer-consumer异步机制</h3>该异步机制依靠两种方法实现</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><strong>warp-specialization</strong><br>FlashAttention3的forward pass和FlashAttention2一样，在batch size、number of heads和$Q$的序列长度进行并行，因此一个CTA-level级的算法是可以应对前面的并行的，具体做法是将$\textbf{Q}$分块。</li>
+</ol>
+<ul>
+<li>个人理解：$\textbf{Q}$是tiling思想，threadblocks其实也是tiling思想，将线程分块。然后每个线程划分为两个线程束的集合，即producer warpgroup和consumer warpgroup，也是继承了tiling，二者是异步关系</li>
+<li>CTA-view：<ul>
+<li>producer：将数据从GMEM加载到SMEM</li>
+<li>就是FA2+TMA&amp;WGMMA的warp specialization<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250406095916.png" alt=""></li>
+</ul>
+</li>
+<li>初始化一个pipeline对象，管理barrier synchronization使各个线程之间同步协调，使用一个s-stage的循环SMEM buffer。</li>
+<li>如果当前thread所在的warpgroup属于producer(处理数据移动)<ul>
+<li><mark style="background: #CACFD9A6;">释放一部分registers</mark></li>
+<li><mark style="background: #ADCCFFA6;">把当前分块</mark>$\textbf{Q}_i$<mark style="background: #ADCCFFA6;">从HBM加载到SMEM</mark></li>
+<li><mark style="background: #ADCCFFA6;">加载完成后，通知属于consumer的threads加载</mark>$\textbf{Q}_i$</li>
+<li>遍历$T_c$个$\textbf{K}$和$\textbf{V}$的分块<ul>
+<li><mark style="background: #BBFABBA6;"> 等待当前循环buffer的第</mark>$j\%s$<mark style="background: #BBFABBA6;">阶段被consumer使用完</mark>，防止旧数据未利用完就加载新数据将旧数据覆盖</li>
+<li><mark style="background: #ADCCFFA6;">把当前分块</mark>$\textbf{K}_j$<mark style="background: #ADCCFFA6;">和</mark>$\textbf{V}_j$<mark style="background: #ADCCFFA6;">从HBM加载到SMEM</mark>，对应循环buffer的第$j\%s$阶段</li>
+<li><mark style="background: #ADCCFFA6;">加载完成后，通知属于consumer的threads加载</mark>$\textbf{K}_j$<mark style="background: #ADCCFFA6;">和</mark>$\textbf{V}_j$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如果当前thread所在的warpgroup属于consumer(处理计算)</p>
+<ul>
+<li>根据consumer warps的数量重新分配registers</li>
+<li>在片上初始化$textbf{Q}_i$、$\ell_i$、$m_i$</li>
+<li><mark style="background: #ADCCFFA6;">等待</mark>$\textbf{Q}_i$<mark style="background: #ADCCFFA6;">加载到SMEM</mark></li>
+<li>遍历$T_c$个$\textbf{K}$和$\textbf{V}$的分块<ul>
+<li><mark style="background: #ADCCFFA6;">等待</mark>$\textbf{K}_j$<mark style="background: #ADCCFFA6;">加载到SMEM</mark></li>
+<li><mark style="background: #FFB86CA6;">SS-GEMM</mark>(数据来源都是SMEM)：计算$\textbf{S}_i^{(j)}=\textbf{Q}_i\textbf{K}_j^T$</li>
+<li>存储$m_i^{old}=m_i$，更新$m_i=max(m_i^{old},rowmax(S_i^{(j)}))$</li>
+<li>计算$\tilde{\textbf{P}}_i^{(j)}=exp(\textbf{S}_i^{(j)}-m_i)$和$\ell_i=exp(m_i^{old}-m_i)\ell_i+rowmsum(\tilde{\textbf{P}}_i^{(j)})$</li>
+<li><mark style="background: #ADCCFFA6;">等待</mark>$\textbf{V}_j$<mark style="background: #ADCCFFA6;">加载到SMEM</mark></li>
+<li><mark style="background: #FFB86CA6;">RS-GEMM</mark>($\tilde{\textbf{P}}_i^{(j)}$在RMEM中，$\textbf{V}_j$在SMEM中)：计算$\textbf{O}_i=diag(exp(m_i^{old}-m_i))^{-1}\textbf{O}_i+\tilde{\textbf{P}}_i^{(j)}\textbf{V}_j$</li>
+<li><mark style="background: #BBFABBA6;">释放第</mark>$j\%s$<mark style="background: #BBFABBA6;">阶段的buffer给producer使用</mark></li>
+</ul>
+</li>
+<li>最后根据最新的$\ell_i$计算$\textbf{O}_i=diag(\ell_i)^{-1}\textbf{O}_i$和$L_i=m_i+log(\ell_i)$</li>
+<li>将$\textbf{O}_i$和$L_i$写回HBM作为第$i$个分块的$\textbf{O}$和$L$</li>
+</ul>
+</li>
+<li><p><mark style="background: #CACFD9A6;">setmaxnreg</mark>负责释放register</p>
+</li>
+<li><mark style="background: #ADCCFFA6;">TMA</mark>负责加载$\textbf{Q}_i$和$\{\textbf{K},\textbf{V}\}_{0\leq j\leq T_c}$，TMA加载是并行的，因为异步的关系，不会在其他加载完成时互相阻塞。</li>
+<li>用<mark style="background: #FFB86CA6;">WGMMA指令</mark>在consumer主循环中执行GEMMs。</li>
+</ul>
+<ol>
+<li><strong>pingpong scheduling</strong><br>为什么要把GEMM和softmax的计算重叠？</li>
+</ol>
+<ul>
+<li>softmax的计算包括指数计算，是non-matmul计算，吞吐量比matmul的要少得多，计算non-matmul用时也占据不小的一部分</li>
+<li>例如，M=128、M=128、K=192，计算$QK^T$时<ul>
+<li>WGMMA计算量为$2\times128\times192\times128=6291456FLOPS$，WGMMA吞吐为$2048FLOPS/cycle$，计算得到延迟$=3072cycles$</li>
+<li>MUFU.EX2计算量为$192\times128=24576OPS$，exp吞吐为$16OPS/cycle$，计算得到延迟=$1536cycles$</li>
+</ul>
+</li>
+<li>softmax里exp的吞吐和WGMMA的吞吐相差太多，延迟是tensor core的一半，如果让tensor core等待exp计算会非常不划算，于是采用计算重叠的方式，用算力高的tensor core保持busy状态掩盖算力低的cuda core</li>
+<li>FP8的情况会给你更糟糕，WGMMA和EX2都是1536cycles</li>
+</ul>
+<p><strong>Inter warpgroup</strong>——Warp-Specialized Persistent <strong>Ping-Pong</strong> kernel design<br>warpScheduler，每个warpgroup有128个线程，这刚好是在一个SM上一个线程块的大小</p>
+<ul>
+<li>synchronization barries令warpgroup 1的GEMMs运行在warpgroup 2的GEMMs之前。其中GEMMs包括<mark style="background: #FF5582A6;">GEMM1</mark>和<mark style="background: #FFB86CA6;">GEMM0</mark>，分别是当前轮的$\textbf{P}\textbf{V}$和下一轮的$\textbf{Q}\textbf{K}^T$</li>
+<li>然后warpgroup 1执行<mark style="background: #FFB86CA6;">softmax</mark>，warpgroup 2执行GEMMs(<mark style="background: #FF5582A6;">GEMM1</mark>和<mark style="background: #FFB86CA6;">GEMM0</mark>)</li>
+<li>然后warpgroup 1执行GEMMs(<mark style="background: #FFB86CA6;">GEMM1</mark>和<mark style="background: #BBFABBA6;">GEMM0</mark>)，warpgroup 2执行<mark style="background: #FFB86CA6;">softmax</mark><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250406162226.png" alt=""><br>实际上，CTA-level的任务是由tile scheduler分配的，可以安排block或warpgroup计算某个tile。当在tensor core执行matmul时，exp的计算通过synchronization barries(<code>bar.sync</code>指令)，由cuda core异步执行。在warpgroup-level的调度和barries的共同控制下，同一gemm的不同output tile可以在两个warpgroup之间丝滑的切换，就如Ping-Pong内核流水线，持续向tensor core输送数据，实现或接近其最大算力。</li>
+</ul>
+<p>对于其他attention变体如MQA和GQA，仍然采取FlashAttention2的算法，避免在HBM重复加载$\textbf{K}$和$\textbf{V}$</p>
+<h3 id="3-2-2-warpgroup内部GEMMs和softmax的重叠"><a href="#3-2-2-warpgroup内部GEMMs和softmax的重叠" class="headerlink" title="3.2.2 warpgroup内部GEMMs和softmax的重叠"></a>3.2.2 warpgroup内部GEMMs和softmax的重叠</h3><p><strong>Intra warpgroup</strong><br>GEMM1：$\textbf{P}\textbf{V}$<br>GEMM0：$\textbf{Q}\textbf{K}^T$<br>为什么要考虑到内部的重叠？</p>
+<ul>
+<li>tensor core的执行粒度是gemm，如果要让tensor core保持busy状态，在warpgroup内部也要用WGMMA掩盖softmax的计算。根据GEMM1依赖softmax的输出，softmax依赖GEMM0的输出的关系，我们希望可以做到在进行GEMM0的WGMMA0后立马执行GEMM1的WGMMA1</li>
+<li>如果要实现busy状态，就不能再顺序地完整执行i-th iteration后再执行i+1-th。又因为tensor core的异步关系，通过滞后计算GEMM1达到掩盖softmax计算的效果，如下图所示，让i+1-th的GEMM0和i-th的GEMM1在i+1-th的softmax时进行衔接。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250418104053.png" alt=""><br>虽然记录i-th的中间结果会增加寄存器的使用，但是TFLOPs确实增加了</li>
+</ul>
+<p>考虑intra-warpgroup后的算法<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/2aca7a8646421548df820c062e61240.jpg" alt=""></p>
+<ul>
+<li>第11~13行实现掩盖softmax</li>
+</ul>
+<h1 id="随记"><a href="#随记" class="headerlink" title="随记"></a>随记</h1><p>Persistent Kernel：<br>启动固定数量的CTAs来占用整个GPU，可以为CTAs分配多个工作块，提高SM使用率</p>
+<ul>
+<li>没有persistent kernel：每个CTA对应一个work tile，当tile工作量不太均匀时，会导致SMs空闲</li>
+<li>有persistent kernel：在 H100 SXM5 GPU 上，有132个SMs，每个SM负责一个CTA，一个CTA动态处理work tiles(一对多)。在causal masking的时候可以动态调度work tile。可以在前一个tile的收尾阶段预加载下一个tile，实际上掩盖了没有persistent kernel时同一个SM在两个CTA之间切换的延迟。</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention/Pasted%20image%2020250428140437.png" alt="FA3CTA-level中的CUTLASS"><br><code>t0r0</code>：thread-wise accumulator of attention output<br>t代表thread-level，r表示register</p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">WB</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://wabbybabb0.github.io/2025/03/26/flashattention/">https://wabbybabb0.github.io/2025/03/26/flashattention/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">WB</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/LLM/">
+                                    <span class="chip bg-color">LLM</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">给WB来包辣条</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <div class="card" data-aos="fade-up">
+    <div id="utteranc-container" class="card-content">
+        <script src="https://utteranc.es/client.js"
+                repo="Wabbybabb0/commit-utterance"
+                issue-term="pathname"
+                theme="github-light"
+                crossorigin="anonymous"
+                async>
+        </script>
+    </div>
+</div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2025/04/29/flashattention-mini/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/11.png" class="responsive-img" alt="【实践】FlashAttention学习过程">
+                        
+                        <span class="card-title">【实践】FlashAttention学习过程</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            FlashAttentionv1实操过程，已验证！
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-04-29
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/LLM/">
+                        <span class="chip bg-color">LLM</span>
+                    </a>
+                    
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2025/03/19/mla/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/22.jpg" class="responsive-img" alt="Multi-head Latent Attention模型理解">
+                        
+                        <span class="card-title">Multi-head Latent Attention模型理解</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            作为FlashMLA的核心之一，MLA设计了在保持性能的同时着重减少KV Cache的attention机制，十分值得细究！
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-19
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/DeepSeek/">
+                        <span class="chip bg-color">DeepSeek</span>
+                    </a>
+                    
+                    <a href="/tags/GPU/">
+                        <span class="chip bg-color">GPU</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Wabbybabbo的摸鱼圣地<br />'
+            + '文章作者: Wabbybabbo<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="8590828427"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023-2025</span>
+            
+            <span id="year">2023</span>
+            <a href="/about" target="_blank">Wabbybabbo</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Wabbybabb0" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:Wabbybabb0@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=497056512" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 497056512" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

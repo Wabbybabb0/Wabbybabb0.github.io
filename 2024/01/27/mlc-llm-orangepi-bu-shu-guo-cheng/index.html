@@ -1,0 +1,1487 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="mlc-llm 香橙派部署过程, Wabbybabbo的摸鱼圣地">
+    <meta name="description" content="上班？下班！">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>mlc-llm 香橙派部署过程 | Wabbybabbo的摸鱼圣地</title>
+    <link rel="icon" type="image/png" href="/grape200x200.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+<link rel="alternate" href="/atom.xml" title="Wabbybabbo的摸鱼圣地" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/grape200x200.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Wabbybabbo的摸鱼圣地</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-sharp fa-solid fa-fish" style="zoom: 0.6;"></i>
+      
+      <span>主页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-soild fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>档案</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="" class="waves-effect waves-light">
+
+      
+      <i class="fas fa-list" style="zoom: 0.6;"></i>
+      
+      <span>分享</span>
+      <i class="fas fa-chevron-down" aria-hidden="true" style="zoom: 0.6;"></i>
+    </a>
+    <ul class="sub-nav menus_item_child ">
+      
+      <li>
+        <a href="/musics">
+          
+          <i class="fas fa-music" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>音乐</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/movies">
+          
+          <i class="fas fa-film" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>电影</span>
+        </a>
+      </li>
+      
+      <li>
+        <a href="/books">
+          
+          <i class="fas fa-book" style="margin-top: -20px; zoom: 0.6;"></i>
+          
+          <span>书籍</span>
+        </a>
+      </li>
+      
+    </ul>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/grape200x200.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Wabbybabbo的摸鱼圣地</div>
+        <div class="logo-desc">
+            
+            上班？下班！
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-sharp fa-solid fa-fish"></i>
+			
+			主页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-soild fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			档案
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="javascript:;">
+			
+				<i class="fa-fw fas fa-list"></i>
+			
+			分享
+			<span class="m-icon"><i class="fas fa-chevron-right"></i></span>
+		</a>
+            <ul  style="background:  ;" >
+              
+                <li>
+
+                  <a href="/musics " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-music" style="position: absolute;left:50px" ></i>
+			      
+		          <span>音乐</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/movies " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-film" style="position: absolute;left:50px" ></i>
+			      
+		          <span>电影</span>
+                  </a>
+                </li>
+              
+                <li>
+
+                  <a href="/books " style="margin-left:75px">
+				  
+				   <i class="fa fas fa-book" style="position: absolute;left:50px" ></i>
+			      
+		          <span>书籍</span>
+                  </a>
+                </li>
+              
+            </ul>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/Wabbybabb0/Wabbybabb0.github.io" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/Wabbybabb0/Wabbybabb0.github.io" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/9.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">mlc-llm 香橙派部署过程</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                                <span class="chip bg-color">人工智能</span>
+                            </a>
+                        
+                            <a href="/tags/NLP/">
+                                <span class="chip bg-color">NLP</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
+                                人工智能
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2024-01-27
+                </div>
+                
+
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
+                    2024-10-19
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    1.4k
+                </div>
+                
+
+                
+
+                
+                    <div id="busuanzi_container_page_pv" class="info-break-policy">
+                        <i class="far fa-eye fa-fw"></i>阅读次数:&nbsp;&nbsp;
+                        <span id="busuanzi_value_page_pv"></span>
+                    </div>
+				
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>参考网站：<a target="_blank" rel="noopener" href="https://blog.mlc.ai/2023/08/09/GPU-Accelerated-LLM-on-Orange-Pi">GPU-Accelerated LLM on a $100 Orange Pi</a>、<a target="_blank" rel="noopener" href="https://llm.mlc.ai/docs/install/gpu.html#orange-pi-5-rk3588-based-sbc">Orange Pi 5 (RK3588 based SBC)¶</a></p>
+<p>资料来源：<a target="_blank" rel="noopener" href="https://github.com/mlc-ai/mlc-llm">Github——mlc-llm</a></p>
+<p>相关论坛：<a target="_blank" rel="noopener" href="https://www.reddit.com/r/MachineLearning/comments/15r1vy5/project_gpuaccelerated_llm_on_a_100_orange_pi/?rdt=33752&amp;onetap_auto=true">Reddit——GPU-Accelerated LLM on a $100 Orange Pi</a></p>
+<h1 id="1-Prepare"><a href="#1-Prepare" class="headerlink" title="1 Prepare"></a>1 Prepare</h1><h2 id="1-1-Installation"><a href="#1-1-Installation" class="headerlink" title="1.1 Installation"></a>1.1 Installation</h2><p><strong>- Download and istall the Ubuntu 22.04 for your board from <a target="_blank" rel="noopener" href="https://github.com/Joshua-Riek/ubuntu-rockchip/releases/tag/v1.22">here</a></strong>(pick “Orange Pi 5 Plus”)<br>(:ps 在这个版本里，我无法使用串口，apt update会出现无法解析域名等问题，于是最后用了<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1cQR1pcca0P-xuQbTrnGXAw?pwd=pjhv#list/path=%2Fsharelink1077680202-1101560075650855%2FUbuntu&amp;parentPath=%2Fsharelink1077680202-1101560075650855">香橙派官方的系统——1.0.8_ubuntu_jammy_desktop_xfce_linux5.10.150</a><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127153142.png" alt=""></p>
+<ol>
+<li>在烧录前，需要准备一张SD卡(我用的32G)，准备<a target="_blank" rel="noopener" href="https://etcher.balena.io/#download-etcher">烧录软件balenaEtcher</a></li>
+<li>如何知道自己是否烧录成功？<ul>
+<li>使用串口<a target="_blank" rel="noopener" href="https://blog.csdn.net/itt21044ZCY/article/details/132742245#:~:text=%E9%A6%99%E6%A9%99%E6%B4%BE%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%E7%94%B5%E8%84%91%20%E4%B8%B2%E5%8F%A3%E8%BF%9E%E6%8E%A5%EF%BC%9AGND%E6%8E%A5GND%EF%BC%8CTX%E6%8E%A5RX%EF%BC%8CRX%E6%8E%A5TX%20%E4%B8%B2%E5%8F%A3%E7%9A%84%20TX%20%E5%92%8C%20RX%20%E6%98%AF%E9%9C%80%E8%A6%81%E4%BA%A4%E5%8F%89%E8%BF%9E%E6%8E%A5%E7%9A%84%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B8%8D%E6%83%B3%E4%BB%94%E7%BB%86%E5%8C%BA%E5%88%86%20TX%E5%92%8C,TX%20%E5%92%8C%20RX%20%E5%85%88%E9%9A%8F%E4%BE%BF%E6%8E%A5%E4%B8%8A%EF%BC%8C%E5%A6%82%E6%9E%9C%E6%B5%8B%E8%AF%95%E4%B8%B2%E5%8F%A3%E6%B2%A1%E6%9C%89%E8%BE%93%E5%87%BA%E5%86%8D%E4%BA%A4%E6%8D%A2%E4%B8%8B%20TX%20%E5%92%8C%20RX%20%E7%9A%84%E9%A1%BA%E5%BA%8F%EF%BC%8C%E8%BF%99%E6%A0%B7%E5%B0%B1%E6%80%BB%E6%9C%89%E4%B8%80%E7%A7%8D%E9%A1%BA%E5%BA%8F%E6%98%AF%E5%AF%B9%E7%9A%84">CSDN——使用香橙派连接电脑，串口和SSH</a></li>
+<li>使用另一个显示屏查看<ol>
+<li>烧录成功后，通过上面两种办法知道香橙派的ip地址(如果是用显示屏的，在官方文档里查阅“设置静态IP地址的方法”)，我自己的修改为了192.168.1.201，如下图所示，用自己的电脑ping一下香橙派<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240126214418.png" alt=""></li>
+<li>使用vscode连接香橙派<a target="_blank" rel="noopener" href="https://blog.csdn.net/mjmmm/article/details/133981063#:~:text=%E7%82%B9%E5%87%BB%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%9A%20%E4%B8%AD%E9%97%B4%E4%B8%8A%E6%96%B9%E9%80%89%E6%8B%A9%E2%80%9Csmart_bin%E2%80%9D%EF%BC%9A,%E7%82%B9%E5%87%BB%E2%80%9C%E7%A1%AE%E5%AE%9A%E2%80%9D%EF%BC%9A%20%E5%86%8D%E6%AC%A1%E9%80%89%E6%8B%A9%E2%80%9CLinux%E2%80%9D%EF%BC%8C%E5%B9%B6%E8%BE%93%E5%85%A5%E9%A6%99%E6%A9%99%E6%B4%BE%E5%AF%86%E7%A0%81%EF%BC%9A%20%E6%AD%A4%E6%97%B6%EF%BC%8C%E5%B0%B1%E6%88%90%E5%8A%9F%E8%BF%9E%E6%8E%A5%E4%B8%8A%E4%BA%86smart_bin%E6%96%87%E4%BB%B6%E5%A4%B9%EF%BC%8C%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8VSCODE%E5%AF%B9%E4%BA%8E%E4%BB%A3%E7%A0%81%E8%BF%9B%E8%A1%8C%E7%BC%96%E8%BE%91%E6%93%8D%E4%BD%9C%E4%BA%86%EF%BC%81">CSDN——使用Visual Studio Code远程连接香橙派</a></li>
+</ol>
+<ul>
+<li>踩坑点：注意Ubuntu上是否开启了ssh</li>
+<li>更新软件包<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>下载<code>open ssh</code><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> openssh-server<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
+<li>下载完成后查看<code>ssh</code>是否打开<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">ps</span> <span class="token parameter variable">-e</span> <span class="token operator">|</span><span class="token function">grep</span> <span class="token function">ssh</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+连接成功后会出现下面的图<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240126222152.png" alt=""></li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>- Download and install <code>libmali-g610.so</code></strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /usr/lib <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">wget</span> https://github.com/JeffyCN/mirrors/raw/libmali/lib/aarch64-linux-gnu/libmali-valhall-g610-g6p0-x11-wayland-gbm.so<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ol>
+<li>我的香橙派无法访问github，于是采用主机下载文件后用FileZilla传输文件到虚拟机上，用了之前方法但是显示无法连接<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127093218.png" alt=""></li>
+<li>更改协议后连接成功，协议如下图所示<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127094737.png" alt=""></li>
+<li>在主机上点击<a target="_blank" rel="noopener" href="https://github.com/JeffyCN/mirrors/tree/libmali/lib/aarch64-linux-gnu">网站</a>找到libmali-valhall-g610-g6p0-x11-wayland-gbm.so并下载</li>
+<li>FileZilla出现“无法启动传输”字样 <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127100058.png" alt=""><ul>
+<li>原因：文件权限不足</li>
+<li>解决：修改远程站点文件的权限<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">chmod</span> <span class="token parameter variable">-R</span> <span class="token number">777</span> 文件名<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127100350.png" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127100646.png" alt=""></li>
+</ul>
+</li>
+</ol>
+<p><strong>- Check if file <code>mali_csffw.bin</code> exist under path <code>/lib/firmware</code>, if not download it with command:</strong></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> /lib/firmware <span class="token operator">&amp;&amp;</span> <span class="token function">sudo</span> <span class="token function">wget</span> https://github.com/JeffyCN/mirrors/raw/libmali/firmware/g610/mali_csffw.bin<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我找到了这个文件所以就不用下载了，<a target="_blank" rel="noopener" href="https://github.com/JeffyCN/mirrors/tree/libmali/firmware/g610">文件下载处</a><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127101202.png" alt=""></p>
+<p><strong>- Download OpenCL ICD loader and manually add libmali to ICD</strong><br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> mesa-opencl-icd
+<span class="token function">sudo</span> <span class="token function">mkdir</span> <span class="token parameter variable">-p</span> /etc/OpenCL/vendors
+<span class="token builtin class-name">echo</span> <span class="token string">"/usr/lib/libmali-valhall-g610-g6p0-x11-wayland-gbm.so"</span> <span class="token operator">|</span> <span class="token function">sudo</span> <span class="token function">tee</span> /etc/OpenCL/vendors/mali.icd<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
+<h2 id="1-2-Validata-Installation"><a href="#1-2-Validata-Installation" class="headerlink" title="1.2 Validata Installation"></a>1.2 Validata Installation</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">clinfo<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="1-3-Prepare"><a href="#1-3-Prepare" class="headerlink" title="1.3 Prepare"></a>1.3 Prepare</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># clone mlc-llm from GitHub</span>
+<span class="token function">git</span> clone <span class="token parameter variable">--recursive</span> https://github.com/mlc-ai/mlc-llm.git <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> mlc-llm
+<span class="token comment"># Download prebuilt weights and libs</span>
+<span class="token function">git</span> lfs <span class="token function">install</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> dist/prebuilt <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> dist/prebuilt
+<span class="token function">git</span> clone https://github.com/mlc-ai/binary-mlc-llm-libs.git lib
+<span class="token function">git</span> clone https://huggingface.co/mlc-ai/mlc-chat-RedPajama-INCITE-Chat-3B-v1-q4f16_1
+<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/<span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我采用在本地拉取后再传输到香橙派上，建议是先压缩再传输，再在香橙派上解压(.zip)</p>
+<p>在第一步<code>git clone --recursive https://github.com/mlc-ai/mlc-llm.git &amp;&amp; cd mlc-llm</code>如果遇到这个443问题，点击<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40296909/article/details/134285451">链接</a><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127140733.png" alt=""></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> config <span class="token parameter variable">--global</span> http.proxy <span class="token number">127.0</span>.0.1:7890
+<span class="token function">git</span> config <span class="token parameter variable">--global</span> https.proxy <span class="token number">127.0</span>.0.1:7890
+<span class="token comment"># 注意7890要改成自己的电脑上的</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone <span class="token parameter variable">--recursive</span> https://github.com/mlc-ai/mlc-llm.git <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> mlc-llm<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> lfs <span class="token function">install</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在这一步之前先install<code>git-lfs</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> git-lfs<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>👇在宿主机中创建文件并进入文件<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127143842.png" alt=""><br>👇会直接在你(主机)选中的目录下(我这里的是mlc-llm)下有一个lib文件<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127144257.png" alt=""><br>将主机中的lib压缩后拖进宿主机的lib文件下<br>👇在宿主机中cd到lib并将刚才的压缩包解压缩</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">unzip</span> FileName.zip <span class="token comment"># 解压</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127152142.png" alt=""></p>
+<p>RedPajama-INCITE-Chat-3B-v1-q4f16_1:<a target="_blank" rel="noopener" href="https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1">https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1</a></p>
+<p>Llama-2-7b-chat-hf-q4f16_1:<a target="_blank" rel="noopener" href="https://huggingface.co/mlc-ai/mlc-chat-Llama-2-7b-chat-hf-q4f16_1">https://huggingface.co/mlc-ai/mlc-chat-Llama-2-7b-chat-hf-q4f16_1</a></p>
+<p>Llama-2-13b-chat-hf-q4f16_1:<a target="_blank" rel="noopener" href="https://huggingface.co/mlc-ai/mlc-chat-Llama-2-13b-chat-hf-q4f16_1">https://huggingface.co/mlc-ai/mlc-chat-Llama-2-13b-chat-hf-q4f16_1</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://huggingface.co/mlc-ai/mlc-chat-Llama-2-13b-chat-hf-q4f16_1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>👆在主机上下载(注意这个网址取决于你用什么来作为模型)，下载完毕后采用👇命令传输到香橙派上，好处是可以看到传输的过程(这个文件有13多个G)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127151212.png" alt=""></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> <span class="token parameter variable">-r</span> ./mlc-chat-Llama-2-13b-chat-hf-q4f16_1 orangepi@192.168.1.202:/home/orangepi/Project/MLC-LLM/dist/prebuit<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">scp</span> <span class="token parameter variable">-r</span> 相对路径下需要传输的文件 主机名@ip:被传输文件的目的文件<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h1 id="2-Try-out-the-CLI"><a href="#2-Try-out-the-CLI" class="headerlink" title="2 Try out the CLI"></a>2 Try out the CLI</h1><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> mlc-llm/
+<span class="token comment"># create build directory</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> build <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> build
+<span class="token comment"># generate build configuration</span>
+python3 <span class="token punctuation">..</span>/cmake/gen_cmake_config.py
+<span class="token comment"># build `mlc_chat_cli`</span>
+cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> cmake <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">--parallel</span> <span class="token variable"><span class="token variable">$(</span>nproc<span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">python3 <span class="token punctuation">..</span>/cmake/gen_cmake_config.py<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>👆这一步中，<code>CUDA</code>、<code>Vulkan</code>、<code>ROCm</code>、<code>Metal</code>全选<code>n</code>，其余选<code>y</code></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> cmake <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">--parallel</span> <span class="token variable"><span class="token variable">$(</span>nproc<span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>👆在这一步可能会报两次错<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127155002.png" alt=""></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> cmake<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>还有一个报错没找到图，大概意思是找不到cargo，install一个就好👇<br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">cargo</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127155902.png" alt=""><br>解决方法<a target="_blank" rel="noopener" href="https://blog.csdn.net/iamzhoujunjia/article/details/113835347">更换Cargo软件源</a></p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">vim</span> <span class="token environment constant">$HOME</span>/.cargo/config<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>👆我的是新建的一个文件<br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 中科大</span>
+<span class="token punctuation">[</span>source.crates-io<span class="token punctuation">]</span>
+registry <span class="token operator">=</span> <span class="token string">"https://github.com/rust-lang/crates.io-index"</span>
+replace-with <span class="token operator">=</span> <span class="token string">'ustc'</span>
+<span class="token punctuation">[</span>source.ustc<span class="token punctuation">]</span>
+registry <span class="token operator">=</span> <span class="token string">"git://mirrors.ustc.edu.cn/crates.io-index"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>再次执行👇可以看到有后续的进度<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">cmake <span class="token punctuation">..</span> <span class="token operator">&amp;&amp;</span> cmake <span class="token parameter variable">--build</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">--parallel</span> <span class="token variable"><span class="token variable">$(</span>nproc<span class="token variable">)</span></span> <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> <span class="token punctuation">..</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127161834.png" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127162004.png" alt=""><p></p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127162200.png" alt=""></p>
+<p>👆这一步是让我们看是否有三个文件，分别对应右图中绿色的三个</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./build/mlc_chat_cli <span class="token parameter variable">--model</span> Llama-2-13b-chat-hf-q4f16_1 –device mali<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>报错：找不到<code>mlc-chat-config.json</code><br>解决问题<a target="_blank" rel="noopener" href="https://github.com/mlc-ai/mlc-llm/issues/730">Github——Cannot find “mlc-chat-config.json” in path “”dist”/RedPajama-INCITE-Chat-3B-v1-q4f16_1</a>：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127164042.png" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127164305.png" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127164020.png" alt=""><br>原因：<code>mlc-chat-config.json</code>在<code>mlc-llm</code>的上一级文件里的<code>mlc-chat-Llama-2-13b-chat-hf-q4f16_1</code>文件中，一开始是在<code>mlc-llm</code>中<code>bulid</code>中运行，因为无法调用/访问<code>mlc-llm</code>的同级文件所以报错。所以换成<code>MLC-LLM</code>来调用<code>mlc_chat_cli</code>，即<code>dist</code>的上一级</p>
+<p><strong>大功告成！</strong><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/LLM%E9%83%A8%E7%BD%B2%E5%9B%BE%E7%89%87/Pasted%20image%2020240127170657.png" alt=""></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">WB</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://wabbybabb0.github.io/2024/01/27/mlc-llm-orangepi-bu-shu-guo-cheng/">https://wabbybabb0.github.io/2024/01/27/mlc-llm-orangepi-bu-shu-guo-cheng/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">WB</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                                    <span class="chip bg-color">人工智能</span>
+                                </a>
+                            
+                                <a href="/tags/NLP/">
+                                    <span class="chip bg-color">NLP</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">给WB来包辣条</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+        <div class="card" data-aos="fade-up">
+    <div id="utteranc-container" class="card-content">
+        <script src="https://utteranc.es/client.js"
+                repo="Wabbybabb0/commit-utterance"
+                issue-term="pathname"
+                theme="github-light"
+                crossorigin="anonymous"
+                async>
+        </script>
+    </div>
+</div>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2024/08/02/cudac/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/10.png" class="responsive-img" alt="CUDA编程：基础与实践学习笔记">
+                        
+                        <span class="card-title">CUDA编程：基础与实践学习笔记</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            樊哲勇老师的CUDA编程教程包括CUDA编程的语法知识、优化策略及程序开发实践，对新手很友好！
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2024-08-02
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
+                    </a>
+                    
+                    <a href="/tags/GPU/">
+                        <span class="chip bg-color">GPU</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2023/12/04/mu-biao-jian-ce/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/1.png" class="responsive-img" alt="目标检测(环境配置)">
+                        
+                        <span class="card-title">目标检测(环境配置)</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            yolov5 person和帽子的分类、配置Ubuntu以及部署到香橙派上
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2023-12-04
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
+                                    人工智能
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
+                        <span class="chip bg-color">人工智能</span>
+                    </a>
+                    
+                    <a href="/tags/Linux/">
+                        <span class="chip bg-color">Linux</span>
+                    </a>
+                    
+                    <a href="/tags/Ubuntu/">
+                        <span class="chip bg-color">Ubuntu</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Wabbybabbo的摸鱼圣地<br />'
+            + '文章作者: Wabbybabbo<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+    
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="8590828427"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2023-2025</span>
+            
+            <span id="year">2023</span>
+            <a href="/about" target="_blank">Wabbybabbo</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/Wabbybabb0" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:Wabbybabb0@outlook.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=497056512" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 497056512" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+	
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
