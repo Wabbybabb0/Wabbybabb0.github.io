@@ -427,11 +427,11 @@
                 </a>
                 
                 
-                <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" title="高性能计算: 5">
+                <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" title="高性能计算: 7">
                     <span class="chip center-align waves-effect waves-light
                              chip-active "
                             style="background-color: #D5F5E3;">高性能计算
-                        <span class="tag-length">5</span>
+                        <span class="tag-length">7</span>
                     </span>
                 </a>
                 
@@ -464,6 +464,98 @@
 
     <article id="articles" class="container articles">
         <div class="row tags-posts">
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2025/11/14/shi-jian-cutlass/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/2.png" class="responsive-img" alt="【实践】CUTLASS学习过程">
+                            
+                            <span class="card-title">【实践】CUTLASS学习过程</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                CUTLASS能实现cuBLAS做不到的算子融合(最核心)，省去多次显存读写，此外，在CuTe(解决CUTLASS的Layout Algebra)基础上定义了GEMM流水线和后处理，是魔改GEMM的最佳选择之一(还有triton，但是最近听说triton不再维护了？)
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-11-14
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/CUTLASS/">
+                            <span class="chip bg-color">CUTLASS</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
+                <div class="card">
+                    <a href="/2025/11/03/li-lun-cute/">
+                        <div class="card-image tag-image">
+                            
+                            
+                            <img src="/medias/featureimages/3.png" class="responsive-img" alt="【理论】CuTe学习过程">
+                            
+                            <span class="card-title">【理论】CuTe学习过程</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="summary block-with-text">
+                            
+                                CuTe解决索引计算和数据搬运问题，引入Layout的概念，并抽象了MMA的一些指令，只需提供shape和stride就能自动计算物理内存地址，省去了手动计算一维内存地址的步骤。
+                            
+                        </div>
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-11-03
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="card-action article-tags">
+                        
+                        <a href="/tags/CUTLASS/">
+                            <span class="chip bg-color">CUTLASS</span>
+                        </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
             
             <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
                 <div class="card">

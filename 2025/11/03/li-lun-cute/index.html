@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="【实践】FlashAttention学习过程, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="【理论】CuTe学习过程, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>【实践】FlashAttention学习过程 | Wabbybabbo的摸鱼圣地</title>
+    <title>【理论】CuTe学习过程 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -357,12 +357,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/11.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">【实践】FlashAttention学习过程</h1>
+                    <h1 class="description center-align post-title">【理论】CuTe学习过程</h1>
                 </div>
             </div>
         </div>
@@ -478,12 +478,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/LLM/">
-                                <span class="chip bg-color">LLM</span>
-                            </a>
-                        
-                            <a href="/tags/CUDA/">
-                                <span class="chip bg-color">CUDA</span>
+                            <a href="/tags/CUTLASS/">
+                                <span class="chip bg-color">CUTLASS</span>
                             </a>
                         
                     </div>
@@ -507,21 +503,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2025-04-29
+                    2025-11-03
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-05-24
+                    2025-11-29
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.8k
+                    3.9k
                 </div>
                 
 
@@ -546,114 +542,248 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>我的学习参考：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1FM9XYoEQ5/?spm_id_from=333.999.0.0&amp;vd_source=1e1c4d48c6129699686897a835e568ea">FlashAttention手动实践过程 - up: 比飞鸟贵重的多_HKL - bilibili</a></p>
-<p>我的实现：<a target="_blank" rel="noopener" href="https://github.com/Wabbybabb0/FlashAttention">FlashAttention - Wabbybabb0</a></p>
-<p>⭐正如up主所言，对于一个新的知识和思想，应该抓住核心逻辑然后使其他因素尽可能简化，于是在github上找其他flash-attention的版本（没有那么庞大复杂的代码体系），于是找到了<a target="_blank" rel="noopener" href="https://github.com/tspeterkim/flash-attention-minimal">flash-attention-minimal</a>仓库。<br>❓存在一个问题：在<code>main.cpp</code>中，<code>forward</code>被包装为python模块中的函数，在<code>bench.py</code>通过<code>load</code>载入，因为是通过python调用的，所以使用cuda传统debug的方法比较麻烦。<br>🚩解决方法：找一个能无缝衔接所有cuda算子的库<code>libtorch</code>实现不依赖python，直接在c++中调试cuda算子，思路是从<code>flash.cu</code>中<code>forward</code>使用<code>torch</code>得到的。<code>libtorch</code>是Pytorch的c++接口，使得在python写的模型torch可以在C++中运行。</p>
+                <p>学习缘由：FlashAttention是基于cute来实现的，所以要补一下cute方面的知识，来自<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/686225377?utm_psn=1750464860968919040"> FlashAttention v2核心代码解析(一）- 知乎</a></p>
+<p>学习顺序：</p>
+<h1 id="1-cute-之-Layout-知乎"><a href="#1-cute-之-Layout-知乎" class="headerlink" title="1 cute 之 Layout - 知乎"></a>1 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/661182311">cute 之 Layout - 知乎</a></h1><p>引入了<strong>有层次的描述Layout</strong>来处理逻辑坐标和物理坐标的映射关系，包含shape和stride两部分</p>
 <ul>
-<li><a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/cpp_index.html#authoring-models-in-c">Pytorch C++</a></li>
-<li><a target="_blank" rel="noopener" href="https://pytorch.org/cppdocs/installing.html">libtorch-demo测试</a><br>那么，我们就不需要用<code>main.cpp</code>里将<code>forward</code>封装为python模块中的函数，可以直接调用<code>forward</code>，直接用C++实现调试。<br>所以现在第一件事是配置环境！</li>
+<li>shape描述分块层次和结构</li>
+<li>stride描述块内或块间的连续性，是间隔量<br>块内和块间都是Tensor，实现了Tensor套Tensor，这就是有层级的Tensor，而其坐标到实际物理位置的映射关系则就是其Layout</li>
 </ul>
-<h1 id="1-Libtorch环境搭建"><a href="#1-Libtorch环境搭建" class="headerlink" title="1 Libtorch环境搭建"></a>1 Libtorch环境搭建</h1><h2 id="1-1-环境测试"><a href="#1-1-环境测试" class="headerlink" title="1.1 环境测试"></a>1.1 环境测试</h2><p>🎈到<a target="_blank" rel="noopener" href="https://pytorch.org/">Pytorch官网</a>找到合适的配置，通过<code>nvcc -V</code>查看合适的libtorch对应的cuda版本<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250429224559.png" alt=""><br>🎈下载完之后放到项目目录(比如<code>/FlashAttention</code>)下解压<code>unzip libtorch-xxxxx</code><br>🎈根据官方提供的 <a target="_blank" rel="noopener" href="https://pytorch.org/cppdocs/installing.html">libtorch-demo测试</a>，进行环境测试</p>
+<p>【例】二维空间下逻辑空间和物理空间的表示<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251103192836.png" alt=""><br>shape: (3, 4), stride: (1, 3)</p>
 <ul>
-<li>在当前目录下创建一个<code>example-app.cpp</code>，内容如下<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;torch/torch.h&gt;</span></span>
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
-
-<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-	torch<span class="token double-colon punctuation">::</span>Tensor tensor <span class="token operator">=</span> torch<span class="token double-colon punctuation">::</span><span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> tensor <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
-	# 下面是新增的两行
-	torch<span class="token double-colon punctuation">::</span>Tensor tensor_cuda <span class="token operator">=</span> torch<span class="token double-colon punctuation">::</span><span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">to</span><span class="token punctuation">(</span><span class="token string">"cuda"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-	std<span class="token double-colon punctuation">::</span>cout <span class="token operator">&lt;&lt;</span> tensor_cuda <span class="token operator">&lt;&lt;</span> std<span class="token double-colon punctuation">::</span>endl<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-新增的两行用于测试c++是否能无缝衔接cuda（学到了up主的“尝试”思路，大胆的猜一些代码语法</li>
-<li>在当前目录下创建一个cmake文件，内容如下<pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.18</span> FATAL_ERROR<span class="token punctuation">)</span>
-<span class="token keyword">project</span><span class="token punctuation">(</span>example-app<span class="token punctuation">)</span>
-
-<span class="token keyword">find_package</span><span class="token punctuation">(</span>Torch REQUIRED<span class="token punctuation">)</span>
-<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_FLAGS</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_CXX_FLAGS</span><span class="token punctuation">}</span></span> <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_CXX_FLAGS</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
-
-<span class="token keyword">add_executable</span><span class="token punctuation">(</span>example-app example-app.cpp<span class="token punctuation">)</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>example-app <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_LIBRARIES</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
-<span class="token keyword">set_property</span><span class="token punctuation">(</span>TARGET example-app PROPERTY <span class="token property">CXX_STANDARD</span> <span class="token number">17</span><span class="token punctuation">)</span>
-<span class="token comment"># 后面的内容是windows上使用的，可以删掉或注释掉</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>增加包的路径为<code>xxx/libtorch/share/cmake/Torch</code>，cmake会在上面提供的路径找torchconfig<pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">cmake_minimum_required</span><span class="token punctuation">(</span><span class="token property">VERSION</span> <span class="token number">3.16.3</span> FATAL_ERROR<span class="token punctuation">)</span>
-<span class="token keyword">project</span><span class="token punctuation">(</span>example-app<span class="token punctuation">)</span>
-
-<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_PREFIX_PATH</span> <span class="token string">"/home/wabby/Project/FlashAttention/libtorch/share/cmake/Torch;<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_PREFIX_PATH</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
-<span class="token keyword">find_package</span><span class="token punctuation">(</span>Torch REQUIRED<span class="token punctuation">)</span>
-<span class="token keyword">set</span><span class="token punctuation">(</span><span class="token variable">CMAKE_CXX_FLAGS</span> <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">CMAKE_CXX_FLAGS</span><span class="token punctuation">}</span></span> <span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_CXX_FLAGS</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
-  
-
-<span class="token keyword">add_executable</span><span class="token punctuation">(</span>example-app example-app.cpp<span class="token punctuation">)</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>example-app <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_LIBRARIES</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
-<span class="token keyword">set_property</span><span class="token punctuation">(</span>TARGET example-app PROPERTY <span class="token property">CXX_STANDARD</span> <span class="token number">17</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<li>shape就是矩阵的行数和列数</li>
+<li>stride的1表示沿着矩阵的行方向的元素，在物理空间时相对上一个元素(相邻行)加1，3表示沿着矩阵的列方向的元素，在物理空间时相对上一个元素(相邻列)加3<br>逻辑空间映射到物理空间：<br>$index_{physical}=coordinate * stride =\sum_i coordinate_i · stride_i$</li>
+</ul>
+<p>【例】两个层级的Tensor<br>shape: ((2, 2), (2, 4))</p>
+<ul>
+<li>(2, 2)表示内层Tensor行数、外层Tensor行数</li>
+<li>(2, 4)表示内层Tensor列数、外层Tensor列数<br>stride: ((1, 4), (2, 8))</li>
+<li>(1, 4)表示内层Tensor行方向间隔、外层Tensor行方向间隔</li>
+<li>(2, 8)表示内层Tensor列方向间隔、外层Tensor列方向间隔<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251103191716.png" alt=""><br>此时引入两个概念：coord和index(或者叫value、offset)</li>
+<li>coord表示数据在Tensor的相对位置，顺序按列主序</li>
+<li>index表示数据在内存上的位置</li>
+</ul>
+<p>具体的在cute实现时，其提供了make_shape和make_stride接口，shape和stride可以区分为常量shape和变量shape</p>
+<ul>
+<li>常量shape：在编译时就完成坐标的映射或推导，减少运行时的计算量，编译期整数<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">auto shape = make_shape(Int&lt;2&gt;{}, Int&lt;3&gt;{}); 
+auto shape1 = make_shape(shape, Int&lt;3&gt;{});
+# shape1代表一个1维的Grid，这个Grid里有3个元素，而每个元素都是一个(2, 3)的Tile<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li>变量shape：在运行时决定，运行时整数<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">auto shape = make_shape(2, 3); 
+auto shape = make_shape(m, n);
+# 2，3虽然是常数，但是在cute的约定里，该形式表示变量
+auto tensor_stride = make_stride(make_stride(1,4), make_stride(2,8));<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 </li>
 </ul>
-<p>🎈编译build，得到可执行文件，然后运行，成功，说明Libtorch环境配置成功<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250429230130.png" alt=""></p>
-<h2 id="1-2-代码移植"><a href="#1-2-代码移植" class="headerlink" title="1.2 代码移植"></a>1.2 代码移植</h2><p>🚩将<code>bench.py</code>移植为c++</p>
+<h1 id="2-cute-Layout-的代数和几何解释"><a href="#2-cute-Layout-的代数和几何解释" class="headerlink" title="2 cute Layout 的代数和几何解释"></a>2 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/662089556">cute Layout 的代数和几何解释</a></h1><p>这个Layout的代数运算，做乘法、除法、复合函数，作用是什么？</p>
 <ul>
-<li>变量一致</li>
-<li>进行forward</li>
-<li>语法：仿照demo<br>🎈在cmake文件添加下面的内容，编译build，打断点(断点不打在<code>forward_kernel</code>内部)运行，先确保两个可执行文件可以正常debugs<pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token keyword">add_executable</span><span class="token punctuation">(</span>flash-attention-main flash-attention-main.cpp flash.cu<span class="token punctuation">)</span>
-<span class="token keyword">target_link_libraries</span><span class="token punctuation">(</span>flash-attention-main <span class="token string">"<span class="token interpolation"><span class="token punctuation">${</span><span class="token variable">TORCH_LIBRARIES</span><span class="token punctuation">}</span></span>"</span><span class="token punctuation">)</span>
-<span class="token keyword">set_property</span><span class="token punctuation">(</span>TARGET flash-attention-main PROPERTY <span class="token property">CXX_STANDARD</span> <span class="token number">17</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
-</ul>
-<h3 id="1-2-1-实现vscode调试cuda"><a href="#1-2-1-实现vscode调试cuda" class="headerlink" title="1.2.1 实现vscode调试cuda"></a>1.2.1 实现vscode调试cuda</h3><p><del>弄了两天，仍未实现vscode调试cuda，但将过程中遇到的问题和部分解决方法放在这里，以便需要时取用。</del>按照下面的方法弄完之后，再抱着尝试的心态重新打开就能调试了~（很神奇，应该是重启之后就好了嘿嘿~<br><strong>笔者环境信息如下：</strong><br>driver version on Windows: 566.07<br>cuda version on Windows10: 12.7<br>nvcc version on Windows10: V12.5.40<br>WSL2 Ubuntu version: 20.04.6 LTS<br>nvcc version on WSL2: V12.6.20<br>cuda-gdb version on WSL2: 13.2</p>
-<p>🎈调试<code>forward_kernel</code></p>
-<ul>
-<li>在cmake文件添加下面的内容<pre class="line-numbers language-cmake" data-language="cmake"><code class="language-cmake"><span class="token comment"># 调试用</span>
-<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token variable">CMAKE_BUILD_TYPE</span> <span class="token operator">STREQUAL</span> <span class="token string">"Debug"</span><span class="token punctuation">)</span>
-    <span class="token keyword">target_compile_options</span><span class="token punctuation">(</span>flash-attention-main <span class="token namespace">PRIVATE</span> <span class="token punctuation">$&lt;</span><span class="token punctuation">$&lt;</span><span class="token inserted class-name">COMPILE_LANGUAGE::CUDA</span><span class="token punctuation">&gt;</span>:-G<span class="token punctuation">&gt;</span><span class="token punctuation">)</span>
-<span class="token keyword">endif</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></li>
-<li>配置<code>launch.json</code><br><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/431782036"> vscode中怎么调试cuda文件? - 知乎</a>（笔者未成功）<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250430104044.png" alt=""><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250430104123.png" alt=""><br>要在Launch的program添加可执行文件的路径<pre class="line-numbers language-json" data-language="json"><code class="language-json"><span class="token punctuation">{</span>
-    <span class="token property">"configurations"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
-        <span class="token punctuation">{</span>
-            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"CUDA C++: Launch"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"cuda-gdb"</span><span class="token punctuation">,</span>
-            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span>
-            <span class="token property">"program"</span><span class="token operator">:</span> <span class="token string">"/home/wabby/Project/FlashAttention/build/flash-attention-main"</span>
-        <span class="token punctuation">}</span><span class="token punctuation">,</span>
-        <span class="token punctuation">{</span>
-            <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"CUDA C++: Attach"</span><span class="token punctuation">,</span>
-            <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"cuda-gdb"</span><span class="token punctuation">,</span>
-            <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span>
-        <span class="token punctuation">}</span>
-    <span class="token punctuation">]</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-</ul>
-<p>❓F5运行时遇到如下问题<code>Error: get_elf_image(0): Failed to read the ELF image handle 93825002597824 relocated 1, error=CUDBG_ERROR_INVALID_ARGS, error message=</code><br>🚩解决方法：<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/cuda-gdb-report-error-under-wsl2/303155">Cuda-gdb report Error under WSL2</a>、<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/cuda-gdb-report-error-using-vscode-for-debugging-under-wsl2/260017">Cuda-gdb report error using vscode for debugging under wsl2</a></p>
-<ul>
-<li>先确保windows装了cudatoolkit，最好是12.2及以上的(官方推荐)</li>
-<li>打开注册表<code>\HKEY_LOCAL_MACHINE\SOFTWARE\NVIDIA Corporation\GPUDebugger</code>是否有一个叫<code>EnableInterface</code>DWORD类型的常量，且值为1，如下图所示，如果没有，可能是cudatoolkit没装好<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250501163821.png" alt=""></li>
-<li>升级wsl，在cmd里输入<code>wsl --update</code>，然后<code>wsl --version</code>可以看到升级后的版本，如下图所示<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/Pasted%20image%2020250501095154.png" alt=""></li>
-<li>然后回到vscode，F5调试不再报错<code>Error: get_elf_image(0): Failed to read the ELF image handle 93825002597824 relocated 1, error=CUDBG_ERROR_INVALID_ARGS, error message=</code>，但是仍无法进入cuda断点，同时有一个新的warning<br>❓【已解决】`warning: Cuda API error detected: cudaLaunchKernel returned(0x1)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/FlashAttention_ex/b956e6d05ebc55649fddc048072d36b%201.png" alt=""><br>🚩【或许有用的方法】</li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/58823826/cuda-gdb-giving-error-warning-cuda-api-error-detected-cudalaunchkernel-return">cuda-gdb giving error “warning: Cuda API error detected: cudaLaunchKernel returned (0x7)”</a>、<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/ask/sof/1419088">cuda-gdb给出错误“警告:检测到Cuda API错误:返回cudaLaunchKernel (0x7)”-腾讯云开发者社区-腾讯云</a>，这两篇意思一样，前者是stack overflow原帖，后者是中文</li>
-<li>在wsl输入<code>cuda-gdb</code>进入(需要回车一下)，再输入<code>info cuda devices</code>。<ul>
-<li>笔者和stack overflow的一个评论的情况相同，显示<code>No Cuda devices</code>，但是<code>nvcc -V</code>、编译、运行都是正常的</li>
+<li>乘法：将维度组合，<em>LayoutA</em>作为外层循环，<em>LayoutB</em>作为内层循环，构建高维tensor，一维内存模拟多维数据，访问更方便 <img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251107154705.png" alt=""></li>
+<li>除法：<em>LayoutA</em>÷<em>LayoutB</em>，对<em>A</em>的分块，对<em>A</em>的访问通过内层和外层两个维度，便于并行<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251107154714.png" alt=""></li>
+<li>复合函数：数据在共享内存里是行优先排序<em>A</em>，但是Tensor Core规定了某种顺序<em>B</em>来读取顺序，这个顺序下的offset=A(B(x))，B输出偏移量，作为A的逻辑坐标输入(默认是列优先)，最终得到对应的数据的物理内存排序<ul>
+<li>B：shape$(M_B, N_B)=(2,2)$stride$(m_B, n_B)=(1,5)$</li>
+<li>A：shape$(M_A, N_A)=(4,4)$stride$(m_A, n_A)=(4,1)$<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251107164402.png" alt=""></li>
+<li>目的：访问B窗口下的某个元素$(i_B, j_B)=(1,1)$</li>
+<li>计算该元素在B下的偏移量：$Offset_B=i_B<em>m_B+j_B</em>n_B=1×1+1×5=6$</li>
+<li>将该偏移量按列优先转换为A的坐标输入：$i_A=Offset_B\% M_A=6\%4=2$、$j_A=Offset_B/ M_A=6/4=1$</li>
+<li>再计算A下的偏移量：$Offset_A=i_A<em>m_A+j_A</em>n_A=2×4+1×1=9$，9就是对应的内存位置</li>
+<li>整个过程的理解：用户去仓库B拿东西$(i_B, j_B)=(1,1)$，要的是索引为$6$的东西，仓库A要接收二维坐标执行，只能先按列优先(线性索引转二维网格的规则)来找对应的编号，找到的是$(i_A, j_A)=(2,1)$，但是这个是逻辑排布，物理排布需要根据A的stride得到，最后计算是9</li>
 </ul>
 </li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.org.cn/questions/15444525">cuda - cuda-gdb 看不到可用设备_Stack Overflow中文网</a>，有让运行<code>lsof /dev/nvidia*</code>查看设备的，但是我的输出是空</li>
-<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/11619565/cuda-gdb-no-cuda-devices">ubuntu 12.04 - CUDA-GDB: No CUDA devices - Stack Overflow</a>，有个说法是”You can’t debug on a display device. Using cuda-gdb requires a dedicated device. … I mean that the GPU you debug on can’t be the one running your display. So unless you have at least two GPUs, or you are not running X windows, you can’t use cuda-gdb.I get “No Cuda devices” although nvcc —version shows correct output and I can compile and run, just not debug”，大意是使用cuda-gdb需要一个单独的专用的GPU，要么有两个GPU，要么不运行X(Linux下的图形界面服务器)，可以用<code>ps aux | grep '[X]'</code>来查一下，但是笔者的并没有运行X。<a target="_blank" rel="noopener" href="https://forums.developer.nvidia.com/t/cuda-gdb-no-cuda-devices-but-cuda-programs-run/24813/2">cuda-gdb “No CUDA devices” but CUDA programs run - CUDA / CUDA Programming and Performance - NVIDIA Developer Forums</a>也是同样的意思</li>
-<li>可能需要在wsl2重新配置cuda了，<a target="_blank" rel="noopener" href="https://www.cnblogs.com/rthete/p/17551419.html">WSL2安装CUDA踩坑Debug全记录 - rthete - 博客园</a>，如果以后想折腾可以再重装一下<br>🚩【真有用的方法】重启！</li>
+<li>逆：在复合函数$(A◦B)(x)=A(B(x))$的基础上再加上单位函数$id_X(x)=x$的定义，就能得到逆的定义$A(B(x))=x$，所谓逆，就是数值上LayoutB的一维坐标=LayoutA的offset，消除特性排布B的乱序影响，使得线程能够以线性的方式在A里访问数据。<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251106193634.png" alt=""><ul>
+<li>注：橙色上排为value(即offset)，下排为coord(即逻辑索引)</li>
 </ul>
-<h1 id="2-验证"><a href="#2-验证" class="headerlink" title="2 验证"></a>2 验证</h1><p>验证方法：使用libtorch做逻辑和精度验证，使用curand设置统一的随机数，<a target="_blank" rel="noopener" href="https://github.com/NVIDIA/CUDALibrarySamples/tree/master/cuRAND/Host/mt19937">cuRAND mt19937 example - github</a></p>
-<p>进行example的测试<br>CMake配置：<br></p><pre class="line-numbers language-CMake" data-language="CMake"><code class="language-CMake">add_executable(mt19937-app curand_mt19937_lognormal_example.cpp)
-set_property(TARGET mt19937-app PROPERTY CXX_STANDARD 17)
-find_package(CUDA REQUIRED)
-target_link_libraries(mt19937-app
-    PRIVATE
-        ${TORCH_LIBRARIES}
-        CUDA::curand
-)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
-<p>\=\=\=\=\=\=\=\=\=\=5/21\=\=\=\=\=\=\=\=\=\=<br><strong>检验</strong>：对基准和my_falsh的输出进行平铺处理<code>.view(-1)</code>，发现前0~63个输出对的上，64及之后的对不上。<br>猜测：</p>
+</li>
+</ul>
+<h1 id="3-cute之MMA"><a href="#3-cute之MMA" class="headerlink" title="3 cute之MMA"></a>3 cute之MMA</h1><p>Tensor Core是专门实现小块矩阵乘法$D=A×B+C$的硬件单元，相比CUDA Core，虽然功能单一，但是速度极快。</p>
+<ol>
+<li>在不同架构，Tensor Core数据存放位置不一样：</li>
+</ol>
 <ul>
-<li>qkgemm？✔</li>
-<li>softmax？✔</li>
-<li>qkvgemm？❌<br>问题出在更新<code>m</code>和<code>l</code>时索引出错，其实这也很符合直觉，同一个Q下第一个分片数据没问题，第二个分片就出事了，第一个分片和第二个分片有联系的变量只有<code>m</code>和<code>l</code>了，那就printf查看计算<code>O</code>的公式、<code>row_m_prev</code>和<code>row_m</code>的值，发现同一个Q下的切片中，<code>row_m</code>有更大的值，但是<code>row_m_prev</code>对不上前一次的更新值，所以就去看关于<code>m</code>的变量，发现是存储新的<code>m</code>值时索引出错<br>准确性检验完成！</li>
+<li>V、T、A架构，输入输出数据都在和CUDA Core共享的寄存器里</li>
+<li>H架构，输入数据在SMEM里</li>
 </ul>
-<p><strong>性能测试</strong>：然后在FA1和基准测试的代码里加上curand随机数生成，两边的q、k、v各使用同一个种子<br>torch：0.638ms<br>my FA1：36ms<br>也许是家用级显卡(3050)限制了FA1的发挥吧哈哈o(<em>￣▽￣</em>)ブ</p>
+<ol>
+<li>Tensor Core的使用形式有两种：</li>
+</ol>
+<ul>
+<li>在cublas和cudnn，封装成矩阵计算的函数，以SDK的形式使用</li>
+<li>NVCC提供wmma和mma来实现<ul>
+<li>wmma：使用API，传参，不需要关心寄存器怎么分配，就能触发Tensor Core，如果数据布局不匹配就不能使用</li>
+<li>mma：自己写指令，数据面向寄存器表示，用户手动管理线程和寄存器</li>
+</ul>
+</li>
+</ul>
+<p>cute是面向mma实现的(管理底层<code>mma.sync</code>汇编指令)，对于矩阵计算类任务，cute提供了mma的抽象来描述计算和数据的逻辑结构：<br><code>MMAOperation</code>、<code>MMA_Traits</code>、<code>MMA_Atom</code>、<code>TiledMMA</code>、<code>ThrMMA</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251112160205.png" alt="">从下往上  </p>
+<ul>
+<li>硬件层  </li>
+<li>MMAOperation，针对不同GPU架构提供不同的指令封装</li>
+<li>MMA_Traits，是编译期的信息库，输入数据类型(MMAOperation的指令)，输出多个属性</li>
+<li>MMA_Atom，最小的矩阵乘法单元，MMAOperation和MMA_Traits分别提供指令和指令属性</li>
+<li>TiledMMA，由多个MMA_Atom组成，实现(多个warp)并行和(同一个线程)重复执行的操作，能处理更大的数据</li>
+<li>ThrMMA，是TiledMMA在具体某个线程上的投影，描述每个线程在干什么活  </li>
+<li>cute::gemm，每个线程调用这个函数，是顶端函数调用</li>
+</ul>
+<h2 id="3-1-MMAOperation"><a href="#3-1-MMAOperation" class="headerlink" title="3.1 MMAOperation"></a>3.1 MMAOperation</h2><p>cute为每一条<code>mma.sync</code>指令()都创建了一个相应的Operation结构体，只定义输入和输出：</p>
+<ul>
+<li>结构体名称：架构_MNK_DABC_AB布局(T:row-major，N:col-major)</li>
+<li>设定A、B、C、D操作数的数据类型，包括寄存器类型和数据量，每个线程负责4+2+2+4个32位寄存器到PTX instruction</li>
+<li><code>fma</code>作为C++接口，内联汇编(在高级语言直接嵌入低级汇编语言)，cute的TiledMMA可以直接调用来执行计算<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">struct SM70_8x8x4_F16F16F16F16_TN
+{
+  using DRegisters = uint32_t[4];
+  using ARegisters = uint32_t[2];
+  using BRegisters = uint32_t[2];
+  using CRegisters = uint32_t[4];
+
+  // Register asm fma
+  CUTE_HOST_DEVICE static void
+  fma(uint32_t &amp; d0, uint32_t &amp; d1, uint32_t &amp; d2, uint32_t &amp; d3,
+      uint32_t const&amp; a0, uint32_t const&amp; a1,
+      uint32_t const&amp; b0, uint32_t const&amp; b1,
+      uint32_t const&amp; c0, uint32_t const&amp; c1, uint32_t const&amp; c2, uint32_t const&amp; c3)
+  {
+#if defined(CUTE_ARCH_MMA_SM70_ENABLED)
+    asm volatile("mma.sync.aligned.m8n8k4.row.col.f16.f16.f16.f16"
+                 "{%0, %1,  %2,  %3},"
+                 "{%4, %5},"
+                 "{%6, %7},"
+                 "{%8, %9, %10, %11};\n"
+        : "=r"(d0), "=r"(d1), "=r"(d2), "=r"(d3)
+        :  "r"(a0),  "r"(a1),
+           "r"(b0),  "r"(b1),
+           "r"(c0),  "r"(c1),  "r"(c2),  "r"(c3));
+#else
+    CUTE_INVALID_CONTROL_PATH("Attempting to use SM70_8x8x4_F16F16F16F16_TN without CUTE_ARCH_MMA_SM70_ENABLED");
+#endif
+  }
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h2 id="3-2-MMA-Traits"><a href="#3-2-MMA-Traits" class="headerlink" title="3.2 MMA_Traits"></a>3.2 MMA_Traits</h2><p>根据MMAOperation输入的数据类型，定义相关的类型或值提供MMA_Atom使用</p>
+<ul>
+<li><code>ValTypeX</code>：数据在加载到寄存器后的逻辑类型，即便上面提到的A、B是用uint32_t的寄存器，他们的物理类型是uint32_t，但ValType会被定义成他们的逻辑类型half_t</li>
+<li><code>ThrID</code>：单个操作使用的线程个数<ul>
+<li>warp：32线程  </li>
+<li>quadpair：8线程，Volta架构  </li>
+<li>warpgroup：hopper架构</li>
+</ul>
+</li>
+<li><code>XLyout</code>和_NT不一样  (【问题】只是个封装名，给BLAS看的？)<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">template &lt;&gt;
+struct MMA_Traits&lt;SM70_8x8x4_F32F16F16F32_NT&gt;
+{
+  using ValTypeD = float;
+  using ValTypeA = half_t;
+  using ValTypeB = half_t;
+  using ValTypeC = float;
+
+  using Shape_MNK = Shape&lt;_8,_8,_4&gt;;
+  using ThrID   = SM70_QuadPair;
+  using ALayout = SM70_8x4_Row;
+  using BLayout = SM70_8x4_Row;
+  using CLayout = SM70_8x8_32b;
+};<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h2 id="3-3-MMA-Atom"><a href="#3-3-MMA-Atom" class="headerlink" title="3.3 MMA_Atom"></a>3.3 MMA_Atom</h2><p>一个Atom包括MMAOperation和MMA_Traits，当调用一个Atom时，只需关注Traits的逻辑，Atom会自动处理Operation物理部分的细节，Atom是对单个硬件操作的定义，支持在多种硬件上工作，比如：单个线程、一个QP(Volta)、一个warp(Ampere)、一个warpgroup(Hopper)，下面是两个构建MMA_Atom的例子</p>
+<h3 id="3-3-1-Volta"><a href="#3-3-1-Volta" class="headerlink" title="3.3.1 Volta"></a>3.3.1 Volta</h3><p>Volta架构下一组thread有8个，称为quadpair(QP)，在例子中执行8×8×4MMA<br><code>Types</code>：<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using ValTypeD = float; 
+using ValTypeA = half_t; 
+using ValTypeB = half_t; 
+using ValTypeC = float;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br><code>Shape</code>：<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using Shape_MNK = Shape &lt;_8,_8,_4&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br><code>Thread_ID</code>：<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using ThrID = Layout&lt;Shape &lt;_4, _2&gt;, Stride&lt;_1,_16&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>MMA的8个逻辑线程ID0~7↔映射↔QP的8个物理线程ID[0,1,2,3]∪[16,17,18,19]<p></p>
+<script type="math/tex; mode=display">\begin{bmatrix} 0 & 16 \\ 1 & 17 \\ 2 & 18 \\ 3 & 19 \end{bmatrix}</script><p>用户视角下是0~7，但是物理上是1~3、16~19<br><code>Accumulator Mapping</code>(Layout)：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251112201522.png" alt=""><br>上图是SM70_F32F16F16F32的QP级别的试图，这种单一指令级视图的信息，就是我们需要在CuTe中编码的内容</p>
+<p>C是F32 Accumulator，AB都是F16</p>
+<h4 id="3-3-1-1-Accumulator-Mapping"><a href="#3-3-1-1-Accumulator-Mapping" class="headerlink" title="3.3.1.1 Accumulator Mapping"></a>3.3.1.1 Accumulator Mapping</h4><p>CLayout需要建立<code>(logic_thr_id, logic_val_id)</code>和<code>(m, n)</code>坐标之间的映射，前者是逻辑id，是用户视角，后者是物理id，是硬件视角。CLayout包含shape和stride两部分，不难知道shape是8×8，但是stride还需要推导，过程中又需要分别对thread和stride分析</p>
+<ul>
+<li>thread<ul>
+<li>至于stride，使用<code>(m,n)</code>的column-major做映射：<ul>
+<li><code>(logic_thr_id, logic_val_id)→(m, n) == m + n * M</code>，<code>M=8</code></li>
+<li>对于thread来说，只需关注同一value下不同thread的坐标<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251113093951.png" alt="|263"></li>
+<li>从图中可以观察到有3个维度的跳变<code>(0,0)→(1,0)</code>、<code>(0,0)→(0,1)</code>、<code>(0,0)→(4,0)</code>，步长分别是1、16、4</li>
+</ul>
+</li>
+<li>此时shape也要变成三维的<code>(2,2,2)</code>，根据跳变的维度数就能得到</li>
+</ul>
+</li>
+<li>value<ul>
+<li>同样的，关注同一thread下不同vaule的坐标<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251113104045.png" alt="|270"></li>
+<li>从图中可以观察到有3个维度的跳变<code>(0,0)→(0,1)</code>、<code>(0,0)→(2,0)</code>、<code>(0,0)→(0,4)</code>，步长分别是8、2、32<br>最终CLayout就是<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">// (T8,V8) -&gt; (m,n) 
+using CLayout = Layout&lt;Shape &lt;Shape &lt;_2, _2,_2&gt;, Shape &lt;_2,_2, _2&gt;&gt;, 
+					   Stride&lt;Stride&lt;_1,_16,_4&gt;, Stride&lt;_8,_2,_32&gt;&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+此时当用户输入<code>(tid, vid)</code>时，就会对应相应的物理位置<code>(m,n)</code></li>
+</ul>
+</li>
+</ul>
+<p>如果C是F16的话，就没那么复杂，因为每个线程负责一行8个FP16(16B)<br>但是负责8个FP32(32B)时，硬件资源压力有点大，所以上面F32的要另作处理<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using CLayout = Layout&lt;Shape &lt;_8,_8&gt;, Stride&lt;_1,_8&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p></p>
+<h4 id="3-3-1-2-A-and-B-Mapping"><a href="#3-3-1-2-A-and-B-Mapping" class="headerlink" title="3.3.1.2 A and B Mapping"></a>3.3.1.2 A and B Mapping</h4><p>AB有两种布局，分别需要将<code>(tid, vid)</code>映射到<code>(m, k)</code>和<code>(n, k)</code><br>先看TN布局<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251113110155.png" alt="|289"><br>不难看出ALayout<code>(m,k)</code>是<code>Shape&lt;_8, _4&gt;</code>，<code>Stride&lt;_1,_8&gt;</code>，逻辑id和物理id关系为<code>(m, k) == m + k * M</code></p>
+<ul>
+<li>在M方向上，<code>(T0,V0)→(T0,V1)</code>对应<code>(0,0)→(0,1)</code>，对thread来说，stride为1</li>
+<li>在K方向上，<code>(T0,V0)→(T1,V0)</code>对应<code>(0,0)→(1,0)</code>，对value来说，stride为第一列，8<br>BLayout<code>(n,k)</code>也是<code>Shape&lt;_8, _4&gt;</code>，<code>Stride&lt;_1,_8&gt;</code>，逻辑id和物理id关系为<code>(n, k) == n + k * N</code></li>
+<li>在N方向上，<code>(T0,V0)→(T1,V0)</code>对应<code>(0,0)→(0,1)</code>，对thread来说，stride为1（n对应水平方向）</li>
+<li>在K方向上，<code>(0,0)→(1,0)</code>，对value来说，stride为第一列，8<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">// (T8,V4) -&gt; (m,k) 
+using ALayout = Layout&lt;Shape &lt;_8,_4&gt;, Stride&lt;_1,_8&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<p>然后看NT布局<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251113141946.png" alt="|313"><br>对于ALayout</p>
+<ul>
+<li>M维度：T0/T16块、V0~V3  </li>
+<li>K维度：T0~T3/T16~T19  </li>
+<li>这里的4是逻辑的，对应的是物理上的T16<br>所以thread是二维的：</li>
+<li><code>(T0,V0)→(T1,V0)</code>对应<code>(0,0)→(0,1)</code>，stride1为第一整列，8；</li>
+<li><code>(T0,V0)→(T1,V1)</code>对应<code>(0,0)→(0,1)</code>，stride为半列，4<br>value也做相应的推导，不难得出ALayout如下<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">  // (T8,V4) -&gt; (m,k) 
+using ALayout = Layout&lt;Shape &lt;Shape &lt;_4,_2&gt;,_4&gt;, 
+					   Stride&lt;Stride&lt;_8,_4&gt;,_1&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+BLayout推导不再赘述</li>
+</ul>
+<h3 id="3-3-2-Hopper"><a href="#3-3-2-Hopper" class="headerlink" title="3.3.2 Hopper"></a>3.3.2 Hopper</h3><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/gmma_wg_n_slice.png" alt=""><br>这是SM90_64x128x16_F16F16F16F16_TN atom<br>A<code>[64,16]</code>、B<code>[128,16]</code>、CD<code>[64,128]</code></p>
+<h4 id="3-3-2-1-Accumulator-Mapping"><a href="#3-3-2-1-Accumulator-Mapping" class="headerlink" title="3.3.2.1 Accumulator Mapping"></a>3.3.2.1 Accumulator Mapping</h4><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251113150522.png" alt=""><br>首先看N方向，</p>
+<ul>
+<li>T0~T3，4个线程，<code>(T0,V0)</code>到<code>(T1,V0)</code>的步长是前两列，2×64=128</li>
+<li>V0~V1，2个值，<code>(T0,V0)</code>到<code>(T0,V1)</code>的步长是第一列，64<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using CLayout = Layout&lt;Shape &lt;Shape &lt; _4, ...&gt;, Shape &lt; _2, ...&gt;&gt;, 
+					   Stride&lt;Stride&lt;_128, ...&gt;, Stride&lt;_64, ...&gt;&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+再看M方向，</li>
+<li>T0~T28，在8×8core matrix中(就是以左上角8×8为单位的)，一行4个thread往下重复了8次 ，相邻两个线程，如<code>(T0,V0)</code>、<code>(T4,V0)</code>，相隔1<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using CLayout = Layout&lt;Shape &lt;Shape &lt; _4, _8, ...&gt;, Shape &lt; _2, ...&gt;&gt;, 
+					   Stride&lt;Stride&lt;_128, _1, ...&gt;, Stride&lt;_64, ...&gt;&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
+<li>V0~V2，相隔8；shape里填2，理解为上面的8×8matrix又复制了一遍<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using CLayout = Layout&lt;Shape &lt;Shape &lt; _4, _8, ...&gt;, Shape &lt; _2, _2&gt;&gt;, 
+					   Stride&lt;Stride&lt;_128, _1, ...&gt;, Stride&lt;_64, _8&gt;&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+最后将这16×8matrix重复4次，<code>(T0,V0)</code>与<code>(T32,V0)</code>相隔16<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">// (T128,V4) -&gt; (M64,N8)
+using CLayout = Layout&lt;Shape &lt;Shape &lt; _4, _8, _4&gt;, Shape &lt; _2, _2&gt;&gt;, 
+					   Stride&lt;Stride&lt;_128, _1, _16&gt;, Stride&lt;_64, _8&gt;&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+此时得到64×8的accumulators，GMMA构造其实是64×N，N可以取<code>[16,32,64,128,256]</code>，只需要将64×8重复几次就好，比如，64×128的CLayout<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">// (T128,V64) -&gt; (M64,N128)
+using CLayout = Layout&lt;Shape &lt;Shape &lt; _4, _8, _4&gt;, Shape &lt; _2, _2, _16&gt;&gt;, 
+					   Stride&lt;Stride&lt;_128, _1, _16&gt;, Stride&lt;_64, _8, _512&gt;&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
+<li>一整个64×8一共有32×8×2=512个，所以跨度是512</li>
+<li>至于shape里的16，就是N/8得到的，这里的N是128<h4 id="3-3-2-2-A-and-B-Mapping"><a href="#3-3-2-2-A-and-B-Mapping" class="headerlink" title="3.3.2.2 A and B Mapping"></a>3.3.2.2 A and B Mapping</h4>A、B完整且连续地存在SMEM里，所有的线程都指向整块数据地开头，所以可以直接按行主序/列主序存储数据，ALayout如下<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">using ALayout_64x16  = Layout&lt;Shape &lt;Shape &lt;  _4,_8, _4&gt;,Shape &lt; _2,_2,  _2&gt;&gt;,
+Stride&lt;Stride&lt;_128,_1,_16&gt;,Stride&lt;_64,_8,_512&gt;&gt;&gt;;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+然而，并没有找到关于<code>BLayout_128x16</code>或<code>BLayout_16x128</code>的定义</li>
+</ul>
+<h2 id="3-4-TiledMMA"><a href="#3-4-TiledMMA" class="headerlink" title="3.4 TiledMMA"></a>3.4 TiledMMA</h2><p>上面已经将Atom构建好了，现在以Atom为单位，在MNK空间组织Atom<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">// CUTLASS3.4：
+template &lt;class MMA_Atom,
+          class AtomLayoutMNK = Layout&lt;Shape&lt;_1,_1,_1&gt;&gt;,
+          class PermutationMNK = Tile&lt;Underscore,Underscore,Underscore&gt;&gt;
+struct TiledMMA : MMA_Atom { ... }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre><br><code>AtomLayoutMNK</code>表示在MNK方向上分别重复几次Atom，这种重复会要求更多的执行线程<br><code>PermutationMNK</code>表示在<p></p>
+<p>【Exp.1】<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">MMA_Atom mma = MMA_Atom&lt;SM70_8x8x4_F32F16F16F32_NT&gt;{}; print_latex(mma);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251113165852.png" alt=""><br>等价于<br><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">TiledMMA mma = make_tiled_mma(SM70_8x8x4_F32F16F16F32_NT{}, 
+							  Layout&lt;Shape&lt;_1,_1,_1&gt;&gt;{}, // Layout of Atoms 
+							  Tile&lt;_8,_8,_4&gt;{}); // Tiler 
+print_latex(mma);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><br>组合多个MMA_Atom，布局是1×1×1，所以只用了一个原子<p></p>
+<p>【Exp.2】用上面的4个MMA_Atom构建一个类似WMMA的对象，在warp内部，将一个Atom的计算模式复制到不同的线程组里(跨线程)<br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">TiledMMA mma = make_tiled_mma(SM70_8x8x4_F32F16F16F32_NT{}, Layout&lt;Shape &lt;_2,_2&gt;, Stride&lt;_2,_1&gt;&gt;{}); // 2x2 n-major layout of Atoms 
+print_latex(mma);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251113172507.png" alt=""><br>C中的以<code>T4</code>、<code>T8</code>、<code>T12</code>为首的这几组thread都是之前没用过的，出现了上面没有的一些线程，加上以<code>T0</code>为首的thread的这四组遵循<code>(2,2):(2,1)</code>布局<p></p>
+<p>【Exp.3】将Tile扩大到<code>32×32×4</code><br></p><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">TiledMMA mma = make_tiled_mma(SM70_8x8x4_F32F16F16F32_NT{}, Layout&lt;Shape &lt;_2,_2&gt;, Stride&lt;_2,_1&gt;&gt;{}, // 2x2 n-major layout of Atoms 
+Tile&lt;_32,_32,_4&gt;{}); // 32x32x4 tiler 
+print_latex(mma);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/CUTLASS/Pasted%20image%2020251113172917.png" alt=""><p></p>
+<ul>
+<li>没有出现新的线程，是把上面的C复制了4份，放在左上、左下、右上、右下  </li>
+<li>出现了上面所有没有的(Tx, Vx)的组合  </li>
+<li>在一个block内部，将warp的计算模式复制到不同的tiles上(跨数值)<br>这时，列出A矩阵中T0负责的8个值，会发现<code>T0V0</code>到<code>T0V4</code>时，T0同时存在warp(0,0)和warp(1,0)中，会有合并内存访问的问题<br>T0V0 =&gt; ( 0,0)<br>T0V1 =&gt; ( 1,0)<br>T0V2 =&gt; ( 2,0)<br>T0V3 =&gt; ( 3,0)<br>T0V4 =&gt; (16,0)<br>T0V5 =&gt; (17,0)<br>T0V6 =&gt; (18,0)<br>T0V7 =&gt; (19,0)<br>于是改变Tile中的排布</li>
+<li>M：<code>Shape &lt;_4,_4,_2&gt;, Stride&lt;_1,_8,_4&gt;</code></li>
+<li>N：<code>32</code></li>
+<li>K：<code>4</code><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">TiledMMA mma = make_tiled_mma(SM70_8x8x4_F32F16F16F32_NT{}, 
+Layout&lt;Shape &lt;_2,_2&gt;, Stride&lt;_2,_1&gt;&gt;{}, // 2x2 n-major layout of Atoms 
+Tile&lt;Layout&lt;Shape &lt;_4,_4,_2&gt;, Stride&lt;_1,_8,_4&gt;&gt;, // Permutation on M, size 32 
+_32, // Permutation on N, size 32 identity 
+_4&gt;{}); // Permutation on K, size 4 identity 
+print_latex(mma);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+上面排布的改变在于更改<code>T0V0(0,0)</code>与<code>T0V3(0,0)</code>、<code>T16V0(4,0)</code>、<code>T0V4(16,0)</code>的距离</li>
+<li><code>T0V0</code>~<code>T0V3</code>：shape4、stride1</li>
+<li>(<code>T0V0</code>~<code>T0V3</code>) ~ (<code>T24V0</code>~<code>T24V3</code>)：shape4(有四个这样的V0~V3的块)，stride8，这里的8就是让相邻两个块有8个跨度，<code>T16V0</code>距离<code>T0V0</code>有8个跨度</li>
+<li>(<code>T0V0</code>~<code>T24V3</code>) ~ (<code>T0V4</code>~<code>T24V7</code>)：shape2，相邻只有4个跨度，那么就刚好是T0的V0到V7按顺序排列了</li>
+</ul>
 
                 
             </div>
@@ -680,7 +810,7 @@ target_link_libraries(mt19937-app
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2025/04/29/flashattention-mini/">https://wabbybabb0.github.io/2025/04/29/flashattention-mini/</a>
+                    <a href="https://wabbybabb0.github.io/2025/11/03/li-lun-cute/">https://wabbybabb0.github.io/2025/11/03/li-lun-cute/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -718,12 +848,8 @@ target_link_libraries(mt19937-app
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/LLM/">
-                                    <span class="chip bg-color">LLM</span>
-                                </a>
-                            
-                                <a href="/tags/CUDA/">
-                                    <span class="chip bg-color">CUDA</span>
+                                <a href="/tags/CUTLASS/">
+                                    <span class="chip bg-color">CUTLASS</span>
                                 </a>
                             
                         </div>
@@ -911,24 +1037,24 @@ target_link_libraries(mt19937-app
             <div class="article-badge left-badge text-color">
                 <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2025/11/03/li-lun-cute/">
+                <a href="/2025/11/14/shi-jian-cutlass/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/3.png" class="responsive-img" alt="【理论】CuTe学习过程">
+                        <img src="/medias/featureimages/2.png" class="responsive-img" alt="【实践】CUTLASS学习过程">
                         
-                        <span class="card-title">【理论】CuTe学习过程</span>
+                        <span class="card-title">【实践】CUTLASS学习过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            CuTe解决索引计算和数据搬运问题，引入Layout的概念，并抽象了MMA的一些指令，只需提供shape和stride就能自动计算物理内存地址，省去了手动计算一维内存地址的步骤。
+                            CUTLASS能实现cuBLAS做不到的算子融合(最核心)，省去多次显存读写，此外，在CuTe(解决CUTLASS的Layout Algebra)基础上定义了GEMM流水线和后处理，是魔改GEMM的最佳选择之一(还有triton，但是最近听说triton不再维护了？)
                         
                     </div>
                     <div class="publish-info">
                         <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2025-11-03
+                            <i class="far fa-clock fa-fw icon-date"></i>2025-11-14
                         </span>
                         <span class="publish-author">
                             
@@ -960,24 +1086,24 @@ target_link_libraries(mt19937-app
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2025/03/26/flashattention/">
+                <a href="/2025/04/29/flashattention-mini/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/4.png" class="responsive-img" alt="【理论】FlashAttention学习过程">
+                        <img src="/medias/featureimages/11.png" class="responsive-img" alt="【实践】FlashAttention学习过程">
                         
-                        <span class="card-title">【理论】FlashAttention学习过程</span>
+                        <span class="card-title">【实践】FlashAttention学习过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            更少的内存！更快的速度！这就是FA！
+                            FlashAttentionv1实操过程，已验证！
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-03-26
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-04-29
                             </span>
                         <span class="publish-author">
                             
@@ -996,6 +1122,10 @@ target_link_libraries(mt19937-app
                     
                     <a href="/tags/LLM/">
                         <span class="chip bg-color">LLM</span>
+                    </a>
+                    
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
                     </a>
                     
                 </div>
