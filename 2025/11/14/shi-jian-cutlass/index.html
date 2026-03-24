@@ -953,30 +953,29 @@ static const int kPartitionsK = ThreadblockShape::kK / WarpShape::kK;<span aria-
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="far fa-dot-circle"></i>&nbsp;本篇
-            </div>
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
             <div class="card">
-                <a href="/2025/11/14/shi-jian-cutlass/">
+                <a href="/2026/03/24/li-lun-tensor-core/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/2.png" class="responsive-img" alt="【实践】CUTLASS学习过程">
+                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="【理论】Tensor Core学习过程">
                         
-                        <span class="card-title">【实践】CUTLASS学习过程</span>
+                        <span class="card-title">【理论】Tensor Core学习过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            CUTLASS能实现cuBLAS做不到的算子融合(最核心)，省去多次显存读写，此外，在CuTe(解决CUTLASS的Layout Algebra)基础上定义了GEMM流水线和后处理，是魔改GEMM的最佳选择之一(还有triton，但是最近听说triton不再维护了？)
+                            简单了解nvidia架构历史，主要学习使用Tensor Core做计算时的数据流动和布局
                         
                     </div>
                     <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2025-11-14
-                            </span>
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2026-03-24
+                        </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -989,12 +988,11 @@ static const int kPartitionsK = ThreadblockShape::kK / WarpShape::kK;<span aria-
                         </span>
                     </div>
                 </div>
-
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/CUTLASS/">
-                        <span class="chip bg-color">CUTLASS</span>
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
                     </a>
                     
                 </div>
@@ -1303,7 +1301,7 @@ static const int kPartitionsK = ThreadblockShape::kK / WarpShape::kK;<span aria-
         <div class="col s12 m8 l8 copy-right">
             Copyright&nbsp;&copy;
             
-                <span id="year">2023-2025</span>
+                <span id="year">2023-2026</span>
             
             <span id="year">2023</span>
             <a href="/about" target="_blank">Wabbybabbo</a>

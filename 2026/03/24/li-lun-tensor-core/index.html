@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="DS1302时钟, Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="【理论】Tensor Core学习过程, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>DS1302时钟 | Wabbybabbo的摸鱼圣地</title>
+    <title>【理论】Tensor Core学习过程 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -357,12 +357,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">DS1302时钟</h1>
+                    <h1 class="description center-align post-title">【理论】Tensor Core学习过程</h1>
                 </div>
             </div>
         </div>
@@ -478,8 +478,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
-                                <span class="chip bg-color">51单片机</span>
+                            <a href="/tags/CUDA/">
+                                <span class="chip bg-color">CUDA</span>
                             </a>
                         
                     </div>
@@ -490,8 +490,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/" class="post-category">
-                                51单片机
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                高性能计算
                             </a>
                         
                     </div>
@@ -503,21 +503,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2022-11-12
+                    2026-03-24
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2023-12-10
+                    2026-03-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    877
+                    1.1k
                 </div>
                 
 
@@ -542,92 +542,44 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>DS1302</strong></p>
-<h1 id="一-引脚分装"><a href="#一-引脚分装" class="headerlink" title="一.引脚分装"></a>一.引脚分装</h1><p>1.DIP直插</p>
-<p>2.SO贴片</p>
-<p><img src="../../../../medias/blog_picture/51/59.png" alt=""></p>
-<p><img src="../../../../medias/blog_picture/51/60.png" alt=""></p>
-<p>其中，<strong>CE为高电平的时候下面的命令(io和SCLK)才有用。</strong>时间存储在实时时钟里，在左边被访问和读写</p>
-<h1 id="二-内部寄存器"><a href="#二-内部寄存器" class="headerlink" title="二.内部寄存器"></a>二.内部寄存器</h1><p><img src="../../../../medias/blog_picture/51/61.png" alt=""></p>
-<p>WP是读写保护</p>
-<h1 id="三-考虑的问题"><a href="#三-考虑的问题" class="headerlink" title="三.考虑的问题"></a>三.考虑的问题</h1><p>在哪(xx寄存器) 写入 什么</p>
-<p>在哪(xx寄存器) 读出 什么(1302芯片返回的，单片机需要读到)</p>
-<p><img src="../../../../medias/blog_picture/51/62.png" alt=""></p>
-<p>第六位：给1——RAM，给0——CK</p>
-<p>6~1完成“在哪”的任务</p>
-<p>第零位：完成“读/写”的任务，给1——读，给0——写</p>
-<p>在<strong>二</strong>的表中已经把“读/写”的命令列出来了</p>
-<h2 id="1-时序定义"><a href="#1-时序定义" class="headerlink" title="1.时序定义"></a>1.时序定义</h2><p><img src="../../../../medias/blog_picture/51/63.png" alt=""></p>
-<p>上升沿(io口的电平被)写入(/向时钟芯片写入数据)，下降沿(DS1302把他的数据)输出(时钟芯片向单片机写入数据)，<strong>所以，只有READ中的D0~D7是芯片写入的</strong></p>
-<p>写入时，先写入数据再进行上升沿。</p>
-<h2 id="2-每个按键的功能"><a href="#2-每个按键的功能" class="headerlink" title="2.每个按键的功能"></a>2.每个按键的功能</h2><ul>
-<li>K1选择模式 MODE=1👉设置时间 MODE=0👉显示流动的时间</li>
-<li>K2选择要更改的时间值(年月日时分秒)</li>
-<li>K3更改某个时间值，+</li>
-<li>K4更改某个时间值，-</li>
-</ul>
-<h1 id="四-代码"><a href="#四-代码" class="headerlink" title="四.代码"></a>四.代码</h1><h2 id="DS1302-C"><a href="#DS1302-C" class="headerlink" title="DS1302.C"></a>DS1302.C</h2><p><strong>1.</strong></p>
-<pre class="line-numbers language-C" data-language="C"><code class="language-C">void DS1302_WriteByte(unsigned char Command,Data)//写入
-{
-	unsigned char i;
-	DS1302_CE=1;
-	
-	for(i=0;i&lt;8;i++)
-	{
-		DS1302_IO=Command&amp;(0x01&lt;&lt;i);//1~7位直接清零，只留第0位
-		DS1302_SCLK=1;
-		DS1302_SCLK=0;
-	}<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>对于每一位，先写入操作指令再给上升沿</p>
-<p><strong>2.</strong></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> <span class="token keyword">char</span> <span class="token function">DS1302_ReadByte</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">char</span> Command<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-	<span class="token keyword">unsigned</span> <span class="token keyword">char</span> i<span class="token punctuation">,</span>Data<span class="token operator">=</span><span class="token number">0x00</span><span class="token punctuation">;</span>
-	Command<span class="token operator">|=</span><span class="token number">0x01</span><span class="token punctuation">;</span>	<span class="token comment">//将指令转换为读指令</span>
-	DS1302_CE<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">8</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token comment">//读出-指令</span>
-	<span class="token punctuation">{</span>
-		DS1302_IO<span class="token operator">=</span>Command<span class="token operator">&amp;</span><span class="token punctuation">(</span><span class="token number">0x01</span><span class="token operator">&lt;&lt;</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
-		DS1302_SCLK<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-		DS1302_SCLK<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
-	<span class="token punctuation">}</span>
-	<span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>i<span class="token operator">&lt;</span><span class="token number">8</span><span class="token punctuation">;</span>i<span class="token operator">++</span><span class="token punctuation">)</span><span class="token comment">//读出-数据</span>
-	<span class="token punctuation">{</span>
-		DS1302_SCLK<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token comment">//看时序图，先少一个高电平</span>
-		DS1302_SCLK<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token comment">//最后是低电平</span>
-		<span class="token keyword">if</span><span class="token punctuation">(</span>DS1302_IO<span class="token punctuation">)</span><span class="token punctuation">{</span>Data<span class="token operator">|=</span><span class="token punctuation">(</span><span class="token number">0x01</span><span class="token operator">&lt;&lt;</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
-	<span class="token punctuation">}</span>
-	DS1302_CE<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>
-	DS1302_IO<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span>	<span class="token comment">//读取后将IO设置为0，否则读出的数据会出错</span>
-	<span class="token keyword">return</span> Data<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>关于为什么要return DataX，👇我的理解</p>
+                <p>现在很多AI Infra的工作都会用到Tensor Core做加速或性能优化，看的论文里也经常会出现<code>mma</code>的字眼、以及<code>mma</code>指令对应的Fragment Layout图(原来的矩阵如何被拆成另一种布局方式)等等。在Tensor Core的计算过程，数据会频繁流动的地方——显存、共享内存、L1、L2等等，他们又是如何协调的，这些比较抽象的过程总是困扰我很久，所以就想好好探讨一下这些知识。</p>
+<p>在搜索资料时发现<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1832871"> 旷视MegEngine TensorCore 卷积算子实现原理</a>这一篇讲得比较详细的，我想在其基础上再梳理一下。文章的后续大部分内容来自这篇文章。</p>
+<h1 id="1-Tensor-Core能解决什么"><a href="#1-Tensor-Core能解决什么" class="headerlink" title="1 Tensor Core能解决什么"></a>1 Tensor Core能解决什么</h1><p>先简短介绍Tensor Core：<br>Tensor Core是专门实现小块矩阵乘法$D=A×B+C$的硬件单元，相比CUDA Core，虽然功能单一，但是速度极快。<br>这里有两个概念，Tensor Core和Cuda Core，下面就解释一下他们的特点以及应用场景。<br>部分内容来源：</p>
 <ul>
-<li>首先在<strong>DS1302_WriteByte</strong>中写入数据，是多少秒(0~15)，就输入0x xx，然后16进制转2进制</li>
-<li>在<strong>DS1302_ReadByte</strong>中读取数据，对每一位进行判断</li>
-<li>e.g. 写入时写入了0x03—16转2—&gt;0000 0100，然后在read函数里对每一位进行判断，执行完读命令字后，数据传输到IO口上，是1的，Data就置1，否则置0，所以Data就是个接收数据的中转站罢了。</li>
-<li>然后return之后，LCD那里的定义是<strong>unsigned int Number</strong>在传参时，已经自动把2进制转换为10进制了，所以显示出来的数据就是10进制的。</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/678893340">全面解析GPU CUDA Core, 为什么Tensor Core可以加速深度学习</a></li>
+<li><a target="_blank" rel="noopener" href="https://jcf94.com/2020/05/24/2020-05-24-nvidia-arch/">NVIDIA GPU 架构演进</a></li>
 </ul>
-<p><strong>3.自动清零</strong></p>
-<p>e.g.希望让a超过5之后清零，从0开始再递增</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>a<span class="token operator">&gt;</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">{</span>a<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
-<span class="token operator">&lt;=</span><span class="token operator">=</span><span class="token operator">&gt;</span>
-a<span class="token operator">=</span><span class="token operator">%</span><span class="token number">6</span><span class="token punctuation">;</span><span class="token comment">//a=6%6=0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<p><strong>4.</strong></p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">1</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">3</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">5</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">7</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">8</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">10</span><span class="token operator">||</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">12</span><span class="token punctuation">)</span>
-		<span class="token punctuation">{</span>
-			<span class="token keyword">if</span><span class="token punctuation">(</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">&lt;</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">31</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
-			<span class="token keyword">if</span><span class="token punctuation">(</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">&gt;</span><span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">{</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span><span class="token punctuation">}</span>	<span class="token comment">//12-31调回11-xx时会显示11-31，所以需要加上这句话</span>
-		<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>关于为什么要在K4-这里复制一部分K3+的代码</p>
+<h2 id="1-1-GPU的核心"><a href="#1-1-GPU的核心" class="headerlink" title="1.1 GPU的核心"></a>1.1 GPU的核心</h2><p>GPU的核心有三种：</p>
 <ul>
-<li>从12-31调回11月份时，会显示为11-31，所以要加上那部分代码</li>
+<li>CUDA Core：</li>
+<li>Tensor Core</li>
+<li>RT Core</li>
 </ul>
-<p><strong>5.</strong></p>
-<p>某个时间值被选中后跳动</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span><span class="token punctuation">(</span>TimeSetSelect<span class="token operator">==</span><span class="token number">0</span><span class="token operator">&amp;&amp;</span>TimeSetFlashFlag<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">{</span><span class="token function">LCD_ShowString</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token string">"  "</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span>
-	<span class="token keyword">else</span><span class="token punctuation">{</span><span class="token function">LCD_ShowNum</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span>DS1302_Time<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<p>定时器每隔500ms对TimeSetFlashFlag置1或0，当TSFF为1且时间值选中的是0—时 时，在原本显示时的时间那一块地方显示空格；如果不符合if的条件，则显示时间，所以TSFF在0和1跳动时，决定了频闪的显示。</p>
+<h3 id="1-1-1-CUDA-Core"><a href="#1-1-1-CUDA-Core" class="headerlink" title="1.1.1 CUDA Core"></a>1.1.1 CUDA Core</h3><p>CUDA的基本计算单元是SM(Streaming Multiprocessor，流式多处理器)，从硬件组织的角度看，多个CUDA Core被集成到1个SM中，而1个SM可以同时调度和执行数百个线程。这就是CUDA高吞吐量、并行计算能力特点的基础来源。</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260320145745.png" alt="CUDA基本计算单元SM(Fermi架构SM)"></p>
+<p>上图这张图是Fermi架构下，CUDA的基本计算单元SM，包含了两个Warp Scheduler(线程束调度器)，32K个32位寄存器，32个CUDA Core。</p>
+<ul>
+<li>每个Cuda Core由1个浮点数单元FPU和1个逻辑运算单元ALU组成<ul>
+<li>浮点数单元FPU一般是FP32，Pascal SM内部出现了DP Unit，即FP64的CUDA Core。</li>
+<li>逻辑运算单元ALU是INT32，Volta架构的SM里的INT32实现与FP32的物理隔离。</li>
+<li>(Fermi架构下)在同一个时钟周期里，要么FPU干活，要么ALU干活，不能同时开工，之后的新架构(Volta/Turnig之后)就改变了这一状态，让二者分开。<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260320164214.png" alt="Pascal架构SM"><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/17d4788c-362d-47c5-8ff4-70ca31173f72.png" alt="Volta架构SM"></li>
+<li>CUDA Core可以进行FMA(fused multiply-add)，即加乘操作的融合$y=wx+b$，单指令就可以完成，这些CUDA Core在显卡里并行计算，如果CUDA Core越多，算力也会越强。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-1-2-Tensor-Core"><a href="#1-1-2-Tensor-Core" class="headerlink" title="1.1.2 Tensor Core"></a>1.1.2 Tensor Core</h3><p>在上面的图中，Volta架构的SM引入了Tensor Core。<br>CUDA Core在一个时钟周期里，只能接收三个数字$w$、$x$、$b$，做一次FMA(乘加运算)，如果要计算4×4的矩阵乘法，就需要调用大量CUDA Core，通过循环去算行列的点积。</p>
+<p>Tensor Core专门处理矩阵计算，并且支持混合精度，就是输入矩阵的精度是FP16，但是最终输出结果可以是FP16或者FP32，计算量减少但是保证了输出的精度。<br>Tensor Core在一个时钟周期内能执行4×4×4的GEMM(general matrix multiply，矩阵乘加)运算，相当于同时进行64个FMA计算。<br>可以看出，相比CUDA Core，Tensor Core在计算量、精度、指令数上都有很大的优化。</p>
+<h1 id="2-TensorCore做计算的过程"><a href="#2-TensorCore做计算的过程" class="headerlink" title="2 TensorCore做计算的过程"></a>2 TensorCore做计算的过程</h1><p>这一部分的内容主要是探讨基于Tensor Core的<code>mma</code>指令底层计算机制，并梳理了数据在Global Memory、Shared Memory与寄存器如何实现swizzle(内存交错)、物理排布优化。</p>
+<p>在阅读本部分之前，读者需要了解的CUDA知识有：</p>
+<ul>
+<li>访问全局内存时，同一warp中的相邻线程访问连续的地址时，或者说一个warp对全局内存的一次访问使用了最少的数据传输时，就称为合并访存，能最大化全局内存的吞吐。</li>
+<li>访问全局内存时，尽可能使用最宽的数据类型(float4)进行访问，可以最大化访存指令的利用率。下面是分别用float和float4做内存拷贝时的性能(rtx3050)<ul>
+<li>[float]  Time: 4.36634 ms, Bandwidth: 183.22 GB/s  </li>
+<li>[float4]Time: 4.27924 ms, Bandwidth: 186.949 GB/s</li>
+<li>可见float4还是比float快一点的，查看其ptx代码，<code>ld.global.f32 %f1, [%rd5];</code>和`ld.global.v4.u32     </li>
+</ul>
+</li>
+</ul>
 
                 
             </div>
@@ -654,7 +606,7 @@ a<span class="token operator">=</span><span class="token operator">%</span><span
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2022/11/12/ds1302-shi-zhong/">https://wabbybabb0.github.io/2022/11/12/ds1302-shi-zhong/</a>
+                    <a href="https://wabbybabb0.github.io/2026/03/24/li-lun-tensor-core/">https://wabbybabb0.github.io/2026/03/24/li-lun-tensor-core/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -692,8 +644,8 @@ a<span class="token operator">=</span><span class="token operator">%</span><span
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
-                                    <span class="chip bg-color">51单片机</span>
+                                <a href="/tags/CUDA/">
+                                    <span class="chip bg-color">CUDA</span>
                                 </a>
                             
                         </div>
@@ -877,54 +829,48 @@ a<span class="token operator">=</span><span class="token operator">%</span><span
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2022/11/13/lian-xu-chu-cun-shu-zu/">
+                <a href="/2026/03/24/li-lun-tensor-core/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/14.png" class="responsive-img" alt="连续储存数组">
+                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="【理论】Tensor Core学习过程">
                         
-                        <span class="card-title">连续储存数组</span>
+                        <span class="card-title">【理论】Tensor Core学习过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大一小白WB尝试理解数组和指针的关系
+                            简单了解nvidia架构历史，主要学习使用Tensor Core做计算时的数据流动和布局
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2022-11-13
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2026-03-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/C%E8%AF%AD%E8%A8%80/" class="post-category">
-                                    C语言
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/C%E8%AF%AD%E8%A8%80/">
-                        <span class="chip bg-color">C语言</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%95%B0%E7%BB%84/">
-                        <span class="chip bg-color">数组</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%8C%87%E9%92%88/">
-                        <span class="chip bg-color">指针</span>
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
                     </a>
                     
                 </div>
@@ -938,31 +884,31 @@ a<span class="token operator">=</span><span class="token operator">%</span><span
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2022/10/30/lcd1602/">
+                <a href="/2025/11/14/shi-jian-cutlass/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/17.png" class="responsive-img" alt="LCD1602">
+                        <img src="/medias/featureimages/2.png" class="responsive-img" alt="【实践】CUTLASS学习过程">
                         
-                        <span class="card-title">LCD1602</span>
+                        <span class="card-title">【实践】CUTLASS学习过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            大云屋考核之51单片机学习————LCD1602
+                            CUTLASS能实现cuBLAS做不到的算子融合(最核心)，省去多次显存读写，此外，在CuTe(解决CUTLASS的Layout Algebra)基础上定义了GEMM流水线和后处理，是魔改GEMM的最佳选择之一(还有triton，但是最近听说triton不再维护了？)
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2022-10-30
+                                <i class="far fa-clock fa-fw icon-date"></i>2025-11-14
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/51%E5%8D%95%E7%89%87%E6%9C%BA/" class="post-category">
-                                    51单片机
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
                                 </a>
                             
                             
@@ -972,12 +918,8 @@ a<span class="token operator">=</span><span class="token operator">%</span><span
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/51%E5%8D%95%E7%89%87%E6%9C%BA/">
-                        <span class="chip bg-color">51单片机</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%A4%A7%E4%BA%91%E5%B1%8B%E8%80%83%E6%A0%B8/">
-                        <span class="chip bg-color">大云屋考核</span>
+                    <a href="/tags/CUTLASS/">
+                        <span class="chip bg-color">CUTLASS</span>
                     </a>
                     
                 </div>
@@ -1167,6 +1109,13 @@ a<span class="token operator">=</span><span class="token operator">%</span><span
 
 
 
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.8/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+    MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$', '$'], ['\(', '\)']]}
+    });
+</script>
 
 
 
