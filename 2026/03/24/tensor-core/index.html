@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="目标检测(环境配置), Wabbybabbo的摸鱼圣地">
+    <meta name="keywords" content="【理论】Tensor Core学习过程, Wabbybabbo的摸鱼圣地">
     <meta name="description" content="上班？下班！">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>目标检测(环境配置) | Wabbybabbo的摸鱼圣地</title>
+    <title>【理论】Tensor Core学习过程 | Wabbybabbo的摸鱼圣地</title>
     <link rel="icon" type="image/png" href="/grape200x200.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -357,12 +357,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/1.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">目标检测(环境配置)</h1>
+                    <h1 class="description center-align post-title">【理论】Tensor Core学习过程</h1>
                 </div>
             </div>
         </div>
@@ -478,16 +478,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                                <span class="chip bg-color">人工智能</span>
-                            </a>
-                        
-                            <a href="/tags/Linux/">
-                                <span class="chip bg-color">Linux</span>
-                            </a>
-                        
-                            <a href="/tags/Ubuntu/">
-                                <span class="chip bg-color">Ubuntu</span>
+                            <a href="/tags/CUDA/">
+                                <span class="chip bg-color">CUDA</span>
                             </a>
                         
                     </div>
@@ -498,8 +490,8 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                人工智能
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                高性能计算
                             </a>
                         
                     </div>
@@ -511,21 +503,21 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2023-12-04
+                    2026-03-24
                 </div>
                 
 
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2025-05-11
+                    2026-03-24
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    2.2k
+                    1.1k
                 </div>
                 
 
@@ -550,145 +542,44 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>附本菜鸡在windows上运行成功的(通过电脑摄像头的)yolo<a target="_blank" rel="noopener" href="https://github.com/Wabbybabb0/yolov5-5.0_hat_person">目标检测</a></p>
-<p><strong>配置环境的时候想清楚放在哪个盘，特别是虚拟机，放C盘很可能会g</strong></p>
-<h1 id="1-项目代码结构整"><a href="#1-项目代码结构整" class="headerlink" title="1 项目代码结构整"></a>1 项目代码结构整</h1><ul>
-<li>data：主要是存放一些超参数的配置文件（这些文件（yaml文件）是用来配置训练集和测试集还有验证集的路径的，其中还包括目标检测的种类数和种类的名称）；还有一些官方提供测试的图片。如果是训练自己的数据集的话，那么就需要修改其中的yaml文件。但是自己的数据集不建议放在这个路径下面，而是建议把数据集放到yolov5项目的同级目录下面。</li>
-<li>models：里面主要是一些网络构建的配置文件和函数，其中包含了该项目的四个不同的版本，分别为是s、m、l、x。从名字就可以看出，这几个版本的大小。他们的检测测度分别都是从快到慢，但是精确度分别是从低到高。这就是所谓的鱼和熊掌不可兼得。如果训练自己的数据集的话，就需要修改这里面相对应的yaml文件来训练自己模型。</li>
-<li>utils：存放的是工具类的函数，里面有loss函数，metrics函数，plots函数等等。</li>
-<li>weights：放置训练好的权重参数。</li>
-<li>detect.py：利用训练好的权重参数进行目标检测，可以进行图像、视频和摄像头的检测。</li>
-<li>train.py：训练自己的数据集的函数。</li>
-<li>test.py：测试训练的结果的函数。</li>
-<li>requirements.txt：这是一个文本文件，里面写着使用yolov5项目的环境依赖包的一些版本，可以利用该文本导入相应版本的包。</li>
-</ul>
-<h1 id="2-从github上拉取的包"><a href="#2-从github上拉取的包" class="headerlink" title="2 从github上拉取的包"></a>2 从github上拉取的包</h1><h2 id="2-1-最好创建一个新的虚拟环境，因为yolo对一些库有版本要求"><a href="#2-1-最好创建一个新的虚拟环境，因为yolo对一些库有版本要求" class="headerlink" title="2.1 最好创建一个新的虚拟环境，因为yolo对一些库有版本要求"></a>2.1 最好创建一个新的虚拟环境，因为<code>yolo</code>对一些库有版本要求</h2><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1cD4y1H7Tk/?spm_id_from=333.337.search-card.all.click&amp;vd_source=1e1c4d48c6129699686897a835e568ea">创建虚拟环境—b站视频教程</a>，视频评论区置顶处下有pdf讲义，可下载。不想看视频的可以直接点<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1Xnhv-NSmtggYqKlg3uAlMg#list/path=%2F">讲义链接</a><br>其中：</p>
+                <p>现在很多AI Infra的工作都会用到Tensor Core做加速或性能优化，看的论文里也经常会出现<code>mma</code>的字眼、以及<code>mma</code>指令对应的Fragment Layout图(原来的矩阵如何被拆成另一种布局方式)等等。在Tensor Core的计算过程，数据会频繁流动的地方——显存、共享内存、L1、L2等等，他们又是如何协调的，这些比较抽象的过程总是困扰我很久，所以就想好好探讨一下这些知识。</p>
+<p>在搜索资料时发现<a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1832871"> 旷视MegEngine TensorCore 卷积算子实现原理</a>这一篇讲得比较详细的，我想在其基础上再梳理一下。文章的后续大部分内容来自这篇文章。</p>
+<h1 id="1-Tensor-Core能解决什么"><a href="#1-Tensor-Core能解决什么" class="headerlink" title="1 Tensor Core能解决什么"></a>1 Tensor Core能解决什么</h1><p>先简短介绍Tensor Core：<br>Tensor Core是专门实现小块矩阵乘法$D=A×B+C$的硬件单元，相比CUDA Core，虽然功能单一，但是速度极快。<br>这里有两个概念，Tensor Core和Cuda Core，下面就解释一下他们的特点以及应用场景。<br>部分内容来源：</p>
 <ul>
-<li>注意<code>NVIDA</code>、<code>CUDA</code>、<code>pytorch</code>的型号是否互相兼容</li>
-<li>注意网络问题，有时候关掉梯子会好点</li>
-<li>源的问题，找到一个阿里云比较好用的：<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip config <span class="token builtin class-name">set</span> global.index-url https://mirrors.aliyun.com/pypi/simple 
-
-pip config <span class="token builtin class-name">set</span> install.trusted-host mirrors.aliyun.com<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></li>
-<li>记录途中用到的<code>whl</code>路径<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> D:<span class="token punctuation">\</span>whl<span class="token punctuation">\</span>torch-1.12.0+cu116-cp39-cp39-win_amd64.whl
-pip <span class="token function">install</span> D:<span class="token punctuation">\</span>whl<span class="token punctuation">\</span>torchvision-0.13.0+cu116-cp39-cp39-win_amd64.whl
-pip <span class="token function">install</span> D:<span class="token punctuation">\</span>whl<span class="token punctuation">\</span>torchaudio-0.12.0+cu116-cp39-cp39-win_amd64.whl<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/678893340">全面解析GPU CUDA Core, 为什么Tensor Core可以加速深度学习</a></li>
+<li><a target="_blank" rel="noopener" href="https://jcf94.com/2020/05/24/2020-05-24-nvidia-arch/">NVIDIA GPU 架构演进</a></li>
 </ul>
-<h2 id="2-2-修改代码时的一些注意事项"><a href="#2-2-修改代码时的一些注意事项" class="headerlink" title="2.2 修改代码时的一些注意事项"></a>2.2 修改代码时的一些注意事项</h2><ol>
-<li><code>train.py</code>、<code>dectect.py</code>可以面向CSDN编程</li>
-</ol>
+<h2 id="1-1-GPU的核心"><a href="#1-1-GPU的核心" class="headerlink" title="1.1 GPU的核心"></a>1.1 GPU的核心</h2><p>GPU的核心有三种：</p>
 <ul>
-<li>e.g.报错No module named ‘yaml‘  ，在终端输入如下指令<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">pip <span class="token function">install</span> pyyaml<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>注意是在终端处下载还是在<code>Anaconda Prompt</code>处下载</li>
-<li>注意<code>conda install</code>还是<code>pip install</code>，注意先激活虚拟环境再安装包<code>conda activate xxx</code></li>
+<li>CUDA Core：</li>
+<li>Tensor Core</li>
+<li>RT Core</li>
 </ul>
-<ol>
-<li>注意路径问题：<ol>
-<li>绝对路径：在<code>train.py</code>中的三行代码里最好使用绝对路径<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205120324.png" alt=""></li>
-<li>相对路径：在<code>detect.py</code>中的<code>weights</code>，在我使用绝对路径的时候是无法实现想要的效果的，但是更改为<code>weights/best.pt</code>(使用最佳模型做测试)时可以正常运行</li>
-</ol>
-</li>
-</ol>
-<h1 id="3-配置VMware和Ubuntu"><a href="#3-配置VMware和Ubuntu" class="headerlink" title="3 配置VMware和Ubuntu"></a>3 配置VMware和Ubuntu</h1><p>下面是两个安装教程，可以结合食用：</p>
-<h2 id="3-1VMware虚拟机安装Linux教程："><a href="#3-1VMware虚拟机安装Linux教程：" class="headerlink" title="3.1VMware虚拟机安装Linux教程："></a>3.1<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_52799373/article/details/124324077">VMware虚拟机安装Linux教程</a>：</h2><p>(以下是该教程的虚拟机和iso选择，可根据个人需要进行更改，但是配置过程大差不差)</p>
-<ol>
-<li>虚拟机：VMware16 pro</li>
-<li>Linux系统iso镜像：CentOS-7.5-x86_64<h2 id="3-2-VMware虚拟机安装Ubuntu20-04详细图文教程"><a href="#3-2-VMware虚拟机安装Ubuntu20-04详细图文教程" class="headerlink" title="3.2 VMware虚拟机安装Ubuntu20.04详细图文教程"></a>3.2 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41805734/article/details/120698714">VMware虚拟机安装Ubuntu20.04详细图文教程</a></h2>(以下是该教程的虚拟机和iso选择，可根据个人需要进行更改，但是配置过程大差不差)</li>
-<li>虚拟机：VMware16</li>
-<li>Linux系统iso镜像：Ubuntu20.04</li>
-</ol>
-<h2 id="3-3-一些说明"><a href="#3-3-一些说明" class="headerlink" title="3.3 一些说明"></a>3.3 一些说明</h2><p>正如上面一位博主所说“不必刻意用旧版”</p>
-<ol>
-<li>关于虚拟机：可选择VMware 17，<a target="_blank" rel="noopener" href="https://www.vmware.com/cn/products/workstation-player/workstation-player-evaluation.html">VMware官方网站</a></li>
-<li><p>关于iso镜像：新手推荐下Ubuntu，可以去<a target="_blank" rel="noopener" href="https://ubuntu.com/download/desktop">Ubuntu官方网站</a><br> 这里附上<a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/ubuntu-releases/20.04/">Ubuntu20.04</a>的链接(是国内镜像源，下载会快些)!<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701762736537.png" alt=""></p>
-</li>
-<li><p>设置内核和内存时可以最好设置好之后就不改了，因为修改内存或硬盘大小之后重启可能会b溃，本人在下图修改硬盘大小之后无法再打开虚拟机<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205155730.png" alt=""></p>
-<h2 id="3-4-宿主机与虚拟机互传文件"><a href="#3-4-宿主机与虚拟机互传文件" class="headerlink" title="3.4 宿主机与虚拟机互传文件"></a>3.4 宿主机与虚拟机互传文件</h2><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_15309736/5424668">windows主机和ubuntu互传文件的4种方法</a><br>本人选择第二个方法：</p>
-</li>
-<li>ubuntu安装FTP服务<br> 在ubuntu终端输入如下命令<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt-get</span> <span class="token function">install</span> vsftpd<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>安装完后检查<code>/etc /vsftpd.conf</code>配置文件<br>输入如下命令打开配置文件：（注意此处在网址上输入的是<code>sudo vi</code>，但是本人不太会使用<code>vi</code>编辑器，也找不到<code>vi</code>编辑器的使用方法，因此使用了<code>vim</code>，<code>vim</code>编辑器的的指令在下文4.9有提到）<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">vim</span> /etc/bsftpd.conf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></li>
-<li>windows安装和配置FIleZilla<br>点击<a target="_blank" rel="noopener" href="https://www.filezilla.cn/download">FileZilla下载中心</a>下载客户端</li>
-<li>FileZilla软件配置：<br>打开FileZilla软件，选择：文件-&gt;站点管理器-&gt;点击新增站点，然后配置连接参数，如下图：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701834260705.png" alt=""><br>主机处输入的是ubuntu的IPv4地址，查找方式如下：</li>
-</ol>
+<h3 id="1-1-1-CUDA-Core"><a href="#1-1-1-CUDA-Core" class="headerlink" title="1.1.1 CUDA Core"></a>1.1.1 CUDA Core</h3><p>CUDA的基本计算单元是SM(Streaming Multiprocessor，流式多处理器)，从硬件组织的角度看，多个CUDA Core被集成到1个SM中，而1个SM可以同时调度和执行数百个线程。这就是CUDA高吞吐量、并行计算能力特点的基础来源。</p>
+<p><img src="photo/Pasted%20image%2020260320145745.png" alt="CUDA基本计算单元SM(Fermi架构SM)"></p>
+<p>上图这张图是Fermi架构下，CUDA的基本计算单元SM，包含了两个Warp Scheduler(线程束调度器)，32K个32位寄存器，32个CUDA Core。</p>
 <ul>
-<li>点击设置<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701834357072.png" alt=""></li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701834466524.png" alt=""></li>
-<li><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/1701834503573.png" alt=""></li>
+<li>每个Cuda Core由1个浮点数单元FPU和1个逻辑运算单元ALU组成<ul>
+<li>浮点数单元FPU一般是FP32，Pascal SM内部出现了DP Unit，即FP64的CUDA Core。</li>
+<li>逻辑运算单元ALU是INT32，Volta架构的SM里的INT32实现与FP32的物理隔离。</li>
+<li>(Fermi架构下)在同一个时钟周期里，要么FPU干活，要么ALU干活，不能同时开工，之后的新架构(Volta/Turnig之后)就改变了这一状态，让二者分开。<img src="photo/Pasted%20image%2020260320164214.png" alt="Pascal架构SM"><img src="photo/17d4788c-362d-47c5-8ff4-70ca31173f72.png" alt="Volta架构SM"></li>
+<li>CUDA Core可以进行FMA(fused multiply-add)，即加乘操作的融合$y=wx+b$，单指令就可以完成，这些CUDA Core在显卡里并行计算，如果CUDA Core越多，算力也会越强。</li>
 </ul>
-<ol>
-<li>可以看到ubuntu下的文件(右边)<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted image 20231206114943.png" alt=""></li>
-</ol>
-<h1 id="4-Ubuntu22-04配置anaconda"><a href="#4-Ubuntu22-04配置anaconda" class="headerlink" title="4 Ubuntu22.04配置anaconda"></a>4 Ubuntu22.04配置anaconda</h1><h2 id="4-1-配置过程"><a href="#4-1-配置过程" class="headerlink" title="4.1 配置过程"></a>4.1 配置过程</h2><p><a target="_blank" rel="noopener" href="https://www.xtuos.com/6527.html">参考来源</a></p>
-<ol>
-<li><p>首先，通过在终端中运行以下命令，确保所有系统包都是最新的。</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update
-<span class="token function">sudo</span> <span class="token function">apt</span> upgrade
-<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">wget</span> apt-transport-https gnupg2 software-properties-common<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 </li>
-<li><p>在 Ubuntu 22.04 上安装 Anaconda Python。<br>默认情况下，Anaconda 在 Ubuntu 22.04 基础存储库中不可用。现在运行以下命令将 Anaconda 的最新稳定版本下载到您的 Ubuntu 系统：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">wget</span> https://repo.anaconda.com/archive/Anaconda3-2022.05-Linux-x86_64.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205114818.png" alt=""><br>下载Anaconda安装程序后，现在使用以下命令运行脚本：</p>
-</li>
-</ol>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">bash</span> Anaconda3-2022.05-Linux-x86_64.sh<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>按照向导说明完成 Anaconda 安装过程(可以一路按”Enter”)<br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Welcome to Anaconda3 <span class="token number">2022.05</span>
-
-In order to <span class="token builtin class-name">continue</span> the installation process, please review the license
-agreement.
-Please, press ENTER to <span class="token builtin class-name">continue</span>
-<span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p></p>
-<p>下一步是指明安装路径，默认指向根目录。如果您具有 root 访问权限，则可以将其保留在那里，但您也可以将其安装在您帐户的 HOME 目录中：<br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">Anaconda3 will now be installed into this location:
-/root/anaconda3
-
-- Press ENTER to confirm the location
-- Press CTRL-C to abort the installation
-- Or specify a different location below
-
-<span class="token punctuation">[</span>/root/anaconda3<span class="token punctuation">]</span> <span class="token operator">&gt;&gt;</span><span class="token operator">&gt;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><br>注意地址是：<code>/home/wabbybabbo(你自己的用户名)/anaconda3</code><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205201819.png" alt=""><p></p>
-<ol>
-<li><p>安装 Anaconda 后，下一步是通过运行以下命令来使用“ ”文件中添加的环境设置：<code>.bashrc</code></p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> ~/.bashrc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>验证Anaconda安装：</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda list<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>如果要更新运行的整个环境(非必要)</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda update-all<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-</li>
-<li><p>查看虚拟机上的虚拟环境有哪些</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda info <span class="token parameter variable">--envs</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>可以看到这时候有一个名为<code>base</code>的虚拟环境<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205155441.png" alt=""></p>
-</li>
-</ol>
-<h2 id="4-2-其他指令"><a href="#4-2-其他指令" class="headerlink" title="4.2 其他指令"></a>4.2 其他指令</h2><h3 id="4-2-1-unbutu一些指令"><a href="#4-2-1-unbutu一些指令" class="headerlink" title="4.2.1 unbutu一些指令"></a>4.2.1 unbutu一些指令</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zjc910997316/article/details/82983251">来源</a><br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">cd</span> www  <span class="token comment"># 到www目录；  </span>
-<span class="token builtin class-name">cd</span> <span class="token punctuation">..</span>   <span class="token comment"># 到上一级目录；  </span>
-<span class="token builtin class-name">cd</span> -    <span class="token comment"># 返回到上次的目录，类似windows返回 ；  </span>
-<span class="token builtin class-name">cd</span> /    <span class="token comment"># 回到根目录。</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre><p></p>
-<h3 id="4-2-2-Linux-vim编辑器的指令"><a href="#4-2-2-Linux-vim编辑器的指令" class="headerlink" title="4.2.2 Linux vim编辑器的指令"></a>4.2.2 Linux vim编辑器的指令</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xie_xiansheng/article/details/78134626">来源</a></p>
+</ul>
+<h3 id="1-1-2-Tensor-Core"><a href="#1-1-2-Tensor-Core" class="headerlink" title="1.1.2 Tensor Core"></a>1.1.2 Tensor Core</h3><p>在上面的图中，Volta架构的SM引入了Tensor Core。<br>CUDA Core在一个时钟周期里，只能接收三个数字$w$、$x$、$b$，做一次FMA(乘加运算)，如果要计算4×4的矩阵乘法，就需要调用大量CUDA Core，通过循环去算行列的点积。</p>
+<p>Tensor Core专门处理矩阵计算，并且支持混合精度，就是输入矩阵的精度是FP16，但是最终输出结果可以是FP16或者FP32，计算量减少但是保证了输出的精度。<br>Tensor Core在一个时钟周期内能执行4×4×4的GEMM(general matrix multiply，矩阵乘加)运算，相当于同时进行64个FMA计算。<br>可以看出，相比CUDA Core，Tensor Core在计算量、精度、指令数上都有很大的优化。</p>
+<h1 id="2-TensorCore做计算的过程"><a href="#2-TensorCore做计算的过程" class="headerlink" title="2 TensorCore做计算的过程"></a>2 TensorCore做计算的过程</h1><p>这一部分的内容主要是探讨基于Tensor Core的<code>mma</code>指令底层计算机制，并梳理了数据在Global Memory、Shared Memory与寄存器如何实现swizzle(内存交错)、物理排布优化。</p>
+<p>在阅读本部分之前，读者需要了解的CUDA知识有：</p>
 <ul>
-<li>编写：按<code>a</code></li>
-<li>退出：先按<code>ESC</code>键，跳到命令模式，再根据选择输入下面的(记得输入冒号)<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">:w      <span class="token comment"># 保存文件但不退出vi</span>
-:w <span class="token function">file</span> <span class="token comment"># 将修改另外保存到file中，不退出vi</span>
-:w<span class="token operator">!</span>     <span class="token comment"># 强制保存，不推出vi</span>
-:wq     <span class="token comment"># 保存文件并退出vi</span>
-:wq<span class="token operator">!</span>    <span class="token comment"># 强制保存文件，并退出vi</span>
-:q      <span class="token comment"># 不保存文件，退出vi</span>
-:q<span class="token operator">!</span>     <span class="token comment"># 不保存文件，强制退出vi</span>
-:e<span class="token operator">!</span>     <span class="token comment"># 放弃所有修改，从上次保存文件开始再编辑</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<li>访问全局内存时，同一warp中的相邻线程访问连续的地址时，或者说一个warp对全局内存的一次访问使用了最少的数据传输时，就称为合并访存，能最大化全局内存的吞吐。</li>
+<li>访问全局内存时，尽可能使用最宽的数据类型(float4)进行访问，可以最大化访存指令的利用率。下面是分别用float和float4做内存拷贝时的性能(rtx3050)<ul>
+<li>[float]  Time: 4.36634 ms, Bandwidth: 183.22 GB/s  </li>
+<li>[float4]Time: 4.27924 ms, Bandwidth: 186.949 GB/s</li>
+<li>可见float4还是比float快一点的，查看其ptx代码，<code>ld.global.f32 %f1, [%rd5];</code>和`ld.global.v4.u32     </li>
+</ul>
 </li>
 </ul>
-<h3 id="4-2-3-进入和退出conda-base环境"><a href="#4-2-3-进入和退出conda-base环境" class="headerlink" title="4.2.3 进入和退出conda base环境"></a>4.2.3 进入和退出<code>conda base</code>环境</h3><p>进入<code>conda base</code>环境：<br></p><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">source</span> ~/anaconda3/bin/activate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br>退出<code>conda base</code>环境：<br><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">conda deactivate<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205205557.png" alt=""><p></p>
-<h1 id="5-yolo模型部署到orangepi-3"><a href="#5-yolo模型部署到orangepi-3" class="headerlink" title="5 yolo模型部署到orangepi 3"></a>5 yolo模型部署到orangepi 3</h1><p>附上两个参考网站：<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_55217834/article/details/130583886"># 香橙派5 RK3588 yolov5模型转换rknn及部署踩坑全记录 orangepi 5</a>、<a target="_blank" rel="noopener" href="http://years.love/yolov5.html">linux板上运行yolov5 目标检测</a>(25/4/18发现这个网站已经无法访问了)</p>
-<h2 id="5-1-所谓的yolov5目录"><a href="#5-1-所谓的yolov5目录" class="headerlink" title="5.1 所谓的yolov5目录"></a>5.1 所谓的yolov5目录</h2><p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205161134.png" alt=""><br> 这个<strong>yolov5目录</strong>在本人的电脑上，这个文件是这样的<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205161233.png" alt=""></p>
-<h2 id="5-2-路径问题"><a href="#5-2-路径问题" class="headerlink" title="5.2 路径问题"></a>5.2 路径问题</h2><p> <code>weight</code>和<code>data/coco128</code>改成自己的weight和data的路径</p>
-<h2 id="5-3-生成的-onnx文件"><a href="#5-3-生成的-onnx文件" class="headerlink" title="5.3 生成的.onnx文件"></a>5.3 生成的<code>.onnx</code>文件</h2><p> 生成的yolov5n.onnx文件在本人电脑上的位置在这里，名为<code>best.onnx</code><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/main/yolo_picture/Pasted%20image%2020231205161724.png" alt=""></p>
-<h2 id="5-4-在Ubuntu创建虚拟环境"><a href="#5-4-在Ubuntu创建虚拟环境" class="headerlink" title="5.4 在Ubuntu创建虚拟环境"></a>5.4 在Ubuntu创建虚拟环境</h2><ol>
-<li>创建名为<code>rknn</code>的虚拟环境时输入<code>conda create -name rknn python=3.9</code>报错了，但是输入<code>conda create -n rknn python=3.9</code>就不会，很奇怪</li>
-</ol>
-<h2 id="5-5-Ubuntu解压缩"><a href="#5-5-Ubuntu解压缩" class="headerlink" title="5.5 Ubuntu解压缩"></a>5.5 Ubuntu解压缩</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/songbinxu/article/details/80435665">参考网址</a><br>本人用到的是</p>
-<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">unzip</span> FileName.zip <span class="token comment"># 解压</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>再之后的跟着上面的两个博客走，基本上没什么坑了</p>
-<h1 id="6-遇到的其他问题"><a href="#6-遇到的其他问题" class="headerlink" title="6 遇到的其他问题"></a>6 遇到的其他问题</h1><p>在开机时黑屏且遇到了：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38132831/article/details/77932173">SMbus Host Controller not enabled</a></p>
 
                 
             </div>
@@ -715,7 +606,7 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://wabbybabb0.github.io/2023/12/04/mu-biao-jian-ce/">https://wabbybabb0.github.io/2023/12/04/mu-biao-jian-ce/</a>
+                    <a href="https://wabbybabb0.github.io/2026/03/24/tensor-core/">https://wabbybabb0.github.io/2026/03/24/tensor-core/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -753,16 +644,8 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                                    <span class="chip bg-color">人工智能</span>
-                                </a>
-                            
-                                <a href="/tags/Linux/">
-                                    <span class="chip bg-color">Linux</span>
-                                </a>
-                            
-                                <a href="/tags/Ubuntu/">
-                                    <span class="chip bg-color">Ubuntu</span>
+                                <a href="/tags/CUDA/">
+                                    <span class="chip bg-color">CUDA</span>
                                 </a>
                             
                         </div>
@@ -946,50 +829,48 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
-                <a href="/2024/01/27/mlc-llm-orangepi-bu-shu-guo-cheng/">
+                <a href="/2026/03/24/tensor-core/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/9.png" class="responsive-img" alt="mlc-llm 香橙派部署过程">
+                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="【理论】Tensor Core学习过程">
                         
-                        <span class="card-title">mlc-llm 香橙派部署过程</span>
+                        <span class="card-title">【理论】Tensor Core学习过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            mlc-llm部署
+                            简单了解nvidia架构历史，主要学习使用Tensor Core做计算时的数据流动和布局
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2024-01-27
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2026-03-24
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                    人工智能
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
                                 </a>
                             
                             
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                        <span class="chip bg-color">人工智能</span>
-                    </a>
-                    
-                    <a href="/tags/NLP/">
-                        <span class="chip bg-color">NLP</span>
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
                     </a>
                     
                 </div>
@@ -1003,31 +884,31 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2023/11/28/alexnet-mo-xing-fu-xian/">
+                <a href="/2026/03/24/li-lun-tensor-core/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/5.png" class="responsive-img" alt="AlexNet模型复现">
+                        <img src="/medias/featureimages/12.png" class="responsive-img" alt="【理论】Tensor Core学习过程">
                         
-                        <span class="card-title">AlexNet模型复现</span>
+                        <span class="card-title">【理论】Tensor Core学习过程</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            阅读了《Imagenet classification with deep convolutional neural networks》后复现AlexNet模型
+                            简单了解nvidia架构历史，主要学习使用Tensor Core做计算时的数据流动和布局
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2023-11-28
+                                <i class="far fa-clock fa-fw icon-date"></i>2026-03-24
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-category">
-                                    人工智能
+                            <a href="/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/" class="post-category">
+                                    高性能计算
                                 </a>
                             
                             
@@ -1037,12 +918,8 @@ Please, press ENTER to <span class="token builtin class-name">continue</span>
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">
-                        <span class="chip bg-color">人工智能</span>
-                    </a>
-                    
-                    <a href="/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                        <span class="chip bg-color">卷积神经网络</span>
+                    <a href="/tags/CUDA/">
+                        <span class="chip bg-color">CUDA</span>
                     </a>
                     
                 </div>

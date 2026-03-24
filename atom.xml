@@ -6,7 +6,7 @@
   <link href="https://wabbybabb0.github.io/atom.xml" rel="self"/>
   
   <link href="https://wabbybabb0.github.io/"/>
-  <updated>2026-03-24T08:27:47.220Z</updated>
+  <updated>2026-03-24T08:29:45.332Z</updated>
   <id>https://wabbybabb0.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>【理论】Tensor Core学习过程</title>
+    <link href="https://wabbybabb0.github.io/2026/03/24/tensor-core/"/>
+    <id>https://wabbybabb0.github.io/2026/03/24/tensor-core/</id>
+    <published>2026-03-24T07:57:00.000Z</published>
+    <updated>2026-03-24T08:29:45.332Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;现在很多AI Infra的工作都会用到Tensor Core做加速或性能优化，看的论文里也经常会出现&lt;code&gt;mma&lt;/code&gt;的字眼、以及&lt;code&gt;mma&lt;/code&gt;指令对应的Fragment</summary>
+        
+      
+    
+    
+    
+    <category term="高性能计算" scheme="https://wabbybabb0.github.io/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
+    
+    
+    <category term="CUDA" scheme="https://wabbybabb0.github.io/tags/CUDA/"/>
+    
+  </entry>
   
   <entry>
     <title>【理论】Tensor Core学习过程</title>
@@ -164,9 +189,9 @@
     <category term="高性能计算" scheme="https://wabbybabb0.github.io/categories/%E9%AB%98%E6%80%A7%E8%83%BD%E8%AE%A1%E7%AE%97/"/>
     
     
-    <category term="GPU" scheme="https://wabbybabb0.github.io/tags/GPU/"/>
-    
     <category term="DeepSeek" scheme="https://wabbybabb0.github.io/tags/DeepSeek/"/>
+    
+    <category term="GPU" scheme="https://wabbybabb0.github.io/tags/GPU/"/>
     
   </entry>
   
@@ -355,11 +380,11 @@
     <category term="人工智能" scheme="https://wabbybabb0.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     
+    <category term="深度学习" scheme="https://wabbybabb0.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
     <category term="人工智能" scheme="https://wabbybabb0.github.io/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/"/>
     
     <category term="卷积神经网络" scheme="https://wabbybabb0.github.io/tags/%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/"/>
-    
-    <category term="深度学习" scheme="https://wabbybabb0.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
@@ -515,33 +540,6 @@
       
     
     
-    
-    
-    <category term="闲着没事干" scheme="https://wabbybabb0.github.io/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/"/>
-    
-    <category term="C#" scheme="https://wabbybabb0.github.io/tags/C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>基本元素和类型</title>
-    <link href="https://wabbybabb0.github.io/2023/01/11/ji-ben-yuan-su-he-shu-ju-lei-xing/"/>
-    <id>https://wabbybabb0.github.io/2023/01/11/ji-ben-yuan-su-he-shu-ju-lei-xing/</id>
-    <published>2023-01-11T13:00:00.000Z</published>
-    <updated>2023-12-10T07:58:14.296Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;一-基本元素&quot;&gt;&lt;a href=&quot;#一-基本元素&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    <category term="C#" scheme="https://wabbybabb0.github.io/categories/C/"/>
     
     
     <category term="闲着没事干" scheme="https://wabbybabb0.github.io/tags/%E9%97%B2%E7%9D%80%E6%B2%A1%E4%BA%8B%E5%B9%B2/"/>
