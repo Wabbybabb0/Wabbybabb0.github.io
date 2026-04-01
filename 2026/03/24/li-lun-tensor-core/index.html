@@ -576,7 +576,10 @@
 <li>访问全局内存时，尽可能使用最宽的数据类型(float4)进行访问，可以最大化访存指令的利用率。下面是分别用float和float4做内存拷贝时的性能(rtx3050)<ul>
 <li>[float]  Time: 4.36634 ms, Bandwidth: 183.22 GB/s  </li>
 <li>[float4]Time: 4.27924 ms, Bandwidth: 186.949 GB/s</li>
-<li>可见float4还是比float快一点的，查看其ptx代码，<code>ld.global.f32 %f1, [%rd5];</code>和`ld.global.v4.u32 </li>
+<li>可见float4还是比float快一点的，查看其ptx代码，<ul>
+<li><code>ld.global.f32 %f1, [%rd5];</code>和`ld.global.v4.u32 </li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
