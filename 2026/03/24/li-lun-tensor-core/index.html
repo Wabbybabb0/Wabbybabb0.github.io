@@ -510,14 +510,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2026-04-01
+                    2026-04-02
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    1.1k
+                    3.3k
                 </div>
                 
 
@@ -576,13 +576,75 @@
 <li>访问全局内存时，尽可能使用最宽的数据类型(float4)进行访问，可以最大化访存指令的利用率。下面是分别用float和float4做内存拷贝时的性能(rtx3050)<ul>
 <li>[float]  Time: 4.36634 ms, Bandwidth: 183.22 GB/s  </li>
 <li>[float4]Time: 4.27924 ms, Bandwidth: 186.949 GB/s</li>
-<li>可见float4还是比float快一点的，查看其ptx代码，<ul>
-<li><code>ld.global.f32 %f1, [%rd5];</code>和`ld.global.v4.u32 </li>
+<li>可见float4还是比float快一点的，查看其ptx代码<code>ld.global.f32 %f1, [%rd5];</code>和<code>ld.global.v4.u32 {%r6, %r7, %r8, %r9}, [%rd7];</code>前者一次只取32位(<code>f32</code>)，后者一次取128位(u32)分别放到4个寄存器里，充分利用带宽。</li>
+</ul>
+</li>
+<li>共享内存按照每4个bytes划分为一个bank，共分为32个bank，一个bank之所以是4bytes是因为一个float或int数据都是4bytes，当申请共享内存时，数据会被依次发放给32个bank，刚好把bank填充完。当同一warp的线程访问同一bank的不同地址时会发生banck conflit(bank 冲突)，如果访问同一bank的相同地址，不会发生冲突，因为有broacast(广播)机制。只有不发生bank conflit才能最大化共享内存的吞吐。</li>
+<li>GPU有显存(Global Memory)、L2、L1(Shared Memory)、寄存器4个层次的存储，直接访问显存的延迟很高，在优化GEMM这种计算型密集的算子时，需要：<ul>
+<li>通过Shared Memory和寄存器减少访存请求次数</li>
+<li>通过大量计算触发多线程并发机制或双缓冲机制隐藏访存延迟<img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260323121236.png" alt=""></li>
 </ul>
 </li>
 </ul>
-</li>
+<p>数据在真正参与运算前，通常会按照<code>Global Memory -&gt; Shared Memory -&gt; Register</code>的层级路径进行逐级搬运。下面的介绍均以完成m8n8k16的GEMM为例。</p>
+<h2 id="2-1-GMEM→SMEM"><a href="#2-1-GMEM→SMEM" class="headerlink" title="2.1 GMEM→SMEM"></a>2.1 GMEM→SMEM</h2><h3 id="2-1-1-GMEM下的数据布局"><a href="#2-1-1-GMEM下的数据布局" class="headerlink" title="2.1.1 GMEM下的数据布局"></a>2.1.1 GMEM下的数据布局</h3><p>根据2.2.1，每个线程处理16个int8类型的数据，每16个元素被当作1个vector。下图是同一个warp中每个线程读取Global Memory的数据的逻辑布局：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324100137.png" alt=""></p>
+<ul>
+<li>【❓】为什么逻辑布局是这样的<br>而实际的物理布局是：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324100429.png" alt=""></li>
+<li>每个线程负责16个int8元素，一共128bits</li>
+<li>相邻的线程读取的数据在物理上是连续的，可以满足合并访存需求</li>
 </ul>
+<p>从Global Memory写入Shared Memory时，物理布局如下：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324100908.png" alt=""></p>
+<ul>
+<li>每8个线程向Shared Memory写入128bits的数据，刚好落在Shared Memory的32个不同的bank中</li>
+<li>同一warp的访存分为四个阶段完成，T0~T7为第一阶段，T8~T15为第二阶段，T16~T23为第三阶段，T24~T23为第三阶段</li>
+<li>物理布局下线程的排布是交错的，这和Shared Memory的bank conflict有关</li>
+</ul>
+<h3 id="2-1-2-SMEM下的数据布局"><a href="#2-1-2-SMEM下的数据布局" class="headerlink" title="2.1.2 SMEM下的数据布局"></a>2.1.2 SMEM下的数据布局</h3><p>前面已经简要介绍了Shared Memory下的bank及其对访存效率的影响，通常为了避免Shared Memory的bank conflict，会对Shared Memory的数据进行padding，让同一warp下的线程访问的数据错开，避免落在同一bank中。但是这样做的问题是会使得kernel需要Shared Memory的Size变大，但是SM上的L1 cache(Shared Memory)又是有限的，所以padding会降低kernel的occupancy，进而就会降低kernel的性能。</p>
+<p>因此CUTLASS设计了一种Shared Memory的交错布局方式，它能够在不进行padding的前提下，使得线程访存的地址没有bank conflict。接下来，我们以64x64的矩阵为例来详细介绍数据在Shared Memory中的布局。</p>
+<p>此时线程读取的数据粒度都是128bits，即16个int8类型的数据，所以下面的每个格子都是以16个数据为一组，也称为一个vector。下面是Shared Memory的数据的逻辑布局：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324111557.png" alt=""></p>
+<ul>
+<li>16个int8类型的数据为一组，被称为一个vector，是不同颜色的格子</li>
+<li>每行相邻的32个元素被称为一个crosswise，是NCHW32里一组channel的数据(背景是Tensor Core卷积算子吞吐优化，采用32个通道对齐的存储格式)</li>
+</ul>
+<p>ldmatrix以矩阵块形式读取数据，而不是在一行里从头读到尾，所以要把需要读取的数据重新排序，下面是Shared Memory的数据的物理布局：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324111707.png" alt=""></p>
+<ul>
+<li>逻辑布局的每4行的一个crosswise数据为一组，连续存放在Shared Memory中，然后存放这四行的下一个crosswise数据</li>
+<li>每组数据包含8个vector，8×16×8bits÷8 = 128bytes，恰好对应Shared Memory的32个bank，能填满一次bank的最大吞吐量</li>
+<li>每组数据在排列中交错，保证ldmatreix时不发生bank conflict。假设没有这种错位，第 0 行的 (0-15, 0) 和第4行的 (0-15, 4) 会被存放在<strong>完全相同编号的 Bank 里</strong>（因为内存地址相差正好是 128 字节的倍数，Bank 循环了一圈又对齐了）。当 Warp 中的不同线程使用 ldmatrix 同时去要第 0 行和第 4 行的数据时，它们就会挤在同一个 Bank 柜员面前，发生惨烈的Bank Conflict。</li>
+</ul>
+<h2 id="2-2-SMEM→R"><a href="#2-2-SMEM→R" class="headerlink" title="2.2 SMEM→R"></a>2.2 SMEM→R</h2><p>在执行warp级别的GEMM运算时，核心依赖于两条Warp-level指令的紧密协同：<code>ldmatrix</code>指令负责将矩阵数据从Shared Memory高效加载并重新排布到线程的Fragment寄存器中；而<code>mma</code> 指令则直接驱动Tensor Core，对这些排布好的数据进行高速的张量乘加计算。</p>
+<ul>
+<li>warp级别的GEMM运算，有别于CUDA Core计算矩阵乘法时一个线程负责输出结果矩阵的一个元素或几个元素的模式，它打破了线程间的隔离，强制要求一个warp内的32个线程进行底层的数据共享与严格同步，协同算出一整个矩阵块。<code>mma.sync</code>指令就体现了同步的特点。</li>
+</ul>
+<h3 id="2-2-1-ldmatrix指令"><a href="#2-2-1-ldmatrix指令" class="headerlink" title="2.2.1 ldmatrix指令"></a>2.2.1 <code>ldmatrix</code>指令</h3><p><code>ldmatrix</code>是PTX指令，从Shared Memory读取数据，把数据打包成warp-level的矩阵片段，将数据搬运到registers里。</p>
+<p>当同一个warp执行空间上连续的两个8×8×16的GEMM时，数据要从Global Memory搬运到Shared Memory然后再使用<code>ldmatrix</code>指令读取数据，如果按照以上<code>mma</code>指令下矩阵的布局布来读取顺序，那么每个线程读取数据时都只能读32bits的数据，跳过一段内存之后再读取下一个32bits的数据，这样的带宽利用率很低。而<code>ldmatrix</code>能够让warp一次性读取4个8×16的矩阵到寄存器里，这样warp里的每个线程读取4×8×16×8bit/32=128bit的数据。</p>
+<p><code>ldmatrix.sync.aligned.x4.m8n8.shared.b16</code>这个指令刚好可以读取4个8×16矩阵，笔者一开始疑惑这为什么不是处理4个8×8矩阵呢？直到注意到<code>b16</code>的存在，总数据量=4×8×8×16bits=4096bits，因为矩阵的数据类型是int8，所以一个16bit单元里有2个int8元素，物理列数是8，逻辑列数是16，所以就符合4个8×(8×2)矩阵了。</p>
+<p>下面的图的三个阶段分别是线程做数据读取、线程之间数据交换、最终线程读取的数据(以线程0为例)。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/969e4305-51fc-4d65-82bc-448decefedc2.png" alt=""></p>
+<ul>
+<li>32个线程都分别加载(即读取)一行数据，一行有4×4个int8类型的数据，一共128bits</li>
+<li>数据加载时的每个线程与对应数据的分布，并不是最终在寄存器里的排布，加载后线程之间做数据交换，线程0最后分配到的数据是由线程0、8、16、24加载而来的</li>
+</ul>
+<p>同一warp在每一轮迭代过程会读取4个8x16的矩阵到寄存器中，每个线程会读取一行的数据。例如第一轮迭代时，线程读取的数据在逻辑上的布局如下图所示：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324113447.png" alt=""><br>而实际上数据在Shared Memory里的物理布局如下图：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324113625.png" alt=""></p>
+<ul>
+<li>参照下面的两幅图，可以理解成这里在取Shared Memory逻辑布局里最左边一列的数据</li>
+<li>每个线程读取了128位的数据，因此访存分为四个阶段来进行。</li>
+<li>每一阶段的8个线程读取的数据恰好落在了Shared Memory的32个bank中，并且线程访存的数据之间不存在冲突。<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324111557.png" alt=""></li>
+<li>Shared Memory的逻辑排布和上面ldmatrix读取时的排布一样<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324111707.png" alt=""></li>
+</ul>
+<p>当进行到第二轮迭代时，每个线程访问的数据的物理布局如下图：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260324113707.png" alt=""></p>
+<ul>
+<li>可以理解成这里在取Shared Memory逻辑布局里第二列的数据</li>
+</ul>
+<p>将数据搬运完成后就用<code>mma</code>指令做计算了。</p>
+<h3 id="2-2-2-mma指令"><a href="#2-2-2-mma指令" class="headerlink" title="2.2.2 mma指令"></a>2.2.2 <code>mma</code>指令</h3><p>以<code>mma.sync.aligned.m8n8k16.row.col.satfinite.s32.s8.s8.s32</code>为例，它是一个PTX汇编指令，由一个warp的32个线程同步地完成m8n8k16的$D=A×B+C$的GEMM。</p>
+<p>其中A矩阵大小为8×16、B矩阵大小为16×8、C和D矩阵大小为8×8，这些数据分布在同一个warp里的32个线程中。</p>
+<p>矩阵A的布局如下：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260323145208.png" alt=""></p>
+<ul>
+<li>Txx表示id为xx的线程，a0~a3表示这个线程负责的4个数据，每4个线程负责读取8×16矩阵的一行<br>矩阵B的布局如下：<br><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260323153345.png" alt=""></li>
+<li>每4个线程负责读取矩阵的一列</li>
+</ul>
+<p>对于矩阵A和矩阵B，一共有8×16=128个数据，且两个输入矩阵的类型都是signed 8-bit integer(即int8)，32个线程里的每个线程处理4个数据，4×8bits=32bits，实际声明<code>A</code>或<code>B</code>寄存器大小时只需要1个32位unsigned int就可以。</p>
+<p><img src="https://raw.githubusercontent.com/Wabbybabb0/Blog_picture/refs/heads/main/tensor%20core/Pasted%20image%2020260323153953.png" alt=""><br>对于矩阵C和矩阵D，一共有8×8=64个数据，且两个矩阵的类型都是signed 32-bit integer(即int32)，32个线程里每个线程处理2个数据，2×32bits=64bits，实际声明<code>C</code>或<code>D</code>寄存器大小需要2个int32。</p>
 
                 
             </div>
